@@ -1,6 +1,6 @@
 package modele.evenement;
 
-public class EvenementImpl {
+public class EvenementImpl implements Evenement {
     private NomsEvenement nomEvenement;
     private String descriptionEvenement;
 

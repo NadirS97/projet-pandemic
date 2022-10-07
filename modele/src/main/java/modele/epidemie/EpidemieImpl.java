@@ -1,4 +1,4 @@
 package modele.epidemie;
 
-public class EpidemieImpl {
+public class EpidemieImpl implements Epidemie {
 }
