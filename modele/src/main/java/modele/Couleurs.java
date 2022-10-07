@@ -1,5 +1,5 @@
 package modele;
 
-public enum Couleur {
+public enum Couleurs {
     ROUGE,NOIR,BLEU,JAUNE
 }

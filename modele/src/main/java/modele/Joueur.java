@@ -1,8 +1,7 @@
 package modele;
 
 public class Joueur {
-
-    private String pseudo;
-
+    private String pseudoJoueur;
+    private Role roleJoueur;
 
 }
