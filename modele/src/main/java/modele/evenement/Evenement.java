@@ -1,4 +1,8 @@
 package modele.evenement;
 
-public interface Evenement {
+public class Evenement {
+    private NomsEvenement nomEvenement;
+    private String descriptionEvenement;
+
+    //TODO : Liste d'effets de carte
 }

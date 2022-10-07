@@ -1,6 +1,8 @@
 package modele;
 
-public class Cube {
+import modele.cartes.CarteCouleur;
+
+public class Cube extends CarteCouleur {
     private Virus virusCube;
 //    private Couleurs couleurCube;
 
