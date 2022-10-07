@@ -1,58 +1,22 @@
 package modele;
 
-import modele.cartes.CarteCouleur;
+import modele.cartes.CarteVille;
 
 import java.util.List;
+import java.util.Map;
 
-public class Ville extends CarteCouleur {
+public class Ville {
+
     private String nomVille;
-    private List<Ville> listeVillesJoignables;
+    private List<Ville> villesVoisines;
     private Virus virus;
-    private int populationTotaleVille;
-    private int populationKmCarreVille;
+    private List<Map<Virus, Integer>> listeVirusVille; // Integer pour le nbCubesActifs
+    private int nbPopulationTotaleCartePropagation;
+    private int nbPopulationKmCarreeCartePropagation;
 
     // TODO: pour moi il s'agit de la classe CarteVille
     //  on doit rajouter la classe Ville à part: avec (String nomVille, Map<Virus, nbCubesActifs> cubeVille, List<Ville> villesVoisines)
     //  avec 2 constructeurs : un constructeur ville(String nomVille, new Map<nomVirus, 0>, et une liste vide) et un constructeur avec la liste des villes voisines
 
 
-    public String getNomVille() {
-        return nomVille;
-    }
-
-    public void setNomVille(String nomVille) {
-        this.nomVille = nomVille;
-    }
-
-    public List<Ville> getListeVillesJoignables() {
-        return listeVillesJoignables;
-    }
-
-    public void setListeVillesJoignables(List<Ville> listeVillesJoignables) {
-        this.listeVillesJoignables = listeVillesJoignables;
-    }
-
-    public Virus getVirus() {
-        return virus;
-    }
-
-    public void setVirus(Virus virus) {
-        this.virus = virus;
-    }
-
-    public int getPopulationTotaleVille() {
-        return populationTotaleVille;
-    }
-
-    public void setPopulationTotaleVille(int populationTotaleVille) {
-        this.populationTotaleVille = populationTotaleVille;
-    }
-
-    public int getPopulationKmCarreVille() {
-        return populationKmCarreVille;
-    }
-
-    public void setPopulationKmCarreVille(int populationKmCarreVille) {
-        this.populationKmCarreVille = populationKmCarreVille;
-    }
 }
