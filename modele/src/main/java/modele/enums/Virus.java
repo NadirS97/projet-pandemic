@@ -8,7 +8,8 @@ public enum Virus {
         ROUGE,
         JAUNE,
         VERT,
-        NOIR
+        NOIR,
+        BLEU
 
 
 
