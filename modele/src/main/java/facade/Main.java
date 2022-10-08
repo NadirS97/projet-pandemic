@@ -1,9 +1,8 @@
-package modele.facade;
+package facade;
 
-import lombok.Builder;
 import modele.Couleurs;
 import modele.Ville;
-import modele.Virus;
+import modele.enums.Virus;
 
 import java.util.*;
 

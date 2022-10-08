@@ -2,6 +2,7 @@ package modele;
 
 
 import lombok.*;
+import modele.enums.Virus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +18,8 @@ public class Ville {
     private String nomVille;
     private List<Ville> villesVoisines;
     private List<Map<Virus, Integer>> listeVirusVille; // Integer pour le nbCubesActifs par Virus
+
+    private Map<Virus,Integer> nbCubeVirus = new HashMap<>();
     private int nbPopulationTotaleVille;
     private int nbPopulationKmCarreeVille;
 
@@ -32,6 +35,10 @@ public class Ville {
         this.villesVoisines = villesVoisines;
         this.nbPopulationTotaleVille = nbPopulationTotaleVille;
         this.nbPopulationKmCarreeVille = nbPopulationKmCarreeVille;
+    }
+    public Ville(String nomVille, Virus virus){
+        this.nomVille = nomVille;
+        nbCubeVirus.put(virus, 0);
     }
 
     // TODO: pour moi il s'agit de la classe CarteVille

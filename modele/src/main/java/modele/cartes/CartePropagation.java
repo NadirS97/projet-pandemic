@@ -8,7 +8,7 @@ import modele.Ville;
 
 @Getter
 @AllArgsConstructor
-public class CartePropagation extends Carte {
+public class CartePropagation  {
 
     private Ville villeCartePropagation;
     // Pour recuperer :
