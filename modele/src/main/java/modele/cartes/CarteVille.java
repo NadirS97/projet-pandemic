@@ -1,10 +1,12 @@
 package modele.cartes;
 
+import lombok.Getter;
 import modele.Ville;
 import modele.Virus;
 
 import java.util.List;
 
+@Getter
 public class CarteVille extends Carte {
 
     private Ville villeCarteVille;
