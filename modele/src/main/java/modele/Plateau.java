@@ -17,6 +17,7 @@ public class Plateau {
 
 
     Map<String,Ville> villes;
+    Map<Ville,Virus> villes2;
     int marqueurVitessePropagation;   // entre 1et 3 = vitesse2 , 4,5 = vitesse3 , 6,7 vitesse 4 , pas vraiment besoin d'un tableau ?
     int marqueurVitesseEclosion;
     List<CarteJoueur> piocheCarteJoueur;

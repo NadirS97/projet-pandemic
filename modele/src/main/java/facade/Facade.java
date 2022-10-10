@@ -22,17 +22,18 @@ public class Facade {
         // les villes bleu
         for (NomVillesBleu nomVillesBleu : NomVillesBleu.values()) {
             Ville ville = new Ville(nomVillesBleu.name(), nomVillesBleu.getPopulation(), nomVillesBleu.getKmCarre(), Virus.BLEU);
+            // attribution des voisins
+            attributionVoisins(nomVillesBleu.name());
             plateau.getVilles().put(nomVillesBleu.name(),ville);
+
         }
-        // attribution des voisins
-        attributionVoisins();
+
+
     }
 
-    public static void attributionVoisins(){
-        for(String ville : plateau.getVilles().keySet()){
+    public static void attributionVoisins(String ville){
 
             switch (ville){
-
                 case "Atlanta":
                     plateau.getVilles().get("Atlanta").setVillesVoisines(List.of("Chicago","Essen"));
                 case "Chicago":
@@ -40,7 +41,6 @@ public class Facade {
                 case "Essen":
                     plateau.getVilles().get("Essen").setVillesVoisines(List.of("Chicago","Atlanta"));
             }
-        }
     }
 
     public void displaybullshit(){

@@ -17,11 +17,12 @@ public class Ville {
 
     private String nomVille;
     private List<String> villesVoisines;
-//    private List<Map<Virus, Integer>> listeVirusVille; // Integer pour le nbCubesActifs par Virus
+
 
     private Map<Virus,Integer> nbCubeVirus = new HashMap<>();
     private int nbPopulationTotaleVille;
     private int nbPopulationKmCarreeVille;
+    private boolean stationDeRecherche;
 
 
 
