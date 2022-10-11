@@ -3,9 +3,7 @@ package modele;
 import lombok.Getter;
 import modele.cartes.CarteJoueur;
 import modele.cartes.CartePropagation;
-import modele.cartes.CarteVille;
-import modele.enums.NomVillesBleu;
-import modele.enums.Virus;
+//import modele.enums.Virus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,29 +13,24 @@ import java.util.Map;
 @Getter
 public class Plateau {
 
-
-    Map<String,Ville> villes;
-    Map<Ville,Virus> villes2;
-    int marqueurVitessePropagation;   // entre 1et 3 = vitesse2 , 4,5 = vitesse3 , 6,7 vitesse 4 , pas vraiment besoin d'un tableau ?
-    int marqueurVitesseEclosion;
-    List<CarteJoueur> piocheCarteJoueur;
-    List<CarteJoueur> defausseCarteJoueur;
-    List<CartePropagation> piocheCartePropagation;
-    List<CartePropagation> defausseCartePropagation;
+    private List<Virus> listeVirus;
+    private Map<String,Ville> villes;
+    private int marqueurVitessePropagation;   // entre 1et 3 = vitesse2 , 4,5 = vitesse3 , 6,7 vitesse 4 , pas vraiment besoin d'un tableau ?
+    private int marqueurVitesseEclosion;
+    private List<CarteJoueur> piocheCarteJoueur;
+    private List<CarteJoueur> defausseCarteJoueur;
+    private List<CartePropagation> piocheCartePropagation;
+    private List<CartePropagation> defausseCartePropagation;
 
     public Plateau() {
-
+        listeVirus = new ArrayList<>();
         villes = new HashMap<>();
         marqueurVitessePropagation = 0;
         marqueurVitesseEclosion = 0;
-
         piocheCarteJoueur = new ArrayList<>();
         defausseCarteJoueur = new ArrayList<>();
         piocheCartePropagation = new ArrayList<>();
         defausseCartePropagation = new ArrayList<>();
     }
 
-    //    public void genererVille(String nom, List<CarteVille> listeVillesJoignables, Virus virus, int populationTotale, int populationKmCarre) {
-//
-//    }
 }

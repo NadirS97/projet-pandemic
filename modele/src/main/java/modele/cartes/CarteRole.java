@@ -1,8 +1,10 @@
-package modele.roles;
+package modele.cartes;
 
-import modele.CouleursPion;
+import modele.enums.CouleursPion;
+import modele.enums.Roles;
 
-public class Role {
+public class CarteRole {
+
     private Roles nomRole;
     private CouleursPion couleurPionRole;
     private String descriptionRole;

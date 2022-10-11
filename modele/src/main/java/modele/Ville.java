@@ -2,47 +2,58 @@ package modele;
 
 
 import lombok.*;
-import modele.enums.Virus;
+//import modele.enums.Virus;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Builder
-@ToString
 @Getter
 @AllArgsConstructor
 public class Ville {
 
     private String nomVille;
-    private List<String> villesVoisines;
-
-
-    private Map<Virus,Integer> nbCubeVirus = new HashMap<>();
+    private List<String> villesVoisinesVille;
+    private Map<Virus,Integer> nbCubeVirusVille;
     private int nbPopulationTotaleVille;
     private int nbPopulationKmCarreeVille;
-    private boolean stationDeRecherche;
-
-
+    private boolean stationDeRechercheVille = false;
+    private boolean eclosionVille = false;
 
 //
     public Ville(String nomVille, int nbPopulationTotaleVille, int nbPopulationKmCarreeVille,Virus virus){
+        this.nbCubeVirusVille = new HashMap<>();
         this.nomVille = nomVille;
         this.nbPopulationTotaleVille = nbPopulationTotaleVille;
         this.nbPopulationKmCarreeVille = nbPopulationKmCarreeVille;
-        nbCubeVirus.put(virus, 0);
+        this.nbCubeVirusVille.put(virus, 0);
     }
 
     public void setVillesVoisines(List<String> villesVoisines) {
-        this.villesVoisines = villesVoisines;
+        this.villesVoisinesVille = villesVoisines;
     }
 
 
-    // TODO: pour moi il s'agit de la classe CarteVille
-    //  on doit rajouter la classe Ville à part: avec (String nomVille, Map<Virus, nbCubesActifs> cubeVille, List<Ville> villesVoisines)
-    //  avec 2 constructeurs : un constructeur ville(String nomVille, new Map<nomVirus, 0>, et une liste vide) et un constructeur avec la liste des villes voisines
 
+    public String retourneVirusNbCubeVirusVille(){
+        String s = "[";
+        for(Map.Entry<Virus, Integer> donneesCubesVirusVille : nbCubeVirusVille.entrySet()){
+            s = s + "("+(donneesCubesVirusVille.getKey().getVirusCouleur() + ", " + donneesCubesVirusVille.getValue())+")";
+        }
+        return s + "]";
+    }
 
-
+    @Override
+    public String toString() {
+        return "Ville{" +
+                "nomVille='" + nomVille + '\'' +
+                ", villesVoisinesVille=" + villesVoisinesVille +
+                ", nbCubesVirusVille="+retourneVirusNbCubeVirusVille()+
+                ", nbPopulationTotaleVille=" + nbPopulationTotaleVille +
+                ", nbPopulationKmCarreeVille=" + nbPopulationKmCarreeVille +
+                ", stationDeRechercheVille=" + stationDeRechercheVille +
+                ", eclosionVille=" + eclosionVille +
+                '}';
+    }
 }
