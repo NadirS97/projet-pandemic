@@ -35,6 +35,9 @@ public class Ville {
     }
 
 
+    public void setStationDeRechercheVille(boolean stationDeRechercheVille) {
+        this.stationDeRechercheVille = stationDeRechercheVille;
+    }
 
     public String retourneVirusNbCubeVirusVille(){
         String s = "[";

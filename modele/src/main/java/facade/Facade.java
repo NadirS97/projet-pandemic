@@ -1,5 +1,7 @@
 package facade;
 
+import modele.Joueur;
+import modele.actions.deplacement.DeplacementVoiture;
 import modele.enums.Couleurs;
 import modele.Plateau;
 import modele.Ville;
@@ -7,6 +9,7 @@ import modele.Virus;
 import modele.enums.DonneesVille;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class Facade {
 
@@ -86,5 +89,31 @@ public class Facade {
         for (Ville ville : plateau.getVilles().values()){
             System.out.println(ville);
         }
+    }
+
+    public void jouerTour(Joueur joueur){
+        joueur.setPlateau(plateau);
+        Scanner sc = new Scanner(System.in);
+        int nbAction = 0;
+        while (nbAction < 4){
+            System.out.println("Hello vous avez 4 actions possible");
+            String choixAction = sc.nextLine();
+            switch (choixAction){
+                case "DEPLACEMENT":
+                    System.out.println("Hello vous avez 4 deplacement possible");
+                    String choixDeplacement = sc.nextLine();
+                    System.out.println("Quel ville?");
+//                            TODO : bcp trop de verif à faire
+                    String choixVille = sc.nextLine();
+                    switch (choixDeplacement){
+                        case "VOITURE":
+                            joueur.setDeplacement(new DeplacementVoiture());
+
+                            joueur.seDeplacer(choixVille);
+
+                    }
+            }
+        }
+
     }
 }

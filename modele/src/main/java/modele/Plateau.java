@@ -33,4 +33,8 @@ public class Plateau {
         defausseCartePropagation = new ArrayList<>();
     }
 
+    Ville getVilleByName(String name){
+        return villes.get(name);
+    }
+
 }
