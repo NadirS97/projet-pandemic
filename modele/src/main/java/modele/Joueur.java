@@ -25,6 +25,9 @@ public class Joueur {
       deplacement.seDeplacer(caseActuel,villeDestination);
       caseActuel = villeDestination;
     }
+    public void construireStation(){
+//        LE JOUEUR DEFAUSSE LA CARTE DE LA VILLE OU IL SE SITUE
+    }
 
     public void setDeplacement(Deplacement deplacement) {
         this.deplacement = deplacement;

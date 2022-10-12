@@ -2,7 +2,10 @@ package facade;
 
 import exceptions.CasCouleurVilleIncorrectException;
 import modele.Joueur;
+import modele.actions.deplacement.DeplacementNavette;
 import modele.actions.deplacement.DeplacementVoiture;
+import modele.actions.deplacement.DeplacementVolCharter;
+import modele.actions.deplacement.DeplacementVolDirect;
 import modele.enums.Couleurs;
 import modele.Plateau;
 import modele.Ville;
@@ -107,13 +110,25 @@ public class Facade {
                     System.out.println("Quelle ville ?");
 //                            TODO : bcp trop de verif à faire
                     String choixVille = sc.nextLine();
+                    nbAction++;
                     switch (choixDeplacement){
                         case "VOITURE":
                             joueur.setDeplacement(new DeplacementVoiture());
 
                             joueur.seDeplacer(choixVille);
+                        case "NAVETTE":
+                            joueur.setDeplacement(new DeplacementNavette());
+                            joueur.seDeplacer(choixVille);
+                        case "VOL CHARTER":
+                            joueur.setDeplacement(new DeplacementVolCharter());
+                            joueur.seDeplacer(choixVille);
+                        case "VOL DIRECT":
+                            joueur.setDeplacement(new DeplacementVolDirect());
+                            joueur.seDeplacer(choixVille);
 
                     }
+                case "STATION":
+
             }
         }
 

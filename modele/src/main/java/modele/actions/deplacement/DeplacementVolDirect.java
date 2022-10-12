@@ -6,7 +6,7 @@ public class DeplacementVolDirect implements Deplacement {
 
 
     @Override
-    public void seDeplacer(Ville ville1, Ville ville2) {
-        System.out.println("CE SONT NOS IMPOTS QUI PAYENT CE JET PRIVE");
+    public void seDeplacer(Ville villeOrigine, Ville villeDestination) {
+        System.out.println("MACRON FLY from " + villeOrigine.getNomVille() + ", villeDestination : " + villeDestination.getNomVille() + " AVEC L'ARGENT DE NOS IMPOTS");
     }
 }

@@ -6,7 +6,7 @@ public class DeplacementVoiture implements Deplacement {
 
 
     @Override
-    public void seDeplacer(Ville ville1, Ville ville2) {
-        System.out.println("VROUM VROUM MA BENZ BENZ BENZ");
+    public void seDeplacer(Ville villeOrigine, Ville villeDestination) {
+        System.out.println("VROUM VROUM MA BENZ BENZ BENZ from" + villeOrigine.getNomVille() +" to " + villeDestination.getNomVille() );
     }
 }
