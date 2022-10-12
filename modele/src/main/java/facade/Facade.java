@@ -41,7 +41,6 @@ public class Facade {
                         DonneesVille donneesVilleBleue = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleBleue.name(), donneesVilleBleue.getPopulationTotaleVille(), donneesVilleBleue.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleBleue.name(),ville);
-                        attributionVoisins(donneesVilleBleue.name());
                     }
                     break;
                 case JAUNE:
@@ -49,7 +48,6 @@ public class Facade {
                         DonneesVille donneesVilleJaune = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleJaune.name(), donneesVilleJaune.getPopulationTotaleVille(), donneesVilleJaune.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleJaune.name(),ville);
-                        attributionVoisins(donneesVilleJaune.name());
                     }
                     break;
                 case NOIR:
@@ -57,7 +55,6 @@ public class Facade {
                         DonneesVille donneesVilleNoire = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleNoire.name(), donneesVilleNoire.getPopulationTotaleVille(), donneesVilleNoire.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleNoire.name(),ville);
-                        attributionVoisins(donneesVilleNoire.name());
                     }
                     break;
                 case ROUGE:
@@ -65,12 +62,14 @@ public class Facade {
                         DonneesVille donneesVilleRouge = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleRouge.name(), donneesVilleRouge.getPopulationTotaleVille(), donneesVilleRouge.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleRouge.name(),ville);
-                        attributionVoisins(donneesVilleRouge.name());
                     }
                     break;
                 default:
                     throw new CasCouleurVilleIncorrectException();
             }
+        }
+        for(Ville ville : plateau.getVilles().values()){
+            attributionVoisins(ville.getNomVille());
         }
     }
 

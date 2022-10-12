@@ -52,7 +52,7 @@ public class Ville {
         return "Ville{" +
                 "nomVille='" + nomVille + '\'' +
                 ", villesVoisinesVille=" + villesVoisinesVille +
-                ", nbCubesVirusVille="+retourneVirusNbCubeVirusVille()+
+                ", nbCubesVirusVille="+ retourneVirusNbCubeVirusVille() +
                 ", nbPopulationTotaleVille=" + nbPopulationTotaleVille +
                 ", nbPopulationKmCarreeVille=" + nbPopulationKmCarreeVille +
                 ", stationDeRechercheVille=" + stationDeRechercheVille +
