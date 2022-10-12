@@ -1,5 +1,6 @@
 package facade;
 
+import exceptions.CasCouleurVilleIncorrectException;
 import modele.Joueur;
 import modele.actions.deplacement.DeplacementVoiture;
 import modele.enums.Couleurs;
@@ -19,7 +20,7 @@ public class Facade {
     private final int NBVILLESNOIRES = 12;
     private final int NBVILLESROUGES = 12;
 
-    public void initialisation(){
+    public void initialisation() throws CasCouleurVilleIncorrectException {
         plateau = new Plateau();
         initialisationVirus();
         initialisationVilles();
@@ -32,11 +33,11 @@ public class Facade {
         }
     }
 
-    public void initialisationVilles(){
+    public void initialisationVilles() throws CasCouleurVilleIncorrectException {
         for(Virus virus : plateau.getListeVirus()){
             switch(virus.getVirusCouleur()){
                 case BLEU:
-                    for (int i = 0; i<NBVILLESBLEUES; i++){
+                    for (int i = 0; i < NBVILLESBLEUES; ++i){
                         DonneesVille donneesVilleBleue = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleBleue.name(), donneesVilleBleue.getPopulationTotaleVille(), donneesVilleBleue.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleBleue.name(),ville);
@@ -44,7 +45,7 @@ public class Facade {
                     }
                     break;
                 case JAUNE:
-                    for (int i = NBVILLESBLEUES; i<NBVILLESJAUNES; i++){
+                    for (int i = NBVILLESBLEUES; i < NBVILLESJAUNES; ++i){
                         DonneesVille donneesVilleJaune = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleJaune.name(), donneesVilleJaune.getPopulationTotaleVille(), donneesVilleJaune.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleJaune.name(),ville);
@@ -52,11 +53,23 @@ public class Facade {
                     }
                     break;
                 case NOIR:
+                    for (int i = NBVILLESJAUNES; i < NBVILLESNOIRES; ++i){
+                        DonneesVille donneesVilleNoire = DonneesVille.values()[i];
+                        Ville ville = new Ville(donneesVilleNoire.name(), donneesVilleNoire.getPopulationTotaleVille(), donneesVilleNoire.getPopulationKmCarreVille(), virus);
+                        plateau.getVilles().put(donneesVilleNoire.name(),ville);
+                        attributionVoisins(donneesVilleNoire.name());
+                    }
                     break;
                 case ROUGE:
+                    for (int i = NBVILLESNOIRES; i < NBVILLESROUGES; ++i){
+                        DonneesVille donneesVilleRouge = DonneesVille.values()[i];
+                        Ville ville = new Ville(donneesVilleRouge.name(), donneesVilleRouge.getPopulationTotaleVille(), donneesVilleRouge.getPopulationKmCarreVille(), virus);
+                        plateau.getVilles().put(donneesVilleRouge.name(),ville);
+                        attributionVoisins(donneesVilleRouge.name());
+                    }
                     break;
                 default:
-                    //Erreur
+                    throw new CasCouleurVilleIncorrectException();
             }
         }
         // les villes bleues
