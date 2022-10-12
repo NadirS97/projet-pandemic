@@ -37,7 +37,7 @@ public class Facade {
         for(Virus virus : plateau.getListeVirus()){
             switch(virus.getVirusCouleur()){
                 case BLEU:
-                    for (int i = 0; i < NBVILLESBLEUES; ++i){
+                    for (int i = 0; i < NBVILLESBLEUES; ++i) {
                         DonneesVille donneesVilleBleue = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleBleue.name(), donneesVilleBleue.getPopulationTotaleVille(), donneesVilleBleue.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleBleue.name(),ville);
@@ -45,7 +45,7 @@ public class Facade {
                     }
                     break;
                 case JAUNE:
-                    for (int i = NBVILLESBLEUES; i < NBVILLESJAUNES; ++i){
+                    for (int i = NBVILLESBLEUES; i < NBVILLESJAUNES; ++i) {
                         DonneesVille donneesVilleJaune = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleJaune.name(), donneesVilleJaune.getPopulationTotaleVille(), donneesVilleJaune.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleJaune.name(),ville);
@@ -53,7 +53,7 @@ public class Facade {
                     }
                     break;
                 case NOIR:
-                    for (int i = NBVILLESJAUNES; i < NBVILLESNOIRES; ++i){
+                    for (int i = NBVILLESJAUNES; i < NBVILLESNOIRES; ++i) {
                         DonneesVille donneesVilleNoire = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleNoire.name(), donneesVilleNoire.getPopulationTotaleVille(), donneesVilleNoire.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleNoire.name(),ville);
@@ -61,7 +61,7 @@ public class Facade {
                     }
                     break;
                 case ROUGE:
-                    for (int i = NBVILLESNOIRES; i < NBVILLESROUGES; ++i){
+                    for (int i = NBVILLESNOIRES; i < NBVILLESROUGES; ++i) {
                         DonneesVille donneesVilleRouge = DonneesVille.values()[i];
                         Ville ville = new Ville(donneesVilleRouge.name(), donneesVilleRouge.getPopulationTotaleVille(), donneesVilleRouge.getPopulationKmCarreVille(), virus);
                         plateau.getVilles().put(donneesVilleRouge.name(),ville);
@@ -72,28 +72,18 @@ public class Facade {
                     throw new CasCouleurVilleIncorrectException();
             }
         }
-        // les villes bleues
-//        for (NomVillesBleu nomVillesBleu : NomVillesBleu.values()) {
-//            Virus virus = plateau.getListeVirus().get()
-//            Ville ville = new Ville(nomVillesBleu.name(), nomVillesBleu.getPopulationTotaleVille(), nomVillesBleu.getPopulationKmCarreVille(), virus);
-//            // attribution des voisins
-//            attributionVoisins(nomVillesBleu.name());
-//            plateau.getVilles().put(nomVillesBleu.name(),ville);
-//        }
-
-
     }
 
     public static void attributionVoisins(String ville){
             switch (ville){
                 case "Atlanta":
-                    plateau.getVilles().get("Atlanta").setVillesVoisines(List.of("Chicago","Essen"));
+                    plateau.getVilles().get("Atlanta").setVillesVoisines(List.of(plateau.getVilles().get("Chicago"),plateau.getVilles().get("Essen")));
                     break;
                 case "Chicago":
-                    plateau.getVilles().get("Chicago").setVillesVoisines(List.of("Atlanta","Essen"));
+                    plateau.getVilles().get("Chicago").setVillesVoisines(List.of(plateau.getVilles().get("Atlanta"),plateau.getVilles().get("Essen")));
                     break;
                 case "Essen":
-                    plateau.getVilles().get("Essen").setVillesVoisines(List.of("Chicago","Atlanta"));
+                    plateau.getVilles().get("Essen").setVillesVoisines(List.of(plateau.getVilles().get("Chicago"),plateau.getVilles().get("Atlanta")));
                     break;
             }
     }
@@ -115,7 +105,7 @@ public class Facade {
                 case "DEPLACEMENT":
                     System.out.println("Hello vous avez 4 deplacement possible");
                     String choixDeplacement = sc.nextLine();
-                    System.out.println("Quel ville?");
+                    System.out.println("Quelle ville ?");
 //                            TODO : bcp trop de verif à faire
                     String choixVille = sc.nextLine();
                     switch (choixDeplacement){

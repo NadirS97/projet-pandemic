@@ -14,7 +14,7 @@ import java.util.Map;
 public class Ville {
 
     private String nomVille;
-    private List<String> villesVoisinesVille;
+    private List<Ville> villesVoisinesVille;
     private Map<Virus,Integer> nbCubeVirusVille;
     private int nbPopulationTotaleVille;
     private int nbPopulationKmCarreeVille;
@@ -30,7 +30,7 @@ public class Ville {
         this.nbCubeVirusVille.put(virus, 0);
     }
 
-    public void setVillesVoisines(List<String> villesVoisines) {
+    public void setVillesVoisines(List<Ville> villesVoisines) {
         this.villesVoisinesVille = villesVoisines;
     }
 
