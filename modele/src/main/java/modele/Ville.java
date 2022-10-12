@@ -2,8 +2,6 @@ package modele;
 
 
 import lombok.*;
-//import modele.enums.Virus;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,14 +13,14 @@ import java.util.Map;
 public class Ville {
 
     private String nomVille;
-    private List<Ville> villesVoisinesVille;
+    private List<String> villesVoisinesVille;
     private Map<Virus,Integer> nbCubeVirusVille;
     private int nbPopulationTotaleVille;
     private int nbPopulationKmCarreeVille;
     private boolean stationDeRechercheVille = false;
     private boolean eclosionVille = false;
 
-//
+
     public Ville(String nomVille, int nbPopulationTotaleVille, int nbPopulationKmCarreeVille,Virus virus){
         this.villesVoisinesVille = new ArrayList<>();
         this.nbCubeVirusVille = new HashMap<>();
@@ -32,7 +30,7 @@ public class Ville {
         this.nbCubeVirusVille.put(virus, 0);
     }
 
-    public void setVillesVoisines(List<Ville> villesVoisines) {
+    public void setVillesVoisines(List<String> villesVoisines) {
         this.villesVoisinesVille = villesVoisines;
     }
 
@@ -42,9 +40,9 @@ public class Ville {
     }
 
     public String retourneVirusNbCubeVirusVille(){
-        String s = "[";
+        StringBuilder s = new StringBuilder("[");
         for(Map.Entry<Virus, Integer> donneesCubesVirusVille : nbCubeVirusVille.entrySet()){
-            s = s + "("+(donneesCubesVirusVille.getKey().getVirusCouleur() + ", " + donneesCubesVirusVille.getValue())+")";
+            s.append("(").append(donneesCubesVirusVille.getKey().getVirusCouleur()).append(", ").append(donneesCubesVirusVille.getValue()).append(")");
         }
         return s + "]";
     }

@@ -3,8 +3,6 @@ package modele;
 import lombok.Getter;
 import modele.cartes.CarteJoueur;
 import modele.cartes.CartePropagation;
-//import modele.enums.Virus;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +33,10 @@ public class Plateau {
 
     Ville getVilleByName(String name){
         return villes.get(name);
+    }
+
+    public Boolean isVille(String nomVille){
+        return villes.containsKey(nomVille);
     }
 
 }
