@@ -14,6 +14,7 @@ import modele.enums.DonneesVille;
 
 import java.util.List;
 import java.util.Scanner;
+import static modele.enums.DonneesVille.*;
 
 public class Facade {
 
@@ -22,6 +23,7 @@ public class Facade {
     private final int NBVILLESJAUNES = 12;
     private final int NBVILLESNOIRES = 12;
     private final int NBVILLESROUGES = 12;
+
 
     public void initialisation() throws CasCouleurVilleIncorrectException {
         plateau = new Plateau();
@@ -333,121 +335,150 @@ public class Facade {
                     ));
                     break;
                 case "Moscou":
-                    plateau.getVilles().get("Moscou").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Saint_Petersbourg"),
-                            plateau.getVilles().get("Istanbul"),
-                            plateau.getVilles().get("Teheran")
-                    ));
-                    break;
+                    if (plateau.isVille(Saint_Petersbourg.name())
+                            && plateau.isVille(Istanbul.name())
+                            && plateau.isVille(Teheran.name()))
+                    {
+                        plateau.getVilles().get(Tokyo.name()).setVillesVoisines(List.of(Saint_Petersbourg.name(), Istanbul.name(), Teheran.name()));
+                    }break;
+
                 case "Mumbai":
-                    plateau.getVilles().get("Mumbai").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Karachi"),
-                            plateau.getVilles().get("Delhi"),
-                            plateau.getVilles().get("Chennai")
-                    ));
-                    break;
+                    if (plateau.isVille(Karachi.name())
+                            && plateau.isVille(Delhi.name())
+                            && plateau.isVille(Chennai.name()))
+                    {
+                        plateau.getVilles().get(Mumbai.name()).setVillesVoisines(List.of(Karachi.name(), Delhi.name(), Chennai.name()));
+                    }break;
+
                 case "Riyad":
-                    plateau.getVilles().get("Riyad").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Le_Caire"),
-                            plateau.getVilles().get("Bagdad"),
-                            plateau.getVilles().get("Karachi")
-                    ));
-                    break;
+
+                    if (plateau.isVille(Le_Caire.name())
+                            && plateau.isVille(Bagdad.name())
+                            && plateau.isVille(Karachi.name()))
+                    {
+                        plateau.getVilles().get(Riyad.name()).setVillesVoisines(List.of(Le_Caire.name(), Bagdad.name(), Karachi.name()));
+                    }break;
+
                 case "Teheran":
-                    plateau.getVilles().get("Teheran").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Moscou"),
-                            plateau.getVilles().get("Bagdad"),
-                            plateau.getVilles().get("Karachi"),
-                            plateau.getVilles().get("Delhi")
-                    ));
-                    break;
+
+                    if (plateau.isVille(Moscou.name())
+                            && plateau.isVille(Bagdad.name())
+                            && plateau.isVille(Karachi.name())
+                            && plateau.isVille(Delhi.name()))
+                    {
+                        plateau.getVilles().get(Teheran.name()).setVillesVoisines(List.of(Moscou.name(), Bagdad.name(), Karachi.name(), Delhi.name()));
+                    }break;
                 case "Bangkok":
-                    plateau.getVilles().get("Bangkok").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Calcutta"),
-                            plateau.getVilles().get("Chennai"),
-                            plateau.getVilles().get("Jakarta"),
-                            plateau.getVilles().get("Ho_chi_minh_ville"),
-                            plateau.getVilles().get("Hong_kong")
-                    ));
-                    break;
+
+                    if (plateau.isVille(Calcutta.name())
+                            && plateau.isVille(Chennai.name())
+                            && plateau.isVille(Jakarta.name())
+                            && plateau.isVille(Ho_chi_minh_ville.name())
+                            && plateau.isVille(Hong_kong.name()))
+                    {
+                        plateau.getVilles().get(Bangkok.name()).setVillesVoisines(List.of(Calcutta.name(), Chennai.name(), Jakarta.name(), Ho_chi_minh_ville.name(), Hong_kong.name()));
+                    }break;
+
                 case "Ho_chi_minh_ville":
-                    plateau.getVilles().get("Ho_chi_minh_ville").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Hong_kong"),
-                            plateau.getVilles().get("Manille"),
-                            plateau.getVilles().get("Bangkok"),
-                            plateau.getVilles().get("Jakarta")
-                    ));
-                    break;
+                    if (plateau.isVille(Hong_kong.name())
+                            && plateau.isVille(Manille.name())
+                            && plateau.isVille(Bangkok.name())
+                            && plateau.isVille(Jakarta.name()))
+                    {
+                        plateau.getVilles().get(Ho_chi_minh_ville.name()).setVillesVoisines(List.of(Hong_kong.name(), Manille.name(), Bangkok.name(), Jakarta.name()));
+                    }break;
+
+
                 case "Jakarta":
-                    plateau.getVilles().get("Jakarta").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Chennai"),
-                            plateau.getVilles().get("Bangkok"),
-                            plateau.getVilles().get("Ho_chi_minh_ville"),
-                            plateau.getVilles().get("Sydney")
-                    ));
-                    break;
+                    if (plateau.isVille(Chennai.name())
+                            && plateau.isVille(Bangkok.name())
+                            && plateau.isVille(Ho_chi_minh_ville.name())
+                            && plateau.isVille(Sydney.name()))
+                    {
+                        plateau.getVilles().get(Jakarta.name()).setVillesVoisines(List.of(Chennai.name(), Bangkok.name(), Ho_chi_minh_ville.name(), Sydney.name()));
+                    }break;
+
                 case "Manille":
-                    plateau.getVilles().get("Manille").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Taipei"),
-                            plateau.getVilles().get("Hong_kong"),
-                            plateau.getVilles().get("Ho_chi_minh_ville"),
-                            plateau.getVilles().get("Sydney"),
-                            plateau.getVilles().get("San_Francisco")
-                    ));
-                    break;
+                    if (plateau.isVille(Taipei.name())
+                            && plateau.isVille(Hong_kong.name())
+                            && plateau.isVille(Ho_chi_minh_ville.name())
+                            && plateau.isVille(Sydney.name())
+                            && plateau.isVille(San_Francisco.name()))
+                    {
+                        plateau.getVilles().get(Manille.name()).setVillesVoisines(List.of(Taipei.name(), Hong_kong.name(), Ho_chi_minh_ville.name(), Sydney.name(),San_Francisco.name()));
+                    }break;
+
                 case "Osaka":
-                    plateau.getVilles().get("Osaka").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Taipei"),
-                            plateau.getVilles().get("Tokyo")
-                    ));
-                    break;
+                    if (plateau.isVille(Taipei.name())
+                            && plateau.isVille(Tokyo.name()))
+                    {
+                        plateau.getVilles().get(Osaka.name()).setVillesVoisines(List.of(Taipei.name(), Tokyo.name()));
+                    }break;
+
                 case "Pekin":
-                    plateau.getVilles().get("Pekin").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Seoul"),
-                            plateau.getVilles().get("Shangai")
-                    ));
-                    break;
+                    if (plateau.isVille(Seoul.name())
+                            && plateau.isVille(Shangai.name()))
+
+                    {
+                        plateau.getVilles().get(Pekin.name()).setVillesVoisines(List.of(Seoul.name(), Shangai.name()));
+                    }break;
+
                 case "Seoul":
-                    plateau.getVilles().get("Seoul").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Shangai"),
-                            plateau.getVilles().get("Tokyo"),
-                            plateau.getVilles().get("Pekin")
-                    ));
-                    break;
+
+                    if (plateau.isVille(Shangai.name())
+                            && plateau.isVille(Tokyo.name())
+                            && plateau.isVille(Pekin.name()))
+
+                    {
+                        plateau.getVilles().get(Seoul.name()).setVillesVoisines(List.of(Shangai.name(), Tokyo.name(), Pekin.name()));
+                    }break;
+
+
                 case "Shangai":
-                    plateau.getVilles().get("Shangai").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Pekin"),
-                            plateau.getVilles().get("Seoul"),
-                            plateau.getVilles().get("Tokyo"),
-                            plateau.getVilles().get("Taipei"),
-                            plateau.getVilles().get("Hong_kong")
-                    ));
-                    break;
+
+                    if (plateau.isVille(Pekin.name())
+                            && plateau.isVille(Seoul.name())
+                            && plateau.isVille(Tokyo.name())
+                            && plateau.isVille(Taipei.name())
+                            && plateau.isVille(Hong_kong.name()))
+                    {
+                        plateau.getVilles().get(Shangai.name()).setVillesVoisines(List.of(Pekin.name(), Seoul.name(), Tokyo.name(), Taipei.name(), Hong_kong.name()));
+                    }break;
+
+
                 case "Sydney":
-                    plateau.getVilles().get("Sydney").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Jakarta"),
-                            plateau.getVilles().get("Manille"),
-                            plateau.getVilles().get("Los_Angeles")
-                    ));
-                    break;
+
+                    if (plateau.isVille(Sydney.name())
+                            && plateau.isVille(Jakarta.name())
+                            && plateau.isVille(Manille.name())
+                            && plateau.isVille(Los_Angeles.name()))
+                    {
+                        plateau.getVilles().get(Sydney.name()).setVillesVoisines(List.of(Sydney.name(), Jakarta.name(), Manille.name(), Los_Angeles.name()));
+                    }break;
+
+
                 case "Taipei":
-                    plateau.getVilles().get("Taipei").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Osaka"),
-                            plateau.getVilles().get("Manille"),
-                            plateau.getVilles().get("Shangai"),
-                            plateau.getVilles().get("Hong_kong")
-                    ));
-                    break;
+                    if (plateau.isVille(Osaka.name())
+                            && plateau.isVille(Manille.name())
+                            && plateau.isVille(Shangai.name())
+                            && plateau.isVille(Hong_kong.name()))
+                    {
+                        plateau.getVilles().get(Taipei.name()).setVillesVoisines(List.of(Osaka.name(), Manille.name(), Shangai.name(), Hong_kong.name()));
+                    }break;
+
                 case "Tokyo":
-                    plateau.getVilles().get("Tokyo").setVillesVoisines(List.of(
-                            plateau.getVilles().get("Osaka"),
-                            plateau.getVilles().get("Seoul"),
-                            plateau.getVilles().get("Shangai"),
-                            plateau.getVilles().get("San_Francisco")
-                    ));
-                    break;
+                    if (plateau.isVille(Osaka.name())
+                        && plateau.isVille(Seoul.name())
+                        && plateau.isVille(Shangai.name())
+                        && plateau.isVille(San_Francisco.name()))
+                {
+                    plateau.getVilles().get(Tokyo.name()).setVillesVoisines(List.of(Osaka.name(), Seoul.name(), Shangai.name(), San_Francisco.name()));
+                }break;
+                }
+
             }
-    }
+
+
 
     public void displaybullshit(){
         for (Ville ville : plateau.getVilles().values()){
