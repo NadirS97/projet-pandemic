@@ -7,6 +7,16 @@ import modele.Ville;
 public class CarteVille extends CarteJoueur {
 
     private Ville villeCarteVille;
+
+    @Override
+    String getNomCarte() {
+        return nomCarte;
+    }
+    public String getNom(){
+        return "mdr";
+    }
+
+
     // Pour recuperer :
     // nomVille,
     // listeVirusVille (qui ne contiendra qu'un seul virus au départ, le virus qui de base est rattaché à la ville),

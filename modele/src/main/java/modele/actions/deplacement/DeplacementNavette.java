@@ -6,7 +6,7 @@ public class DeplacementNavette implements Deplacement{
 
 
     @Override
-    public void seDeplacer(Ville ville1, Ville ville2) {
-
+    public void seDeplacer(Ville villeOrigine, Ville villeDestination) {
+        System.out.println("NAVETTE FROM" + villeOrigine.getNomVille() +" to " + villeDestination.getNomVille() );
     }
 }
