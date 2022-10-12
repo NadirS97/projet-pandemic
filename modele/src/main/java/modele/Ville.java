@@ -4,6 +4,7 @@ package modele;
 import lombok.*;
 //import modele.enums.Virus;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class Ville {
 
 //
     public Ville(String nomVille, int nbPopulationTotaleVille, int nbPopulationKmCarreeVille,Virus virus){
+        this.villesVoisinesVille = new ArrayList<>();
         this.nbCubeVirusVille = new HashMap<>();
         this.nomVille = nomVille;
         this.nbPopulationTotaleVille = nbPopulationTotaleVille;
