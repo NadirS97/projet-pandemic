@@ -6,18 +6,18 @@ public enum DonneesVille {
      * Villes Bleu
      */
 
-    Atlanta(47500,700),
-    Chicago(400,41),
-    Essen(100,24),
-//    Londres,
-//    Madrid,
-//    Milan,
-//    Montréal,
-//    Paris,
-//    Saint_Pétersbourg,
-//    San_Francisco,
-//    New_York,
-//    Washington;
+    Atlanta(471500,700),
+    Chicago(9121000,1300),
+    Essen(575000,2800),
+    Londres(8586000,5300),
+    Madrid(5427000,5700),
+    Milan(5232000,2800),
+    Montreal(3429000,2200),
+    Paris(10755000,3800),
+    Saint_Petersbourg(4879000,4100),
+    San_Francisco(5864000,2100),
+    New_York(20464000,1800),
+    Washington(4679000,1400),
 
     /*
     * Villes Jaune:
@@ -55,13 +55,13 @@ public enum DonneesVille {
     * Villes Rouge:
     * */
     Bangkok(7151000,3200),
-    Hô_chi_minh_ville(834000,9900),
+    Ho_chi_minh_ville(834000,9900),
     Hong_kong(7106000,25900),
     Jakarta(26063000,9400),
     Manille(20767000,14400),
     Osaka(2871000,19000),
-    Pékin(17311000,5000),
-    Séoul(22547000,10400),
+    Pekin(17311000,5000),
+    Seoul(22547000,10400),
     Shangai(13482000,2200),
     Sydney(3785000,2100),
     Taipei(8338000,7300),
