@@ -10,6 +10,6 @@ public class Main {
        Facade facade = new Facade();
        facade.initialisation();
        facade.displaybullshit();
-       //facade.jouerTour(new Joueur());
+//       facade.jouerTour(new Joueur());
     }
 }

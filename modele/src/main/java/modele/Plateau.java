@@ -1,5 +1,6 @@
 package modele;
 
+import exceptions.VilleIntrouvableException;
 import lombok.Getter;
 import modele.cartes.CarteJoueur;
 import modele.cartes.CartePropagation;
@@ -35,7 +36,7 @@ public class Plateau {
         return villes.get(name);
     }
 
-    public Boolean isVille(String nomVille){
+    public Boolean isVille(String nomVille) throws VilleIntrouvableException {
         return villes.containsKey(nomVille);
     }
 
