@@ -1,6 +1,7 @@
 package modele.cartes;
 
 import lombok.Getter;
+import lombok.ToString;
 import modele.Ville;
 
 @Getter
@@ -14,10 +15,11 @@ public class CarteVille extends CarteJoueur {
     }
 
     @Override
-    String getNomCarte() {
-        return nomCarte;
+    public String toString() {
+        return "CarteVille{" +
+                "villeCarteVille=" + villeCarteVille.getNomVille() +
+                '}';
     }
-
 
 
     // Pour recuperer :
