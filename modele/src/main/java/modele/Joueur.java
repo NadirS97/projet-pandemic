@@ -1,5 +1,7 @@
 package modele;
 
+import exceptions.VilleIntrouvableException;
+import exceptions.VilleNonVoisineException;
 import modele.actions.deplacement.Deplacement;
 import modele.cartes.CarteEpidemie;
 import modele.cartes.CarteJoueur;
@@ -17,7 +19,7 @@ public class Joueur {
     private CouleursPion couleursPionJoueur; // Ca va être roleJoueur.getCouleurPionRole()
     private List<CarteJoueur> deck;
 
-    private Ville caseActuel;
+    private Ville villeActuelle;
     private Deplacement deplacement;
     private Plateau plateau;
 
@@ -25,16 +27,40 @@ public class Joueur {
 
     }
 
-    public void seDeplacer(String villeDestinationString){
-
+    public void seDeplacer(String modeDeplacement, String villeDestinationString) throws VilleIntrouvableException, VilleNonVoisineException {
 //        TODO: les verif de chaque deplacement , par ex si voiture check si la villedestination est bien à coté de la ville d'origine (modif ça dans la stratdeplacementVoiture)
-        Ville villeDestination = plateau.getVilleByName(villeDestinationString);
-      deplacement.seDeplacer(caseActuel,villeDestination);
-      caseActuel = villeDestination;
+
+        if(plateau.isVille(villeDestinationString)) {
+            Ville villeDestination = plateau.getVilleByName(villeDestinationString);
+            switch(modeDeplacement){
+                case "VOITURE":
+                    if(plateau.isVilleVoisine(villeActuelle,villeDestination)){
+                        deplacement.seDeplacer(villeActuelle, villeDestination);
+                        villeActuelle = villeDestination;
+                    }
+                    break;
+                case "NAVETTE":
+                    if(plateau.isVilleStationDeRecherche(villeDestination)){
+                        deplacement.seDeplacer(villeActuelle, villeDestination);
+                        villeActuelle = villeDestination;
+                    }
+                    break;
+                case "VOL_DIRECT":
+                    CarteJoueur carteVilleDestinationJoueur = new CarteVille(villeDestination);
+                    if(deck.contains(carteVilleDestinationJoueur)){
+                        deplacement.seDeplacer(villeActuelle, villeDestination);
+                        villeActuelle = villeDestination;
+                    }
+                    break;
+                case "VOL_CHARTER":
+
+                    break;
+            }
+        }
     }
     public void construireStation(){
 //        LE JOUEUR DEFAUSSE LA CARTE DE LA VILLE OU IL SE SITUE ET CONSTRUIT UNE STATION
-        plateau.getVilles().get(caseActuel.getNomVille()).setStationDeRechercheVille(true);
+        plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
 //        TODO : Il faut une classe deck surement, plutot que la liste
     }
 

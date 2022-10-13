@@ -2,6 +2,7 @@ package modele;
 
 import exceptions.CasCouleurVilleIncorrectException;
 import exceptions.VilleIntrouvableException;
+import exceptions.VilleNonVoisineException;
 import lombok.Getter;
 import modele.cartes.CarteEvenement;
 import modele.cartes.CarteJoueur;
@@ -50,11 +51,9 @@ public class Plateau{
         initialiserCartesJoueur();
     }
 
-    Ville getVilleByName(String name){
+    public Ville getVilleByName(String name) {
         return villes.get(name);
     }
-
-
 
     public void initialiserCartesJoueur(){
         for (Ville ville : this.getVilles().values()){
@@ -68,19 +67,22 @@ public class Plateau{
 
     }
 
-
-
     public List melangerPaquet(List paquet){
         Collections.shuffle(paquet);
         return paquet;
     }
 
-
     public Boolean isVille(String nomVille) throws VilleIntrouvableException {
         return villes.containsKey(nomVille);
     }
 
+    public Boolean isVilleVoisine(Ville villeActuelle, Ville villeDestination) throws VilleNonVoisineException {
+        return villeActuelle.getVillesVoisinesVille().contains(villeDestination);
+    }
 
+    public Boolean isVilleStationDeRecherche(Ville villeDestination){
+        return villeDestination.isStationDeRechercheVille();
+    }
 
     public void initialisationVirus(){
         for(Couleurs couleursVirus : Couleurs.values()){
@@ -138,8 +140,6 @@ public class Plateau{
             }
         }
     }
-
-
 
     public void attributionVoisins(String ville) throws VilleIntrouvableException {
         switch (ville){

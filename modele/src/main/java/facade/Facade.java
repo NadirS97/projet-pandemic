@@ -2,6 +2,7 @@ package facade;
 
 import exceptions.CasCouleurVilleIncorrectException;
 import exceptions.VilleIntrouvableException;
+import exceptions.VilleNonVoisineException;
 import modele.Joueur;
 import modele.actions.deplacement.DeplacementNavette;
 import modele.actions.deplacement.DeplacementVoiture;
@@ -12,6 +13,8 @@ import modele.Plateau;
 import modele.Ville;
 import modele.Virus;
 import modele.enums.DonneesVille;
+import modele.enums.ModesDeplacements;
+
 import static modele.enums.DonneesVille.*;
 
 import java.util.List;
@@ -31,7 +34,7 @@ public class Facade {
 
 
 
-    public void jouerTour(Joueur joueur){
+    public void jouerTour(Joueur joueur) throws VilleIntrouvableException, VilleNonVoisineException {
         joueur.setPlateau(plateau);
         Scanner sc = new Scanner(System.in);
         int nbAction = 0;
@@ -49,20 +52,23 @@ public class Facade {
                     switch (choixDeplacement){
                         case "VOITURE":
                             joueur.setDeplacement(new DeplacementVoiture());
-
-                            joueur.seDeplacer(choixVille);
+                            joueur.seDeplacer(ModesDeplacements.VOITURE.name(),choixVille);
+                            break;
                         case "NAVETTE":
                             joueur.setDeplacement(new DeplacementNavette());
-                            joueur.seDeplacer(choixVille);
-                        case "VOL CHARTER":
+                            joueur.seDeplacer(ModesDeplacements.NAVETTE.name(),choixVille);
+                            break;
+                        case "VOL_CHARTER":
                             joueur.setDeplacement(new DeplacementVolCharter());
-                            joueur.seDeplacer(choixVille);
-                        case "VOL DIRECT":
+                            joueur.seDeplacer(ModesDeplacements.VOL_CHARTER.name(),choixVille);
+                            break;
+                        case "VOL_DIRECT":
                             joueur.setDeplacement(new DeplacementVolDirect());
-                            joueur.seDeplacer(choixVille);
-
+                            joueur.seDeplacer(ModesDeplacements.VOL_DIRECT.name(),choixVille);
+                            break;
                     }
                 case "STATION":
+                    break;
 
             }
         }
