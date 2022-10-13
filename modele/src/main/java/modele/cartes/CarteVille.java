@@ -8,13 +8,16 @@ public class CarteVille extends CarteJoueur {
 
     private Ville villeCarteVille;
 
+
+    public CarteVille(Ville villeCarteVille) {
+        this.villeCarteVille = villeCarteVille;
+    }
+
     @Override
     String getNomCarte() {
         return nomCarte;
     }
-    public String getNom(){
-        return "mdr";
-    }
+
 
 
     // Pour recuperer :

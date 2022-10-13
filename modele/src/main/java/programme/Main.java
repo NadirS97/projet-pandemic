@@ -3,6 +3,14 @@ package programme;
 import exceptions.CasCouleurVilleIncorrectException;
 import facade.Facade;
 import modele.Joueur;
+import modele.cartes.CarteEpidemie;
+import modele.cartes.CarteEvenement;
+import modele.cartes.CarteJoueur;
+import modele.cartes.CarteVille;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Main {
 
@@ -10,6 +18,8 @@ public class Main {
        Facade facade = new Facade();
        facade.initialisation();
        facade.displaybullshit();
-//       facade.jouerTour(new Joueur());
+       facade.jouerTour(new Joueur());
+
+
     }
 }

@@ -2,12 +2,13 @@ package modele;
 
 import exceptions.VilleIntrouvableException;
 import lombok.Getter;
+import modele.cartes.CarteEvenement;
 import modele.cartes.CarteJoueur;
 import modele.cartes.CartePropagation;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import modele.cartes.CarteVille;
+import modele.enums.NomsEvenement;
+
+import java.util.*;
 
 @Getter
 public class Plateau {
@@ -35,6 +36,24 @@ public class Plateau {
     Ville getVilleByName(String name){
         return villes.get(name);
     }
+
+    public void initialiserCartesJoueur(){
+        for (Ville ville : this.getVilles().values()){
+            piocheCarteJoueur.add(new CarteVille(ville));
+        }
+        for (NomsEvenement nomsEvenement : NomsEvenement.values()){
+            piocheCarteJoueur.add(new CarteEvenement(nomsEvenement));
+        }
+        melangerPaquet(piocheCarteJoueur);
+        System.out.println(piocheCarteJoueur);
+
+    }
+
+    public List melangerPaquet(List paquet){
+        Collections.shuffle(paquet);
+        return paquet;
+    }
+
 
     public Boolean isVille(String nomVille) throws VilleIntrouvableException {
         return villes.containsKey(nomVille);

@@ -22,9 +22,7 @@ public class Joueur {
     private Plateau plateau;
 
     public Joueur() {
-        deck = new ArrayList<>();
-        deck.add(new CarteVille());
-        deck.add(new CarteEpidemie());
+
     }
 
     public void seDeplacer(String villeDestinationString){

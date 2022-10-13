@@ -30,6 +30,7 @@ public class Facade {
         plateau = new Plateau();
         initialisationVirus();
         initialisationVilles();
+        plateau.initialiserCartesJoueur();
     }
 
     public void initialisationVirus(){
@@ -481,6 +482,9 @@ public class Facade {
             System.out.println(ville);
         }
     }
+
+
+
 
     public void jouerTour(Joueur joueur){
         joueur.setPlateau(plateau);
