@@ -1,6 +1,7 @@
 package modele.elements;
 
 import modele.exceptions.CasCouleurVilleIncorrectException;
+import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.exceptions.VilleIntrouvableException;
 import modele.exceptions.VilleNonVoisineException;
 import lombok.Getter;
@@ -80,7 +81,7 @@ public class Plateau{
         return villeActuelle.getVillesVoisinesVille().contains(villeDestination);
     }
 
-    public Boolean isVilleStationDeRecherche(Ville villeDestination){
+    public Boolean isVilleStationDeRecherche(Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException {
         return villeDestination.isStationDeRechercheVille();
     }
 

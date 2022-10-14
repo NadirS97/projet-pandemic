@@ -1,8 +1,6 @@
 package modele.facade;
 
-import modele.exceptions.CasCouleurVilleIncorrectException;
-import modele.exceptions.VilleIntrouvableException;
-import modele.exceptions.VilleNonVoisineException;
+import modele.exceptions.*;
 import modele.elements.Joueur;
 import modele.elements.actions.deplacement.DeplacementNavette;
 import modele.elements.actions.deplacement.DeplacementVoiture;
@@ -26,7 +24,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
 
     @Override
-    public void jouerTour(Joueur joueur) throws VilleIntrouvableException, VilleNonVoisineException {
+    public void jouerTour(Joueur joueur) throws VilleIntrouvableException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException, VilleAvecAucuneStationDeRechercheException {
         joueur.setPlateau(plateau);
         Scanner sc = new Scanner(System.in);
         int nbAction = 0;
