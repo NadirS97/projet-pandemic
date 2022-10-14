@@ -16,22 +16,10 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws CasCouleurVilleIncorrectException, VilleInexistanteDansDeckJoueurException {
-//       FacadePandemic9Impl facadePandemic9Impl = new FacadePandemic9Impl();
-//       facadePandemic9Impl.initialisation();
+       FacadePandemic9Impl facadePandemic9Impl = new FacadePandemic9Impl();
+       facadePandemic9Impl.initialisation();
 //       facade.jouerTour(new Joueur());
 
-        Ville ville = new Ville();
-        Ville ville1 = new Ville();
-        Ville ville2 = new Ville();
-
-        List<CarteJoueur> villes = new ArrayList<>();
-        villes.add(new CarteVille(ville));
-//        villes.add(new CarteVille(ville1));
-        villes.add(new CarteVille(ville2));
-
-        Joueur joueur = new Joueur(villes);
-
-        System.out.println(joueur.defausse(ville));
 
     }
 }
