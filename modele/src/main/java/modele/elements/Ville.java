@@ -20,8 +20,10 @@ public class Ville {
     private boolean stationDeRechercheVille = false;
     private boolean eclosionVille = false;
 
+    public Ville() {
+    }
 
-    public Ville(String nomVille, int nbPopulationTotaleVille, int nbPopulationKmCarreeVille,Virus virus){
+    public Ville(String nomVille, int nbPopulationTotaleVille, int nbPopulationKmCarreeVille, Virus virus){
         this.villesVoisinesVille = new ArrayList<>();
         this.nbCubeVirusVille = new HashMap<>();
         this.nomVille = nomVille;
@@ -59,4 +61,6 @@ public class Ville {
                 ", eclosionVille=" + eclosionVille +
                 '}';
     }
+
+
 }

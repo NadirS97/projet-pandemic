@@ -1,5 +1,6 @@
 package modele.elements;
 
+import lombok.Getter;
 import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.exceptions.VilleIntrouvableException;
 import modele.exceptions.VilleNonVoisineException;
@@ -13,18 +14,20 @@ import modele.elements.enums.CouleursPion;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class Joueur {
 
     private String pseudoJoueur;
     private CarteRole roleJoueur;
     private CouleursPion couleursPionJoueur; // Ca va être roleJoueur.getCouleurPionRole()
     private List<CarteJoueur> deckJoueur;
+
     private Ville villeActuelle;
     private Deplacement deplacement;
     private Plateau plateau;
 
-    public Joueur() {
-
+    public Joueur(List<CarteJoueur> deckJoueur) {
+        this.deckJoueur = deckJoueur;
     }
 
     /**
@@ -42,6 +45,19 @@ public class Joueur {
         return listeVillesDeckJoueur.contains(ville);
     }
 
+    public CarteJoueur defausse(Ville ville){
+        for (CarteJoueur carteJoueur : deckJoueur){
+            if (carteJoueur instanceof CarteVille){
+                if (((CarteVille) carteJoueur).getVilleCarteVille().equals(ville)) {
+                    deckJoueur.remove(carteJoueur);
+                    return carteJoueur;
+                }
+            }
+        }
+        return null;
+    }
+
+
     public void seDeplacer(String modeDeplacement, String villeDestinationString) throws VilleIntrouvableException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException, VilleAvecAucuneStationDeRechercheException {
         if(plateau.isVille(villeDestinationString)) {
             Ville villeDestination = plateau.getVilleByName(villeDestinationString);
@@ -55,7 +71,7 @@ public class Joueur {
                     break;
                 case "NAVETTE":
                     // Déplacer le pion entre deux stations de recherche
-                    if(plateau.isVilleStationDeRecherche(villeDestination)){
+                    if(plateau.isVilleStationDeRecherche(villeDestination) && plateau.isVilleStationDeRecherche(villeActuelle)){
                         deplacement.seDeplacer(villeActuelle, villeDestination);
                         villeActuelle = villeDestination;
                     }
@@ -93,4 +109,6 @@ public class Joueur {
     public void setPlateau(Plateau plateau) {
         this.plateau = plateau;
     }
+
+
 }

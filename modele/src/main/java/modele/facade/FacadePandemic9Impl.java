@@ -51,6 +51,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
                         case "VOL_CHARTER":
                             joueur.setDeplacement(new DeplacementVolCharter());
                             joueur.seDeplacer(ModesDeplacements.VOL_CHARTER.name(),choixVille);
+                            plateau.getDefausseCarteJoueur().add(joueur.defausse(joueur.getVilleActuelle()));
                             break;
                         case "VOL_DIRECT":
                             joueur.setDeplacement(new DeplacementVolDirect());
