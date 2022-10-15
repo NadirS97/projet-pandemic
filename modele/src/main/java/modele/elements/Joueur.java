@@ -26,6 +26,9 @@ public class Joueur {
     private Deplacement deplacement;
     private Plateau plateau;
 
+    public Joueur(String pseudoJoueur){
+        this.pseudoJoueur = pseudoJoueur;
+    }
     public Joueur(List<CarteJoueur> deckJoueur) {
         this.deckJoueur = deckJoueur;
     }
