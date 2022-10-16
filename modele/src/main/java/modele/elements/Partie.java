@@ -15,6 +15,7 @@ public class Partie {
     private Map<String,Joueur> joueursPartie;
 
     private List<String> ordreTourDeJeuPseudoJoueur;
+    private int indexJoueur =0;
     private Plateau plateauPartie;
 
     public Partie(String pseudoJoueurPartie) throws CasCouleurVilleIncorrectException {
@@ -24,6 +25,14 @@ public class Partie {
         this.joueursPartie.put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie));
         this.ordreTourDeJeuPseudoJoueur = new ArrayList<>();
         this.ordreTourDeJeuPseudoJoueur.add(pseudoJoueurPartie);
+    }
+
+    public String aQuiLeTour(){
+        if (indexJoueur == 4)
+            indexJoueur = 0;
+        String joueur = ordreTourDeJeuPseudoJoueur.get(indexJoueur);
+        indexJoueur++;
+        return joueur;
     }
 
     public boolean isJoueurDejaDansPartie(String pseudoJoueurPartie){

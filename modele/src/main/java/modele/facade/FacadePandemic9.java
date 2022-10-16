@@ -3,6 +3,7 @@ package modele.facade;
 import modele.elements.Partie;
 import modele.elements.Plateau;
 import modele.elements.Ville;
+import modele.elements.enums.Actions;
 import modele.elements.enums.ModesDeplacements;
 import modele.exceptions.*;
 import modele.elements.Joueur;
@@ -23,7 +24,12 @@ public interface FacadePandemic9 {
             PseudoDejaExistantException;
 
 
-    void jouerUnTourDeplacement(String codePartie, String pseudoJoueurPartie, ModesDeplacements deplacement, Ville villeDestination) throws CodePartieInexistantException, PseudoInexistantDansLaPartieException, VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException;
+
+
+
+    void jouerTour(String codePartie, Actions action, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws CodePartieInexistantException, VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, PseudoInexistantDansLaPartieException, VilleInexistanteDansDeckJoueurException;
+
+    void jouerActionDeplacement(Joueur joueurPartie, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException;
 
     boolean estPartieTerminee(String joueur) throws CodePartieInexistantException;
 
