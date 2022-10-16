@@ -14,7 +14,7 @@ public class Partie {
     private Map<String,Joueur> joueursPartie;
 
     private List<String> ordreTourDeJeuPseudoJoueur;
-    private int indexJoueur =0;
+    private int indexJoueur = 0;
     private Plateau plateauPartie;
 
     public Partie(String pseudoJoueurPartie) throws CasCouleurVilleIncorrectException {

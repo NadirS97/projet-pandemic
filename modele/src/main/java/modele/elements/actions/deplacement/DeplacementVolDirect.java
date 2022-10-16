@@ -19,6 +19,7 @@ public class DeplacementVolDirect implements Deplacement {
         if(joueur.isVilleOfCarteVilleDeckJoueur(villeDestination)){
             joueur.setVilleActuelle(villeDestination);
         }
+        joueur.defausseCarteVilleDeDeckJoueur(villeDestination);
         return joueur.getVilleActuelle();
     }
 

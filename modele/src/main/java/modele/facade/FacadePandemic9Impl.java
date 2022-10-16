@@ -37,29 +37,48 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     }
 
     @Override
-    public void jouerTour(String codePartie, Actions action, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws CodePartieInexistantException, VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, PseudoInexistantDansLaPartieException, VilleInexistanteDansDeckJoueurException {
+    public void jouerTour(String codePartie, Actions action, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws CodePartieInexistantException, VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, PseudoInexistantDansLaPartieException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException, VilleActuellePossedeDejaUneStationDeRechercheException {
         Partie partie = this.parties.get(codePartie);
         String pseudoJoueurPartie = partie.aQuiLeTour();
         Joueur joueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
-        switch (action) {
-            case DEPLACEMENT:
-                jouerActionDeplacement(joueurPartie, modeDeplacementChoisis, villeDestination);
-                break;
-            case TRAITER_MALADIE:
-                break;
-            case DECOUVRIR_REMEDE:
-                break;
-            case PARTAGER_CONNAISSANCE:
-                break;
-            case CONSTRUIRE_UNE_STATION:
-                break;
+        int nbActions = 0;
+        while (nbActions < 4){
+            switch (action) {
+                case DEPLACEMENT:
+                    if (!Objects.isNull(modeDeplacementChoisis)){
+                        jouerActionDeplacement(joueurPartie, modeDeplacementChoisis, villeDestination);
+                        nbActions++;
+                    }
+                    break;
+                case TRAITER_MALADIE:
+
+                    nbActions++;
+                    break;
+                case DECOUVRIR_REMEDE:
+
+                    nbActions++;
+                    break;
+                case PARTAGER_CONNAISSANCE:
+
+                    nbActions++;
+                    break;
+                case CONSTRUIRE_UNE_STATION:
+                    if(partie.getPlateauPartie().getNbStationsDeRechercheConstruites() < 6) {
+                        joueurPartie.construireStation();
+                        joueurPartie.defausseCarteVilleDeDeckJoueur(joueurPartie.getVilleActuelle());
+                    }else{
+                        joueurPartie.deplacerStationDeRecherche(villeDestination);
+                    }
+                    nbActions++;
+                    break;
+            }
         }
-        partie.getJoueursPartie().put(joueurPartie.getPseudoJoueur(), joueurPartie);
-        parties.put(partie.getCodePartie(), partie);
+            partie.getJoueursPartie().put(joueurPartie.getPseudoJoueur(), joueurPartie);
+            parties.put(partie.getCodePartie(), partie);
     }
 
     @Override
-    public void jouerActionDeplacement(Joueur joueurPartie, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException {
+    public void jouerActionDeplacement(Joueur joueurPartie, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException {
         joueurPartie.choixDeplacement(modeDeplacementChoisis);
         joueurPartie.seDeplacer(villeDestination);
     }

@@ -4,10 +4,7 @@ import lombok.Getter;
 import modele.elements.actions.deplacement.*;
 import modele.elements.enums.Actions;
 import modele.elements.enums.ModesDeplacements;
-import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
-import modele.exceptions.VilleIntrouvableException;
-import modele.exceptions.VilleNonVoisineException;
-import modele.exceptions.VilleInexistanteDansDeckJoueurException;
+import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
@@ -48,7 +45,10 @@ public class Joueur {
                 listeVillesDeckJoueur.add(((CarteVille) carteJoueur).getVilleCarteVille());
             }
         }
-        return listeVillesDeckJoueur.contains(ville);
+        if(!listeVillesDeckJoueur.contains(ville)){
+            throw new VilleInexistanteDansDeckJoueurException();
+        }
+        return listeVillesDeckJoueur.contains(ville); //True
     }
 
     public CarteJoueur defausseCarteVilleDeDeckJoueur(Ville ville){
@@ -63,14 +63,19 @@ public class Joueur {
         return null;
     }
 
-    public Deplacement choixDeplacement(ModesDeplacements modesDeplacements){
+    public Deplacement choixDeplacement(ModesDeplacements modesDeplacements) throws ModeDeplacementInexistantException {
         switch (modesDeplacements) {
             case VOITURE -> deplacement = new DeplacementVoiture();
             case NAVETTE -> deplacement = new DeplacementNavette();
             case VOL_DIRECT -> deplacement = new DeplacementVolDirect();
             case VOL_CHARTER -> deplacement = new DeplacementVolCharter();
+            default -> throw new ModeDeplacementInexistantException();
         }
         return null;
+    }
+
+    public Ville seDeplacer(Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException {
+        return deplacement.seDeplacer(this,villeDestination);
     }
     public Ville seDeplacer(Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException {
         return deplacement.seDeplacer(this,villeDestination);
@@ -81,10 +86,21 @@ public class Joueur {
     }
 
 
-    public void construireStation() throws VilleInexistanteDansDeckJoueurException {
+    public void construireStation() throws VilleInexistanteDansDeckJoueurException, VilleAvecAucuneStationDeRechercheException {
 //        LE JOUEUR DEFAUSSE LA CARTE DE LA VILLE OU IL SE SITUE ET CONSTRUIT UNE STATION
-        if (isVilleOfCarteVilleDeckJoueur(villeActuelle)) {
+        if (isVilleOfCarteVilleDeckJoueur(villeActuelle) && !plateau.isVilleStationDeRecherche(villeActuelle)){
             plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
+        }
+    }
+
+    public void deplacerStationDeRecherche(Ville villeStationDeRecherche) throws VilleAvecAucuneStationDeRechercheException, VilleActuellePossedeDejaUneStationDeRechercheException {
+        if (!plateau.isVilleStationDeRecherche(villeActuelle) && plateau.isVilleStationDeRecherche(villeStationDeRecherche)) {
+            plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
+            plateau.getVilles().get(villeStationDeRecherche.getNomVille()).setStationDeRechercheVille(false);
+        }else{
+            if (plateau.isVilleStationDeRecherche(villeActuelle)){
+                throw new VilleActuellePossedeDejaUneStationDeRechercheException();
+            }
         }
     }
 

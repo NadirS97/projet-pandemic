@@ -19,6 +19,7 @@ public class DeplacementVolCharter implements Deplacement{
         if(joueur.isVilleOfCarteVilleDeckJoueur(joueur.getVilleActuelle())){
             joueur.setVilleActuelle(villeDestination);
         }
+        joueur.defausseCarteVilleDeDeckJoueur(joueur.getVilleActuelle());
         return joueur.getVilleActuelle();
     }
 }

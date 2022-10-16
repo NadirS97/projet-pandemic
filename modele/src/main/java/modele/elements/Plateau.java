@@ -29,9 +29,9 @@ public class Plateau{
     private List<CarteJoueur> defausseCarteJoueur;
     private List<CartePropagation> piocheCartePropagation;
     private List<CartePropagation> defausseCartePropagation;
+    private int nbStationsDeRechercheConstruites;
 
-
-//    Pour l'initialisation des villes
+    //    Pour l'initialisation des villes
     private final int NB_VILLES_BLEUES = 12;
     private final int NB_VILLES_JAUNES = 12;
     private final int NB_VILLES_NOIRES = 12;
@@ -42,6 +42,7 @@ public class Plateau{
         villes = new HashMap<>();
         marqueurVitessePropagation = 0;
         marqueurVitesseEclosion = 0;
+        nbStationsDeRechercheConstruites = 0;
         piocheCarteJoueur = new ArrayList<>();
         defausseCarteJoueur = new ArrayList<>();
         piocheCartePropagation = new ArrayList<>();
@@ -56,6 +57,15 @@ public class Plateau{
         return villes.get(name);
     }
 
+    public int getNbStationsDeRechercheConstruites(){
+        for(Ville ville : getVilles().values()){
+            if(ville.isStationDeRechercheVille()){
+                nbStationsDeRechercheConstruites++;
+            }
+        }
+        return nbStationsDeRechercheConstruites;
+    }
+
     public void initialiserCartesJoueur(){
         for (Ville ville : this.getVilles().values()){
             piocheCarteJoueur.add(new CarteVille(ville));
@@ -65,7 +75,6 @@ public class Plateau{
         }
         melangerPaquet(piocheCarteJoueur);
         System.out.println(piocheCarteJoueur);
-
     }
 
     public List melangerPaquet(List paquet){
