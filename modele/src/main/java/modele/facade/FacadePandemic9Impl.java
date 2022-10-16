@@ -4,17 +4,11 @@ import modele.elements.Partie;
 import modele.elements.Ville;
 import modele.exceptions.*;
 import modele.elements.Joueur;
-import modele.elements.actions.deplacement.DeplacementNavette;
-import modele.elements.actions.deplacement.DeplacementVoiture;
-import modele.elements.actions.deplacement.DeplacementVolCharter;
-import modele.elements.actions.deplacement.DeplacementVolDirect;
-import modele.elements.Plateau;
 import modele.elements.enums.ModesDeplacements;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Scanner;
 
 public class FacadePandemic9Impl implements FacadePandemic9 {
 
@@ -42,8 +36,14 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     }
 
     @Override
-    public void jouerUnTour(String codePartie, String pseudoJoueurPartie) throws CodePartieInexistantException, PseudoInexistantDansLaPartieException {
-        parties.get(codePartie).getJoueursPartie();
+    public void jouerUnTourDeplacement(String codePartie, String pseudoJoueurPartie, ModesDeplacements deplacement, Ville villeDestination) throws CodePartieInexistantException, PseudoInexistantDansLaPartieException, VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException {
+        Partie partie = this.parties.get(codePartie);
+        Joueur joueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
+
+        joueurPartie.choixDeplacement(deplacement);
+        joueurPartie.seDeplacer(villeDestination);
+        partie.getJoueursPartie().put(pseudoJoueurPartie,joueurPartie);
+        parties.put(codePartie,partie);
 
     }
 

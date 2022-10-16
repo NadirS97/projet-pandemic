@@ -13,6 +13,8 @@ public class Partie {
 
     private String codePartie;
     private Map<String,Joueur> joueursPartie;
+
+    private List<String> ordreTourDeJeuPseudoJoueur;
     private Plateau plateauPartie;
 
     public Partie(String pseudoJoueurPartie) throws CasCouleurVilleIncorrectException {

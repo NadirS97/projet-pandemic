@@ -2,6 +2,7 @@ package modele.elements;
 
 import lombok.Getter;
 import modele.elements.actions.deplacement.*;
+import modele.elements.enums.Actions;
 import modele.elements.enums.ModesDeplacements;
 import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.exceptions.VilleIntrouvableException;
@@ -27,10 +28,13 @@ public class Joueur {
     private Deplacement deplacement;
 
     private Plateau plateau;
+    private int nbActionsTour;
 
     public Joueur(String pseudoJoueur){
         this.pseudoJoueur = pseudoJoueur;
     }
+
+//    public Actions choixAction(Actions actions)
 
     /**
      * Fonction permettant de savoir si le joueur possède une carteVille dans sa main correspondant à la ville en paramètre
@@ -67,6 +71,9 @@ public class Joueur {
             case VOL_CHARTER -> deplacement = new DeplacementVolCharter();
         }
         return null;
+    }
+    public Ville seDeplacer(Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException {
+        return deplacement.seDeplacer(this,villeDestination);
     }
 
     public void setVilleActuelle(Ville villeActuelle) {
