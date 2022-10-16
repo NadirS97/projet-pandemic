@@ -1,11 +1,12 @@
 package modele.elements;
 
 import lombok.Getter;
+import modele.elements.actions.deplacement.*;
+import modele.elements.enums.ModesDeplacements;
 import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.exceptions.VilleIntrouvableException;
 import modele.exceptions.VilleNonVoisineException;
 import modele.exceptions.VilleInexistanteDansDeckJoueurException;
-import modele.elements.actions.deplacement.Deplacement;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
@@ -56,6 +57,16 @@ public class Joueur {
                     return carteJoueur;
                 }
             }
+        }
+        return null;
+    }
+
+    public Deplacement choixDeplacement(ModesDeplacements modesDeplacements){
+        switch (modesDeplacements) {
+            case VOITURE -> deplacement = new DeplacementVoiture();
+            case NAVETTE -> deplacement = new DeplacementNavette();
+            case VOL_DIRECT -> deplacement = new DeplacementVolDirect();
+            case VOL_CHARTER -> deplacement = new DeplacementVolCharter();
         }
         return null;
     }
