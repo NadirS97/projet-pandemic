@@ -17,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) throws CasCouleurVilleIncorrectException, VilleInexistanteDansDeckJoueurException {
        FacadePandemic9Impl facadePandemic9Impl = new FacadePandemic9Impl();
-       facadePandemic9Impl.initialisation();
+//       facadePandemic9Impl.initialisation();
 //       facade.jouerTour(new Joueur());
 
 
