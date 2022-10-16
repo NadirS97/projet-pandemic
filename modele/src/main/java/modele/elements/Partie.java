@@ -22,6 +22,8 @@ public class Partie {
         this.plateauPartie = new Plateau();
         this.joueursPartie = new HashMap<>();
         this.joueursPartie.put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie));
+        this.ordreTourDeJeuPseudoJoueur = new ArrayList<>();
+        this.ordreTourDeJeuPseudoJoueur.add(pseudoJoueurPartie);
     }
 
     public boolean isJoueurDejaDansPartie(String pseudoJoueurPartie){
