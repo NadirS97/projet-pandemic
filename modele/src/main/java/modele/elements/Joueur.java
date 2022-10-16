@@ -77,9 +77,6 @@ public class Joueur {
     public Ville seDeplacer(Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException {
         return deplacement.seDeplacer(this,villeDestination);
     }
-    public Ville seDeplacer(Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException {
-        return deplacement.seDeplacer(this,villeDestination);
-    }
 
     public void setVilleActuelle(Ville villeActuelle) {
         this.villeActuelle = villeActuelle;
