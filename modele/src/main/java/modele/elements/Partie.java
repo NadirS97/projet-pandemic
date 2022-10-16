@@ -13,24 +13,21 @@ public class Partie {
 
     private String codePartie;
     private Map<String,Joueur> joueursPartie;
-
     private Plateau plateauPartie;
 
     public Partie(String pseudoJoueurPartie) throws CasCouleurVilleIncorrectException {
         this.codePartie = UUID.randomUUID().toString();
         this.plateauPartie = new Plateau();
         this.joueursPartie = new HashMap<>();
-        this.joueursPartie.put(pseudoJoueurPartie,new Joueur(pseudoJoueurPartie));
-
+        this.joueursPartie.put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie));
     }
 
-    public boolean isJoueurDejaDansPartie(String pseudo){
+    public boolean isJoueurDejaDansPartie(String pseudoJoueurPartie){
         for (Joueur joueur : joueursPartie.values()){
-            if (joueur.getPseudoJoueur().equals(pseudo))
+            if (joueur.getPseudoJoueur().equals(pseudoJoueurPartie))
                 return true;
         }
         return false;
     }
-
 
 }

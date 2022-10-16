@@ -25,12 +25,12 @@ public class Joueur {
 
     private Ville villeActuelle;
     private Deplacement deplacement;
+
     private Plateau plateau;
 
     public Joueur(String pseudoJoueur){
         this.pseudoJoueur = pseudoJoueur;
     }
-
 
     /**
      * Fonction permettant de savoir si le joueur possède une carteVille dans sa main correspondant à la ville en paramètre

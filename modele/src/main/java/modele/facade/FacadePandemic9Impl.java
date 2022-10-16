@@ -26,8 +26,8 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     }
 
     @Override
-    public String creerPartie(String joueur) throws  CasCouleurVilleIncorrectException {
-        Partie partie = new Partie(joueur);
+    public String creerPartie(String pseudoJoueurPartie) throws  CasCouleurVilleIncorrectException {
+        Partie partie = new Partie(pseudoJoueurPartie);
         parties.put(partie.getCodePartie(),partie);
         return partie.getCodePartie();
     }
@@ -38,17 +38,18 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
             throw new CodePartieInexistantException();
         if (parties.get(codePartie).isJoueurDejaDansPartie(pseudoJoueurPartie))
             throw new PseudoDejaExistantException();
-        parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie,new Joueur(pseudoJoueurPartie));
+        parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie));
     }
 
     @Override
-    public void jouerUnTour(String codePartie, String joueur) throws CodePartieInexistantException, PseudoInexistantDansLaPartieException {
-//     parties.get(codePartie).getJoueursPartie()
+    public void jouerUnTour(String codePartie, String pseudoJoueurPartie) throws CodePartieInexistantException, PseudoInexistantDansLaPartieException {
+        parties.get(codePartie).getJoueursPartie();
+
     }
 
 
     @Override
-    public boolean estPartieTerminee(String joueur) throws CodePartieInexistantException {
+    public boolean estPartieTerminee(String pseudoJoueurPartie) throws CodePartieInexistantException {
         return false;
     }
 
