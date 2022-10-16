@@ -30,9 +30,7 @@ public class Joueur {
     public Joueur(String pseudoJoueur){
         this.pseudoJoueur = pseudoJoueur;
     }
-    public Joueur(List<CarteJoueur> deckJoueur) {
-        this.deckJoueur = deckJoueur;
-    }
+
 
     /**
      * Fonction permettant de savoir si le joueur possède une carteVille dans sa main correspondant à la ville en paramètre

@@ -5,27 +5,27 @@ import lombok.Getter;
 import modele.exceptions.CasCouleurVilleIncorrectException;
 import modele.facade.FacadePandemic9Impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+
 @Getter
 
 public class Partie {
 
     private String codePartie;
-    private List<Joueur> joueursPartie;
-    private Plateau plateau;
+    private Map<String,Joueur> joueursPartie;
 
-    public Partie(String joueur) throws CasCouleurVilleIncorrectException {
+    private Plateau plateauPartie;
+
+    public Partie(String pseudoJoueurPartie) throws CasCouleurVilleIncorrectException {
         this.codePartie = UUID.randomUUID().toString();
-        this.plateau = new Plateau();
-        this.joueursPartie = new ArrayList<>();
-        this.joueursPartie.add(new Joueur(joueur));
+        this.plateauPartie = new Plateau();
+        this.joueursPartie = new HashMap<>();
+        this.joueursPartie.put(pseudoJoueurPartie,new Joueur(pseudoJoueurPartie));
 
     }
 
     public boolean isJoueurDejaDansPartie(String pseudo){
-        for (Joueur joueur : joueursPartie){
+        for (Joueur joueur : joueursPartie.values()){
             if (joueur.getPseudoJoueur().equals(pseudo))
                 return true;
         }
