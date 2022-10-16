@@ -7,5 +7,7 @@ import modele.exceptions.VilleInexistanteDansDeckJoueurException;
 import modele.exceptions.VilleNonVoisineException;
 
 public interface Deplacement {
+
     Ville seDeplacer(Joueur joueur, Ville villeDestination) throws VilleNonVoisineException, VilleAvecAucuneStationDeRechercheException, VilleInexistanteDansDeckJoueurException;
+
 }
