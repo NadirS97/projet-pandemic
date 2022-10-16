@@ -13,19 +13,19 @@ import java.util.UUID;
 public class Partie {
 
     private String codePartie;
-    private List<Joueur> joueurs;
+    private List<Joueur> joueursPartie;
     private Plateau plateau;
 
     public Partie(String joueur) throws CasCouleurVilleIncorrectException {
         this.codePartie = UUID.randomUUID().toString();
         this.plateau = new Plateau();
-        this.joueurs = new ArrayList<>();
-        this.joueurs.add(new Joueur(joueur));
+        this.joueursPartie = new ArrayList<>();
+        this.joueursPartie.add(new Joueur(joueur));
 
     }
 
     public boolean isJoueurDejaDansPartie(String pseudo){
-        for (Joueur joueur : joueurs){
+        for (Joueur joueur : joueursPartie){
             if (joueur.getPseudoJoueur().equals(pseudo))
                 return true;
         }

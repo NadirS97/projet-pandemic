@@ -49,7 +49,7 @@ public class Joueur {
         return listeVillesDeckJoueur.contains(ville);
     }
 
-    public CarteJoueur defausse(Ville ville){
+    public CarteJoueur defausseCarteVilleDeDeckJoueur(Ville ville){
         for (CarteJoueur carteJoueur : deckJoueur){
             if (carteJoueur instanceof CarteVille){
                 if (((CarteVille) carteJoueur).getVilleCarteVille().equals(ville)) {
@@ -71,54 +71,16 @@ public class Joueur {
         return null;
     }
 
-
-
     public void setVilleActuelle(Ville villeActuelle) {
         this.villeActuelle = villeActuelle;
     }
 
-//    public void seDeplacer(String modeDeplacement, String villeDestinationString) throws VilleIntrouvableException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException, VilleAvecAucuneStationDeRechercheException {
-//        if(plateau.isVille(villeDestinationString)) {
-//            Ville villeDestination = plateau.getVilleByName(villeDestinationString);
-//            switch(modeDeplacement){
-//                case "VOITURE":
-//                    // Déplacer le pion entre deux villes reliées par une ligne
-//                    if(plateau.isVilleVoisine(villeActuelle,villeDestination)){
-//                        deplacement.seDeplacer(villeActuelle, villeDestination);
-//                        villeActuelle = villeDestination;
-//                    }
-//                    break;
-//                case "NAVETTE":
-//                    // Déplacer le pion entre deux stations de recherche
-//                    if(plateau.isVilleStationDeRecherche(villeDestination) && plateau.isVilleStationDeRecherche(villeActuelle)){
-//                        deplacement.seDeplacer(villeActuelle, villeDestination);
-//                        villeActuelle = villeDestination;
-//                    }
-//                    break;
-//                case "VOL_DIRECT":
-//                    // Défausser une carte ville pour déplacer le pion sur la ville de la carte défaussée
-//                    // Pour cela on vérifie que le Joueur possède dans sa main/son deck la carte Ville correspondant à la villeDestination
-//                    if(isVilleOfCarteVilleDeckJoueur(villeDestination)){
-//                        deplacement.seDeplacer(villeActuelle, villeDestination);
-//                        villeActuelle = villeDestination;
-//                    }
-//                    break;
-//                case "VOL_CHARTER":
-//                    // Défausser la carte ville correspondant à la ville où se trouve le pion pour atteindre n’importe quelle autre ville du plateau
-//                    // Pour cela on vérifie que le Joueur possède dans sa main/son deck la carteVille correspondante à la villeActuelle
-//                    if(isVilleOfCarteVilleDeckJoueur(villeActuelle)){
-//                        deplacement.seDeplacer(villeActuelle, villeDestination);
-//                        villeActuelle = villeDestination;
-//                    }
-//                    break;
-//            }
-//        }
-//    }
 
-    public void construireStation(){
+    public void construireStation() throws VilleInexistanteDansDeckJoueurException {
 //        LE JOUEUR DEFAUSSE LA CARTE DE LA VILLE OU IL SE SITUE ET CONSTRUIT UNE STATION
-        plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
-//        TODO : Il faut une classe deck surement, plutot que la liste
+        if (isVilleOfCarteVilleDeckJoueur(villeActuelle)) {
+            plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
+        }
     }
 
     public void setDeplacement(Deplacement deplacement) {
