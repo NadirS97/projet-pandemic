@@ -21,15 +21,15 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     }
 
     @Override
-    public String creerPartie(String pseudoJoueurPartie) throws  CasCouleurVilleIncorrectException {
+    public String creerPartie(String pseudoJoueurPartie) throws CasCouleurVilleIncorrectException {
         Partie partie = new Partie(pseudoJoueurPartie);
-        parties.put(partie.getCodePartie(),partie);
+        parties.put(partie.getCodePartie(), partie);
         return partie.getCodePartie();
     }
 
     @Override
-    public void rejoindrePartie(String codePartie, String pseudoJoueurPartie) throws PseudoDejaExistantException,CodePartieInexistantException, DonneManquanteException {
-        if(Objects.isNull(parties.get(codePartie)))
+    public void rejoindrePartie(String codePartie, String pseudoJoueurPartie) throws PseudoDejaExistantException, CodePartieInexistantException, DonneManquanteException {
+        if (Objects.isNull(parties.get(codePartie)))
             throw new CodePartieInexistantException();
         if (parties.get(codePartie).isJoueurDejaDansPartie(pseudoJoueurPartie))
             throw new PseudoDejaExistantException();
@@ -62,9 +62,6 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     public void jouerActionDeplacement(Joueur joueurPartie, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException {
         joueurPartie.choixDeplacement(modeDeplacementChoisis);
         joueurPartie.seDeplacer(villeDestination);
-        partie.getJoueursPartie().put(pseudoJoueurPartie,joueurPartie);
-        parties.put(codePartie,partie);
-
     }
 
 
