@@ -25,13 +25,11 @@ public class Joueur {
 
     private Ville villeActuelle;
     private Deplacement deplacement;
+
     private Plateau plateau;
 
     public Joueur(String pseudoJoueur){
         this.pseudoJoueur = pseudoJoueur;
-    }
-    public Joueur(List<CarteJoueur> deckJoueur) {
-        this.deckJoueur = deckJoueur;
     }
 
     /**
