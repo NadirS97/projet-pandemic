@@ -11,6 +11,7 @@
     <modules>
         <module>modele</module>
         <module>serveur</module>
+        <module>serveur</module>
     </modules>
 
     <properties>

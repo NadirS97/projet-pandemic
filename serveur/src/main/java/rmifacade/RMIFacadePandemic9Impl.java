@@ -5,6 +5,10 @@ import modele.facade.FacadePandemic9Impl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 public class RMIFacadePandemic9Impl extends UnicastRemoteObject implements RMIFacadePandemic9 {
     FacadePandemic9 facadePandemic9;
@@ -19,67 +23,95 @@ public class RMIFacadePandemic9Impl extends UnicastRemoteObject implements RMIFa
     }
 
     @Override
-    public String inscrireJoueur(String pseudo, String mdp) throws PseudoDejaExistantException, PseudoInvalideException, MdpInvalideException, RemoteException {
-        return this.facadePandemic9.inscrireJoueur(pseudo, mdp);
+    public void accederUnePartie(String idPartie, String pseudo) throws RemoteException, partieDejaTermineException, partieInexistantException, PartiePleinExecption {
+        this.facadePandemic9.accederUnePartie(idPartie,pseudo);
     }
 
     @Override
-    public String connexion(String pseudo, String mdp) throws PseudoInexistantException, MdpIncorrectException, DejaConnecteException, RemoteException {
-        return this.facadePandemic9.connexion(pseudo, mdp);
+    public void deplacementCarte(String idPartie, String pseudo, Carte carte, List<Carte> cartes, ModeDeplacement modeDeplacement) throws RemoteException, CarteInexistantException, CarteDejaException, PartieTermineException, PartieSuspenduException, RessourcesInsuffisantesException, CarteDejaPossederException {
+        this.facadePandemic9.deplacementCarte(idPartie, pseudo, carte, cartes, modeDeplacement);
     }
 
     @Override
-    public void deconnexion(String pseudo) throws PasConnecteException, RemoteException {
-        this.facadePandemic9.deconnexion(pseudo);
+    public Collection<Carte> getLesCartesSurPlateau(String idPartie, String pseudo) throws RemoteException {
+        return this.facadePandemic9.getLesCartesSurPlateau(idPartie, pseudo);
     }
 
     @Override
-    public String creerSalonPartie(String pseudo) throws PseudoDejaEnPartieException, RemoteException, PasConnecteException {
-        return this.facadePandemic9.creerSalonPartie(pseudo);
+    public Collection<Carte> getLesCartesPropagationDefausses(String idPartie) throws RemoteException {
+        return this.facadePandemic9.getLesCartesPropagationDefausses(idPartie);
     }
 
     @Override
-    public void sauvegarderPartie(String pseudo) throws PasCreateurException, PartiePasCommenceeException, PasConnecteException, RemoteException, PartieInexistanteException {
-        this.facadePandemic9.sauvegarderPartie(pseudo);
+    public void distribution(String idPartie) throws RemoteException {
+        this.facadePandemic9.distribution(idPartie);
     }
 
     @Override
-    public void rejoindreSalonPartie(String pseudo, String codePartie) throws PartieInexistanteException, PseudoDejaEnPartieException, PasConnecteException, RemoteException, AssezDeJoueursException {
-        this.facadePandemic9.rejoindreSalonPartie(pseudo, codePartie);
+    public Boolean partieCommence(String idPartie) throws RemoteException {
+        return this.facadePandemic9.partieCommence(idPartie);
     }
 
     @Override
-    public void partirSalonPartie(String pseudo) throws PseudoPartieInexistantException, RemoteException, PasConnecteException {
-        this.facadePandemic9.partirSalonPartie(pseudo);
+    public synchronized void notification(String idPartie) throws RemoteException {
+        this.facadePandemic9.notification(idPartie);
     }
 
     @Override
-    public Boolean partieCommencee(String pseudo) throws RemoteException, PasConnecteException, PasDansUnePartie {
-        return this.facadePandemic9.partieCommencee(pseudo);
+    public void inscription(String pseudo, String mdp) throws RemoteException{
+        this.facadePandemic9.inscription(pseudo,mdp);
     }
 
     @Override
-    public void notifierPret(String pseudo) throws RemoteException, PasConnecteException, PasDansUnePartie {
-        this.facadePandemic9.notifierPret(pseudo);
+    public boolean connexion(String pseudo, String mdp)throws RemoteException{
+        return this.facadePandemic9.connexion(pseudo,mdp);
     }
 
     @Override
-    public SalonDTO getParticipants(String pseudo) throws RemoteException, PasConnecteException, PasDansUnePartie {
-        return this.facadePandemic9.getParticipants(pseudo);
+    public void setNouvellePartie(String pseudo, String ticket) throws RemoteException, PartiePleinExecption {
+        this.facadePandemic9.setNouvellePartie(pseudo, ticket);
     }
 
     @Override
-    public String getCodePartie(String pseudo) throws RemoteException, PasConnecteException, PasDansUnePartie {
-        return this.facadePandemic9.getCodePartie(pseudo);
+    public boolean quitter(String idPartie, String pseudo)throws RemoteException {
+        return this.facadePandemic9.quitter(idPartie, pseudo);
     }
 
     @Override
-    public List<SaveDTO> getSaves(String pseudo) throws RemoteException, PasConnecteException, PasDansUnePartie {
-        return this.facadePandemic9.getSaves(pseudo);
+    public boolean peutQuitter(String idPartie) throws RemoteException{
+        return this.facadePandemic9.peutQuitter(idPartie);
     }
 
     @Override
-    public void sendIdSave(String pseudo, String id) throws PasConnecteException, RemoteException, PasDansUnePartie {
-        this.facadePandemic9.sendIdSave(pseudo, id);
+    public Collection<PartieDTO> getLesParties() throws  RemoteException{
+        Collection<PartieDTO> partieDTOCollection = new ArrayList<PartieDTO>();
+        for (Partie partie: this.facadePandemic9.getLesParties()){
+            PartieDTO partieDTO = new PartieDTO(partie.getId(), partie.getEtatPartie().toString(), partie.getDateCreation());
+            for (PartieJoueur partieJoueur : partie.getPartieJoueurs()){
+                partieDTO.ajouterNomJoueur(partieJoueur.getJoueur());
+            }
+            partieDTOCollection.add(partieDTO);
+        }
+        return partieDTOCollection;
+    }
+
+    @Override
+    public boolean joueurCreateurDeLaPartie(String idPartie, String pseudo) throws RemoteException {
+        return this.facadePandemic9.joueurCreateurDeLaPartie(idPartie,pseudo);
+    }
+
+    @Override
+    public String getPlateauDuJoueur(String idPartie, String pseudo) throws RemoteException {
+        return this.facadePandemic9.getPlateauDuJoueur(idPartie,pseudo);
+    }
+
+    @Override
+    public String getEtatPartie(String idPartie) throws RemoteException {
+        return this.facadePandemic9.getEtatPartie(idPartie);
+    }
+
+    @Override
+    public String getVainqueur(String idPartie) throws RemoteException {
+        return this.facadePandemic9.getVainqueur(idPartie);
     }
 }

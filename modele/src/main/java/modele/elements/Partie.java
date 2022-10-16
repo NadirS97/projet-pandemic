@@ -8,7 +8,6 @@ import modele.facade.FacadePandemic9Impl;
 import java.util.*;
 
 @Getter
-
 public class Partie {
 
     private String codePartie;
