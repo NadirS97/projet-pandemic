@@ -38,7 +38,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
             throw new CodePartieInexistantException();
         if (parties.get(codePartie).isJoueurDejaDansPartie(joueur))
             throw new PseudoDejaExistantException();
-        parties.get(codePartie).getJoueurs().add(new Joueur(joueur));
+        parties.get(codePartie).getJoueursPartie().add(new Joueur(joueur));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 //                            // Pour cela on vérifie que le Joueur possède dans sa main/son deck la carteVille correspondante à la villeActuelle
 //                            joueur.setDeplacement(new DeplacementVolCharter());
 //                            joueur.seDeplacer(ModesDeplacements.VOL_CHARTER.name(),choixVille);
-//                            plateau.getDefausseCarteJoueur().add(joueur.defausse(joueur.getVilleActuelle()));
+//                            plateau.getDefausseCarteJoueur().add(joueur.defausseCarteVilleDeDeckJoueur(joueur.getVilleActuelle()));
 //                            break;
 //                        case "VOL_DIRECT":
 //                            // Défausser une carte ville pour déplacer le pion sur la ville de la carte défaussée
@@ -102,7 +102,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 //                            joueur.setDeplacement(new DeplacementVolDirect());
 //                            joueur.seDeplacer(ModesDeplacements.VOL_DIRECT.name(),choixVille);
 //                            Ville villeDestination = plateau.getVilleByName(choixVille);
-//                            plateau.getDefausseCarteJoueur().add(joueur.defausse(villeDestination));
+//                            plateau.getDefausseCarteJoueur().add(joueur.defausseCarteVilleDeDeckJoueur(villeDestination));
 //                            break;
 //                    }
 //                case "STATION":

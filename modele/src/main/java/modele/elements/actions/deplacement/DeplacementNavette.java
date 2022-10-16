@@ -1,12 +1,15 @@
 package modele.elements.actions.deplacement;
 
+import modele.elements.Joueur;
 import modele.elements.Ville;
+import modele.exceptions.VilleInexistanteDansDeckJoueurException;
 
-public class DeplacementNavette implements Deplacement{
-
+public class DeplacementNavette implements Deplacement {
 
     @Override
-    public void seDeplacer(Ville villeOrigine, Ville villeDestination) {
-        System.out.println("NAVETTE FROM" + villeOrigine.getNomVille() +" to " + villeDestination.getNomVille() );
+    public Ville seDeplacer(Joueur joueur, Ville villeDestination) throws VilleInexistanteDansDeckJoueurException {
+        return null;
     }
 }
+
+

@@ -1,7 +1,9 @@
 package modele.elements.actions.deplacement;
 
+import modele.elements.Joueur;
 import modele.elements.Ville;
+import modele.exceptions.VilleInexistanteDansDeckJoueurException;
 
 public interface Deplacement {
-    void seDeplacer(Ville ville1, Ville ville2);
+    public Ville seDeplacer(Joueur joueur, Ville villeDestination) throws VilleInexistanteDansDeckJoueurException;
 }
