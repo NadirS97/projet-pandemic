@@ -8,10 +8,15 @@ import modele.elements.enums.NomsEvenement;
 @Getter
 public abstract class CarteEvenement extends CarteJoueur {
     private NomsEvenement nomEvenement;
-
-    public CarteEvenement(NomsEvenement nomEvenement) {
-        this.nomEvenement = nomEvenement;
-    }
+    private String description;
 
     public abstract void effet();
+
+    public NomsEvenement getNomEvennement() {
+        return nomEvenement;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

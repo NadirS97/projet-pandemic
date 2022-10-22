@@ -3,10 +3,10 @@ package modele.elements.cartes.evenements;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.enums.NomsEvenement;
 
-public class PontAerien extends CarteEvenement {
+public class ParUneNuitTranquille extends CarteEvenement {
 
-    private final NomsEvenement NOMEVENEMENT = NomsEvenement.PONT_AERIEN;
-    private final String DESCRIPTION = "Déplacez un pion quelconque sur la ville de votre choix. Vous devez avoir la permission du propriétaire du pion qui sera déplacé.";
+    private final NomsEvenement NOMEVENEMENT = NomsEvenement.PAR_UNE_NUIT_TRANQUILE;
+    private final String DESCRIPTION = "Ne faites pas la prochaine phase Propagation des maladies (ne dévoilez aucune carte Propagation).";
 
     @Override
     public NomsEvenement getNomEvennement() {

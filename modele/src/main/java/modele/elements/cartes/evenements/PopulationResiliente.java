@@ -3,10 +3,10 @@ package modele.elements.cartes.evenements;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.enums.NomsEvenement;
 
-public class PontAerien extends CarteEvenement {
+public class PopulationResiliente extends CarteEvenement {
 
-    private final NomsEvenement NOMEVENEMENT = NomsEvenement.PONT_AERIEN;
-    private final String DESCRIPTION = "Déplacez un pion quelconque sur la ville de votre choix. Vous devez avoir la permission du propriétaire du pion qui sera déplacé.";
+    private final NomsEvenement NOMEVENEMENT = NomsEvenement.POPULATION_RESILIENTE;
+    private final String DESCRIPTION = "Retirez du jeu 1 carte de votre choix de la défausse Propagation. (Vous pouvez jouer Population résiliente entre les étapes Infection et Intensification d'une carte Épidémie.)";
 
     @Override
     public NomsEvenement getNomEvennement() {
