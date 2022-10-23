@@ -20,6 +20,11 @@ public class PopulationResiliente extends CarteEvenement {
 
     @Override
     public void effet() {
-        //effet
+
+    }
+
+    @Override
+    public void effet(boolean autorisation) {
+
     }
 }

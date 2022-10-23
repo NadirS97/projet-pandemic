@@ -1,5 +1,6 @@
 package modele.elements;
 
+import modele.elements.cartes.evenements.*;
 import modele.exceptions.CasCouleurVilleIncorrectException;
 import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.exceptions.VilleIntrouvableException;
@@ -70,8 +71,14 @@ public class Plateau{
         for (Ville ville : this.getVilles().values()){
             piocheCarteJoueur.add(new CarteVille(ville));
         }
-        for (NomsEvenement nomsEvenement : NomsEvenement.values()){
-            piocheCarteJoueur.add(new CarteEvenement(nomsEvenement));
+        for (NomsEvenement nomEvenement : NomsEvenement.values()){
+            switch (nomEvenement) {
+                case PONT_AERIEN -> piocheCarteJoueur.add(new PontAerien());
+                case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new SubventionPublique());
+                case PREVISION -> piocheCarteJoueur.add(new Prevision());
+                case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new ParUneNuitTranquille());
+                case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new PopulationResiliente());
+            }
         }
         melangerPaquet(piocheCarteJoueur);
         System.out.println(piocheCarteJoueur);

@@ -20,6 +20,15 @@ public class PontAerien extends CarteEvenement {
 
     @Override
     public void effet() {
-        //effet
+
+    }
+
+    @Override
+    public void effet(boolean autorisation) {
+        if (autorisation) {
+
+        } else {
+
+        }
     }
 }

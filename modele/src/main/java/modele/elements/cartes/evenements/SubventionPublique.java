@@ -20,6 +20,11 @@ public class SubventionPublique extends CarteEvenement {
 
     @Override
     public void effet() {
-        //effet
+
+    }
+
+    @Override
+    public void effet(boolean autorisation) {
+
     }
 }
