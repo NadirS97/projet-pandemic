@@ -73,8 +73,8 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
                     break;
             }
         }
-            partie.getJoueursPartie().put(joueurPartie.getPseudoJoueur(), joueurPartie);
-            parties.put(partie.getCodePartie(), partie);
+        partie.getJoueursPartie().put(joueurPartie.getPseudoJoueur(), joueurPartie);
+        parties.put(partie.getCodePartie(), partie);
     }
 
     @Override

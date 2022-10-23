@@ -1,0 +1,59 @@
+{
+  "villes_bleues": [
+      {"nomVille":"Atlanta", "populationTotaleVille" : 471500, "populationKmCarreVille":700, "listeNomsVillesVoisines":  ["Chicaga", "Washington", "Miami"]},
+      {"nomVille":"Chicago", "populationTotaleVille" : 9121000, "populationKmCarreVille":1300, "listeNomsVillesVoisines":  ["Atlanta", "San_Francisco", "Los_Angeles", "Mexico", "Montreal"]},
+      {"nomVille":"Essen", "populationTotaleVille" : 575000, "populationKmCarreVille":2800, "listeNomsVillesVoisines":  ["Londres", "Paris", "Milan", "Saint_Petersbourg"]},
+      {"nomVille":"Londres", "populationTotaleVille" : 8586000, "populationKmCarreVille":5300, "listeNomsVillesVoisines":  ["New_York", "Madrid", "Paris", "Essen"]},
+      {"nomVille":"Madrid", "populationTotaleVille" : 5427000, "populationKmCarreVille":5700, "listeNomsVillesVoisines":  ["New_York", "Alger", "Paris", "Londres", "Sao_Paulo"]},
+      {"nomVille":"Milan", "populationTotaleVille" : 5232000, "populationKmCarreVille":2800, "listeNomsVillesVoisines":  ["Essen", "Paris", "Istanbul"]},
+      {"nomVille":"Montreal", "populationTotaleVille" : 3429000, "populationKmCarreVille":2200, "listeNomsVillesVoisines":  ["New_York", "Washington", "Chicago"]},
+      {"nomVille":"Paris", "populationTotaleVille" : 10755000, "populationKmCarreVille":3800, "listeNomsVillesVoisines":  ["Essen", "Alger", "Madrid", "Londres", "Milan"]},
+      {"nomVille":"Saint_Petersbourg", "populationTotaleVille" : 4879000, "populationKmCarreVille":4100, "listeNomsVillesVoisines":  ["Essen", "Istanbul", "Moscou"]},
+      {"nomVille":"San_Francisco", "populationTotaleVille" : 5864000, "populationKmCarreVille":2100, "listeNomsVillesVoisines":  ["Los_Angeles", "Chicago", "Tokyo", "Manille"]},
+      {"nomVille":"New_York", "populationTotaleVille" : 20464000, "populationKmCarreVille":1800, "listeNomsVillesVoisines":  ["Montreal", "Washington", "Madrid", "Londres"]},
+      {"nomVille":"Washington", "populationTotaleVille" : 4679000, "populationKmCarreVille":1400, "listeNomsVillesVoisines":  ["New_York", "Montreal", "Atlanta", "Miami"]}
+  ],
+  "villes_jaunes": [
+      {"nomVille":"Bogota", "populationTotaleVille" : 8702000, "populationKmCarreVille":21000, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Buenos_Aires", "populationTotaleVille" : 13639000, "populationKmCarreVille":5200, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Johannesburg", "populationTotaleVille" : 3888000, "populationKmCarreVille":2400,"listeNomsVillesVoisines":  []},
+      {"nomVille":"Khartoum", "populationTotaleVille" : 4897000, "populationKmCarreVille":4500, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Kinshasa", "populationTotaleVille" : 9046000, "populationKmCarreVille":15500,"listeNomsVillesVoisines":  []},
+      {"nomVille":"Lagos", "populationTotaleVille" : 1547000, "populationKmCarreVille":12700, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Lima", "populationTotaleVille" : 9121000, "populationKmCarreVille":14000, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Los_Angeles", "populationTotaleVille" : 14900000, "populationKmCarreVille":2400, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Mexico", "populationTotaleVille" : 19463000, "populationKmCarreVille":9500, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Miami", "populationTotaleVille" : 5582000, "populationKmCarreVille":1700, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Santiago", "populationTotaleVille" : 6015000, "populationKmCarreVille":6500, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Sao_Paulo", "populationTotaleVille" : 20186000, "populationKmCarreVille":6400,"listeNomsVillesVoisines":  []}
+  ],
+  "villes_noires": [
+      {"nomVille":"Alger", "populationTotaleVille" : 2946000, "populationKmCarreVille":6500, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Bagdad", "populationTotaleVille" : 6204000, "populationKmCarreVille":10400, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Calcutta", "populationTotaleVille" : 14374000, "populationKmCarreVille":1900,"listeNomsVillesVoisines":  []},
+      {"nomVille":"Chennai", "populationTotaleVille" : 8965000, "populationKmCarreVille":14600,"listeNomsVillesVoisines":  []},
+      {"nomVille":"Delhi", "populationTotaleVille" : 22242000, "populationKmCarreVille":1500, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Istanbul", "populationTotaleVille" : 13576000, "populationKmCarreVille":9700, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Karachi", "populationTotaleVille" : 2071000, "populationKmCarreVille":25800, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Le_Caire", "populationTotaleVille" : 14718000, "populationKmCarreVille":8900, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Moscou", "populationTotaleVille" : 15512000, "populationKmCarreVille":3500, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Mumbai", "populationTotaleVille" : 1690000, "populationKmCarreVille":30900, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Riyad", "populationTotaleVille" : 5037000, "populationKmCarreVille":3400, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Teheran", "populationTotaleVille" : 7419000, "populationKmCarreVille":9500, "listeNomsVillesVoisines":  []}
+  ],
+  "villes_rouges": [
+      {"nomVille":"Bangkok", "populationTotaleVille" : 7151000, "populationKmCarreVille":3200, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Ho_chi_minh_ville", "populationTotaleVille" : 834000, "populationKmCarreVille":9900, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Hong_kong", "populationTotaleVille" : 7106000, "populationKmCarreVille":25900, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Jakarta", "populationTotaleVille" : 26063000, "populationKmCarreVille":9400,"listeNomsVillesVoisines":  []},
+      {"nomVille":"Manille", "populationTotaleVille" : 20767000, "populationKmCarreVille":14400,"listeNomsVillesVoisines":  []},
+      {"nomVille":"Osaka", "populationTotaleVille" : 2871000, "populationKmCarreVille":19000, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Pekin", "populationTotaleVille" : 17311000, "populationKmCarreVille":5000, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Seoul", "populationTotaleVille" : 22547000, "populationKmCarreVille":10400, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Shangai", "populationTotaleVille" : 13482000, "populationKmCarreVille":2200, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Sydney", "populationTotaleVille" : 3785000, "populationKmCarreVille":2100, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Taipei", "populationTotaleVille" : 8338000, "populationKmCarreVille":7300, "listeNomsVillesVoisines":  []},
+      {"nomVille":"Tokyo", "populationTotaleVille" : 13189000, "populationKmCarreVille":6030,"listeNomsVillesVoisines":  []}
+  ]
+}
+
