@@ -36,7 +36,6 @@ public class Ville {
         this.villesVoisinesVille = villesVoisines;
     }
 
-
     public void setStationDeRechercheVille(boolean stationDeRechercheVille) {
         this.stationDeRechercheVille = stationDeRechercheVille;
     }
@@ -61,6 +60,4 @@ public class Ville {
                 ", eclosionVille=" + eclosionVille +
                 '}';
     }
-
-
 }

@@ -2,18 +2,13 @@ package modele.elements;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import modele.dto.DonneesVillesDTO;
+import modele.dto.DonneesPlateauDTO;
 import modele.elements.cartes.evenements.*;
-import modele.exceptions.CasCouleurVilleIncorrectException;
-import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
-import modele.exceptions.VilleIntrouvableException;
-import modele.exceptions.VilleNonVoisineException;
+import modele.exceptions.*;
 import lombok.Getter;
-import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
-import modele.elements.enums.Couleurs;
 
 import modele.elements.enums.NomsEvenement;
 
@@ -27,7 +22,7 @@ import java.util.stream.Collectors;
 @Getter
 public class Plateau{
 
-    private List<Virus> listeVirus;
+    private Map<String,Virus> lesVirus;
     private Map<String,Ville> villes;
     private int marqueurVitessePropagation;   // entre 1et 3 = vitesse2 , 4,5 = vitesse3 , 6,7 vitesse 4 , pas vraiment besoin d'un tableau ?
     private int marqueurVitesseEclosion;
@@ -38,7 +33,7 @@ public class Plateau{
     private int nbStationsDeRechercheConstruites;
 
     public Plateau() {
-        listeVirus = new ArrayList<>();
+        lesVirus = new HashMap<>();
         villes = new HashMap<>();
         marqueurVitessePropagation = 0;
         marqueurVitesseEclosion = 0;
@@ -48,14 +43,13 @@ public class Plateau{
         piocheCartePropagation = new ArrayList<>();
         defausseCartePropagation = new ArrayList<>();
     }
-    public void initialisationPlateau() throws FileNotFoundException, CasCouleurVilleIncorrectException, VilleIntrouvableException {
-        initialisationVirus();
-        initialisationVilles();
-        initialiserCartesJoueur();
-    }
 
     public Ville getVilleByName(String name) {
         return villes.get(name);
+    }
+
+    public Virus getVirusVilleByCouleurVirus(String couleurVirus){
+        return getLesVirus().get(couleurVirus);
     }
 
     public int getNbStationsDeRechercheConstruites(){
@@ -65,6 +59,12 @@ public class Plateau{
             }
         }
         return nbStationsDeRechercheConstruites;
+    }
+
+    public void initialisationPlateau() throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException {
+        initialisationVirus();
+        initialisationVilles();
+        initialiserCartesJoueur();
     }
 
     public void initialiserCartesJoueur(){
@@ -84,122 +84,83 @@ public class Plateau{
         System.out.println(piocheCarteJoueur);
     }
 
-    public List melangerPaquet(List paquet){
+    public void melangerPaquet(List paquet){
         Collections.shuffle(paquet);
-        return paquet;
     }
 
-    public Boolean isVille(String nomVille) throws VilleIntrouvableException {
+    public Boolean isVille(String nomVille){
         return villes.containsKey(nomVille);
     }
 
-    public Boolean isVilleVoisine(Ville villeActuelle, Ville villeDestination) throws VilleNonVoisineException {
-        return villeActuelle.getVillesVoisinesVille().contains(villeDestination);
+    public Boolean isVilleVoisine(Ville villeActuelle, Ville villeDestination){
+        return villeActuelle.getVillesVoisinesVille().contains(villeDestination.getNomVille());
     }
 
-    public Boolean isVilleStationDeRecherche(Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException {
+    public Boolean isVilleStationDeRecherche(Ville villeDestination){
         return villeDestination.isStationDeRechercheVille();
     }
 
-    public void initialisationVirus(){
-        for(Couleurs couleursVirus : Couleurs.values()){
-            Virus virus = new Virus(couleursVirus);
-            getListeVirus().add(virus);
-        }
-    }
-
-    public DonneesVillesDTO lectureDonneesVilles() throws FileNotFoundException {
+    public DonneesPlateauDTO lectureDonneesVilles() throws FileNotFoundException {
         FileReader reader = new FileReader("modele/src/main/resources/DonneesVilles.json");
         BufferedReader br = new BufferedReader(reader);
         String donnees = br.lines().collect(Collectors.joining());
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        return gson.fromJson(donnees, DonneesVillesDTO.class);
+        return gson.fromJson(donnees, DonneesPlateauDTO.class);
     }
 
-    public void initialisationVilles() throws CasCouleurVilleIncorrectException, FileNotFoundException, VilleIntrouvableException {
-        DonneesVillesDTO donneesVillesDTO = lectureDonneesVilles();
-        for(Virus virus : getListeVirus()){
-            switch(virus.getVirusCouleur()){
-                case BLEU:
-                    donneesVillesDTO.getVilles_bleues().forEach(villesDTO ->{
-                        Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), virus);
-                        getVilles().put(villesDTO.getNomVille(), ville);
-                    });
-                    break;
-                case JAUNE:
-                    donneesVillesDTO.getVilles_jaunes().forEach(villesDTO ->{
-                        Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), virus);
-                        getVilles().put(villesDTO.getNomVille(), ville);
-                    });
-                    break;
-                case NOIR:
-                    donneesVillesDTO.getVilles_noires().forEach(villesDTO ->{
-                        Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), virus);
-                        getVilles().put(villesDTO.getNomVille(), ville);
-                    });
-                    break;
-                case ROUGE:
-                    donneesVillesDTO.getVilles_rouges().forEach(villesDTO ->{
-                        Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), virus);
-                        getVilles().put(villesDTO.getNomVille(), ville);
-                    });
-                    break;
-                default:
-                    throw new CasCouleurVilleIncorrectException();
-            }
-        }
-        attributionVoisins(donneesVillesDTO);
+    public void initialisationVirus() throws FileNotFoundException {
+        DonneesPlateauDTO donneesPlateauDTO = lectureDonneesVilles();
+        donneesPlateauDTO.getListe_virus().forEach(virusDTO -> {
+            Virus virus = new Virus(virusDTO.getCouleurVirus());
+            getLesVirus().put(virusDTO.getCouleurVirus(), virus);
+        });
     }
 
-    private List<String> listeVillesNonValide (DonneesVillesDTO donneesVillesDTO){
-        List<String> listeNonValide = new ArrayList<>();
-        donneesVillesDTO.getVilles_bleues().forEach(villesDTO ->{
-            villesDTO.getListeNomsVillesVoisines().forEach(s -> {
-                if(!villes.containsKey(s))
-                    listeNonValide.add(s);
-            });
-        });
-        donneesVillesDTO.getVilles_rouges().forEach(villesDTO ->{
-            villesDTO.getListeNomsVillesVoisines().forEach(s -> {
-                if(!villes.containsKey(s))
-                    listeNonValide.add(s);
-            });
-        });
-        donneesVillesDTO.getVilles_jaunes().forEach(villesDTO ->{
-            villesDTO.getListeNomsVillesVoisines().forEach(s -> {
-                if(!villes.containsKey(s))
-                    listeNonValide.add(s);
-            });
-        });
-        donneesVillesDTO.getVilles_noires().forEach(villesDTO ->{
-            villesDTO.getListeNomsVillesVoisines().forEach(s -> {
-                if(!villes.containsKey(s))
-                    listeNonValide.add(s);
-            });
-        });
-        return listeNonValide;
+    public void initialisationVilles() throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException {
+        DonneesPlateauDTO donneesPlateauDTO = lectureDonneesVilles();
+        attributionVirus(donneesPlateauDTO);
+        attributionVoisins(donneesPlateauDTO);
     }
 
-    public void attributionVoisins(DonneesVillesDTO donneesVillesDTO) throws VilleIntrouvableException {
-        List<String> listeVillesNonValide = listeVillesNonValide(donneesVillesDTO);
+    public void attributionVoisins(DonneesPlateauDTO donneesPlateauDTO) throws VilleIntrouvableException {
+        List<String> listeVillesNonValide = listeVillesVoisinesNonValide(donneesPlateauDTO);
         if(!listeVillesNonValide.isEmpty()) throw new VilleIntrouvableException(
                 "Une erreur vient de se produire, le nom des villes ci-joint ne sont pas corrects: " +
                         listeVillesNonValide.toString());
-        donneesVillesDTO.getVilles_bleues().forEach(villesDTO -> {
+        donneesPlateauDTO.getVilles().forEach(villesDTO -> {
             List<String> listeNomsVillesVoisines = villesDTO.getListeNomsVillesVoisines();
             villes.get(villesDTO.getNomVille()).setVillesVoisines(listeNomsVillesVoisines);
         });
-        donneesVillesDTO.getVilles_jaunes().forEach(villesDTO -> {
-            List<String> listeNomsVillesVoisines = villesDTO.getListeNomsVillesVoisines();
-            villes.get(villesDTO.getNomVille()).setVillesVoisines(listeNomsVillesVoisines);
+    }
+
+    private List<String> listeVillesVoisinesNonValide(DonneesPlateauDTO donneesPlateauDTO){
+        List<String> listeVillesNonValide = new ArrayList<>();
+        donneesPlateauDTO.getVilles().forEach(villesDTO ->{
+            villesDTO.getListeNomsVillesVoisines().forEach(s -> {
+                if(!villes.containsKey(s))
+                    listeVillesNonValide.add(s);
+            });
         });
-        donneesVillesDTO.getVilles_rouges().forEach(villesDTO -> {
-            List<String> listeNomsVillesVoisines = villesDTO.getListeNomsVillesVoisines();
-            villes.get(villesDTO.getNomVille()).setVillesVoisines(listeNomsVillesVoisines);
+        return listeVillesNonValide;
+    }
+
+    public void attributionVirus(DonneesPlateauDTO donneesPlateauDTO) throws VirusIntrouvableException {
+        List<String> listeVillesVirusNonValide = listeVilleVirusNonValide(donneesPlateauDTO);
+        if(!listeVillesVirusNonValide.isEmpty()) throw new VirusIntrouvableException(
+                "Une erreur vient de se produire, vous trouverez ci-joint la liste des villes dont la couleur du virus est incorrect: " +
+                        listeVillesVirusNonValide.toString());
+        donneesPlateauDTO.getVilles().forEach(villesDTO ->{
+            Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), getVirusVilleByCouleurVirus(villesDTO.getCouleurVirusVille()));
+            getVilles().put(villesDTO.getNomVille(), ville);
         });
-        donneesVillesDTO.getVilles_noires().forEach(villesDTO -> {
-            List<String> listeNomsVillesVoisines = villesDTO.getListeNomsVillesVoisines();
-            villes.get(villesDTO.getNomVille()).setVillesVoisines(listeNomsVillesVoisines);
+    }
+
+    private List<String> listeVilleVirusNonValide(DonneesPlateauDTO donneesPlateauDTO){
+        List<String> listeVirusNonValide = new ArrayList<>();
+        donneesPlateauDTO.getVilles().forEach(villesDTO -> {
+            if (!lesVirus.containsKey(villesDTO.getCouleurVirusVille()))
+                listeVirusNonValide.add(villesDTO.getNomVille());
         });
+        return listeVirusNonValide;
     }
 }

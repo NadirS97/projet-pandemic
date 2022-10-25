@@ -16,5 +16,6 @@ public class VillesDTO {
     private int populationTotaleVille;
     private int populationKmCarreVille;
     private List<String> listeNomsVillesVoisines;
+    private String couleurVirusVille;
 
 }

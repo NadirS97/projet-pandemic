@@ -1,20 +1,12 @@
 package programme;
 
-import modele.elements.Joueur;
 import modele.elements.Plateau;
-import modele.elements.Ville;
-import modele.elements.Virus;
-import modele.elements.cartes.CarteJoueur;
-import modele.elements.cartes.CarteVille;
-import modele.elements.enums.Couleurs;
 import modele.exceptions.CasCouleurVilleIncorrectException;
 import modele.exceptions.VilleInexistanteDansDeckJoueurException;
 import modele.exceptions.VilleIntrouvableException;
-import modele.facade.FacadePandemic9Impl;
+import modele.exceptions.VirusIntrouvableException;
 
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
@@ -29,7 +21,7 @@ public class Main {
             plateau.getVilles().values().forEach(ville -> {
                 System.out.println(ville);
             });
-        } catch (FileNotFoundException | VilleIntrouvableException e) {
+        } catch (FileNotFoundException | VilleIntrouvableException | VirusIntrouvableException e) {
             throw new RuntimeException(e);
         }
 
