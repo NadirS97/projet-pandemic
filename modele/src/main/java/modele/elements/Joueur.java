@@ -1,8 +1,9 @@
 package modele.elements;
 
 import lombok.Getter;
+import lombok.Setter;
+import modele.action.IAction;
 import modele.elements.actions.deplacement.*;
-import modele.elements.enums.Actions;
 import modele.elements.enums.ModesDeplacements;
 import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
@@ -14,7 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 public class Joueur {
+
+    private IAction action;
+    private int nbActions;
 
     private String pseudoJoueur;
     private CarteRole roleJoueur;
@@ -27,11 +32,12 @@ public class Joueur {
     private Plateau plateau;
     private int nbActionsTour;
 
-    public Joueur(String pseudoJoueur){
+    public Joueur(String pseudoJoueur,int nbActions){
+        this.nbActions=nbActions;
         this.pseudoJoueur = pseudoJoueur;
+
     }
 
-//    public Actions choixAction(Actions actions)
 
     /**
      * Fonction permettant de savoir si le joueur possède une carteVille dans sa main correspondant à la ville en paramètre
@@ -109,5 +115,11 @@ public class Joueur {
         this.plateau = plateau;
     }
 
+    public void executerAction(){
+        if (this.nbActions > 0){
+            this.action.execAction();
+            this.nbActions --;
+        }
 
+    }
 }

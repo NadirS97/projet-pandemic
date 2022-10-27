@@ -1,5 +1,6 @@
 package modele.facade;
 
+import modele.action.IAction;
 import modele.elements.Partie;
 import modele.elements.Ville;
 import modele.elements.enums.Actions;
@@ -33,7 +34,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
             throw new CodePartieInexistantException();
         if (parties.get(codePartie).isJoueurDejaDansPartie(pseudoJoueurPartie))
             throw new PseudoDejaExistantException();
-        parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie));
+        parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie,4));
     }
 
     @Override
@@ -75,6 +76,14 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         }
         partie.getJoueursPartie().put(joueurPartie.getPseudoJoueur(), joueurPartie);
         parties.put(partie.getCodePartie(), partie);
+    }
+
+    public void JouerTourr(String codePartie, IAction action){
+        Partie partie = this.parties.get(codePartie);
+        String pseudoJoueurPartie = partie.aQuiLeTour();
+        Joueur joueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
+        joueurPartie.setAction(action);
+        joueurPartie.executerAction();
     }
 
     @Override

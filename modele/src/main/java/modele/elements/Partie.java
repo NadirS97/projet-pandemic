@@ -21,7 +21,7 @@ public class Partie {
         this.codePartie = UUID.randomUUID().toString();
         this.plateauPartie = new Plateau();
         this.joueursPartie = new HashMap<>();
-        this.joueursPartie.put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie));
+        this.joueursPartie.put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie,4));
         this.ordreTourDeJeuPseudoJoueur = new ArrayList<>();
         this.ordreTourDeJeuPseudoJoueur.add(pseudoJoueurPartie);
     }
