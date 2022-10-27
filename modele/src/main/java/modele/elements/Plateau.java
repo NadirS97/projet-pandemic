@@ -101,7 +101,7 @@ public class Plateau{
     }
 
     public DonneesPlateauDTO lectureDonneesVilles() throws FileNotFoundException {
-        FileReader reader = new FileReader("modele/src/main/resources/DonneesVilles.json");
+        FileReader reader = new FileReader("modele/src/main/resources/DonneesPlateau.json");
         BufferedReader br = new BufferedReader(reader);
         String donnees = br.lines().collect(Collectors.joining());
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -126,7 +126,7 @@ public class Plateau{
         List<String> listeVillesNonValide = listeVillesVoisinesNonValide(donneesPlateauDTO);
         if(!listeVillesNonValide.isEmpty()) throw new VilleIntrouvableException(
                 "Une erreur vient de se produire, le nom des villes ci-joint ne sont pas corrects: " +
-                        listeVillesNonValide.toString());
+                        listeVillesNonValide);
         donneesPlateauDTO.getVilles().forEach(villesDTO -> {
             List<String> listeNomsVillesVoisines = villesDTO.getListeNomsVillesVoisines();
             villes.get(villesDTO.getNomVille()).setVillesVoisines(listeNomsVillesVoisines);
@@ -148,7 +148,7 @@ public class Plateau{
         List<String> listeVillesVirusNonValide = listeVilleVirusNonValide(donneesPlateauDTO);
         if(!listeVillesVirusNonValide.isEmpty()) throw new VirusIntrouvableException(
                 "Une erreur vient de se produire, vous trouverez ci-joint la liste des villes dont la couleur du virus est incorrect: " +
-                        listeVillesVirusNonValide.toString());
+                        listeVillesVirusNonValide);
         donneesPlateauDTO.getVilles().forEach(villesDTO ->{
             Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), getVirusVilleByCouleurVirus(villesDTO.getCouleurVirusVille()));
             getVilles().put(villesDTO.getNomVille(), ville);

@@ -7,8 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class VirusDTO {
+public class CartesDTO {
 
-    private String couleurVirus;
+    private String typeCarte;
 
 }

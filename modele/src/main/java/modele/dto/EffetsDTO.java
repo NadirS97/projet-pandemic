@@ -7,8 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class VirusDTO {
+public class EffetsDTO {
 
-    private String couleurVirus;
+    private String idEffet;
+    private String descriptionEffet;
+    private String typeCarteEffet;
 
 }

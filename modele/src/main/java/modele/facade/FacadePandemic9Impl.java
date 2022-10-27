@@ -37,7 +37,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     }
 
     @Override
-    public void jouerTour(String codePartie, Actions action, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws CodePartieInexistantException, VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, PseudoInexistantDansLaPartieException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException, VilleActuellePossedeDejaUneStationDeRechercheException {
+    public void jouerTour(String codePartie, Actions action, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, PseudoInexistantDansLaPartieException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException, VilleActuellePossedeDejaUneStationDeRechercheException {
         Partie partie = this.parties.get(codePartie);
         String pseudoJoueurPartie = partie.aQuiLeTour();
         Joueur joueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
