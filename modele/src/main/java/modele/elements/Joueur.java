@@ -9,7 +9,6 @@ import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
-import modele.elements.enums.CouleursPion;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class Joueur {
 
     private String pseudoJoueur;
     private CarteRole roleJoueur;
-    private CouleursPion couleursPionJoueur; // Ca va être roleJoueur.getCouleurPionRole()
+    private Pion couleurPionJoueur; // Ca va être roleJoueur.getCouleurPionRole()
     private List<CarteJoueur> deckJoueur;
 
     private Ville villeActuelle;

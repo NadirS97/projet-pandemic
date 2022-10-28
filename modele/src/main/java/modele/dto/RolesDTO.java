@@ -13,7 +13,6 @@ public class RolesDTO {
 
     private String nomRole;
     private String couleurPionRole;
-    private String descriptionRole;
     private List<String> listeEffetsRole;
 
 }

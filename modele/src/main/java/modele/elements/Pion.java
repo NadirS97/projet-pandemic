@@ -7,10 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Effet {
-
-    private String idEffet;
-    private String description;
-    private String typeDeCarte;
-
+public class Pion {
+    private String couleurPion;
 }
