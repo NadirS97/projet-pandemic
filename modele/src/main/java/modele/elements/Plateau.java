@@ -25,22 +25,17 @@ public class Plateau {
 
     private Map<String, Virus> lesVirus;
     private Map<String, Ville> villes;
-    private Map<String, Pion> listePions;
-    private Map<String, Effet> listeEffetsPossibles;
     private int marqueurVitessePropagation;   // entre 1et 3 = vitesse2 , 4,5 = vitesse3 , 6,7 vitesse 4 , pas vraiment besoin d'un tableau ?
     private int marqueurVitesseEclosion;
     private List<CarteJoueur> piocheCarteJoueur;
     private List<CarteJoueur> defausseCarteJoueur;
     private List<CartePropagation> piocheCartePropagation;
     private List<CartePropagation> defausseCartePropagation;
-    private List<CarteRole> listeCartesRole;
     private int nbStationsDeRechercheConstruites;
 
     public Plateau() {
         lesVirus = new HashMap<>();
         villes = new HashMap<>();
-        listePions = new HashMap<>();
-        listeEffetsPossibles = new HashMap<>();
         marqueurVitessePropagation = 0;
         marqueurVitesseEclosion = 0;
         nbStationsDeRechercheConstruites = 0;
@@ -48,16 +43,12 @@ public class Plateau {
         defausseCarteJoueur = new ArrayList<>();
         piocheCartePropagation = new ArrayList<>();
         defausseCartePropagation = new ArrayList<>();
-        listeCartesRole = new ArrayList<>();
     }
 
     public Ville getVilleByName(String name) {
         return villes.get(name);
     }
 
-    public Virus getVirusVilleByCouleurVirus(String couleurVirus) {
-        return getLesVirus().get(couleurVirus);
-    }
 
     public int getNbStationsDeRechercheConstruites() {
         for (Ville ville : getVilles().values()) {
@@ -68,13 +59,10 @@ public class Plateau {
         return nbStationsDeRechercheConstruites;
     }
 
-    public void initialisationPlateau() throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException, CouleurPionIntrouvableException, EffetIntrouvableException, TypeCarteIntrouvableException {
+    public void initialisationPlateau() throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException  {
         initialisationVirus();
         initialisationVilles();
         initialiserCartesJoueur();
-        initialisationPions();
-        initialisationEffets();
-        initialisationCartesRole();
     }
 
     public void initialiserCartesJoueur() {
@@ -93,7 +81,7 @@ public class Plateau {
         melangerPaquet(piocheCarteJoueur);
     }
 
-    public void melangerPaquet(List paquet) {
+    public void melangerPaquet(List<?> paquet) {
         Collections.shuffle(paquet);
     }
 
@@ -131,41 +119,13 @@ public class Plateau {
         attributionVoisins(donneesPlateauDTO);
     }
 
-    private Set<String> initialisationTypesCartes() throws FileNotFoundException {
-        DonneesPlateauDTO donneesPlateauDTO = lectureDonneesPlateau();
-        Set<String> listeTypesCartes = new HashSet<>();
-        donneesPlateauDTO.getTypes_carte().forEach(cartesDTO -> {
-            listeTypesCartes.add(cartesDTO.getTypeCarte());
-        });
-        return listeTypesCartes;
-    }
-
-    private void initialisationEffets() throws FileNotFoundException, TypeCarteIntrouvableException {
-        DonneesPlateauDTO donneesPlateauDTO = lectureDonneesPlateau();
-        attributionTypeCarte(donneesPlateauDTO);
-    }
-
-    private void initialisationPions() throws FileNotFoundException {
-        DonneesPlateauDTO donneesPlateauDTO = lectureDonneesPlateau();
-        donneesPlateauDTO.getListe_pions().forEach(pionsDTO -> {
-            Pion pion = new Pion(pionsDTO.getCouleurPion());
-            listePions.put(pionsDTO.getCouleurPion(), pion);
-        });
-    }
-
-    private void initialisationCartesRole() throws FileNotFoundException, CouleurPionIntrouvableException, EffetIntrouvableException {
-        DonneesPlateauDTO donneesPlateauDTO = lectureDonneesPlateau();
-        attributionPionsEtEffets(donneesPlateauDTO);
-        melangerPaquet(listeCartesRole);
-    }
-
     public void attributionVirus(DonneesPlateauDTO donneesPlateauDTO) throws VirusIntrouvableException {
         List<String> listeVillesVirusNonValide = listeVilleVirusNonValide(donneesPlateauDTO);
         if (!listeVillesVirusNonValide.isEmpty()) throw new VirusIntrouvableException(
                 "Une erreur vient de se produire, vous trouverez ci-joint la liste des villes dont la couleur du virus est incorrect: " +
                         listeVillesVirusNonValide);
         donneesPlateauDTO.getVilles().forEach(villesDTO -> {
-            Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), getVirusVilleByCouleurVirus(villesDTO.getCouleurVirusVille()));
+            Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), getLesVirus().get(villesDTO.getCouleurVirusVille()));
             getVilles().put(villesDTO.getNomVille(), ville);
         });
     }
@@ -176,34 +136,7 @@ public class Plateau {
                 "Une erreur vient de se produire, le nom des villes ci-joint ne sont pas corrects: " +
                         listeVillesNonValide);
         donneesPlateauDTO.getVilles().forEach(villesDTO -> {
-            List<String> listeNomsVillesVoisines = villesDTO.getListeNomsVillesVoisines();
-            villes.get(villesDTO.getNomVille()).setVillesVoisines(listeNomsVillesVoisines);
-        });
-    }
-
-    public void attributionTypeCarte(DonneesPlateauDTO donneesPlateauDTO) throws FileNotFoundException, TypeCarteIntrouvableException {
-        List<String> listeEffetsTypeCartesNonValide = listeEffetsTypeCartesNonValide(donneesPlateauDTO);
-        if (!listeEffetsTypeCartesNonValide.isEmpty()) throw new TypeCarteIntrouvableException(
-                "Une erreur vient de se produire, vous trouverez ci-joint la liste des effets dont le type de carte est incorrect: " +
-                        listeEffetsTypeCartesNonValide);
-        donneesPlateauDTO.getListe_effets().forEach(effetsDTO -> {
-            Effet effet = new Effet(effetsDTO.getIdEffet(), effetsDTO.getDescriptionEffet(), effetsDTO.getTypeCarteEffet());
-            listeEffetsPossibles.put(effetsDTO.getIdEffet(), effet);
-        });
-    }
-
-    private void attributionPionsEtEffets(DonneesPlateauDTO donneesPlateauDTO) throws CouleurPionIntrouvableException, EffetIntrouvableException {
-        List<String> listeRolesCouleursPionNonValide = listeRolesCouleursPionNonValide(donneesPlateauDTO);
-        List<String> listeRolesEffetsNonValide = listeRolesEffetsNonValide(donneesPlateauDTO);
-        if (!listeRolesCouleursPionNonValide.isEmpty()) throw new CouleurPionIntrouvableException(
-                "Une erreur vient de se produire, vous trouverez ci-joint la liste des cartes roles dont la couleur du pion est inexistante: " +
-                        listeRolesCouleursPionNonValide);
-        if (!listeRolesEffetsNonValide.isEmpty()) throw new EffetIntrouvableException(
-                "Une erreur vient de se produire, vous trouverez ci-joint la liste des cartes roles dont l'effet attribué est inexistant: " +
-                        listeRolesEffetsNonValide);
-        donneesPlateauDTO.getCartes_role().forEach(rolesDTO -> {
-            CarteRole carteRole = new CarteRole(rolesDTO.getNomRole(), rolesDTO.getCouleurPionRole(), rolesDTO.getListeEffetsRole());
-            listeCartesRole.add(carteRole);
+            villes.get(villesDTO.getNomVille()).setVillesVoisines(villesDTO.getListeNomsVillesVoisines());
         });
     }
 
@@ -225,35 +158,5 @@ public class Plateau {
                 listeVirusNonValide.add(villesDTO.getNomVille());
         });
         return listeVirusNonValide;
-    }
-
-    private List<String> listeRolesCouleursPionNonValide(DonneesPlateauDTO donneesPlateauDTO) {
-        List<String> listeRolesCouleursPionNonValide = new ArrayList<>();
-        donneesPlateauDTO.getCartes_role().forEach(rolesDTO -> {
-            if (!listePions.containsKey(rolesDTO.getCouleurPionRole()))
-                listeRolesCouleursPionNonValide.add(rolesDTO.getNomRole());
-        });
-        return listeRolesCouleursPionNonValide;
-    }
-
-    private List<String> listeRolesEffetsNonValide(DonneesPlateauDTO donneesPlateauDTO) {
-        List<String> listeRolesEffetsNonValide = new ArrayList<>();
-        donneesPlateauDTO.getCartes_role().forEach(rolesDTO -> {
-            rolesDTO.getListeEffetsRole().forEach(s -> {
-                if (!listeEffetsPossibles.containsKey(s))
-                    listeRolesEffetsNonValide.add(rolesDTO.getNomRole());
-            });
-        });
-        return listeRolesEffetsNonValide;
-    }
-
-    private List<String> listeEffetsTypeCartesNonValide(DonneesPlateauDTO donneesPlateauDTO) throws FileNotFoundException {
-        Set<String> listeTypesCartes = initialisationTypesCartes();
-        List<String> listeEffetsTypeCartesNonValide = new ArrayList<>();
-        donneesPlateauDTO.getListe_effets().forEach(effetsDTO -> {
-            if (!listeTypesCartes.contains(effetsDTO.getTypeCarteEffet()))
-                listeEffetsTypeCartesNonValide.add(effetsDTO.getIdEffet());
-        });
-        return listeEffetsTypeCartesNonValide;
     }
 }

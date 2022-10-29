@@ -22,11 +22,7 @@ public class Main {
             plateau.getVilles().values().forEach(ville -> {
                 System.out.println(ville);
             });
-            plateau.getListeCartesRole().forEach(carteRole -> {
-                System.out.println(carteRole);
-            });
-        } catch (FileNotFoundException | VilleIntrouvableException | VirusIntrouvableException |
-                 CouleurPionIntrouvableException | EffetIntrouvableException | TypeCarteIntrouvableException e) {
+        } catch (FileNotFoundException | VilleIntrouvableException | VirusIntrouvableException e ) {
             throw new RuntimeException(e);
         }
 //      ================================================================================================================

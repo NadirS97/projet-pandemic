@@ -1,37 +1,4 @@
 {
-    "types_carte": [
-      {"typeCarte":  "Role"}
-    ],
-    "liste_effets": [
-      {"idEffet":  "effet1", "descriptionEffet":  "Vous n'avez besoin que de 4 cartes de la même couleur pour découvrir un remède.", "typeCarteEffet": "Role" },
-      {"idEffet":  "effet2", "descriptionEffet":  "Lorsque vous partagez des connaissances, vous pouvez donner n'importe quelle carte Ville de votre main. La carte n'a pas à correspondre à la ville où vous êtes. Durant son tour, un joueur qui partage des connaissance avec vous peut vous prendre n'importe quelle carte", "typeCarteEffet": "Role" },
-      {"idEffet":  "effet3", "descriptionEffet":  "Déplacez le pion d'un autre joueur comme si c'était le vôtre. Vous devez avoir la permission du propriétaire du pion qui sera déplacé.", "typeCarteEffet": "Role" },
-      {"idEffet":  "effet4", "descriptionEffet":  "Pour une action, déplacez un pion sur une ville où se trouve un autre pion. Vous devez avoir la permission du propriétaire du pion qui sera déplacé.", "typeCarteEffet": "Role" },
-      {"idEffet":  "effet5", "descriptionEffet":  "Empêchez les éclosions et le placement de cubes dans la ville où vous êtes ainsi que dans toutes les villes qui y sont reliées", "typeCarteEffet": "Role" },
-      {"idEffet":  "effet6", "descriptionEffet":  "Retirez tous les cubes d'une couleur lorsque vous traitez une maladie.", "typeCarteEffet": "Role" },
-      {"idEffet":  "effet7", "descriptionEffet":  "Dans la ville où vous êtes retirez automatiquement tous les cubes de la couleur d'une maladie guérie (et empêchez d'autres cubes d'une maladie guérie d'y être placés).", "typeCarteEffet": "Role" },
-      {"idEffet":  "effet8", "descriptionEffet":  "Pour une action vous pouvez construire une station de recherche dans la ville que vous occupez (sans avoir à défausser).", "typeCarteEffet": "Role" },
-      {"idEffet":  "effet9", "descriptionEffet":  "Une fois par tour, pour une action, défaussez une carte Ville pour vous déplacer d'une ville avec une station de recherche vers n'importe quelle ville.", "typeCarteEffet": "Role" },
-      {"idEffet":  "effet10", "descriptionEffet":  "Pour une action, prenez une carte Evenement de la défausse et entreposez-la sur cette carte. Lorsque vous jouez la carte Evenement entreprosée. Retirez la de la partie. Limite de 1 carte Evenement sur cette carte. Elle ne fait pas partie de votre main.", "typeCarteEffet": "Role" }
-    ],
-    "liste_pions": [
-      {"couleurPion":  "BLANC"},
-      {"couleurPion":  "MARRON"},
-      {"couleurPion":  "ROSE"},
-      {"couleurPion":  "VERT_FONCE"},
-      {"couleurPion":  "ORANGE"},
-      {"couleurPion":  "VERT_CLAIR"},
-      {"couleurPion":  "BLEU"}
-    ],
-    "cartes_role": [
-      {"nomRole":"SCIENTIFIQUE", "couleurPionRole": "BLANC", "listeEffetsRole": ["effet1"]},
-      {"nomRole":"CHERCHEUSE", "couleurPionRole": "MARRON", "listeEffetsRole": ["effet2"]},
-      {"nomRole":"REPARTITEUR", "couleurPionRole": "ROSE",  "listeEffetsRole": ["effet3", "effet4"]},
-      {"nomRole":"SPECIALISTE_EN_MISE_EN_QUARANTAINE", "couleurPionRole": "VERT_FONCE", "listeEffetsRole": ["effet5"]},
-      {"nomRole":"MEDECIN", "couleurPionRole": "ORANGE", "listeEffetsRole": ["effet6", "effet7"]},
-      {"nomRole":"EXPERT_AUX_OPERATIONS", "couleurPionRole": "VERT_CLAIR", "listeEffetsRole": ["effet8", "effet9"]},
-      {"nomRole":"PLANIFICATEUR_D_URGENCE", "couleurPionRole": "BLEU", "listeEffetsRole": ["effet10"]}
-    ],
     "liste_virus": [
       {"couleurVirus": "BLEU"},
       {"couleurVirus": "JAUNE"},
