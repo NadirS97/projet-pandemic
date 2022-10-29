@@ -29,11 +29,11 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     @Override
     public void rejoindrePartie(String codePartie, String pseudoJoueurPartie) throws PseudoDejaExistantException, CodePartieInexistantException, DonneManquanteException {
-        if (Objects.isNull(parties.get(codePartie)))
-            throw new CodePartieInexistantException();
-        if (parties.get(codePartie).isJoueurDejaDansPartie(pseudoJoueurPartie))
-            throw new PseudoDejaExistantException();
-        parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, new PionJoueur(pseudoJoueurPartie,4));
+//        if (Objects.isNull(parties.get(codePartie)))
+//            throw new CodePartieInexistantException();
+//        if (parties.get(codePartie).isJoueurDejaDansPartie(pseudoJoueurPartie))
+//            throw new PseudoDejaExistantException();
+//        parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, new PionJoueur(pseudoJoueurPartie,4));
     }
 
     @Override

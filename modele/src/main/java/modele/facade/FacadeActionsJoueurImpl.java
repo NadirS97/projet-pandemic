@@ -1,0 +1,66 @@
+package modele.facade;
+
+import modele.elements.PionJoueur;
+import modele.elements.Ville;
+import modele.elements.cartes.CarteJoueur;
+import modele.exceptions.*;
+
+import java.util.Set;
+
+public class FacadeActionsJoueurImpl implements FacadeActionsJoueur{
+
+    @Override
+    public Ville seDeplacerVoiture(PionJoueur pionJoueur, Ville villeDestination) throws VilleIntrouvableException, VilleNonVoisineException, NbActionsMaxTourAtteintException {
+      return pionJoueur.seDeplacerVoiture(villeDestination);
+    }
+
+    @Override
+    public Ville seDeplacerVolDirect(PionJoueur pionJoueur, Ville villeDestination) throws VilleIntrouvableException, VilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+
+    @Override
+    public Ville seDeplacerVolCharter(PionJoueur pionJoueur, Ville villeDestination) throws VilleIntrouvableException, CarteVilleNonCorrespondVilleActuelleException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+
+    @Override
+    public Ville seDeplacerNavette(PionJoueur pionJoueur, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleIntrouvableException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+
+    @Override
+    public Ville construireStationRecherche(PionJoueur pionJoueur) throws NbMaxStationRechercheException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+
+    @Override
+    public Ville deplacerStationRecherche(PionJoueur pionJoueur, Ville villeStationCible) throws VilleIntrouvableException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+
+    @Override
+    public Ville traiterUneMaladieNonTraite(PionJoueur pionJoueur, Ville villeTraite) throws VilleIntrouvableException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+
+    @Override
+    public Ville traiterUneMaladieTraite(PionJoueur pionJoueur, Ville villeTraite) throws VilleIntrouvableException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+
+    @Override
+    public Ville donnerAuJoueurCarteVille(PionJoueur pionJoueur1, PionJoueur pionJoueur2) throws VilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+
+    @Override
+    public Ville prendreAuJoueurCarteVille(PionJoueur pionJoueur1, PionJoueur pionJoueur2) throws VilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+
+    @Override
+    public Set<CarteJoueur> decouvrirRemede(PionJoueur pionJoueur) throws PasAssezCarteMemeCouleurException, NbActionsMaxTourAtteintException {
+        return null;
+    }
+}

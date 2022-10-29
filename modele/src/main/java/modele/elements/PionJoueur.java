@@ -3,7 +3,6 @@ package modele.elements;
 import lombok.Getter;
 import lombok.Setter;
 import modele.action.IAction;
-import modele.elements.actions.deplacement.*;
 import modele.elements.enums.ModesDeplacements;
 import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
@@ -26,14 +25,13 @@ public class PionJoueur {
     private List<CarteJoueur> deckJoueur;
 
     private Ville villeActuelle;
-    private Deplacement deplacement;
+
 
     private Plateau plateau;
-    private int nbActionsTour;
 
-    public PionJoueur(String pseudoJoueur, int nbActions){
-        this.nbActions=nbActions;
+    public PionJoueur(String pseudoJoueur, Plateau plateau){
         this.pseudoJoueur = pseudoJoueur;
+        this.plateau = plateau;
     }
 
     /**
@@ -66,24 +64,21 @@ public class PionJoueur {
         return null;
     }
 
-    public Deplacement choixDeplacement(ModesDeplacements modesDeplacements) throws ModeDeplacementInexistantException {
-        switch (modesDeplacements) {
-            case VOITURE -> deplacement = new DeplacementVoiture();
-            case NAVETTE -> deplacement = new DeplacementNavette();
-            case VOL_DIRECT -> deplacement = new DeplacementVolDirect();
-            case VOL_CHARTER -> deplacement = new DeplacementVolCharter();
-            default -> throw new ModeDeplacementInexistantException();
-        }
-        return null;
+
+    public Ville seDeplacerVoiture(Ville villeDestination) throws VilleIntrouvableException, VilleNonVoisineException, NbActionsMaxTourAtteintException{
+        if (nbActions >= 4)
+            throw new NbActionsMaxTourAtteintException();
+        if (!this.plateau.isVille(villeDestination.getNomVille()))
+           throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
+        if (!this.plateau.isVilleVoisine(getVilleActuelle(),villeDestination))
+            throw new VilleNonVoisineException();
+
+        villeActuelle = villeDestination;
+        nbActions++;
+        return villeActuelle;
     }
 
-    public Ville seDeplacer(Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException {
-        return deplacement.seDeplacer(this,villeDestination);
-    }
 
-    public void setVilleActuelle(Ville villeActuelle) {
-        this.villeActuelle = villeActuelle;
-    }
 
 
     public void construireStation() throws VilleInexistanteDansDeckJoueurException, VilleAvecAucuneStationDeRechercheException {
@@ -104,9 +99,7 @@ public class PionJoueur {
         }
     }
 
-    public void setDeplacement(Deplacement deplacement) {
-        this.deplacement = deplacement;
-    }
+
 
     public void setPlateau(Plateau plateau) {
         this.plateau = plateau;
@@ -118,5 +111,9 @@ public class PionJoueur {
             this.nbActions --;
         }
 
+    }
+
+    public void setVilleActuelle(Ville villeActuelle) {
+        this.villeActuelle = villeActuelle;
     }
 }

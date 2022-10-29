@@ -19,7 +19,8 @@ public class Ville {
     private boolean eclosionVille = false;
     private Set<PionJoueur> listePionsJoueursPresents;
 
-    public Ville() {
+    public Ville(String nomVille) {
+        this.nomVille = nomVille;
     }
 
     public Ville(String nomVille, int nbPopulationTotaleVille, int nbPopulationKmCarreeVille, Virus virus){

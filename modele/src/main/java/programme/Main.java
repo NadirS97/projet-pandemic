@@ -18,7 +18,7 @@ public class Main {
 //      ================================================================================================================
         Plateau plateau = new Plateau();
         try {
-            plateau.initialisationPlateau();
+            plateau.initialisationPlateau("modele/src/main/resources/DonneesPlateau.json");
             plateau.getVilles().values().forEach(ville -> {
                 System.out.println(ville);
             });
