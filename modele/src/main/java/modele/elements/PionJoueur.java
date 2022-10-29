@@ -3,6 +3,7 @@ package modele.elements;
 import lombok.Getter;
 import lombok.Setter;
 import modele.action.IAction;
+import modele.action.deplacement.DeplacementVoiture;
 import modele.elements.enums.ModesDeplacements;
 import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
@@ -65,7 +66,7 @@ public class PionJoueur {
     }
 
 
-    public Ville seDeplacerVoiture(Ville villeDestination) throws VilleIntrouvableException, VilleNonVoisineException, NbActionsMaxTourAtteintException{
+    public Ville actionSeDeplacerVoiture(Ville villeDestination) throws VilleIntrouvableException, VilleNonVoisineException, NbActionsMaxTourAtteintException{
         if (nbActions >= 4)
             throw new NbActionsMaxTourAtteintException();
         if (!this.plateau.isVille(villeDestination.getNomVille()))
@@ -73,10 +74,12 @@ public class PionJoueur {
         if (!this.plateau.isVilleVoisine(getVilleActuelle(),villeDestination))
             throw new VilleNonVoisineException();
 
-        villeActuelle = villeDestination;
+        action = new DeplacementVoiture(this,villeDestination);
+        action.execAction();
         nbActions++;
         return villeActuelle;
     }
+
 
 
 

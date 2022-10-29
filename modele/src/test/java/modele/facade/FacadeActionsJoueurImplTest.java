@@ -23,17 +23,27 @@ class FacadeActionsJoueurImplTest {
     void setUp() throws VilleIntrouvableException, VirusIntrouvableException, FileNotFoundException {
         this.instance = new FacadeActionsJoueurImpl();
         plateau = new Plateau();
-        plateau.initialisationPlateau("src/test/resources/DonneesPlateau.json");;
+        plateau.initialisationPlateau("src/main/resources/DonneesPlateau.json");
     }
 
-//    @Test
-//    void seDeplacerVoitureVilleIntrouvable() {
-//
-//        PionJoueur pionJoueur = new PionJoueur("jo",plateau);
-//        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
-//        Ville villeIntrouvable = new Ville("Atlanta");
-//
-//        Assertions.assertThrows(VilleIntrouvableException.class,
-//                () -> this.instance.seDeplacerVoiture(pionJoueur,villeIntrouvable));
-//    }
+    @Test
+    void actionSeDeplacerVoitureVilleOK() {
+
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau);
+        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
+        Ville villeIntrouvable = new Ville("Atlanta");
+
+        Assertions.assertDoesNotThrow(() -> this.instance.actionSeDeplacerVoiture(pionJoueur,villeIntrouvable));
+    }
+
+    @Test
+    void actionSeDeplacerVoitureVilleIntrouvable() {
+
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau);
+        pionJoueur.setVilleActuelle(plateau.getVilleByName("Atlanta"));
+        Ville villeIntrouvable = new Ville("Introuvable");
+
+        Assertions.assertThrows(VilleIntrouvableException.class,
+                () -> this.instance.actionSeDeplacerVoiture(pionJoueur,villeIntrouvable));
+    }
 }

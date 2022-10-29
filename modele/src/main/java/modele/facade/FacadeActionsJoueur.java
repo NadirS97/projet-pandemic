@@ -19,7 +19,7 @@ public interface FacadeActionsJoueur {
      * @throws VilleNonVoisineException
      * @throws NbActionsMaxTourAtteintException
      */
-    Ville seDeplacerVoiture(PionJoueur pionJoueur, Ville villeDestination)
+    Ville actionSeDeplacerVoiture(PionJoueur pionJoueur, Ville villeDestination)
         throws VilleIntrouvableException,
             VilleNonVoisineException,
             NbActionsMaxTourAtteintException;
@@ -29,48 +29,48 @@ public interface FacadeActionsJoueur {
     Vol direct : défausse une carte ville pour l'atteindre
     Vol Charter : défausser la carte ville où se trouve le pion pour se déplacer sur N'IMPORTE quelle viles
  */
-    Ville seDeplacerVolDirect(PionJoueur pionJoueur, Ville villeDestination)
+    Ville actionSeDeplacerVolDirect(PionJoueur pionJoueur, Ville villeDestination)
             throws VilleIntrouvableException,
             VilleInexistanteDansDeckJoueurException,
             NbActionsMaxTourAtteintException;
 
-    Ville seDeplacerVolCharter(PionJoueur pionJoueur, Ville villeDestination)
+    Ville actionSeDeplacerVolCharter(PionJoueur pionJoueur, Ville villeDestination)
         throws VilleIntrouvableException,
             CarteVilleNonCorrespondVilleActuelleException,
             NbActionsMaxTourAtteintException;
 
-    Ville seDeplacerNavette(PionJoueur pionJoueur, Ville villeDestination)
+    Ville actionSeDeplacerNavette(PionJoueur pionJoueur, Ville villeDestination)
         throws VilleAvecAucuneStationDeRechercheException,
             VilleIntrouvableException,
             NbActionsMaxTourAtteintException;
 
-    Ville construireStationRecherche(PionJoueur pionJoueur)
+    Ville actionConstruireStationRecherche(PionJoueur pionJoueur)
         throws NbMaxStationRechercheException,
             NbActionsMaxTourAtteintException;
 
 
-    Ville deplacerStationRecherche(PionJoueur pionJoueur, Ville villeStationCible)
+    Ville actionDeplacerStationRecherche(PionJoueur pionJoueur, Ville villeStationCible)
         throws VilleIntrouvableException,
             NbActionsMaxTourAtteintException;
 
-    Ville traiterUneMaladieNonTraite(PionJoueur pionJoueur, Ville villeTraite)
+    Ville actionTraiterUneMaladieNonTraite(PionJoueur pionJoueur, Ville villeTraite)
         throws VilleIntrouvableException,
             NbActionsMaxTourAtteintException;
 
     // si dernier cube d'une couleur est supprimé, alors maladie éradiquée
-    Ville traiterUneMaladieTraite(PionJoueur pionJoueur, Ville villeTraite)
+    Ville actionTraiterUneMaladieTraite(PionJoueur pionJoueur, Ville villeTraite)
         throws VilleIntrouvableException,
             NbActionsMaxTourAtteintException;
 
-    Ville donnerAuJoueurCarteVille(PionJoueur pionJoueur1,PionJoueur pionJoueur2)
+    Ville actionDonnerAuJoueurCarteVille(PionJoueur pionJoueur1,PionJoueur pionJoueur2)
         throws VilleInexistanteDansDeckJoueurException,
             NbActionsMaxTourAtteintException;
 
-    Ville prendreAuJoueurCarteVille(PionJoueur pionJoueur1, PionJoueur pionJoueur2)
+    Ville actionPrendreAuJoueurCarteVille(PionJoueur pionJoueur1, PionJoueur pionJoueur2)
         throws VilleInexistanteDansDeckJoueurException,
             NbActionsMaxTourAtteintException;
 
-    Set<CarteJoueur> decouvrirRemede(PionJoueur pionJoueur)
+    Set<CarteJoueur> actionDecouvrirRemede(PionJoueur pionJoueur)
         throws PasAssezCarteMemeCouleurException,
             NbActionsMaxTourAtteintException;
 }

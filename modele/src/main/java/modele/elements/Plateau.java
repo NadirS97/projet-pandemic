@@ -13,6 +13,7 @@ import modele.elements.cartes.CarteVille;
 import modele.elements.enums.NomsEvenement;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
@@ -34,6 +35,8 @@ public class Plateau {
     private Set<String> listeCouleursPionsJoueurs;
     private int nbStationsDeRechercheConstruites;
     private String jsonFile;
+    DonneesPlateauDTO donneesPlateauDTO;
+
 
     public Plateau() {
         lesVirus = new HashMap<>();
@@ -62,9 +65,10 @@ public class Plateau {
         return nbStationsDeRechercheConstruites;
     }
 
-    public void initialisationPlateau(String jsonFile) throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException  {
-        initialisationVirus(jsonFile);
-        initialisationVilles(jsonFile);
+    public void initialisationPlateau(String cheminDonneesJson) throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException  {
+        donneesPlateauDTO = lectureDonneesPlateau(cheminDonneesJson);
+        initialisationVirus();
+        initialisationVilles();
         initialiserCartesJoueur();
     }
 
@@ -100,24 +104,24 @@ public class Plateau {
         return villeDestination.isStationDeRechercheVille();
     }
 
-    public DonneesPlateauDTO lectureDonneesPlateau(String jsonFile) throws FileNotFoundException {
-        FileReader reader = new FileReader(jsonFile);
+    public DonneesPlateauDTO lectureDonneesPlateau(String cheminDonneesJson) throws FileNotFoundException {
+//        FileReader reader = new FileReader("C:\\Users\\Wedat\\IdeaProjects\\projet-pandemic-9\\modele\\src\\main\\resources\\DonneesPlateau.json");
+        FileReader reader = new FileReader(cheminDonneesJson);
         BufferedReader br = new BufferedReader(reader);
         String donnees = br.lines().collect(Collectors.joining());
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         return gson.fromJson(donnees, DonneesPlateauDTO.class);
     }
 
-    public void initialisationVirus(String jsonFile) throws FileNotFoundException {
-        DonneesPlateauDTO donneesPlateauDTO = lectureDonneesPlateau(jsonFile);
+    public void initialisationVirus()  {
         donneesPlateauDTO.getListe_virus().forEach(virusDTO -> {
             Virus virus = new Virus(virusDTO.getCouleurVirus());
             getLesVirus().put(virusDTO.getCouleurVirus(), virus);
         });
     }
 
-    public void initialisationVilles(String jsonFile) throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException {
-        DonneesPlateauDTO donneesPlateauDTO = lectureDonneesPlateau(jsonFile);
+    public void initialisationVilles() throws  VilleIntrouvableException, VirusIntrouvableException {
+
         attributionVirus(donneesPlateauDTO);
         attributionVoisins(donneesPlateauDTO);
     }
