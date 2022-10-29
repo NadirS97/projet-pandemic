@@ -13,6 +13,4 @@ public abstract class CarteJoueur {
         Mélanger et placer dans pioche Joueur
 
  */
-
-
 }

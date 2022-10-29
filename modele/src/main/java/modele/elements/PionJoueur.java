@@ -15,14 +15,14 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Joueur {
+public class PionJoueur {
 
     private IAction action;
     private int nbActions;
 
     private String pseudoJoueur;
     private CarteRole roleJoueur;
-    private Pion couleurPionJoueur; // Ca va être roleJoueur.getCouleurPionRole()
+    private String couleurPion;
     private List<CarteJoueur> deckJoueur;
 
     private Ville villeActuelle;
@@ -31,12 +31,10 @@ public class Joueur {
     private Plateau plateau;
     private int nbActionsTour;
 
-    public Joueur(String pseudoJoueur,int nbActions){
+    public PionJoueur(String pseudoJoueur, int nbActions){
         this.nbActions=nbActions;
         this.pseudoJoueur = pseudoJoueur;
-
     }
-
 
     /**
      * Fonction permettant de savoir si le joueur possède une carteVille dans sa main correspondant à la ville en paramètre

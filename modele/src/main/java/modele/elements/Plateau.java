@@ -3,7 +3,6 @@ package modele.elements;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import modele.dto.DonneesPlateauDTO;
-import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.evenements.*;
 import modele.exceptions.*;
 import lombok.Getter;
@@ -25,12 +24,14 @@ public class Plateau {
 
     private Map<String, Virus> lesVirus;
     private Map<String, Ville> villes;
-    private int marqueurVitessePropagation;   // entre 1et 3 = vitesse2 , 4,5 = vitesse3 , 6,7 vitesse 4 , pas vraiment besoin d'un tableau ?
+    private int marqueurVitessePropagation;   // entre 1 et 3 = vitesse2 , 4, 5 = vitesse3 , 6, 7 vitesse 4, pas vraiment besoin d'un tableau ?
     private int marqueurVitesseEclosion;
     private List<CarteJoueur> piocheCarteJoueur;
     private List<CarteJoueur> defausseCarteJoueur;
     private List<CartePropagation> piocheCartePropagation;
     private List<CartePropagation> defausseCartePropagation;
+    // TODO : créer méthode pour y mettre les couleurs des pions de joueurs
+    private Set<String> listeCouleursPionsJoueurs;
     private int nbStationsDeRechercheConstruites;
 
     public Plateau() {
@@ -43,12 +44,12 @@ public class Plateau {
         defausseCarteJoueur = new ArrayList<>();
         piocheCartePropagation = new ArrayList<>();
         defausseCartePropagation = new ArrayList<>();
+        listeCouleursPionsJoueurs = new HashSet<>();
     }
 
     public Ville getVilleByName(String name) {
         return villes.get(name);
     }
-
 
     public int getNbStationsDeRechercheConstruites() {
         for (Ville ville : getVilles().values()) {
@@ -71,7 +72,7 @@ public class Plateau {
         }
         for (NomsEvenement nomEvenement : NomsEvenement.values()) {
             switch (nomEvenement) {
-                case PONT_AERIEN -> piocheCarteJoueur.add(new PontAerien());
+                case PONT_AERIEN -> piocheCarteJoueur.add(new PontAerien(this));
                 case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new SubventionPublique());
                 case PREVISION -> piocheCarteJoueur.add(new Prevision());
                 case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new ParUneNuitTranquille());

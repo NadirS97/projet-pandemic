@@ -2,12 +2,15 @@ package modele.elements.cartes;
 
 import lombok.Getter;
 import lombok.ToString;
+import modele.elements.PionJoueur;
+import modele.elements.Ville;
 import modele.elements.enums.NomsEvenement;
-import modele.exceptions.AutorisationManquanteException;
+import modele.exceptions.DeplacementRefuseException;
 
 @ToString
 @Getter
 public abstract class CarteEvenement extends CarteJoueur {
+
     private NomsEvenement nomEvenement;
     private String description;
 
@@ -21,5 +24,5 @@ public abstract class CarteEvenement extends CarteJoueur {
 
     public abstract void effet();
 
-    public abstract void effet(boolean autorisation);
+    public abstract void effet(boolean autorisationDuJoueur, PionJoueur pionJoueur, Ville villeDestination) throws DeplacementRefuseException;
 }

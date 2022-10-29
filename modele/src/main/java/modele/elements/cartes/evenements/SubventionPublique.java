@@ -1,7 +1,10 @@
 package modele.elements.cartes.evenements;
 
+import modele.elements.PionJoueur;
+import modele.elements.Ville;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.enums.NomsEvenement;
+import modele.exceptions.DeplacementRefuseException;
 
 public class SubventionPublique extends CarteEvenement {
 
@@ -24,7 +27,7 @@ public class SubventionPublique extends CarteEvenement {
     }
 
     @Override
-    public void effet(boolean autorisation) {
+    public void effet(boolean autorisationDuJoueur, PionJoueur pionJoueur, Ville villeDestination) throws DeplacementRefuseException {
 
     }
 }

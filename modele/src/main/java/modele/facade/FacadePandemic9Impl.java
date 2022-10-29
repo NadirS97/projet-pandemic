@@ -5,7 +5,7 @@ import modele.elements.Partie;
 import modele.elements.Ville;
 import modele.elements.enums.Actions;
 import modele.exceptions.*;
-import modele.elements.Joueur;
+import modele.elements.PionJoueur;
 import modele.elements.enums.ModesDeplacements;
 
 import java.util.HashMap;
@@ -15,7 +15,6 @@ import java.util.Objects;
 public class FacadePandemic9Impl implements FacadePandemic9 {
 
     private Map<String, Partie> parties;
-
 
     public FacadePandemic9Impl() {
         this.parties = new HashMap<>();
@@ -34,20 +33,20 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
             throw new CodePartieInexistantException();
         if (parties.get(codePartie).isJoueurDejaDansPartie(pseudoJoueurPartie))
             throw new PseudoDejaExistantException();
-        parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie,4));
+        parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, new PionJoueur(pseudoJoueurPartie,4));
     }
 
     @Override
     public void jouerTour(String codePartie, Actions action, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, PseudoInexistantDansLaPartieException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException, VilleActuellePossedeDejaUneStationDeRechercheException {
         Partie partie = this.parties.get(codePartie);
         String pseudoJoueurPartie = partie.aQuiLeTour();
-        Joueur joueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
+        PionJoueur pionJoueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
         int nbActions = 0;
         while (nbActions < 4){
             switch (action) {
                 case DEPLACEMENT:
                     if (!Objects.isNull(modeDeplacementChoisis)){
-                        jouerActionDeplacement(joueurPartie, modeDeplacementChoisis, villeDestination);
+                        jouerActionDeplacement(pionJoueurPartie, modeDeplacementChoisis, villeDestination);
                         nbActions++;
                     }
                     break;
@@ -65,31 +64,31 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
                     break;
                 case CONSTRUIRE_UNE_STATION:
                     if(partie.getPlateauPartie().getNbStationsDeRechercheConstruites() < 6) {
-                        joueurPartie.construireStation();
-                        joueurPartie.defausseCarteVilleDeDeckJoueur(joueurPartie.getVilleActuelle());
+                        pionJoueurPartie.construireStation();
+                        pionJoueurPartie.defausseCarteVilleDeDeckJoueur(pionJoueurPartie.getVilleActuelle());
                     }else{
-                        joueurPartie.deplacerStationDeRecherche(villeDestination);
+                        pionJoueurPartie.deplacerStationDeRecherche(villeDestination);
                     }
                     nbActions++;
                     break;
             }
         }
-        partie.getJoueursPartie().put(joueurPartie.getPseudoJoueur(), joueurPartie);
+        partie.getJoueursPartie().put(pionJoueurPartie.getPseudoJoueur(), pionJoueurPartie);
         parties.put(partie.getCodePartie(), partie);
     }
 
     public void JouerTourr(String codePartie, IAction action){
         Partie partie = this.parties.get(codePartie);
         String pseudoJoueurPartie = partie.aQuiLeTour();
-        Joueur joueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
-        joueurPartie.setAction(action);
-        joueurPartie.executerAction();
+        PionJoueur pionJoueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
+        pionJoueurPartie.setAction(action);
+        pionJoueurPartie.executerAction();
     }
 
     @Override
-    public void jouerActionDeplacement(Joueur joueurPartie, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException {
-        joueurPartie.choixDeplacement(modeDeplacementChoisis);
-        joueurPartie.seDeplacer(villeDestination);
+    public void jouerActionDeplacement(PionJoueur pionJoueurPartie, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException {
+        pionJoueurPartie.choixDeplacement(modeDeplacementChoisis);
+        pionJoueurPartie.seDeplacer(villeDestination);
     }
 
 
@@ -97,5 +96,4 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     public boolean estPartieTerminee(String pseudoJoueurPartie) throws CodePartieInexistantException {
         return false;
     }
-
 }

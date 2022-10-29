@@ -1,14 +1,10 @@
 package modele.facade;
 
-import modele.elements.Partie;
-import modele.elements.Plateau;
 import modele.elements.Ville;
 import modele.elements.enums.Actions;
 import modele.elements.enums.ModesDeplacements;
 import modele.exceptions.*;
-import modele.elements.Joueur;
-
-import java.util.Map;
+import modele.elements.PionJoueur;
 
 public interface FacadePandemic9 {
 
@@ -29,7 +25,7 @@ public interface FacadePandemic9 {
 
     void jouerTour(String codePartie, Actions action, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws CodePartieInexistantException, VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, PseudoInexistantDansLaPartieException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException, VilleActuellePossedeDejaUneStationDeRechercheException;
 
-    void jouerActionDeplacement(Joueur joueurPartie, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException;
+    void jouerActionDeplacement(PionJoueur pionJoueurPartie, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException;
 
     boolean estPartieTerminee(String joueur) throws CodePartieInexistantException;
 

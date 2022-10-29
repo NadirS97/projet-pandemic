@@ -3,7 +3,6 @@ package modele.elements;
 
 import lombok.Getter;
 import modele.exceptions.CasCouleurVilleIncorrectException;
-import modele.facade.FacadePandemic9Impl;
 
 import java.util.*;
 
@@ -11,8 +10,7 @@ import java.util.*;
 public class Partie {
 
     private String codePartie;
-    private Map<String,Joueur> joueursPartie;
-
+    private Map<String, PionJoueur> joueursPartie;
     private List<String> ordreTourDeJeuPseudoJoueur;
     private int indexJoueur = 0;
     private Plateau plateauPartie;
@@ -21,7 +19,7 @@ public class Partie {
         this.codePartie = UUID.randomUUID().toString();
         this.plateauPartie = new Plateau();
         this.joueursPartie = new HashMap<>();
-        this.joueursPartie.put(pseudoJoueurPartie, new Joueur(pseudoJoueurPartie,4));
+        this.joueursPartie.put(pseudoJoueurPartie, new PionJoueur(pseudoJoueurPartie,4));
         this.ordreTourDeJeuPseudoJoueur = new ArrayList<>();
         this.ordreTourDeJeuPseudoJoueur.add(pseudoJoueurPartie);
     }
@@ -35,8 +33,8 @@ public class Partie {
     }
 
     public boolean isJoueurDejaDansPartie(String pseudoJoueurPartie){
-        for (Joueur joueur : joueursPartie.values()){
-            if (joueur.getPseudoJoueur().equals(pseudoJoueurPartie))
+        for (PionJoueur pionJoueur : joueursPartie.values()){
+            if (pionJoueur.getPseudoJoueur().equals(pseudoJoueurPartie))
                 return true;
         }
         return false;
