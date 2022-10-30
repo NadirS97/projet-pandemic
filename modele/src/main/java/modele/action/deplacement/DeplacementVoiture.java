@@ -3,7 +3,6 @@ package modele.action.deplacement;
 import modele.action.IAction;
 import modele.elements.PionJoueur;
 import modele.elements.Ville;
-import modele.exceptions.VilleNonVoisineException;
 
 public class DeplacementVoiture implements IAction {
 
@@ -19,6 +18,7 @@ public class DeplacementVoiture implements IAction {
 
     @Override
     public void execAction() {
-       pionJoueur.setVilleActuelle(this.villeDestination);
+
+        pionJoueur.setVilleActuelle(this.villeDestination);
     }
 }

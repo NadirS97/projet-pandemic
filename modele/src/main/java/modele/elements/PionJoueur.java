@@ -11,7 +11,9 @@ import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,7 +25,7 @@ public class PionJoueur {
     private String pseudoJoueur;
     private CarteRole roleJoueur;
     private String couleurPion;
-    private List<CarteJoueur> deckJoueur;
+    private Set<CarteJoueur> deckJoueur;
 
     private Ville villeActuelle;
 
@@ -33,6 +35,7 @@ public class PionJoueur {
     public PionJoueur(String pseudoJoueur, Plateau plateau){
         this.pseudoJoueur = pseudoJoueur;
         this.plateau = plateau;
+        this.deckJoueur = new HashSet<>();
     }
 
     /**
@@ -55,6 +58,7 @@ public class PionJoueur {
 
     public CarteJoueur defausseCarteVilleDeDeckJoueur(Ville ville){
         for (CarteJoueur carteJoueur : deckJoueur){
+
             if (carteJoueur instanceof CarteVille){
                 if (((CarteVille) carteJoueur).getVilleCarteVille().equals(ville)) {
                     deckJoueur.remove(carteJoueur);
@@ -64,21 +68,39 @@ public class PionJoueur {
         }
         return null;
     }
+    public void ajouterCarteVilleDeckJoueur(CarteVille carteVille){
+        deckJoueur.add(carteVille);
+    }
+
+
 
 
     public Ville actionSeDeplacerVoiture(Ville villeDestination) throws VilleIntrouvableException, VilleNonVoisineException, NbActionsMaxTourAtteintException{
         if (nbActions >= 4)
             throw new NbActionsMaxTourAtteintException();
-        if (!this.plateau.isVille(villeDestination.getNomVille()))
+        if (!plateau.isVille(villeDestination.getNomVille()))
            throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
-        if (!this.plateau.isVilleVoisine(getVilleActuelle(),villeDestination))
+        if (!plateau.isVilleVoisine(getVilleActuelle(),villeDestination))
             throw new VilleNonVoisineException();
-
-        action = new DeplacementVoiture(this,villeDestination);
-        action.execAction();
+        setVilleActuelle(villeDestination);
         nbActions++;
         return villeActuelle;
     }
+
+
+    public Ville actionSeDeplacerVolDirect(Ville villeDestination) throws VilleIntrouvableException, VilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
+        if (nbActions >= 4)
+            throw new NbActionsMaxTourAtteintException();
+        if (!plateau.isVille(villeDestination.getNomVille()))
+            throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
+        if (!isVilleOfCarteVilleDeckJoueur(villeDestination))
+            throw new VilleInexistanteDansDeckJoueurException();
+
+        defausseCarteVilleDeDeckJoueur(villeDestination);
+        setVilleActuelle(villeDestination);
+        return villeActuelle;
+    }
+
 
 
 
@@ -103,18 +125,6 @@ public class PionJoueur {
     }
 
 
-
-    public void setPlateau(Plateau plateau) {
-        this.plateau = plateau;
-    }
-
-    public void executerAction(){
-        if (this.nbActions > 0){
-            this.action.execAction();
-            this.nbActions --;
-        }
-
-    }
 
     public void setVilleActuelle(Ville villeActuelle) {
         this.villeActuelle = villeActuelle;

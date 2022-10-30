@@ -17,7 +17,7 @@ public class FacadeActionsJoueurImpl implements FacadeActionsJoueur {
 
     @Override
     public Ville actionSeDeplacerVolDirect(PionJoueur pionJoueur, Ville villeDestination) throws VilleIntrouvableException, VilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
-        return null;
+        return pionJoueur.actionSeDeplacerVolDirect(villeDestination);
     }
 
     @Override
