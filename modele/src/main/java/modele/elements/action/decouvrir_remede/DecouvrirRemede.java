@@ -1,6 +1,6 @@
-package modele.action.decouvrir_remede;
+package modele.elements.action.decouvrir_remede;
 
-import modele.action.IAction;
+import modele.elements.action.IAction;
 
 public class DecouvrirRemede implements IAction {
     @Override

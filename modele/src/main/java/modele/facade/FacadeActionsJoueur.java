@@ -35,9 +35,9 @@ public interface FacadeActionsJoueur {
             NbActionsMaxTourAtteintException;
 
     Ville actionSeDeplacerVolCharter(PionJoueur pionJoueur, Ville villeDestination)
-        throws VilleIntrouvableException,
-            CarteVilleInexistanteDansDeckJoueurException,
-            NbActionsMaxTourAtteintException;
+            throws VilleIntrouvableException,
+            CarteVilleNonCorrespondVilleActuelleException,
+            NbActionsMaxTourAtteintException, CarteVilleInexistanteDansDeckJoueurException;
 
     Ville actionSeDeplacerNavette(PionJoueur pionJoueur, Ville villeDestination)
         throws VilleAvecAucuneStationDeRechercheException,

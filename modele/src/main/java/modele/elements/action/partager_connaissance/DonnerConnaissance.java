@@ -1,6 +1,6 @@
-package modele.action.partager_connaissance;
+package modele.elements.action.partager_connaissance;
 
-import modele.action.IAction;
+import modele.elements.action.IAction;
 
 public class DonnerConnaissance implements IAction {
     @Override

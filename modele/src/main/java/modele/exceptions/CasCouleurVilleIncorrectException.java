@@ -1,4 +1,4 @@
 package modele.exceptions;
 
-public class CasCouleurVilleIncorrectException extends Throwable {
+public class CasCouleurVilleIncorrectException extends Exception {
 }

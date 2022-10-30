@@ -1,4 +1,4 @@
 package modele.exceptions;
 
-public class AutorisationManquanteException extends Throwable {
+public class AutorisationManquanteException extends Exception {
 }

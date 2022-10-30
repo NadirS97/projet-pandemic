@@ -11,5 +11,7 @@ public class DonneesPlateauDTO {
 
     private Set<VillesDTO> villes;
     private Set<VirusDTO> liste_virus;
+    private Set<PionsDTO> liste_pions;
+    private Set<CartesDTO> cartes_role;
 
 }

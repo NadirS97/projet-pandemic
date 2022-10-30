@@ -1,4 +1,4 @@
-package modele.action;
+package modele.elements.action;
 
 public interface IAction {
 

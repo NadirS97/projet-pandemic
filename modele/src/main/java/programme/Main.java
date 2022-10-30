@@ -19,10 +19,17 @@ public class Main {
         Plateau plateau = new Plateau();
         try {
             plateau.initialisationPlateau("modele/src/main/resources/DonneesPlateau.json");
+
             plateau.getVilles().values().forEach(ville -> {
                 System.out.println(ville);
             });
-        } catch (FileNotFoundException | VilleIntrouvableException | VirusIntrouvableException e ) {
+
+            plateau.getToutesLesCartesRolesExistante().forEach(carteRole -> {
+                System.out.println(carteRole);
+            });
+
+        } catch (FileNotFoundException | VilleIntrouvableException | VirusIntrouvableException |
+                 RoleIntrouvableException e ) {
             throw new RuntimeException(e);
         }
 //      ================================================================================================================

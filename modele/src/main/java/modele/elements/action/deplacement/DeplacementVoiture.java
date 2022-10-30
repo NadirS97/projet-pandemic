@@ -1,6 +1,6 @@
-package modele.action.deplacement;
+package modele.elements.action.deplacement;
 
-import modele.action.IAction;
+import modele.elements.action.IAction;
 import modele.elements.PionJoueur;
 import modele.elements.Ville;
 
@@ -18,7 +18,6 @@ public class DeplacementVoiture implements IAction {
 
     @Override
     public void execAction() {
-
-        pionJoueur.setVilleActuelle(this.villeDestination);
+       pionJoueur.setVilleActuelle(this.villeDestination);
     }
 }

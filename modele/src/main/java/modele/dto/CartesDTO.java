@@ -1,0 +1,13 @@
+package modele.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class CartesDTO {
+    private String nomRole;
+    private String couleurPionRole;
+}

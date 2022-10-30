@@ -1,11 +1,13 @@
 package modele.elements.cartes.evenements;
 
-import modele.elements.PionJoueur;
 import modele.elements.Plateau;
-import modele.elements.Ville;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.enums.NomsEvenement;
 import modele.exceptions.DeplacementRefuseException;
+import modele.utils.EffetTypePontAerienImpl;
+import modele.utils.IEffetType;
+
+import java.util.Optional;
 
 public class PontAerien extends CarteEvenement {
 
@@ -34,13 +36,28 @@ public class PontAerien extends CarteEvenement {
     }
 
     @Override
-    public void effet(boolean autorisationDuJoueur, PionJoueur pionJoueur, Ville villeDestination) throws DeplacementRefuseException {
-        if (autorisationDuJoueur) {
-            plateau.getVilles().get(pionJoueur.getVilleActuelle().getNomVille()).getListePionsJoueursPresents().remove(pionJoueur);
-            plateau.getVilles().get(villeDestination.getNomVille()).getListePionsJoueursPresents().add(pionJoueur);
-            pionJoueur.setVilleActuelle(villeDestination);
+    public void effet(Optional<IEffetType> effetType) throws Exception {
+        EffetTypePontAerienImpl effetTypePontAerienImpl = (EffetTypePontAerienImpl) effetType.get();
+        if (effetTypePontAerienImpl.isAutorisationDuJoueur()) {
+            plateau.getVilles().get(effetTypePontAerienImpl.getPionJoueur().getVilleActuelle().getNomVille()).getListePionsJoueursPresents().remove(effetTypePontAerienImpl.getPionJoueur());
+            plateau.getVilles().get(effetTypePontAerienImpl.getVilleDestination().getNomVille()).getListePionsJoueursPresents().add(effetTypePontAerienImpl.getPionJoueur());
+            effetTypePontAerienImpl.getPionJoueur().setVilleActuelle(effetTypePontAerienImpl.getVilleDestination());
         } else {
             throw new DeplacementRefuseException();
         }
     }
+
+//    @Override
+//    public void effet(boolean autorisationDuJoueur, PionJoueur pionJoueur, Ville villeDestination) throws DeplacementRefuseException {
+//        if (autorisationDuJoueur) {
+//            plateau.getVilles().get(pionJoueur.getVilleActuelle().getNomVille()).getListePionsJoueursPresents().remove(pionJoueur);
+//            plateau.getVilles().get(villeDestination.getNomVille()).getListePionsJoueursPresents().add(pionJoueur);
+//            pionJoueur.setVilleActuelle(villeDestination);
+//        } else {
+//            throw new DeplacementRefuseException();
+//        }
+//    }
+
+
+
 }

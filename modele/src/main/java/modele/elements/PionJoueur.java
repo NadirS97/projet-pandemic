@@ -2,7 +2,8 @@ package modele.elements;
 
 import lombok.Getter;
 import lombok.Setter;
-import modele.action.IAction;
+import modele.elements.action.IAction;
+import modele.elements.action.deplacement.DeplacementVoiture;
 import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
@@ -19,15 +20,11 @@ public class PionJoueur {
 
     private IAction action;
     private int nbActions;
-
     private String pseudoJoueur;
     private CarteRole roleJoueur;
     private String couleurPion;
     private List<CarteJoueur> deckJoueur;
-
     private Ville villeActuelle;
-
-
     private Plateau plateau;
 
     public PionJoueur(String pseudoJoueur, Plateau plateau){
@@ -54,24 +51,19 @@ public class PionJoueur {
         return listeVillesDeckJoueur.contains(ville); //True
     }
 
-    public CarteJoueur defausseCarteVilleDeDeckJoueur(Ville ville){
-        for (CarteJoueur carteJoueur : deckJoueur){
-
-            if (carteJoueur instanceof CarteVille){
+    public void defausseCarteVilleDeDeckJoueur(Ville ville) {
+        for (CarteJoueur carteJoueur : deckJoueur) {
+            if (carteJoueur instanceof CarteVille) {
                 if (((CarteVille) carteJoueur).getVilleCarteVille().equals(ville)) {
                     deckJoueur.remove(carteJoueur);
-                    return carteJoueur;
                 }
             }
         }
-        return null;
     }
+
     public void ajouterCarteVilleDeckJoueur(CarteVille carteVille){
         deckJoueur.add(carteVille);
     }
-
-
-
 
     public Ville actionSeDeplacerVoiture(Ville villeDestination) throws VilleIntrouvableException, VilleNonVoisineException, NbActionsMaxTourAtteintException{
         if (nbActions >= 4)
@@ -85,7 +77,6 @@ public class PionJoueur {
         return villeActuelle;
     }
 
-
     public Ville actionSeDeplacerVolDirect(Ville villeDestination) throws VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
         if (nbActions >= 4)
             throw new NbActionsMaxTourAtteintException();
@@ -93,7 +84,6 @@ public class PionJoueur {
             throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
         if (!isVilleOfCarteVilleDeckJoueur(villeDestination))
             throw new CarteVilleInexistanteDansDeckJoueurException();
-
         defausseCarteVilleDeDeckJoueur(villeDestination);
         setVilleActuelle(villeDestination);
         return villeActuelle;
@@ -106,17 +96,10 @@ public class PionJoueur {
             throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
         if (!isVilleOfCarteVilleDeckJoueur(villeActuelle))
             throw new CarteVilleInexistanteDansDeckJoueurException();
-
-
         defausseCarteVilleDeDeckJoueur(villeActuelle);
         setVilleActuelle(villeDestination);
         return villeActuelle;
     }
-
-
-
-
-
 
     public void construireStation() throws CarteVilleInexistanteDansDeckJoueurException, VilleAvecAucuneStationDeRechercheException {
 //        LE JOUEUR DEFAUSSE LA CARTE DE LA VILLE OU IL SE SITUE ET CONSTRUIT UNE STATION
@@ -136,9 +119,14 @@ public class PionJoueur {
         }
     }
 
-
-
     public void setVilleActuelle(Ville villeActuelle) {
         this.villeActuelle = villeActuelle;
+    }
+
+    public void executerAction() {
+        if (this.nbActions > 0) {
+            this.action.execAction();
+            this.nbActions--;
+        }
     }
 }

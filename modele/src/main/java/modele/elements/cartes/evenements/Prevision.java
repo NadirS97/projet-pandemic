@@ -5,6 +5,9 @@ import modele.elements.Ville;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.enums.NomsEvenement;
 import modele.exceptions.DeplacementRefuseException;
+import modele.utils.IEffetType;
+
+import java.util.Optional;
 
 public class Prevision extends CarteEvenement {
 
@@ -27,7 +30,12 @@ public class Prevision extends CarteEvenement {
     }
 
     @Override
-    public void effet(boolean autorisationDuJoueur, PionJoueur pionJoueur, Ville villeDestination) throws DeplacementRefuseException {
+    public void effet(Optional<IEffetType> effetType) throws Exception {
 
     }
+
+//    @Override
+//    public void effet(boolean autorisationDuJoueur, PionJoueur pionJoueur, Ville villeDestination) throws DeplacementRefuseException {
+//
+//    }
 }

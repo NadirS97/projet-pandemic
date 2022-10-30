@@ -1,0 +1,13 @@
+package modele.elements.enums;
+
+public enum NomsRoles {
+
+    SCIENTIFIQUE,
+    CHERCHEUSE,
+    REPARTITEUR,
+    SPECIALISTE_EN_MISE_EN_QUARANTAINE,
+    MEDECIN,
+    EXPERT_AUX_OPERATIONS,
+    PLANIFICATEUR_D_URGENCE
+
+}

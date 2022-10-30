@@ -1,21 +1,24 @@
 package modele.elements.cartes;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import modele.elements.enums.CouleurPionsRole;
+import modele.elements.enums.NomsRoles;
 
 import java.util.List;
 
-
 @Getter
 @Setter
-@AllArgsConstructor
 @ToString
-public class CarteRole {
+public abstract class CarteRole {
 
-    private String nomRole;
-    private String couleurPionRole;
-    private List<String> listeEffetsRole;
+    private NomsRoles nomRole;
+    private CouleurPionsRole couleurPionRole;
+    private String descriptionRole;
+
+    public CarteRole(CouleurPionsRole couleurPionRole) {
+        this.couleurPionRole = couleurPionRole;
+    }
+
+//    public abstract void effetRole();
 
 }

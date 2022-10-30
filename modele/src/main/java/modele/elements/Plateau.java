@@ -3,7 +3,11 @@ package modele.elements;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import modele.dto.DonneesPlateauDTO;
+import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.evenements.*;
+import modele.elements.cartes.roles.*;
+import modele.elements.enums.CouleurPionsRole;
+import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import lombok.Getter;
 import modele.elements.cartes.CarteJoueur;
@@ -13,7 +17,6 @@ import modele.elements.cartes.CarteVille;
 import modele.elements.enums.NomsEvenement;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.*;
@@ -31,12 +34,12 @@ public class Plateau {
     private List<CarteJoueur> defausseCarteJoueur;
     private List<CartePropagation> piocheCartePropagation;
     private List<CartePropagation> defausseCartePropagation;
+    private List<CarteRole> toutesLesCartesRolesExistante;
+
     // TODO : créer méthode pour y mettre les couleurs des pions de joueurs
     private Set<String> listeCouleursPionsJoueurs;
     private int nbStationsDeRechercheConstruites;
-    private String jsonFile;
     DonneesPlateauDTO donneesPlateauDTO;
-
 
     public Plateau() {
         lesVirus = new HashMap<>();
@@ -49,7 +52,7 @@ public class Plateau {
         piocheCartePropagation = new ArrayList<>();
         defausseCartePropagation = new ArrayList<>();
         listeCouleursPionsJoueurs = new HashSet<>();
-
+        toutesLesCartesRolesExistante = new ArrayList<>();
     }
 
     public Ville getVilleByName(String name) {
@@ -65,8 +68,9 @@ public class Plateau {
         return nbStationsDeRechercheConstruites;
     }
 
-    public void initialisationPlateau(String cheminDonneesJson) throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException  {
+    public void initialisationPlateau(String cheminDonneesJson) throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException, RoleIntrouvableException {
         donneesPlateauDTO = lectureDonneesPlateau(cheminDonneesJson);
+        initialisationCartesRoles();
         initialisationVirus();
         initialisationVilles();
         initialiserCartesJoueur();
@@ -88,6 +92,35 @@ public class Plateau {
         melangerPaquet(piocheCarteJoueur);
     }
 
+    public void initialisationVilles() throws  VilleIntrouvableException, VirusIntrouvableException {
+        attributionVirus(donneesPlateauDTO);
+        attributionVoisins(donneesPlateauDTO);
+    }
+
+    public void initialisationCartesRoles() throws RoleIntrouvableException {
+        for (NomsRoles role : NomsRoles.values()) {
+            switch(role) {
+                case CHERCHEUSE -> toutesLesCartesRolesExistante.add(new Chercheuse(CouleurPionsRole.MARRON));
+                case SCIENTIFIQUE -> toutesLesCartesRolesExistante.add(new Scientifique(CouleurPionsRole.BLANC));
+                case REPARTITEUR -> toutesLesCartesRolesExistante.add(new Repartiteur(CouleurPionsRole.ROSE));
+                case SPECIALISTE_EN_MISE_EN_QUARANTAINE -> toutesLesCartesRolesExistante.add(new SpecialisteEnMiseEnQuarantaine(CouleurPionsRole.VERT_FONCE));
+                case EXPERT_AUX_OPERATIONS -> toutesLesCartesRolesExistante.add(new ExpertAuxOperations(CouleurPionsRole.VERT_CLAIR));
+                case MEDECIN -> toutesLesCartesRolesExistante.add(new Medecin(CouleurPionsRole.ORANGE));
+                case PLANIFICATEUR_D_URGENCE -> toutesLesCartesRolesExistante.add(new PlanificateurDUrgence(CouleurPionsRole.BLEU));
+                default -> throw new RoleIntrouvableException(
+                        "Le role : " + role.toString() + " est introuvable");
+            }
+        }
+        melangerPaquet(toutesLesCartesRolesExistante);
+    }
+
+    public void initialisationVirus()  {
+        donneesPlateauDTO.getListe_virus().forEach(virusDTO -> {
+            Virus virus = new Virus(virusDTO.getCouleurVirus());
+            getLesVirus().put(virusDTO.getCouleurVirus(), virus);
+        });
+    }
+
     public void melangerPaquet(List<?> paquet) {
         Collections.shuffle(paquet);
     }
@@ -105,7 +138,6 @@ public class Plateau {
     }
 
     public DonneesPlateauDTO lectureDonneesPlateau(String cheminDonneesJson) throws FileNotFoundException {
-//        FileReader reader = new FileReader("C:\\Users\\Wedat\\IdeaProjects\\projet-pandemic-9\\modele\\src\\main\\resources\\DonneesPlateau.json");
         FileReader reader = new FileReader(cheminDonneesJson);
         BufferedReader br = new BufferedReader(reader);
         String donnees = br.lines().collect(Collectors.joining());
@@ -113,18 +145,16 @@ public class Plateau {
         return gson.fromJson(donnees, DonneesPlateauDTO.class);
     }
 
-    public void initialisationVirus()  {
-        donneesPlateauDTO.getListe_virus().forEach(virusDTO -> {
-            Virus virus = new Virus(virusDTO.getCouleurVirus());
-            getLesVirus().put(virusDTO.getCouleurVirus(), virus);
-        });
-    }
-
-    public void initialisationVilles() throws  VilleIntrouvableException, VirusIntrouvableException {
-
-        attributionVirus(donneesPlateauDTO);
-        attributionVoisins(donneesPlateauDTO);
-    }
+//    public void attributionPions(DonneesPlateauDTO donneesPlateauDTO) throws PionIntrouvableException {
+////        List<String> listeCartesRolesPionNonValide = listeCartesRolesPionNonValide(donneesPlateauDTO);
+////        if(!listeCartesRolesPionNonValide.isEmpty()) throw new PionIntrouvableException(
+////                "Une erreur vient de se produire, vous trouverez ci-joint la liste des cartes roles dont la couleur du pion associée est incorrecte: " +
+////                        listeCartesRolesPionNonValide);
+////        donneesPlateauDTO.getCartes_role().forEach(cartesDTO -> {
+////            CarteRole carteRole = new CarteRole(cartesDTO.getNomRole(), cartesDTO.getCouleurPionRole());
+////            toutesLesCartesRolesExistante.add(carteRole);
+////        });
+//    }
 
     public void attributionVirus(DonneesPlateauDTO donneesPlateauDTO) throws VirusIntrouvableException {
         List<String> listeVillesVirusNonValide = listeVilleVirusNonValide(donneesPlateauDTO);
@@ -166,4 +196,13 @@ public class Plateau {
         });
         return listeVirusNonValide;
     }
+
+//    private List<String> listeCartesRolesPionNonValide(DonneesPlateauDTO donneesPlateauDTO){
+//        List<String> listeCartesRolesPionNonValide = new ArrayList<>();
+//        donneesPlateauDTO.getCartes_role().forEach(cartesDTO -> {
+//            if(!tousLesPionsExistant.contains(cartesDTO.getCouleurPionRole()))
+//                listeCartesRolesPionNonValide.add(cartesDTO.getNomRole());
+//        });
+//        return listeCartesRolesPionNonValide;
+//    }
 }
