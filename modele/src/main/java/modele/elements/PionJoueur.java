@@ -10,9 +10,7 @@ import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -27,10 +25,11 @@ public class PionJoueur {
     private Ville villeActuelle;
     private Plateau plateau;
 
-    public PionJoueur(String pseudoJoueur, Plateau plateau){
+    public PionJoueur(String pseudoJoueur, Plateau plateau,int nbActions){
         this.pseudoJoueur = pseudoJoueur;
         this.plateau = plateau;
         this.deckJoueur = new ArrayList<>();
+        this.nbActions = nbActions;
     }
 
     /**
@@ -56,6 +55,7 @@ public class PionJoueur {
             if (carteJoueur instanceof CarteVille) {
                 if (((CarteVille) carteJoueur).getVilleCarteVille().equals(ville)) {
                     deckJoueur.remove(carteJoueur);
+                    break;
                 }
             }
         }
@@ -72,7 +72,10 @@ public class PionJoueur {
            throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
         if (!plateau.isVilleVoisine(getVilleActuelle(),villeDestination))
             throw new VilleNonVoisineException();
-        setVilleActuelle(villeDestination);
+
+//        setAction(new DeplacementVoiture(this,villeDestination));
+//         PionJoueur pionJoueur = executerAction();
+//         setVilleActuelle(pionJoueur.getVilleActuelle());
         nbActions++;
         return villeActuelle;
     }
@@ -86,6 +89,7 @@ public class PionJoueur {
             throw new CarteVilleInexistanteDansDeckJoueurException();
         defausseCarteVilleDeDeckJoueur(villeDestination);
         setVilleActuelle(villeDestination);
+        nbActions++;
         return villeActuelle;
     }
 
@@ -98,6 +102,7 @@ public class PionJoueur {
             throw new CarteVilleInexistanteDansDeckJoueurException();
         defausseCarteVilleDeDeckJoueur(villeActuelle);
         setVilleActuelle(villeDestination);
+        nbActions++;
         return villeActuelle;
     }
 
@@ -123,10 +128,12 @@ public class PionJoueur {
         this.villeActuelle = villeActuelle;
     }
 
-    public void executerAction() {
-        if (this.nbActions > 0) {
-            this.action.execAction();
+    public void executerAction() throws Exception {
+
+            this.action.execAction(this);
             this.nbActions--;
         }
+
+
     }
-}
+

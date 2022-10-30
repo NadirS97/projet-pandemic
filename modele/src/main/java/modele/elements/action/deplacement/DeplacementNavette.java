@@ -1,5 +1,6 @@
 package modele.elements.action.deplacement;
 
+import modele.elements.PionJoueur;
 import modele.elements.action.IAction;
 import modele.elements.Ville;
 
@@ -14,7 +15,7 @@ public class DeplacementNavette implements IAction {
 
 
     @Override
-    public void execAction() {
+    public void execAction(PionJoueur pionJoueur) {
 
         //
     /*    Plateau plateau;

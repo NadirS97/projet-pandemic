@@ -1,10 +1,11 @@
 package modele.elements.action.decouvrir_remede;
 
+import modele.elements.PionJoueur;
 import modele.elements.action.IAction;
 
 public class DecouvrirRemede implements IAction {
     @Override
-    public void execAction() {
+    public void execAction(PionJoueur pionJoueur) {
 
     }
 }

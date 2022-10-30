@@ -33,7 +33,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
             throw new PseudoDejaExistantException();
 
         Plateau plateau = parties.get(codePartie).getPlateauPartie();
-        PionJoueur nouveauPionJoueur = new PionJoueur(pseudoJoueurPartie, plateau);
+        PionJoueur nouveauPionJoueur = new PionJoueur(pseudoJoueurPartie, plateau,4);
         parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, nouveauPionJoueur);
     }
 
@@ -77,12 +77,16 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 //        parties.put(partie.getCodePartie(), partie);
 //    }
 
-    public void JouerTourr(String codePartie, IAction action){
-        Partie partie = this.parties.get(codePartie);
-        String pseudoJoueurPartie = partie.aQuiLeTour();
-        PionJoueur pionJoueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
-        pionJoueurPartie.setAction(action);
-        pionJoueurPartie.executerAction();
+//    public void JouerTourr(String codePartie, IAction action){
+//        Partie partie = this.parties.get(codePartie);
+//        String pseudoJoueurPartie = partie.aQuiLeTour();
+//        PionJoueur pionJoueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
+//        pionJoueurPartie.setAction(action);
+//        pionJoueurPartie.executerAction();
+//    }
+    public void jouerTour(PionJoueur joueurActuel, IAction action) throws Exception {
+        joueurActuel.setAction(action);
+        joueurActuel.executerAction();
     }
 
     @Override
