@@ -64,33 +64,9 @@ public class PionJoueur {
         deckJoueur.add(carteVille);
     }
 
-    public Ville actionSeDeplacerVoiture(Ville villeDestination) throws VilleIntrouvableException, VilleNonVoisineException, NbActionsMaxTourAtteintException{
-        if (nbActions >= 4)
-            throw new NbActionsMaxTourAtteintException();
-        if (!plateau.isVille(villeDestination.getNomVille()))
-           throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
-        if (!plateau.isVilleVoisine(getVilleActuelle(),villeDestination))
-            throw new VilleNonVoisineException();
 
-//        setAction(new DeplacementVoiture(this,villeDestination));
-//         PionJoueur pionJoueur = executerAction();
-//         setVilleActuelle(pionJoueur.getVilleActuelle());
-        nbActions++;
-        return villeActuelle;
-    }
 
-    public Ville actionSeDeplacerVolDirect(Ville villeDestination) throws VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
-        if (nbActions >= 4)
-            throw new NbActionsMaxTourAtteintException();
-        if (!plateau.isVille(villeDestination.getNomVille()))
-            throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
-        if (!isVilleOfCarteVilleDeckJoueur(villeDestination))
-            throw new CarteVilleInexistanteDansDeckJoueurException();
-        defausseCarteVilleDeDeckJoueur(villeDestination);
-        setVilleActuelle(villeDestination);
-        nbActions++;
-        return villeActuelle;
-    }
+
 
     public Ville actionSeDeplacerVolCharter(Ville villeDestination) throws VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
         if (nbActions >= 4)
