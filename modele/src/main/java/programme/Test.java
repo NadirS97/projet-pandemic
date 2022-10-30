@@ -4,11 +4,7 @@ import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.Ville;
 import modele.elements.cartes.evenements.PontAerien;
-import modele.exceptions.VirusIntrouvableException;
-import modele.utils.EffetTypePontAerienImpl;
-
-import java.util.HashMap;
-import java.util.Map;
+import modele.elements.cartes.effets.evenements.EffetTypePontAerienImpl;
 
 import java.util.Optional;
 
@@ -24,15 +20,8 @@ public class Test {
             pontAerien.effet(Optional.of(new EffetTypePontAerienImpl(true, pionJoueur,ville)));
             //Optional.empty() pour le cas d'un effet sans parametres
 
-        } catch (VirusIntrouvableException | Exception e) {
+        } catch ( Exception e) {
             throw new RuntimeException(e);
         }
-
-//        Map<String, Object> maMap = new HashMap<>();
-//        maMap.put("Autorisation", true);
-
-
-
-
     }
 }

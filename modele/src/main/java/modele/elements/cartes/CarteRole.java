@@ -1,10 +1,11 @@
 package modele.elements.cartes;
 
 import lombok.*;
+import modele.elements.cartes.effets.IEffetType;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
-import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -19,6 +20,7 @@ public abstract class CarteRole {
         this.couleurPionRole = couleurPionRole;
     }
 
-//    public abstract void effetRole();
+    public abstract void effet(Optional<IEffetType> effetType) throws Exception;
+
 
 }

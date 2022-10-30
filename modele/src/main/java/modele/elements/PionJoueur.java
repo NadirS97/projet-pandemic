@@ -2,17 +2,14 @@ package modele.elements;
 
 import lombok.Getter;
 import lombok.Setter;
-import modele.elements.action.IAction;
-import modele.elements.action.deplacement.DeplacementVoiture;
+import modele.elements.actions.IAction;
 import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -56,6 +53,7 @@ public class PionJoueur {
             if (carteJoueur instanceof CarteVille) {
                 if (((CarteVille) carteJoueur).getVilleCarteVille().equals(ville)) {
                     deckJoueur.remove(carteJoueur);
+                    break;
                 }
             }
         }

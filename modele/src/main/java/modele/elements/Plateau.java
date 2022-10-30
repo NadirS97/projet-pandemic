@@ -145,17 +145,6 @@ public class Plateau {
         return gson.fromJson(donnees, DonneesPlateauDTO.class);
     }
 
-//    public void attributionPions(DonneesPlateauDTO donneesPlateauDTO) throws PionIntrouvableException {
-////        List<String> listeCartesRolesPionNonValide = listeCartesRolesPionNonValide(donneesPlateauDTO);
-////        if(!listeCartesRolesPionNonValide.isEmpty()) throw new PionIntrouvableException(
-////                "Une erreur vient de se produire, vous trouverez ci-joint la liste des cartes roles dont la couleur du pion associée est incorrecte: " +
-////                        listeCartesRolesPionNonValide);
-////        donneesPlateauDTO.getCartes_role().forEach(cartesDTO -> {
-////            CarteRole carteRole = new CarteRole(cartesDTO.getNomRole(), cartesDTO.getCouleurPionRole());
-////            toutesLesCartesRolesExistante.add(carteRole);
-////        });
-//    }
-
     public void attributionVirus(DonneesPlateauDTO donneesPlateauDTO) throws VirusIntrouvableException {
         List<String> listeVillesVirusNonValide = listeVilleVirusNonValide(donneesPlateauDTO);
         if (!listeVillesVirusNonValide.isEmpty()) throw new VirusIntrouvableException(
@@ -196,13 +185,4 @@ public class Plateau {
         });
         return listeVirusNonValide;
     }
-
-//    private List<String> listeCartesRolesPionNonValide(DonneesPlateauDTO donneesPlateauDTO){
-//        List<String> listeCartesRolesPionNonValide = new ArrayList<>();
-//        donneesPlateauDTO.getCartes_role().forEach(cartesDTO -> {
-//            if(!tousLesPionsExistant.contains(cartesDTO.getCouleurPionRole()))
-//                listeCartesRolesPionNonValide.add(cartesDTO.getNomRole());
-//        });
-//        return listeCartesRolesPionNonValide;
-//    }
 }

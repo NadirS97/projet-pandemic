@@ -2,11 +2,8 @@ package modele.elements.cartes;
 
 import lombok.Getter;
 import lombok.ToString;
-import modele.elements.PionJoueur;
-import modele.elements.Ville;
 import modele.elements.enums.NomsEvenement;
-import modele.exceptions.DeplacementRefuseException;
-import modele.utils.IEffetType;
+import modele.elements.cartes.effets.IEffetType;
 
 import java.util.Optional;
 

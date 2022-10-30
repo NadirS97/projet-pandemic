@@ -1,11 +1,8 @@
 package modele.elements.cartes.evenements;
 
-import modele.elements.PionJoueur;
-import modele.elements.Ville;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.enums.NomsEvenement;
-import modele.exceptions.DeplacementRefuseException;
-import modele.utils.IEffetType;
+import modele.elements.cartes.effets.IEffetType;
 
 import java.util.Optional;
 

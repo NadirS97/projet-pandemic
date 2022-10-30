@@ -1,6 +1,6 @@
-package modele.elements.action.construire_une_station;
+package modele.elements.actions.construire_une_station;
 
-import modele.elements.action.IAction;
+import modele.elements.actions.IAction;
 
 public class ConstruireUneStation implements IAction {
     @Override

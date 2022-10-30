@@ -1,6 +1,6 @@
 package modele.facade;
 
-import modele.elements.action.IAction;
+import modele.elements.actions.IAction;
 import modele.elements.Partie;
 import modele.elements.Plateau;
 import modele.exceptions.*;
