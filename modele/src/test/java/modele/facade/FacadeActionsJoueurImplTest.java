@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -151,6 +152,19 @@ class FacadeActionsJoueurImplTest {
 
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.actionSeDeplacerVolCharter(pionJoueur,plateau.getVilleByName("Paris")));
+
+    }
+
+    @Test
+    void testshuffle() {
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau);
+        Ville atlanta = plateau.getVilleByName("Atlanta");
+        Ville paris = plateau.getVilleByName("Paris");
+
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        Collections.shuffle(pionJoueur.getDeckJoueur().stream().toList());
+
 
     }
 

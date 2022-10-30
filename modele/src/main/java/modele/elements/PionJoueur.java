@@ -23,7 +23,7 @@ public class PionJoueur {
     private String pseudoJoueur;
     private CarteRole roleJoueur;
     private String couleurPion;
-    private Set<CarteJoueur> deckJoueur;
+    private List<CarteJoueur> deckJoueur;
 
     private Ville villeActuelle;
 
@@ -33,7 +33,7 @@ public class PionJoueur {
     public PionJoueur(String pseudoJoueur, Plateau plateau){
         this.pseudoJoueur = pseudoJoueur;
         this.plateau = plateau;
-        this.deckJoueur = new HashSet<>();
+        this.deckJoueur = new ArrayList<>();
     }
 
     /**
