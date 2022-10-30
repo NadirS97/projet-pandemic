@@ -1,8 +1,9 @@
-package modele.elements.action.deplacement;
+package modele.elements.actions.deplacement;
 
 import modele.elements.PionJoueur;
-import modele.elements.action.IAction;
+
 import modele.elements.Ville;
+import modele.elements.actions.IAction;
 
 public class DeplacementNavette implements IAction {
 

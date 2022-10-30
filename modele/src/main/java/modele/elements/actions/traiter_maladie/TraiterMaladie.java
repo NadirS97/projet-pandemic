@@ -1,7 +1,8 @@
-package modele.elements.action.traiter_maladie;
+package modele.elements.actions.traiter_maladie;
 
 import modele.elements.PionJoueur;
-import modele.elements.action.IAction;
+
+import modele.elements.actions.IAction;
 
 public class TraiterMaladie implements IAction {
     @Override

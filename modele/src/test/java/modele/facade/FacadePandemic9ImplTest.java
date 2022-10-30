@@ -2,8 +2,9 @@ package modele.facade;
 
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
-import modele.elements.action.IAction;
-import modele.elements.action.deplacement.DeplacementVoiture;
+
+import modele.elements.actions.IAction;
+import modele.elements.actions.deplacement.DeplacementVoiture;
 import modele.exceptions.RoleIntrouvableException;
 import modele.exceptions.VilleIntrouvableException;
 import modele.exceptions.VirusIntrouvableException;
