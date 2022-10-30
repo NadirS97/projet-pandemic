@@ -16,13 +16,13 @@ public class FacadeActionsJoueurImpl implements FacadeActionsJoueur {
     }
 
     @Override
-    public Ville actionSeDeplacerVolDirect(PionJoueur pionJoueur, Ville villeDestination) throws VilleIntrouvableException, VilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
+    public Ville actionSeDeplacerVolDirect(PionJoueur pionJoueur, Ville villeDestination) throws VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
         return pionJoueur.actionSeDeplacerVolDirect(villeDestination);
     }
 
     @Override
-    public Ville actionSeDeplacerVolCharter(PionJoueur pionJoueur, Ville villeDestination) throws VilleIntrouvableException, CarteVilleNonCorrespondVilleActuelleException, NbActionsMaxTourAtteintException {
-        return null;
+    public Ville actionSeDeplacerVolCharter(PionJoueur pionJoueur, Ville villeDestination) throws CarteVilleInexistanteDansDeckJoueurException,VilleIntrouvableException, NbActionsMaxTourAtteintException {
+        return pionJoueur.actionSeDeplacerVolCharter(villeDestination);
     }
 
     @Override
@@ -51,12 +51,12 @@ public class FacadeActionsJoueurImpl implements FacadeActionsJoueur {
     }
 
     @Override
-    public Ville actionDonnerAuJoueurCarteVille(PionJoueur pionJoueur1, PionJoueur pionJoueur2) throws VilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
+    public Ville actionDonnerAuJoueurCarteVille(PionJoueur pionJoueur1, PionJoueur pionJoueur2) throws CarteVilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
         return null;
     }
 
     @Override
-    public Ville actionPrendreAuJoueurCarteVille(PionJoueur pionJoueur1, PionJoueur pionJoueur2) throws VilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
+    public Ville actionPrendreAuJoueurCarteVille(PionJoueur pionJoueur1, PionJoueur pionJoueur2) throws CarteVilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
         return null;
     }
 

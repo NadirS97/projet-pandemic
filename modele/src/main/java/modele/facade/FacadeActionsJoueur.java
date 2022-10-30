@@ -31,12 +31,12 @@ public interface FacadeActionsJoueur {
  */
     Ville actionSeDeplacerVolDirect(PionJoueur pionJoueur, Ville villeDestination)
             throws VilleIntrouvableException,
-            VilleInexistanteDansDeckJoueurException,
+            CarteVilleInexistanteDansDeckJoueurException,
             NbActionsMaxTourAtteintException;
 
     Ville actionSeDeplacerVolCharter(PionJoueur pionJoueur, Ville villeDestination)
         throws VilleIntrouvableException,
-            CarteVilleNonCorrespondVilleActuelleException,
+            CarteVilleInexistanteDansDeckJoueurException,
             NbActionsMaxTourAtteintException;
 
     Ville actionSeDeplacerNavette(PionJoueur pionJoueur, Ville villeDestination)
@@ -63,11 +63,11 @@ public interface FacadeActionsJoueur {
             NbActionsMaxTourAtteintException;
 
     Ville actionDonnerAuJoueurCarteVille(PionJoueur pionJoueur1,PionJoueur pionJoueur2)
-        throws VilleInexistanteDansDeckJoueurException,
+        throws CarteVilleInexistanteDansDeckJoueurException,
             NbActionsMaxTourAtteintException;
 
     Ville actionPrendreAuJoueurCarteVille(PionJoueur pionJoueur1, PionJoueur pionJoueur2)
-        throws VilleInexistanteDansDeckJoueurException,
+        throws CarteVilleInexistanteDansDeckJoueurException,
             NbActionsMaxTourAtteintException;
 
     Set<CarteJoueur> actionDecouvrirRemede(PionJoueur pionJoueur)

@@ -1,7 +1,7 @@
 package modele.action.deplacement;
 
 import modele.action.IAction;
-import modele.exceptions.VilleInexistanteDansDeckJoueurException;
+import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
 
 public class DeplacementVolCharter implements IAction {
 
@@ -11,7 +11,7 @@ public class DeplacementVolCharter implements IAction {
      *
      * @param
      * @param
-     * @throws VilleInexistanteDansDeckJoueurException
+     * @throws CarteVilleInexistanteDansDeckJoueurException
      */
   /*  @Override
     public Ville seDeplacer(Joueur joueur, Ville villeDestination) throws VilleInexistanteDansDeckJoueurException {

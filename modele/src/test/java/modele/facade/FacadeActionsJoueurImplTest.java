@@ -5,17 +5,12 @@ import modele.elements.Plateau;
 import modele.elements.Ville;
 import modele.elements.Virus;
 import modele.elements.cartes.CarteVille;
-import modele.exceptions.NbActionsMaxTourAtteintException;
-import modele.exceptions.VilleIntrouvableException;
-import modele.exceptions.VilleNonVoisineException;
-import modele.exceptions.VirusIntrouvableException;
+import modele.exceptions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -101,4 +96,62 @@ class FacadeActionsJoueurImplTest {
         Assertions.assertDoesNotThrow(() -> this.instance.actionSeDeplacerVolDirect(pionJoueur,madrid));
         assertEquals(pionJoueur.getVilleActuelle(), madrid);
     }
+
+    @Test
+    void actionSeDeplacerVolDirectVilleIntrouvable() {
+
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau);
+        pionJoueur.setVilleActuelle(plateau.getVilleByName("Atlanta"));
+        Ville villeIntrouvable = new Ville("qdq",40,40,new Virus("rojo"));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(villeIntrouvable));
+
+        Assertions.assertThrows(VilleIntrouvableException.class,
+                () -> this.instance.actionSeDeplacerVolDirect(pionJoueur,villeIntrouvable));
+
+    }
+
+    @Test
+    void actionSeDeplacerVolDirectVilleInexistanteDeckJoueur() {
+
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau);
+        pionJoueur.setVilleActuelle(plateau.getVilleByName("Atlanta"));
+        Ville madrid = new Ville("Madrid",40,40,new Virus("rojo"));
+        Ville paris = new Ville("Paris",40,40,new Virus("blue"));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.actionSeDeplacerVolDirect(pionJoueur,madrid));
+
+    }
+
+    /**
+     *
+     * VOL CHARTER
+     */
+
+    @Test
+    void actionSeDeplacerVolCharterOK() {
+
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau);
+        Ville atlanta = plateau.getVilleByName("Atlanta");
+        pionJoueur.setVilleActuelle(atlanta);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+
+        Assertions.assertDoesNotThrow(() -> this.instance.actionSeDeplacerVolCharter(pionJoueur,plateau.getVilleByName("Paris")));
+        assertEquals(pionJoueur.getVilleActuelle(), plateau.getVilleByName("Paris"));
+    }
+
+    @Test
+    void actionSeDeplacerVolCharterPasDeCarteVilleActuel() {
+
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau);
+        Ville atlanta = plateau.getVilleByName("Atlanta");
+        pionJoueur.setVilleActuelle(atlanta);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Paris")));
+
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.actionSeDeplacerVolCharter(pionJoueur,plateau.getVilleByName("Paris")));
+
+    }
+
 }
