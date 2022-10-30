@@ -2,8 +2,7 @@ package modele.elements;
 
 import lombok.Getter;
 import lombok.Setter;
-import modele.elements.action.IAction;
-import modele.elements.action.deplacement.DeplacementVoiture;
+import modele.elements.actions.IAction;
 import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;

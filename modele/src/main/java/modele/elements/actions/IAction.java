@@ -1,4 +1,4 @@
-package modele.elements.action;
+package modele.elements.actions;
 
 import modele.elements.PionJoueur;
 import modele.exceptions.NbActionsMaxTourAtteintException;

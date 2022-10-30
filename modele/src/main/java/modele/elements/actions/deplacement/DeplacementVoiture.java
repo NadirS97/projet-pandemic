@@ -1,6 +1,6 @@
-package modele.elements.action.deplacement;
+package modele.elements.actions.deplacement;
 
-import modele.elements.action.IAction;
+import modele.elements.actions.IAction;
 import modele.elements.PionJoueur;
 import modele.elements.Ville;
 import modele.exceptions.NbActionsMaxTourAtteintException;
