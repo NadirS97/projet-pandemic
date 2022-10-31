@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.ToString;
 import modele.elements.enums.NomsEvenement;
 import modele.elements.cartes.effets.IEffetType;
+import modele.exceptions.EffetManquantException;
 
 import java.util.Optional;
 
@@ -22,9 +23,5 @@ public abstract class CarteEvenement extends CarteJoueur {
         return description;
     }
 
-    public abstract void effet();
-
-//    public abstract void effet(boolean autorisationDuJoueur, PionJoueur pionJoueur, Ville villeDestination) throws DeplacementRefuseException;
-
-    public abstract void effet(Optional<IEffetType> effetType) throws Exception;
+    public abstract void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException;
 }

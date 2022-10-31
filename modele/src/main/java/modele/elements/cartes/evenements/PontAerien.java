@@ -6,6 +6,7 @@ import modele.elements.enums.NomsEvenement;
 import modele.exceptions.DeplacementRefuseException;
 import modele.elements.cartes.effets.evenements.EffetTypePontAerienImpl;
 import modele.elements.cartes.effets.IEffetType;
+import modele.exceptions.EffetManquantException;
 
 import java.util.Optional;
 
@@ -29,20 +30,19 @@ public class PontAerien extends CarteEvenement {
     }
 
     @Override
-    public void effet() {
-
-    }
-
-    @Override
-    public void effet(Optional<IEffetType> effetType) throws Exception {
-        EffetTypePontAerienImpl effetTypePontAerienImpl = (EffetTypePontAerienImpl) effetType.get();
-        if (effetTypePontAerienImpl.isAutorisationDuJoueur()) {
-            plateau.getVilles().get(effetTypePontAerienImpl.getPionJoueur().getVilleActuelle().getNomVille()).getListePionsJoueursPresents().remove(effetTypePontAerienImpl.getPionJoueur());
-            plateau.getVilles().get(effetTypePontAerienImpl.getVilleDestination().getNomVille()).getListePionsJoueursPresents().add(effetTypePontAerienImpl.getPionJoueur());
-            effetTypePontAerienImpl.getPionJoueur().setVilleActuelle(effetTypePontAerienImpl.getVilleDestination());
-        } else {
-            throw new DeplacementRefuseException();
+    public void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException {
+        if (effetType.isPresent()) {
+            EffetTypePontAerienImpl effetTypePontAerienImpl = (EffetTypePontAerienImpl) effetType.get();
+            if (effetTypePontAerienImpl.isAutorisationDuJoueur()) {
+                plateau.getVilles().get(effetTypePontAerienImpl.getPionJoueur().getVilleActuelle().getNomVille()).getListePionsJoueursPresents().remove(effetTypePontAerienImpl.getPionJoueur());
+                plateau.getVilles().get(effetTypePontAerienImpl.getVilleDestination().getNomVille()).getListePionsJoueursPresents().add(effetTypePontAerienImpl.getPionJoueur());
+                effetTypePontAerienImpl.getPionJoueur().setVilleActuelle(effetTypePontAerienImpl.getVilleDestination());
+            } else {
+                throw new DeplacementRefuseException();
+            }
+        }
+        else {
+            throw new EffetManquantException();
         }
     }
-
 }

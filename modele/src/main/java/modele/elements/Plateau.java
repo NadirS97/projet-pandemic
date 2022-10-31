@@ -39,6 +39,9 @@ public class Plateau {
     // TODO : créer méthode pour y mettre les couleurs des pions de joueurs
     private Set<String> listeCouleursPionsJoueurs;
     private int nbStationsDeRechercheConstruites;
+
+    // TODO : au moment de la phase propagation des maladies, vérifier que effetParUneNuitTranquilleActif est à false, sinon passer la phase puis passer effetParUneNuitTranquilleActif à false
+    private boolean effetParUneNuitTranquilleActif;
     DonneesPlateauDTO donneesPlateauDTO;
 
     public Plateau() {
@@ -53,6 +56,7 @@ public class Plateau {
         defausseCartePropagation = new ArrayList<>();
         listeCouleursPionsJoueurs = new HashSet<>();
         toutesLesCartesRolesExistante = new ArrayList<>();
+        effetParUneNuitTranquilleActif = false;
     }
 
     public Ville getVilleByName(String name) {
@@ -83,10 +87,10 @@ public class Plateau {
         for (NomsEvenement nomEvenement : NomsEvenement.values()) {
             switch (nomEvenement) {
                 case PONT_AERIEN -> piocheCarteJoueur.add(new PontAerien(this));
-                case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new SubventionPublique());
-                case PREVISION -> piocheCarteJoueur.add(new Prevision());
-                case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new ParUneNuitTranquille());
-                case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new PopulationResiliente());
+                case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new SubventionPublique(this));
+                case PREVISION -> piocheCarteJoueur.add(new Prevision(this));
+                case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new ParUneNuitTranquille(this));
+                case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new PopulationResiliente(this));
             }
         }
         melangerPaquet(piocheCarteJoueur);
@@ -184,5 +188,9 @@ public class Plateau {
                 listeVirusNonValide.add(villesDTO.getNomVille());
         });
         return listeVirusNonValide;
+    }
+
+    public void setEffetParUneNuitTranquilleActif(boolean effetParUneNuitTranquilleActif) {
+        this.effetParUneNuitTranquilleActif = effetParUneNuitTranquilleActif;
     }
 }
