@@ -24,7 +24,6 @@ public class DeplacementVoiture implements IAction {
             throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
         if (!pionJoueur.getPlateau().isVilleVoisine(pionJoueur.getVilleActuelle(),villeDestination))
             throw new VilleNonVoisineException();
-      pionJoueur.setVilleActuelle(villeDestination);
-
+        pionJoueur.setVilleActuelle(villeDestination);
     }
 }

@@ -12,7 +12,9 @@ public class SpecialisteEnMiseEnQuarantaine extends CarteRole {
     public SpecialisteEnMiseEnQuarantaine(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
         super.setNomRole(NomsRoles.SPECIALISTE_EN_MISE_EN_QUARANTAINE);
-        super.setDescriptionRole("ceci est une description pour SpecialisteEnMiseEnQuarantaine.");
+        super.setDescriptionRole(
+                "Empêchez les éclosions et le placement de cubes dans la ville où vous êtes ainsi " +
+                        "que dans toutes les villes qui y sont reliées.");
     }
 
     @Override

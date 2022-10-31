@@ -24,7 +24,7 @@ public class DeplacementVolDirect implements IAction {
         if (!pionJoueur.getPlateau().isVille(villeDestination.getNomVille()))
             throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
         if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(villeDestination))
-            throw new CarteVilleInexistanteDansDeckJoueurException();
+            throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeDestination + " n'est pas présente dans votre main.");
         pionJoueur.defausseCarteVilleDeDeckJoueur(villeDestination);
         pionJoueur.setVilleActuelle(villeDestination);
     }

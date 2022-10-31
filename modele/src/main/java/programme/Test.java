@@ -5,6 +5,7 @@ import modele.elements.Plateau;
 import modele.elements.Ville;
 import modele.elements.cartes.effets.evenements.EffetTypePontAerienImpl;
 import modele.elements.cartes.evenements.PontAerien;
+import modele.exceptions.EffetManquantException;
 import modele.exceptions.VirusIntrouvableException;
 
 
@@ -25,13 +26,8 @@ public class Test {
             pontAerien.effet(Optional.of(new EffetTypePontAerienImpl(true, pionJoueur,ville)));
             //Optional.empty() pour le cas d'un effet sans parametres
 
-        } catch ( Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-
-
-
-
     }
 }

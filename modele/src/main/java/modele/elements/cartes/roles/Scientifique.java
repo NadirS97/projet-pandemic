@@ -12,7 +12,7 @@ public class Scientifique extends CarteRole {
     public Scientifique(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
         super.setNomRole(NomsRoles.SCIENTIFIQUE);
-        super.setDescriptionRole("ceci est une description pour Scientifique.");
+        super.setDescriptionRole("Vous n'avez besoin que de 4 cartes de la même couleur pour découvrir un remède.");
     }
 
     @Override

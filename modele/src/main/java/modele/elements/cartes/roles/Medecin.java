@@ -12,7 +12,10 @@ public class Medecin extends CarteRole {
     public Medecin(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
         super.setNomRole(NomsRoles.MEDECIN);
-        super.setDescriptionRole("ceci est une description pour Medecin.");
+        super.setDescriptionRole(
+                "Retirez tous les cubes d'une couleur lorsque vous traitez une maladie. Dans la " +
+                        "ville où vous êtes retirez automatiquement tous les cubes de la couleur d'une maladie guérie " +
+                        "(et empêchez d'autres cubes d'une maladie guérie d'y être placés).");
     }
 
     @Override

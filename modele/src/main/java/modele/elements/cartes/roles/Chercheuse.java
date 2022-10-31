@@ -12,7 +12,10 @@ public class Chercheuse extends CarteRole {
     public Chercheuse(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
         super.setNomRole(NomsRoles.CHERCHEUSE);
-        super.setDescriptionRole("ceci est une description pour chercheuse.");
+        super.setDescriptionRole(
+                "Lorsque vous partagez des connaissances, vous pouvez donner n'importe quelle carte Ville de " +
+                        "votre main. La carte n'a pas à correspondre à la ville où vous êtes. Durant son tour, " +
+                        "un joueur qui partage des connaissance avec vous peut vous prendre n'importe quelle carte.");
     }
 
     @Override

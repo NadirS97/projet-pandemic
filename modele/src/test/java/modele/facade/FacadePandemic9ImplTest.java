@@ -5,6 +5,7 @@ import modele.elements.Plateau;
 
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
+import modele.elements.actions.construire_une_station.ConstruireUneStation;
 import modele.elements.actions.deplacement.DeplacementVoiture;
 import modele.elements.actions.deplacement.DeplacementVolDirect;
 import modele.elements.cartes.CarteVille;
@@ -31,8 +32,9 @@ class FacadePandemic9ImplTest {
     }
 
 
-
-//ACTION DEPLACEMENT_VOITURE
+//=============================================================================================================================
+//                                                ACTION DeplacementVoiture
+//=============================================================================================================================
     @Test
     void jouerTourActionDeplacementVoitureOK() {
         PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
@@ -82,7 +84,9 @@ class FacadePandemic9ImplTest {
 
     }
 
-    //ACTION DEPLACEMENT_VOL_DIRECT
+//=============================================================================================================================
+//                                                ACTION DeplacementVolDirect
+//=============================================================================================================================
     @Test
     void jouerTourActionDeplacementVolDirectOK() {
         PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
@@ -94,4 +98,147 @@ class FacadePandemic9ImplTest {
 
         assertEquals(pionJoueur.getVilleActuelle(), madrid);
     }
+
+//=============================================================================================================================
+//                                                ACTION ConstruireUneStation
+//=============================================================================================================================
+
+    @Test
+    void jouerTourActionConstruireUneStationOK() {
+        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
+
+        Ville villeActuelle = plateau.getVilleByName("Atlanta");
+
+        pionJoueur.setVilleActuelle(villeActuelle);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(villeActuelle));
+
+        IAction action = new ConstruireUneStation();
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur, action));
+
+        assertTrue(pionJoueur.getVilleActuelle().isStationDeRechercheVille());
+        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(villeActuelle));
+    }
+
+    @Test
+    void jouerTourActionConstruireUneStationDeplacementStationOK(){
+        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
+
+        Ville villeSansStationRecherche = plateau.getVilleByName("Atlanta");
+        villeSansStationRecherche.setStationDeRechercheVille(false);
+
+        Ville ville1 = plateau.getVilleByName("Chicago");
+        ville1.setStationDeRechercheVille(true);
+        Ville ville2 = plateau.getVilleByName("Alger");
+        ville2.setStationDeRechercheVille(true);
+        Ville ville3 = plateau.getVilleByName("Paris");
+        ville3.setStationDeRechercheVille(true);
+        Ville ville4 = plateau.getVilleByName("Milan");
+        ville4.setStationDeRechercheVille(true);
+        Ville ville5 = plateau.getVilleByName("Tokyo");
+        ville5.setStationDeRechercheVille(true);
+        Ville ville6 = plateau.getVilleByName("Miami");
+        ville6.setStationDeRechercheVille(true);
+
+        pionJoueur.setVilleActuelle(villeSansStationRecherche);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(villeSansStationRecherche));
+
+        IAction action = new ConstruireUneStation(ville1);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur, action));
+
+        assertTrue(villeSansStationRecherche.isStationDeRechercheVille());
+        assertFalse(ville1.isStationDeRechercheVille());
+    }
+
+    @Test
+    void jouerTourActionConstruireUneStationDeplacementStationVilleAvecAucuneStationDeRecherche(){
+        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
+
+        Ville villeSansStationRecherche = plateau.getVilleByName("Atlanta");
+        villeSansStationRecherche.setStationDeRechercheVille(false);
+
+        Ville villeSansStationRecherche2 = plateau.getVilleByName("Istanbul");
+        villeSansStationRecherche2.setStationDeRechercheVille(false);
+
+        Ville ville1 = plateau.getVilleByName("Chicago");
+        ville1.setStationDeRechercheVille(true);
+        Ville ville2 = plateau.getVilleByName("Alger");
+        ville2.setStationDeRechercheVille(true);
+        Ville ville3 = plateau.getVilleByName("Paris");
+        ville3.setStationDeRechercheVille(true);
+        Ville ville4 = plateau.getVilleByName("Milan");
+        ville4.setStationDeRechercheVille(true);
+        Ville ville5 = plateau.getVilleByName("Tokyo");
+        ville5.setStationDeRechercheVille(true);
+        Ville ville6 = plateau.getVilleByName("Miami");
+        ville6.setStationDeRechercheVille(true);
+
+        pionJoueur.setVilleActuelle(villeSansStationRecherche);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(villeSansStationRecherche));
+
+        IAction action = new ConstruireUneStation(villeSansStationRecherche2);
+        Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
+                () -> this.instance.jouerTour(pionJoueur,action));
+    }
+
+    @Test
+    void jouerTourActionConstruireUneStationDeplacementStationVilleActuellePossedeDejaUneStationDeRecherche(){
+        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
+
+        Ville villeSansStationRecherche = plateau.getVilleByName("Atlanta");
+        villeSansStationRecherche.setStationDeRechercheVille(true);
+
+        Ville ville1 = plateau.getVilleByName("Chicago");
+        ville1.setStationDeRechercheVille(true);
+        Ville ville2 = plateau.getVilleByName("Alger");
+        ville2.setStationDeRechercheVille(true);
+        Ville ville3 = plateau.getVilleByName("Paris");
+        ville3.setStationDeRechercheVille(true);
+        Ville ville4 = plateau.getVilleByName("Milan");
+        ville4.setStationDeRechercheVille(true);
+        Ville ville5 = plateau.getVilleByName("Tokyo");
+        ville5.setStationDeRechercheVille(true);
+        Ville ville6 = plateau.getVilleByName("Miami");
+        ville6.setStationDeRechercheVille(true);
+
+        pionJoueur.setVilleActuelle(villeSansStationRecherche);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(villeSansStationRecherche));
+
+        IAction action = new ConstruireUneStation(ville1);
+        Assertions.assertThrows(VilleActuellePossedeDejaUneStationDeRechercheException.class,
+                () -> this.instance.jouerTour(pionJoueur,action));
+    }
+
+    @Test
+    void jouerTourActionConstruireUneStationCarteVilleInexistanteDansDeckJoueur(){
+        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
+
+        Ville villeActuelle = plateau.getVilleByName("Atlanta");
+
+        pionJoueur.setVilleActuelle(villeActuelle);
+
+        IAction action = new ConstruireUneStation();
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.jouerTour(pionJoueur,action));
+    }
+
+    @Test
+    void jouerTourActionConstruireUneStationVilleActuellePossedeDejaUneStationDeRecherche(){
+        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
+
+        Ville ville = plateau.getVilleByName("Atlanta");
+        ville.setStationDeRechercheVille(true);
+
+        pionJoueur.setVilleActuelle(ville);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(ville));
+
+        IAction action = new ConstruireUneStation();
+        Assertions.assertThrows(VilleActuellePossedeDejaUneStationDeRechercheException.class,
+                () -> this.instance.jouerTour(pionJoueur,action));
+    }
+
+
+//=============================================================================================================================
+//                                                 ACTION
+//=============================================================================================================================
+
 }

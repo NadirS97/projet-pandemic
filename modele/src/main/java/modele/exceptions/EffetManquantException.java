@@ -1,4 +1,4 @@
 package modele.exceptions;
 
-public class EffetManquantException extends Throwable {
+public class EffetManquantException extends Exception {
 }
