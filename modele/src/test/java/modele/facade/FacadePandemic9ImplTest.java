@@ -8,6 +8,7 @@ import modele.elements.actions.IAction;
 import modele.elements.actions.construire_une_station.ConstruireUneStation;
 import modele.elements.actions.deplacement.DeplacementNavette;
 import modele.elements.actions.deplacement.DeplacementVoiture;
+import modele.elements.actions.deplacement.DeplacementVolCharter;
 import modele.elements.actions.deplacement.DeplacementVolDirect;
 import modele.elements.cartes.CarteVille;
 import modele.exceptions.*;
@@ -115,6 +116,43 @@ class FacadePandemic9ImplTest {
         Assertions.assertThrows(VilleDestinationEstVilleActuelleException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
+
+    @Test
+    void jouerTourActionDeplacementVolDirectVilleIntrouvable() {
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
+        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
+        IAction action = new DeplacementVolDirect(new Ville("ville_introuvable"));
+        Assertions.assertThrows(VilleIntrouvableException.class,() -> this.instance.jouerTour(pionJoueur,action));
+
+    }
+
+    @Test
+    void actionSeDeplacerVolDirectVilleInexistanteDeckJoueur() {
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
+        pionJoueur.setVilleActuelle(plateau.getVilleByName("Atlanta"));
+        Ville madrid = plateau.getVilleByName("Madrid");
+        IAction action = new DeplacementVolDirect(madrid);
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.jouerTour(pionJoueur,action));
+    }
+    //=============================================================================================================================
+    //                                                ACTION DeplacementVolCharter
+    //=============================================================================================================================
+
+    @Test
+    void jouerTourActionDeplacementVolCharterOK() {
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
+        Ville madrid = plateau.getVilleByName("Madrid");
+        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Chicago")));
+        IAction action = new DeplacementVolCharter(madrid);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
+        assertEquals(pionJoueur.getVilleActuelle(), madrid);
+    }
+
+
+
+
 
 //=============================================================================================================================
 //                                                ACTION ConstruireUneStation

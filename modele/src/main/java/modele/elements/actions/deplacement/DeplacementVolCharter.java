@@ -2,8 +2,11 @@ package modele.elements.actions.deplacement;
 
 import modele.elements.PionJoueur;
 
+import modele.elements.Ville;
 import modele.elements.actions.IAction;
 import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
+import modele.exceptions.NbActionsMaxTourAtteintException;
+import modele.exceptions.VilleIntrouvableException;
 
 public class DeplacementVolCharter implements IAction {
 
@@ -11,23 +14,27 @@ public class DeplacementVolCharter implements IAction {
      * Défausser la carte ville correspondant à la ville où se trouve le pion pour atteindre n’importe quelle autre ville du plateau
      * Pour cela on vérifie que le Joueur possède dans sa main/son deck la carteVille correspondante à la villeActuelle
      *
-     * @param
-     * @param
-     * @param pionJoueur
-     * @return la nouvelle villeActuelle
-     * @throws CarteVilleInexistanteDansDeckJoueurException
-     */
-  /*  @Override
-    public Ville seDeplacer(Joueur joueur, Ville villeDestination) throws VilleInexistanteDansDeckJoueurException {
-        if(joueur.isVilleOfCarteVilleDeckJoueur(joueur.getVilleActuelle())){
-            joueur.setVilleActuelle(villeDestination);
-        }
-        joueur.defausseCarteVilleDeDeckJoueur(joueur.getVilleActuelle());
-        return joueur.getVilleActuelle();
+  */
+
+    private Ville villeDestination;
+
+
+    public DeplacementVolCharter(Ville villeDestination) {
+        this.villeDestination = villeDestination;
     }
-*/
     @Override
-    public void execAction(PionJoueur pionJoueur) {
+    public void execAction(PionJoueur pionJoueur) throws Exception {
+
+            if (pionJoueur.getNbActions() <= 0)
+                throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
+            if (!pionJoueur.getPlateau().isVille(villeDestination.getNomVille()))
+                throw new VilleIntrouvableException(villeDestination.getNomVille()+" non trouvé");
+            if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(pionJoueur.getVilleActuelle()))
+                throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + pionJoueur.getVilleActuelle().getNomVille() + " n'est pas présente dans votre deck.");
+            pionJoueur.defausseCarteVilleDeDeckJoueur(pionJoueur.getVilleActuelle());
+            pionJoueur.setVilleActuelle(villeDestination);
+
+        }
 
     }
-}
+
