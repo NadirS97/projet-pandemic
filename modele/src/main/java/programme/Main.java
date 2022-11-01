@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
-    public static void main(String[] args) throws CasCouleurVilleIncorrectException, CarteVilleInexistanteDansDeckJoueurException {
+    public static void main(String[] args){
 //       FacadePandemic9Impl facadePandemic9Impl = new FacadePandemic9Impl();
 //       facadePandemic9Impl.initialisation();
 //       facadePandemic9Impl.JouerTourr("111",new DeplacementNAvette(new Ville()));
@@ -29,7 +29,7 @@ public class Main {
             });
 
         } catch (FileNotFoundException | VilleIntrouvableException | VirusIntrouvableException |
-                 RoleIntrouvableException e ) {
+                 RoleIntrouvableException | EvenementInnexistantException e ) {
             throw new RuntimeException(e);
         }
 //      ================================================================================================================

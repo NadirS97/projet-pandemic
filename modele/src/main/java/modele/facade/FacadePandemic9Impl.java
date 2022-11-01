@@ -84,6 +84,8 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 //        pionJoueurPartie.setAction(action);
 //        pionJoueurPartie.executerAction();
 //    }
+
+    @Override
     public void jouerTour(PionJoueur joueurActuel, IAction action) throws Exception {
         joueurActuel.setAction(action);
         joueurActuel.executerAction();

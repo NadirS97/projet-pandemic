@@ -63,11 +63,11 @@ public class PionJoueur {
 
     public Ville actionSeDeplacerVolCharter(Ville villeDestination) throws VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException, NbActionsMaxTourAtteintException {
         if (nbActions >= 4)
-            throw new NbActionsMaxTourAtteintException();
+            throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
         if (!plateau.isVille(villeDestination.getNomVille()))
-            throw new VilleIntrouvableException(villeDestination.getNomVille()+"non trouvé");
+            throw new VilleIntrouvableException(villeDestination.getNomVille()+" non trouvé");
         if (!isVilleOfCarteVilleDeckJoueur(villeActuelle))
-            throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeDestination + " n'est pas présente dans votre deck.");
+            throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeDestination.getNomVille() + " n'est pas présente dans votre deck.");
         defausseCarteVilleDeDeckJoueur(villeActuelle);
         setVilleActuelle(villeDestination);
         nbActions++;
@@ -77,10 +77,10 @@ public class PionJoueur {
     public void construireStation() throws CarteVilleInexistanteDansDeckJoueurException, VilleActuellePossedeDejaUneStationDeRechercheException {
 //        LE JOUEUR DEFAUSSE LA CARTE DE LA VILLE OU IL SE SITUE ET CONSTRUIT UNE STATION
         if (!isVilleOfCarteVilleDeckJoueur(villeActuelle)) {
-            throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeActuelle + " n'est pas présente dans votre deck.");
+            throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeActuelle.getNomVille() + " n'est pas présente dans votre deck.");
         }else{
             if(plateau.isVilleStationDeRecherche(villeActuelle)){
-                throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.toString() + " possède déjà une station de recherche.");
+                throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.getNomVille() + " possède déjà une station de recherche.");
             }
             else{
                 plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
@@ -94,10 +94,10 @@ public class PionJoueur {
             plateau.getVilles().get(villeStationDeRecherche.getNomVille()).setStationDeRechercheVille(false);
         }else{
             if (plateau.isVilleStationDeRecherche(villeActuelle)){
-                throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.toString() + " possède déjà une station de recherche.");
+                throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.getNomVille() + " possède déjà une station de recherche.");
             }
             if(!plateau.isVilleStationDeRecherche(villeStationDeRecherche)){
-                throw new VilleAvecAucuneStationDeRechercheException("La ville " + villeStationDeRecherche + " ne possède aucune station de recherche.");
+                throw new VilleAvecAucuneStationDeRechercheException("La ville " + villeStationDeRecherche.getNomVille() + " ne possède aucune station de recherche.");
             }
         }
     }

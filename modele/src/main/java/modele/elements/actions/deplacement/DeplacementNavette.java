@@ -4,6 +4,9 @@ import modele.elements.PionJoueur;
 
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
+import modele.exceptions.NbActionsMaxTourAtteintException;
+import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
+import modele.exceptions.VilleDestinationEstVilleActuelleException;
 
 public class DeplacementNavette implements IAction {
 
@@ -13,21 +16,20 @@ public class DeplacementNavette implements IAction {
         this.villeStationDeRecherche = villeStationDeRecherche;
     }
 
-
-
     @Override
-    public void execAction(PionJoueur pionJoueur) {
-
-        //
-    /*    Plateau plateau;
-        if (!plateau.isVilleStationDeRecherche(villeActuelle) && plateau.isVilleStationDeRecherche(villeStationDeRecherche)) {
-            plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
-            plateau.getVilles().get(villeStationDeRecherche.getNomVille()).setStationDeRechercheVille(false);
+    public void execAction(PionJoueur pionJoueur) throws Exception {
+        if(pionJoueur.getVilleActuelle().equals(villeStationDeRecherche))
+            throw new VilleDestinationEstVilleActuelleException("Vous ne pouvez pas vous déplacer vers votre ville actuelle.");
+        if (pionJoueur.getNbActions() <= 0)
+            throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
+        if(pionJoueur.getVilleActuelle().isStationDeRechercheVille() && pionJoueur.getPlateau().isVilleStationDeRecherche(villeStationDeRecherche)){
+            pionJoueur.setVilleActuelle(villeStationDeRecherche);
         }else{
-            if (plateau.isVilleStationDeRecherche(villeActuelle)){
-                throw new VilleActuellePossedeDejaUneStationDeRechercheException();
+            if(!pionJoueur.getVilleActuelle().isStationDeRechercheVille()){
+                throw new VilleAvecAucuneStationDeRechercheException("La ville actuelle: " + pionJoueur.getVilleActuelle().getNomVille() + " ne possède pas de station de recherche.");
+            }else{
+                throw new VilleAvecAucuneStationDeRechercheException("La ville de destination: " + villeStationDeRecherche.getNomVille() + " ne possède pas de station de recherche.");
             }
         }
-*/
     }
 }

@@ -42,7 +42,7 @@ public class Plateau {
 
     // TODO : au moment de la phase propagation des maladies, vérifier que effetParUneNuitTranquilleActif est à false, sinon passer la phase puis passer effetParUneNuitTranquilleActif à false
     private boolean effetParUneNuitTranquilleActif;
-    DonneesPlateauDTO donneesPlateauDTO;
+    private DonneesPlateauDTO donneesPlateauDTO;
 
     public Plateau() {
         lesVirus = new HashMap<>();
@@ -72,7 +72,7 @@ public class Plateau {
         return nbStationsDeRechercheConstruites;
     }
 
-    public void initialisationPlateau(String cheminDonneesJson) throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException, RoleIntrouvableException {
+    public void initialisationPlateau(String cheminDonneesJson) throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException, RoleIntrouvableException, EvenementInnexistantException {
         donneesPlateauDTO = lectureDonneesPlateau(cheminDonneesJson);
         initialisationCartesRoles();
         initialisationVirus();
@@ -80,7 +80,7 @@ public class Plateau {
         initialiserCartesJoueur();
     }
 
-    public void initialiserCartesJoueur() {
+    public void initialiserCartesJoueur() throws EvenementInnexistantException {
         for (Ville ville : this.getVilles().values()) {
             piocheCarteJoueur.add(new CarteVille(ville));
         }
@@ -91,6 +91,8 @@ public class Plateau {
                 case PREVISION -> piocheCarteJoueur.add(new Prevision(this));
                 case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new ParUneNuitTranquille(this));
                 case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new PopulationResiliente(this));
+                default -> throw new EvenementInnexistantException(
+                        "L'évènement : "+ nomEvenement +" est inexistant.");
             }
         }
         melangerPaquet(piocheCarteJoueur);
@@ -112,7 +114,7 @@ public class Plateau {
                 case MEDECIN -> toutesLesCartesRolesExistante.add(new Medecin(CouleurPionsRole.ORANGE));
                 case PLANIFICATEUR_D_URGENCE -> toutesLesCartesRolesExistante.add(new PlanificateurDUrgence(CouleurPionsRole.BLEU));
                 default -> throw new RoleIntrouvableException(
-                        "Le role : " + role.toString() + " est introuvable");
+                        "Le rôle : " + role + " est inexistant.");
             }
         }
         melangerPaquet(toutesLesCartesRolesExistante);
