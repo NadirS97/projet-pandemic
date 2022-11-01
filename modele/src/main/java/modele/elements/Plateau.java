@@ -80,6 +80,7 @@ public class Plateau {
         initialisationVirus();
         initialisationVilles();
         initialiserCartesJoueur();
+        initialiserCartesPropagation();
     }
 
     public void initialiserCartesJoueur() throws EvenementInnexistantException {
@@ -98,6 +99,13 @@ public class Plateau {
             }
         }
         melangerPaquet(piocheCarteJoueur);
+    }
+
+    public void initialiserCartesPropagation() throws EvenementInnexistantException {
+        for (Ville ville : this.getVilles().values()) {
+            piocheCartePropagation.add(new CartePropagation(ville));
+        }
+        melangerPaquet(piocheCartePropagation);
     }
 
     public void initialisationVilles() throws  VilleIntrouvableException, VirusIntrouvableException {
@@ -134,11 +142,33 @@ public class Plateau {
         });
     }
 
-    public void propagationMaladie(){
+    public void propagationMaladie() throws VilleDejaEclosException {
         for (int i=0; i< nbCartePropagationPiocherSelonVitesse();i++){
             CartePropagation cartePropagation = piocheCartePropagation.remove(0);
+            Ville villePropagation = villes.get(cartePropagation);
+            Virus virus = lesVirus.get(villePropagation.getCouleurVirusVille());
+            if (villePropagation.isEclosionVille())
+                throw new VilleDejaEclosException();
+            villePropagation.getNbCubeVirusVille().put(virus,villePropagation.getNbCubeVirusVille().get(virus)+1);
+            if (villePropagation.getNbCubeVirusVille().get(virus)==3) {
+                villePropagation.setEclosionVille(true);
+                eclosion(villePropagation,virus);
+            }
         }
 
+    }
+
+
+    public void eclosion(Ville ville,Virus virus){
+        for (String villeVoisineString : ville.getVillesVoisinesVille()){
+            Ville villeVoisine = villes.get(villeVoisineString);
+            villes.get(villeVoisineString)
+                    .getNbCubeVirusVille().put(virus,villeVoisine.getNbCubeVirusVille().get(virus)+1);
+            if (villes.get(villeVoisineString).getNbCubeVirusVille().get(virus)==3){
+                villes.get(villeVoisineString).setEclosionVille(true);
+                eclosion(villes.get(villeVoisineString),virus);
+            }
+        }
     }
 
     public int nbCartePropagationPiocherSelonVitesse(){
@@ -181,6 +211,7 @@ public class Plateau {
                         listeVillesVirusNonValide);
         donneesPlateauDTO.getVilles().forEach(villesDTO -> {
             Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), getLesVirus().get(villesDTO.getCouleurVirusVille()));
+            ville.setCouleurVirusVille(villesDTO.getCouleurVirusVille());
             getVilles().put(villesDTO.getNomVille(), ville);
         });
     }

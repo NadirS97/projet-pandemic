@@ -17,6 +17,7 @@ public class Ville {
     private int nbPopulationKmCarreeVille;
     private boolean stationDeRechercheVille = false;
     private boolean eclosionVille = false;
+    private String couleurVirusVille;
     private List<PionJoueur> listePionsJoueursPresents;
 
     public Ville(String nomVille) {
@@ -49,6 +50,10 @@ public class Ville {
         return s + "]";
     }
 
+    public void setEclosionVille(boolean eclosionVille) {
+        this.eclosionVille = eclosionVille;
+    }
+
     @Override
     public String toString() {
         return "Ville{" +
@@ -60,5 +65,9 @@ public class Ville {
                 ", stationDeRechercheVille=" + stationDeRechercheVille +
                 ", eclosionVille=" + eclosionVille +
                 '}';
+    }
+
+    public void setCouleurVirusVille(String couleurVirusVille) {
+        this.couleurVirusVille = couleurVirusVille;
     }
 }

@@ -1,9 +1,7 @@
 package modele.elements;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import modele.elements.enums.EtatVirus;
 import modele.utils.DonneesStatiques;
 
@@ -23,10 +21,11 @@ public class Virus {
         nbCubes = donneesStatiques.getNbMaxCubesParVirus();
     }
 
-   public int retirerCubes(int nbCubesRetirer){
+   public int retirerCubesSac(int nbCubesRetirer){
 
         return nbCubes = nbCubes- nbCubesRetirer;
    }
+
 
     @Override
     public String toString() {
