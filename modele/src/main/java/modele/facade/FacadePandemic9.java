@@ -1,9 +1,6 @@
 package modele.facade;
 
-import modele.elements.Ville;
 import modele.elements.actions.IAction;
-import modele.elements.enums.Actions;
-import modele.elements.enums.ModesDeplacements;
 import modele.exceptions.*;
 import modele.elements.PionJoueur;
 

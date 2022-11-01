@@ -91,6 +91,8 @@ class FacadePandemic9ImplTest {
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
 
+
+
 //=============================================================================================================================
 //                                                ACTION DeplacementVolDirect
 //=============================================================================================================================
@@ -148,6 +150,28 @@ class FacadePandemic9ImplTest {
         IAction action = new DeplacementVolCharter(madrid);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
         assertEquals(pionJoueur.getVilleActuelle(), madrid);
+    }
+
+    @Test
+    void jouerTourActionDeplacementVolCharterPasDeCarteVilleActuel() {
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
+        Ville madrid = plateau.getVilleByName("Madrid");
+        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Madrid")));
+        IAction action = new DeplacementVolCharter(madrid);
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,() -> this.instance.jouerTour(pionJoueur,action));
+
+    }
+
+    @Test
+    void jouerTourActionDeplacementVolCharterVilleIntrouvable() {
+        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
+        Ville madrid = plateau.getVilleByName("Madrid");
+        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Madrid")));
+        IAction action = new DeplacementVolCharter(new Ville("ae"));
+        Assertions.assertThrows(VilleIntrouvableException.class,() -> this.instance.jouerTour(pionJoueur,action));
+
     }
 
 
@@ -341,9 +365,7 @@ class FacadePandemic9ImplTest {
                 () -> this.instance.jouerTour(pionJoueur,action5));
     }
 
-//=============================================================================================================================
-//                                                 ACTION DeplacementNavette
-//=============================================================================================================================
+
 
 
 }

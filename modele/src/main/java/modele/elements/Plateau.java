@@ -7,6 +7,7 @@ import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.evenements.*;
 import modele.elements.cartes.roles.*;
 import modele.elements.enums.CouleurPionsRole;
+import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import lombok.Getter;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 public class Plateau {
 
     private Map<String, Virus> lesVirus;
+
     private Map<String, Ville> villes;
     private int marqueurVitessePropagation;   // entre 1 et 3 = vitesse2 , 4, 5 = vitesse3 , 6, 7 vitesse 4, pas vraiment besoin d'un tableau ?
     private int marqueurVitesseEclosion;
@@ -122,8 +124,13 @@ public class Plateau {
 
     public void initialisationVirus()  {
         donneesPlateauDTO.getListe_virus().forEach(virusDTO -> {
-            Virus virus = new Virus(virusDTO.getCouleurVirus());
-            getLesVirus().put(virusDTO.getCouleurVirus(), virus);
+            for(EtatVirus etatVirus : EtatVirus.values()){
+                if (etatVirus.toString().equals(virusDTO.getEtatVirus())) {
+                    Virus virus = new Virus(virusDTO.getCouleurVirus(), etatVirus);
+                    getLesVirus().put(virusDTO.getCouleurVirus(), virus);
+                }
+            }
+
         });
     }
 

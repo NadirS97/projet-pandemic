@@ -1,16 +1,20 @@
 {
   "liste_virus": [
     {
-      "couleurVirus": "BLEU"
+      "couleurVirus": "BLEU",
+      "etatVirus": "NON_TRAITE"
     },
     {
-      "couleurVirus": "JAUNE"
+      "couleurVirus": "JAUNE",
+      "etatVirus": "NON_TRAITE"
     },
     {
-      "couleurVirus": "NOIR"
+      "couleurVirus": "NOIR",
+      "etatVirus": "NON_TRAITE"
     },
     {
-      "couleurVirus": "ROUGE"
+      "couleurVirus": "ROUGE",
+      "etatVirus": "NON_TRAITE"
     }
   ],
   "villes": [

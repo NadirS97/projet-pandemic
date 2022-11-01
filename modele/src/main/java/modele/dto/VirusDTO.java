@@ -10,5 +10,6 @@ import lombok.Setter;
 public class VirusDTO {
 
     private String couleurVirus;
+    private String etatVirus;
 
 }
