@@ -142,10 +142,19 @@ public class Plateau {
         });
     }
 
-    public void propagationMaladie() throws VilleDejaEclosException {
-        for (int i=0; i< nbCartePropagationPiocherSelonVitesse();i++){
-            CartePropagation cartePropagation = piocheCartePropagation.remove(0);
-            Ville villePropagation = villes.get(cartePropagation);
+    public Ville piocherCartePropagation(){
+        CartePropagation cartePropagation = piocheCartePropagation.remove(0);
+        return villes.get(cartePropagation.getVilleCartePropagation().getNomVille());
+    }
+
+    public void initialiserPropagation() throws VilleDejaEclosException {
+        for (int i =0;i<nbCartePropagationPiocherSelonVitesse();i++){
+            Ville villePropagation = piocherCartePropagation();
+            propagationMaladie(villePropagation);
+        }
+    }
+
+    public void propagationMaladie(Ville villePropagation) throws VilleDejaEclosException {
             Virus virus = lesVirus.get(villePropagation.getCouleurVirusVille());
             if (villePropagation.isEclosionVille())
                 throw new VilleDejaEclosException();
@@ -154,16 +163,19 @@ public class Plateau {
                 villePropagation.setEclosionVille(true);
                 eclosion(villePropagation,virus);
             }
-        }
-
     }
 
 
     public void eclosion(Ville ville,Virus virus){
         for (String villeVoisineString : ville.getVillesVoisinesVille()){
-            Ville villeVoisine = villes.get(villeVoisineString);
+
             villes.get(villeVoisineString)
-                    .getNbCubeVirusVille().put(virus,villeVoisine.getNbCubeVirusVille().get(virus)+1);
+                    .getNbCubeVirusVille().put(virus,villes.get(villeVoisineString).getNbCubeVirusVille().get(virus)+1);
+            // si la ville est d'une autre couleur que le virus propagé, il faut l'ajouter à la map
+            if (!villes.get(villeVoisineString).getNbCubeVirusVille().containsKey(virus))
+                villes.get(villeVoisineString).getNbCubeVirusVille().put(virus,0);
+
+            System.out.println(villes.get(villeVoisineString) + " :" + villes.get(villeVoisineString).getNbCubeVirusVille().get(virus));
             if (villes.get(villeVoisineString).getNbCubeVirusVille().get(virus)==3){
                 villes.get(villeVoisineString).setEclosionVille(true);
                 eclosion(villes.get(villeVoisineString),virus);
@@ -210,7 +222,10 @@ public class Plateau {
                 "Une erreur vient de se produire, vous trouverez ci-joint la liste des villes dont la couleur du virus est incorrect: " +
                         listeVillesVirusNonValide);
         donneesPlateauDTO.getVilles().forEach(villesDTO -> {
-            Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille(), getLesVirus().get(villesDTO.getCouleurVirusVille()));
+            Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille());
+            lesVirus.values().forEach(virus -> {
+                ville.getNbCubeVirusVille().put(virus,0);
+            });
             ville.setCouleurVirusVille(villesDTO.getCouleurVirusVille());
             getVilles().put(villesDTO.getNomVille(), ville);
         });

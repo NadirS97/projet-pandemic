@@ -47,6 +47,10 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     public void piocherCartes(PionJoueur joueur){
         joueur.piocherCartes();
     }
+    public void propagation(PionJoueur joueur) throws VilleDejaEclosException {
+        joueur.getPlateau().initialiserPropagation();
+
+    }
 
     @Override
     public boolean estPartieTerminee(String pseudoJoueurPartie) throws CodePartieInexistantException {

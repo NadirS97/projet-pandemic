@@ -24,13 +24,13 @@ public class Ville {
         this.nomVille = nomVille;
     }
 
-    public Ville(String nomVille, int nbPopulationTotaleVille, int nbPopulationKmCarreeVille, Virus virus){
+    public Ville(String nomVille, int nbPopulationTotaleVille, int nbPopulationKmCarreeVille){
         this.villesVoisinesVille = new ArrayList<>();
         this.nbCubeVirusVille = new HashMap<>();
         this.nomVille = nomVille;
         this.nbPopulationTotaleVille = nbPopulationTotaleVille;
         this.nbPopulationKmCarreeVille = nbPopulationKmCarreeVille;
-        this.nbCubeVirusVille.put(virus, 0);
+        this.nbCubeVirusVille = new HashMap<>();
         this.listePionsJoueursPresents = new ArrayList<>();
     }
 

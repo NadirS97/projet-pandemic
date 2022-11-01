@@ -4,6 +4,7 @@ import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 
 import modele.elements.Ville;
+import modele.elements.Virus;
 import modele.elements.actions.IAction;
 import modele.elements.actions.construire_une_station.ConstruireUneStation;
 import modele.elements.actions.deplacement.DeplacementNavette;
@@ -348,8 +349,17 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void propagation(){
-        System.out.println(pionJoueur.getPlateau().getPiocheCartePropagation());
+    void propagation() throws VilleDejaEclosException {
+
+
+        System.out.println(this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille());
+       Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
+       Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
+       Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
+        System.out.println(this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille());
+
+
+
     }
 
 
