@@ -22,14 +22,10 @@ public class DeplacementNavette implements IAction {
             throw new VilleDestinationEstVilleActuelleException("Vous ne pouvez pas vous déplacer vers votre ville actuelle.");
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
-        if(pionJoueur.getVilleActuelle().isStationDeRechercheVille() && pionJoueur.getPlateau().isVilleStationDeRecherche(villeStationDeRecherche)){
-            pionJoueur.setVilleActuelle(villeStationDeRecherche);
-        }else{
-            if(!pionJoueur.getVilleActuelle().isStationDeRechercheVille()){
-                throw new VilleAvecAucuneStationDeRechercheException("La ville actuelle: " + pionJoueur.getVilleActuelle().getNomVille() + " ne possède pas de station de recherche.");
-            }else{
-                throw new VilleAvecAucuneStationDeRechercheException("La ville de destination: " + villeStationDeRecherche.getNomVille() + " ne possède pas de station de recherche.");
-            }
-        }
+        if(!pionJoueur.getVilleActuelle().isStationDeRechercheVille())
+            throw new VilleAvecAucuneStationDeRechercheException("La ville actuelle: " + pionJoueur.getVilleActuelle().getNomVille() + " ne possède pas de station de recherche.");
+        if(!pionJoueur.getPlateau().isVilleStationDeRecherche(villeStationDeRecherche))
+            throw new VilleAvecAucuneStationDeRechercheException("La ville de destination: " + villeStationDeRecherche.getNomVille() + " ne possède pas de station de recherche.");
+        pionJoueur.setVilleActuelle(villeStationDeRecherche);
     }
 }
