@@ -12,7 +12,7 @@ public interface FacadePandemic9 {
 
     void rejoindrePartie(String codePartie, String joueur) throws Exception;
 
-    void jouerTour(PionJoueur joueurActuel, IAction action) throws Exception;
+    void jouerAction(PionJoueur joueurActuel, IAction action) throws Exception;
 
     boolean estPartieTerminee(String joueur) throws Exception;
 

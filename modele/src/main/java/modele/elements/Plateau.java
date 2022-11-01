@@ -39,7 +39,7 @@ public class Plateau {
     private List<CarteRole> toutesLesCartesRolesExistante;
 
     // TODO : créer méthode pour y mettre les couleurs des pions de joueurs
-    private Set<String> listeCouleursPionsJoueurs;
+    private List<String> listeCouleursPionsJoueurs;
     private int nbStationsDeRechercheConstruites;
 
     // TODO : au moment de la phase propagation des maladies, vérifier que effetParUneNuitTranquilleActif est à false, sinon passer la phase puis passer effetParUneNuitTranquilleActif à false
@@ -49,14 +49,14 @@ public class Plateau {
     public Plateau() {
         lesVirus = new HashMap<>();
         villes = new HashMap<>();
-        marqueurVitessePropagation = 0;
+        marqueurVitessePropagation = 0; // 0,1,3 = 2 ; 3,4 = 3 ; 4,5 = 4
         marqueurVitesseEclosion = 0;
         nbStationsDeRechercheConstruites = 0;
         piocheCarteJoueur = new ArrayList<>();
         defausseCarteJoueur = new ArrayList<>();
         piocheCartePropagation = new ArrayList<>();
         defausseCartePropagation = new ArrayList<>();
-        listeCouleursPionsJoueurs = new HashSet<>();
+        listeCouleursPionsJoueurs = new ArrayList<>();
         toutesLesCartesRolesExistante = new ArrayList<>();
         effetParUneNuitTranquilleActif = false;
     }
@@ -132,6 +132,22 @@ public class Plateau {
             }
 
         });
+    }
+
+    public void propagationMaladie(){
+        for (int i=0; i< nbCartePropagationPiocherSelonVitesse();i++){
+            CartePropagation cartePropagation = piocheCartePropagation.remove(0);
+        }
+
+    }
+
+    public int nbCartePropagationPiocherSelonVitesse(){
+        if (marqueurVitesseEclosion >= 5)
+            return 4;
+        else if (marqueurVitesseEclosion >= 3)
+            return 3;
+        else
+            return 2;
     }
 
     public void melangerPaquet(List<?> paquet) {

@@ -17,7 +17,7 @@ public class Ville {
     private int nbPopulationKmCarreeVille;
     private boolean stationDeRechercheVille = false;
     private boolean eclosionVille = false;
-    private Set<PionJoueur> listePionsJoueursPresents;
+    private List<PionJoueur> listePionsJoueursPresents;
 
     public Ville(String nomVille) {
         this.nomVille = nomVille;
@@ -30,7 +30,7 @@ public class Ville {
         this.nbPopulationTotaleVille = nbPopulationTotaleVille;
         this.nbPopulationKmCarreeVille = nbPopulationKmCarreeVille;
         this.nbCubeVirusVille.put(virus, 0);
-        this.listePionsJoueursPresents = new HashSet<>();
+        this.listePionsJoueursPresents = new ArrayList<>();
     }
 
     public void setVillesVoisines(List<String> villesVoisines) {

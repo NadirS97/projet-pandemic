@@ -8,5 +8,7 @@ public class DonnerConnaissance implements IAction {
     @Override
     public void execAction(PionJoueur pionJoueur) {
 
+
+
     }
 }

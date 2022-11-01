@@ -61,7 +61,7 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourActionDeplacementVoitureOK() {
         IAction action = new DeplacementVoiture(chicago);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action));
         assertEquals(pionJoueur.getVilleActuelle(), chicago);
     }
 
@@ -69,36 +69,36 @@ class FacadePandemic9ImplTest {
     void jouerTourActionDeplacementVoitureVilleDestinationEstVilleActuelle() {
         IAction action = new DeplacementVoiture(atlanta);
         Assertions.assertThrows(VilleDestinationEstVilleActuelleException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionDeplacementVoitureNbTourMaxAtteint() {
         IAction action = new DeplacementVoiture(chicago);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action));
         IAction action1 = new DeplacementVoiture(atlanta);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action1));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
         IAction action2 = new DeplacementVoiture(chicago);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action2));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action2));
         IAction action3 = new DeplacementVoiture(atlanta);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action3));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action3));
         IAction action4 = new DeplacementVoiture(chicago);
         Assertions.assertThrows(NbActionsMaxTourAtteintException.class,
-                () -> this.instance.jouerTour(pionJoueur,action4));
+                () -> this.instance.jouerAction(pionJoueur,action4));
     }
 
     @Test
     void jouerTourActionDeplacementVoitureVilleIntrouvable() {
         IAction action = new DeplacementVoiture(new Ville("Introuvable"));
         Assertions.assertThrows(VilleIntrouvableException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionDeplacementVoitureVilleNonVoisine() {
         IAction action = new DeplacementVoiture(paris);
         Assertions.assertThrows(VilleNonVoisineException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
 
@@ -111,7 +111,7 @@ class FacadePandemic9ImplTest {
     void jouerTourActionDeplacementVolDirectOK() {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         IAction action = new DeplacementVolDirect(paris);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action));
         assertEquals(pionJoueur.getVilleActuelle(), paris);
     }
 
@@ -120,21 +120,21 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new DeplacementVolDirect(atlanta);
         Assertions.assertThrows(VilleDestinationEstVilleActuelleException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionDeplacementVolDirectVilleIntrouvable() {
         IAction action = new DeplacementVolDirect(new Ville("ville_introuvable"));
         Assertions.assertThrows(VilleIntrouvableException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
     void actionSeDeplacerVolDirectVilleInexistanteDeckJoueur() {
         IAction action = new DeplacementVolDirect(paris);
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 //=============================================================================================================================
 //                                                ACTION DeplacementVolCharter
@@ -144,7 +144,7 @@ class FacadePandemic9ImplTest {
     void jouerTourActionDeplacementVolCharterOK() {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new DeplacementVolCharter(paris);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action));
         assertEquals(pionJoueur.getVilleActuelle(), paris);
     }
 
@@ -155,7 +155,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Madrid")));
         IAction action = new DeplacementVolCharter(madrid);
-        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,() -> this.instance.jouerTour(pionJoueur,action));
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,() -> this.instance.jouerAction(pionJoueur,action));
 
     }
 
@@ -166,7 +166,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Madrid")));
         IAction action = new DeplacementVolCharter(new Ville("ae"));
-        Assertions.assertThrows(VilleIntrouvableException.class,() -> this.instance.jouerTour(pionJoueur,action));
+        Assertions.assertThrows(VilleIntrouvableException.class,() -> this.instance.jouerAction(pionJoueur,action));
 
     }
 
@@ -178,7 +178,7 @@ class FacadePandemic9ImplTest {
     void jouerTourActionConstruireUneStationOK() {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new ConstruireUneStation();
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur, action));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
         assertTrue(pionJoueur.getVilleActuelle().isStationDeRechercheVille());
         assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
     }
@@ -194,7 +194,7 @@ class FacadePandemic9ImplTest {
         istanbul.setStationDeRechercheVille(true);
         pionJoueur.setVilleActuelle(atlanta);
         IAction action = new ConstruireUneStation(chicago);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur, action));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
         assertTrue(atlanta.isStationDeRechercheVille());
         assertFalse(chicago.isStationDeRechercheVille());
     }
@@ -207,16 +207,16 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(alger));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         IAction action1 = new DeplacementVolDirect(chicago);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action1));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
         IAction action2 = new DeplacementVolDirect(paris);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action2));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action2));
         IAction action3 = new DeplacementVolDirect(alger);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action3));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action3));
         IAction action4 =  new DeplacementVolDirect(milan);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action4));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action4));
         IAction action5 = new ConstruireUneStation();
         Assertions.assertThrows(NbActionsMaxTourAtteintException.class,
-                () -> this.instance.jouerTour(pionJoueur,action5));
+                () -> this.instance.jouerAction(pionJoueur,action5));
     }
 
     @Test
@@ -233,7 +233,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new ConstruireUneStation(istanbul);
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
@@ -249,14 +249,14 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new ConstruireUneStation(chicago);
         Assertions.assertThrows(VilleActuellePossedeDejaUneStationDeRechercheException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionConstruireUneStationCarteVilleInexistanteDansDeckJoueur(){
         IAction action = new ConstruireUneStation();
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
@@ -265,7 +265,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new ConstruireUneStation();
         Assertions.assertThrows(VilleActuellePossedeDejaUneStationDeRechercheException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
 //=============================================================================================================================
@@ -277,7 +277,7 @@ class FacadePandemic9ImplTest {
         atlanta.setStationDeRechercheVille(true);
         alger.setStationDeRechercheVille(true);
         IAction action = new DeplacementNavette(alger);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur, action));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
         assertEquals(pionJoueur.getVilleActuelle(), alger);
     }
 
@@ -287,7 +287,7 @@ class FacadePandemic9ImplTest {
         alger.setStationDeRechercheVille(false);
         IAction action = new DeplacementNavette(alger);
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
@@ -296,7 +296,7 @@ class FacadePandemic9ImplTest {
         alger.setStationDeRechercheVille(true);
         IAction action = new DeplacementNavette(alger);
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
@@ -304,7 +304,7 @@ class FacadePandemic9ImplTest {
         atlanta.setStationDeRechercheVille(true);
         IAction action = new DeplacementNavette(atlanta);
         Assertions.assertThrows(VilleDestinationEstVilleActuelleException.class,
-                () -> this.instance.jouerTour(pionJoueur,action));
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
     @Test
@@ -313,21 +313,44 @@ class FacadePandemic9ImplTest {
         pionJoueur.setVilleActuelle(atlanta);
         alger.setStationDeRechercheVille(true);
         IAction action1 = new DeplacementNavette(alger);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action1));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
         IAction action2 = new DeplacementNavette(atlanta);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action2));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action2));
         IAction action3 = new DeplacementNavette(alger);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action3));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action3));
         IAction action4 = new DeplacementNavette(atlanta);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action4));
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action4));
         IAction action5 = new DeplacementNavette(alger);
         Assertions.assertThrows(NbActionsMaxTourAtteintException.class,
-                () -> this.instance.jouerTour(pionJoueur,action5));
+                () -> this.instance.jouerAction(pionJoueur,action5));
     }
 
 //=============================================================================================================================
-//                                                 ACTION
+//                                                 ACTION TRAITER MALADIE
 //=============================================================================================================================
+
+
+    @Test
+    void jouerTourActionTraiterMaladieNonTraiteOK(){
+
+        System.out.println(atlanta.getNbCubeVirusVille());
+    }
+
+
+
+    @Test
+    void piocherCartes(){
+        System.out.println(pionJoueur.getDeckJoueur());
+        int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
+        instance.piocherCartes(pionJoueur);
+        assertEquals(tailleDeckInitial+2,pionJoueur.getDeckJoueur().size());
+        System.out.println(pionJoueur.getDeckJoueur());
+    }
+
+    @Test
+    void propagation(){
+        System.out.println(pionJoueur.getPlateau().getPiocheCartePropagation());
+    }
 
 
 

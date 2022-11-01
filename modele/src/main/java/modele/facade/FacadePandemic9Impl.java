@@ -37,58 +37,15 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, nouveauPionJoueur);
     }
 
-//    @Override
-//    public void jouerTour(String codePartie, Actions action, ModesDeplacements modeDeplacementChoisis, Ville villeDestination) throws VilleAvecAucuneStationDeRechercheException, VilleNonVoisineException, PseudoInexistantDansLaPartieException, VilleInexistanteDansDeckJoueurException, ModeDeplacementInexistantException, VilleActuellePossedeDejaUneStationDeRechercheException {
-//        Partie partie = this.parties.get(codePartie);
-//        String pseudoJoueurPartie = partie.aQuiLeTour();
-//        PionJoueur pionJoueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
-//        int nbActions = 0;
-//        while (nbActions < 4){
-//            switch (action) {
-//                case DEPLACEMENT:
-//                    if (!Objects.isNull(modeDeplacementChoisis)){
-//                        nbActions++;
-//                    }
-//                    break;
-//                case TRAITER_MALADIE:
-//
-//                    nbActions++;
-//                    break;
-//                case DECOUVRIR_REMEDE:
-//
-//                    nbActions++;
-//                    break;
-//                case PARTAGER_CONNAISSANCE:
-//
-//                    nbActions++;
-//                    break;
-//                case CONSTRUIRE_UNE_STATION:
-//                    if(partie.getPlateauPartie().getNbStationsDeRechercheConstruites() < 6) {
-//                        pionJoueurPartie.construireStation();
-//                        pionJoueurPartie.defausseCarteVilleDeDeckJoueur(pionJoueurPartie.getVilleActuelle());
-//                    }else{
-//                        pionJoueurPartie.deplacerStationDeRecherche(villeDestination);
-//                    }
-//                    nbActions++;
-//                    break;
-//            }
-//        }
-//        partie.getJoueursPartie().put(pionJoueurPartie.getPseudoJoueur(), pionJoueurPartie);
-//        parties.put(partie.getCodePartie(), partie);
-//    }
-
-//    public void JouerTourr(String codePartie, IAction action){
-//        Partie partie = this.parties.get(codePartie);
-//        String pseudoJoueurPartie = partie.aQuiLeTour();
-//        PionJoueur pionJoueurPartie = partie.getJoueursPartie().get(pseudoJoueurPartie);
-//        pionJoueurPartie.setAction(action);
-//        pionJoueurPartie.executerAction();
-//    }
 
     @Override
-    public void jouerTour(PionJoueur joueurActuel, IAction action) throws Exception {
+    public void jouerAction(PionJoueur joueurActuel, IAction action) throws Exception {
         joueurActuel.setAction(action);
         joueurActuel.executerAction();
+    }
+
+    public void piocherCartes(PionJoueur joueur){
+        joueur.piocherCartes();
     }
 
     @Override

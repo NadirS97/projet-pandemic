@@ -57,6 +57,11 @@ public class PionJoueur {
         }
     }
 
+    public void piocherCartes(){
+        deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
+        deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
+    }
+
     public void ajouterCarteVilleDeckJoueur(CarteVille carteVille){
         deckJoueur.add(carteVille);
     }
