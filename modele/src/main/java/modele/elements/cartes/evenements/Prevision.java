@@ -10,9 +10,11 @@ import java.util.Optional;
 public class Prevision extends CarteEvenement {
 
     private Plateau plateau;
+
     public Prevision(Plateau plateau) {
         this.plateau = plateau;
     }
+
     private final NomsEvenement nomEvenement = NomsEvenement.PREVISION;
     private final String description = "Piochez, consultez et réorganisez dans l'ordre de votre choix les 6 premières cartes du paquet Propagation. Replacez-les ensuite sur le dessus du paquet.";
 

@@ -24,7 +24,7 @@ public class PionJoueur {
     private Ville villeActuelle;
     private Plateau plateau;
 
-    public PionJoueur(String pseudoJoueur, Plateau plateau,int nbActions){
+    public PionJoueur(String pseudoJoueur, Plateau plateau, int nbActions) {
         this.pseudoJoueur = pseudoJoueur;
         this.plateau = plateau;
         this.deckJoueur = new ArrayList<>();
@@ -33,13 +33,14 @@ public class PionJoueur {
 
     /**
      * Fonction permettant de savoir si le joueur possède une carteVille dans sa main correspondant à la ville en paramètre
+     *
      * @param ville
      * @return True si le joueur possède la carte en main, False sinon
      */
     public Boolean isVilleOfCarteVilleDeckJoueur(Ville ville) {
         List<Ville> listeVillesDeckJoueur = new ArrayList<>();
-        for(CarteJoueur carteJoueur : deckJoueur){
-            if(carteJoueur instanceof CarteVille){
+        for (CarteJoueur carteJoueur : deckJoueur) {
+            if (carteJoueur instanceof CarteVille) {
                 listeVillesDeckJoueur.add(((CarteVille) carteJoueur).getVilleCarteVille());
             }
         }
@@ -57,12 +58,12 @@ public class PionJoueur {
         }
     }
 
-    public void piocherCartes(){
+    public void piocherCartes() {
         deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
         deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
     }
 
-    public void ajouterCarteVilleDeckJoueur(CarteVille carteVille){
+    public void ajouterCarteVilleDeckJoueur(CarteVille carteVille) {
         deckJoueur.add(carteVille);
     }
 
@@ -71,8 +72,8 @@ public class PionJoueur {
     }
 
     public void executerAction() throws Exception {
-            this.action.execAction(this);
-            this.nbActions--;
-        }
+        this.action.execAction(this);
+        this.nbActions--;
     }
+}
 

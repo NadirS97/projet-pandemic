@@ -12,9 +12,11 @@ import java.util.Optional;
 public class PopulationResiliente extends CarteEvenement {
 
     private Plateau plateau;
+
     public PopulationResiliente(Plateau plateau) {
         this.plateau = plateau;
     }
+
     private final NomsEvenement NOMEVENEMENT = NomsEvenement.POPULATION_RESILIENTE;
     private final String DESCRIPTION = "Retirez du jeu 1 carte de votre choix de la défausse Propagation. (Vous pouvez jouer Population résiliente entre les étapes Infection et Intensification d'une carte Épidémie.)";
 
@@ -33,8 +35,7 @@ public class PopulationResiliente extends CarteEvenement {
         if (effetType.isPresent()) {
             EffetTypePopulationResilienteImpl effetTypePopulationResilienteImpl = (EffetTypePopulationResilienteImpl) effetType.get();
             plateau.getDefausseCartePropagation().remove(effetTypePopulationResilienteImpl.getCartePropagation());
-        }
-        else {
+        } else {
             throw new EffetManquantException();
         }
     }

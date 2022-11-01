@@ -8,7 +8,6 @@ public class CarteVille extends CarteJoueur {
 
     private Ville villeCarteVille;
 
-
     public CarteVille(Ville villeCarteVille) {
         this.villeCarteVille = villeCarteVille;
     }
@@ -19,12 +18,5 @@ public class CarteVille extends CarteJoueur {
                 "villeCarteVille=" + villeCarteVille.getNomVille() +
                 '}';
     }
-
-
-    // Pour recuperer :
-    // nomVille,
-    // listeVirusVille (qui ne contiendra qu'un seul virus au départ, le virus qui de base est rattaché à la ville),
-    // nbPopulationTotaleVille,
-    // nbPopulationKmCarreeVille.
 
 }

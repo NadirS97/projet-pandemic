@@ -3,6 +3,7 @@ package modele.elements;
 
 import lombok.Getter;
 import modele.exceptions.CasCouleurVilleIncorrectException;
+import modele.utils.DonneesVariablesStatiques;
 
 import java.util.*;
 
@@ -19,12 +20,12 @@ public class Partie {
         this.codePartie = UUID.randomUUID().toString();
         this.plateauPartie = new Plateau();
         this.joueursPartie = new HashMap<>();
-        this.joueursPartie.put(pseudoJoueurPartie, new PionJoueur(pseudoJoueurPartie,plateauPartie,4));
+        this.joueursPartie.put(pseudoJoueurPartie, new PionJoueur(pseudoJoueurPartie, plateauPartie, DonneesVariablesStatiques.nbActionsMaxParTour));
         this.ordreTourDeJeuPseudoJoueur = new ArrayList<>();
         this.ordreTourDeJeuPseudoJoueur.add(pseudoJoueurPartie);
     }
 
-    public String aQuiLeTour(){
+    public String aQuiLeTour() {
         if (indexJoueur == 4)
             indexJoueur = 0;
         String joueur = ordreTourDeJeuPseudoJoueur.get(indexJoueur);
@@ -32,8 +33,8 @@ public class Partie {
         return joueur;
     }
 
-    public boolean isJoueurDejaDansPartie(String pseudoJoueurPartie){
-        for (PionJoueur pionJoueur : joueursPartie.values()){
+    public boolean isJoueurDejaDansPartie(String pseudoJoueurPartie) {
+        for (PionJoueur pionJoueur : joueursPartie.values()) {
             if (pionJoueur.getPseudoJoueur().equals(pseudoJoueurPartie))
                 return true;
         }

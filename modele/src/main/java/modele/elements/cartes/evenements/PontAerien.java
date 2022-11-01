@@ -13,9 +13,11 @@ import java.util.Optional;
 public class PontAerien extends CarteEvenement {
 
     private Plateau plateau;
+
     public PontAerien(Plateau plateau) {
         this.plateau = plateau;
     }
+
     private final NomsEvenement NOMEVENEMENT = NomsEvenement.PONT_AERIEN;
     private final String DESCRIPTION = "Déplacez un pion quelconque sur la ville de votre choix. Vous devez avoir la permission du propriétaire du pion qui sera déplacé.";
 
@@ -40,8 +42,7 @@ public class PontAerien extends CarteEvenement {
             } else {
                 throw new DeplacementRefuseException();
             }
-        }
-        else {
+        } else {
             throw new EffetManquantException();
         }
     }

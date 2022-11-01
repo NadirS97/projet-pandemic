@@ -16,6 +16,7 @@ import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
 
 import modele.elements.enums.NomsEvenement;
+import modele.utils.DonneesVariablesStatiques;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -95,7 +96,7 @@ public class Plateau {
                 case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new ParUneNuitTranquille(this));
                 case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new PopulationResiliente(this));
                 default -> throw new EvenementInnexistantException(
-                        "L'évènement : "+ nomEvenement +" est inexistant.");
+                        "L'évènement : " + nomEvenement + " est inexistant.");
             }
         }
         melangerPaquet(piocheCarteJoueur);
@@ -108,82 +109,80 @@ public class Plateau {
         melangerPaquet(piocheCartePropagation);
     }
 
-    public void initialisationVilles() throws  VilleIntrouvableException, VirusIntrouvableException {
+    public void initialisationVilles() throws VilleIntrouvableException, VirusIntrouvableException {
         attributionVirus(donneesPlateauDTO);
         attributionVoisins(donneesPlateauDTO);
     }
 
     public void initialisationCartesRoles() throws RoleIntrouvableException {
         for (NomsRoles role : NomsRoles.values()) {
-            switch(role) {
+            switch (role) {
                 case CHERCHEUSE -> toutesLesCartesRolesExistante.add(new Chercheuse(CouleurPionsRole.MARRON));
                 case SCIENTIFIQUE -> toutesLesCartesRolesExistante.add(new Scientifique(CouleurPionsRole.BLANC));
                 case REPARTITEUR -> toutesLesCartesRolesExistante.add(new Repartiteur(CouleurPionsRole.ROSE));
                 case SPECIALISTE_EN_MISE_EN_QUARANTAINE -> toutesLesCartesRolesExistante.add(new SpecialisteEnMiseEnQuarantaine(CouleurPionsRole.VERT_FONCE));
-                case EXPERT_AUX_OPERATIONS -> toutesLesCartesRolesExistante.add(new ExpertAuxOperations(CouleurPionsRole.VERT_CLAIR));
+                case EXPERT_AUX_OPERATIONS ->toutesLesCartesRolesExistante.add(new ExpertAuxOperations(CouleurPionsRole.VERT_CLAIR));
                 case MEDECIN -> toutesLesCartesRolesExistante.add(new Medecin(CouleurPionsRole.ORANGE));
                 case PLANIFICATEUR_D_URGENCE -> toutesLesCartesRolesExistante.add(new PlanificateurDUrgence(CouleurPionsRole.BLEU));
-                default -> throw new RoleIntrouvableException(
-                        "Le rôle : " + role + " est inexistant.");
+                default -> throw new RoleIntrouvableException("Le rôle : " + role + " est inexistant.");
             }
         }
         melangerPaquet(toutesLesCartesRolesExistante);
     }
 
-    public void initialisationVirus()  {
+    public void initialisationVirus() {
         donneesPlateauDTO.getListe_virus().forEach(virusDTO -> {
-            for(EtatVirus etatVirus : EtatVirus.values()){
+            for (EtatVirus etatVirus : EtatVirus.values()) {
                 if (etatVirus.toString().equals(virusDTO.getEtatVirus())) {
                     Virus virus = new Virus(virusDTO.getCouleurVirus(), etatVirus);
                     getLesVirus().put(virusDTO.getCouleurVirus(), virus);
                 }
             }
-
         });
     }
 
-    public Ville piocherCartePropagation(){
+    public Ville piocherCartePropagation() {
         CartePropagation cartePropagation = piocheCartePropagation.remove(0);
         return villes.get(cartePropagation.getVilleCartePropagation().getNomVille());
     }
 
     public void initialiserPropagation() throws VilleDejaEclosException {
-        for (int i =0;i<nbCartePropagationPiocherSelonVitesse();i++){
+        for (int i = 0; i < nbCartePropagationPiocherSelonVitesse(); i++) {
             Ville villePropagation = piocherCartePropagation();
             propagationMaladie(villePropagation);
         }
     }
 
     public void propagationMaladie(Ville villePropagation) throws VilleDejaEclosException {
-            Virus virus = lesVirus.get(villePropagation.getCouleurVirusVille());
-            if (villePropagation.isEclosionVille())
-                throw new VilleDejaEclosException();
-            villePropagation.getNbCubeVirusVille().put(virus,villePropagation.getNbCubeVirusVille().get(virus)+1);
-            if (villePropagation.getNbCubeVirusVille().get(virus)==3) {
-                villePropagation.setEclosionVille(true);
-                eclosion(villePropagation,virus);
-            }
+        Virus virus = lesVirus.get(villePropagation.getCouleurVirusVille());
+        if (villePropagation.isEclosionVille())
+            throw new VilleDejaEclosException();
+        villePropagation.getNbCubeVirusVille().put(virus, villePropagation.getNbCubeVirusVille().get(virus) + 1);
+        if (villePropagation.getNbCubeVirusVille().get(virus) == 3) {
+            villePropagation.setEclosionVille(true);
+            eclosion(villePropagation, virus);
+        }
     }
 
 
-    public void eclosion(Ville ville,Virus virus){
-        for (String villeVoisineString : ville.getVillesVoisinesVille()){
+    public void eclosion(Ville ville, Virus virus) {
+        for (String villeVoisineString : ville.getVillesVoisinesVille()) {
 
             villes.get(villeVoisineString)
-                    .getNbCubeVirusVille().put(virus,villes.get(villeVoisineString).getNbCubeVirusVille().get(virus)+1);
+                    .getNbCubeVirusVille().put(virus, villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) + 1);
             // si la ville est d'une autre couleur que le virus propagé, il faut l'ajouter à la map
             if (!villes.get(villeVoisineString).getNbCubeVirusVille().containsKey(virus))
-                villes.get(villeVoisineString).getNbCubeVirusVille().put(virus,0);
+                villes.get(villeVoisineString).getNbCubeVirusVille().put(virus, 0);
 
             System.out.println(villes.get(villeVoisineString) + " :" + villes.get(villeVoisineString).getNbCubeVirusVille().get(virus));
-            if (villes.get(villeVoisineString).getNbCubeVirusVille().get(virus)==3){
+            if (villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) == 3) {
                 villes.get(villeVoisineString).setEclosionVille(true);
-                eclosion(villes.get(villeVoisineString),virus);
+                eclosion(villes.get(villeVoisineString), virus);
             }
         }
     }
 
-    public int nbCartePropagationPiocherSelonVitesse(){
+    public int nbCartePropagationPiocherSelonVitesse() {
         if (marqueurVitesseEclosion >= 5)
             return 4;
         else if (marqueurVitesseEclosion >= 3)
@@ -224,7 +223,7 @@ public class Plateau {
         donneesPlateauDTO.getVilles().forEach(villesDTO -> {
             Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille());
             lesVirus.values().forEach(virus -> {
-                ville.getNbCubeVirusVille().put(virus,0);
+                ville.getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubesInitialementPresentDansChaqueVille);
             });
             ville.setCouleurVirusVille(villesDTO.getCouleurVirusVille());
             getVilles().put(villesDTO.getNomVille(), ville);

@@ -8,13 +8,12 @@ import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VilleActuellePossedeDejaUneStationDeRechercheException;
 import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
-import modele.utils.DonneesStatiques;
+import modele.utils.DonneesVariablesStatiques;
 
 
 public class ConstruireUneStation implements IAction {
 
     private Ville villeStationDeRecherche;
-    private DonneesStatiques donneesStatiques = new DonneesStatiques();
 
     public ConstruireUneStation() {
     }
@@ -29,24 +28,24 @@ public class ConstruireUneStation implements IAction {
         Plateau plateau = pionJoueur.getPlateau();
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
-        if (plateau.getNbStationsDeRechercheConstruites() < donneesStatiques.getNbStationsRechercheMaxAutorise()) {
+        if (plateau.getNbStationsDeRechercheConstruites() < DonneesVariablesStatiques.nbStationsRechercheMaxAutorise) {
             if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(villeActuelle))
                 throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeActuelle.getNomVille() + " n'est pas présente dans votre deck.");
-            if(plateau.isVilleStationDeRecherche(villeActuelle)) {
+            if (plateau.isVilleStationDeRecherche(villeActuelle)) {
                 throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.getNomVille() + " possède déjà une station de recherche.");
-            }else {
+            } else {
                 plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
             }
             pionJoueur.defausseCarteVilleDeDeckJoueur(villeActuelle);
-        }else{
+        } else {
             if (plateau.isVilleStationDeRecherche(villeActuelle))
                 throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.getNomVille() + " possède déjà une station de recherche.");
-            if(!plateau.isVilleStationDeRecherche(villeStationDeRecherche))
+            if (!plateau.isVilleStationDeRecherche(villeStationDeRecherche))
                 throw new VilleAvecAucuneStationDeRechercheException("La ville " + villeStationDeRecherche.getNomVille() + " ne possède aucune station de recherche.");
             if (!plateau.isVilleStationDeRecherche(villeActuelle) && plateau.isVilleStationDeRecherche(villeStationDeRecherche)) {
                 plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
                 plateau.getVilles().get(villeStationDeRecherche.getNomVille()).setStationDeRechercheVille(false);
             }
-       }
+        }
     }
 }

@@ -7,6 +7,7 @@ import modele.elements.cartes.effets.evenements.EffetTypePontAerienImpl;
 import modele.elements.cartes.evenements.PontAerien;
 import modele.exceptions.EffetManquantException;
 import modele.exceptions.VirusIntrouvableException;
+import modele.utils.DonneesVariablesStatiques;
 
 
 import java.util.HashMap;
@@ -21,9 +22,9 @@ public class Test {
         try {
             plateau.initialisationPlateau("modele/src/main/resources/DonneesPlateau.json");
             PontAerien pontAerien = new PontAerien(plateau);
-            PionJoueur pionJoueur = new PionJoueur("nadir", plateau,4);
+            PionJoueur pionJoueur = new PionJoueur("nadir", plateau, DonneesVariablesStatiques.nbActionsMaxParTour);
             Ville ville = new Ville("Test");
-            pontAerien.effet(Optional.of(new EffetTypePontAerienImpl(true, pionJoueur,ville)));
+            pontAerien.effet(Optional.of(new EffetTypePontAerienImpl(true, pionJoueur, ville)));
             //Optional.empty() pour le cas d'un effet sans parametres
 
         } catch (Exception e) {

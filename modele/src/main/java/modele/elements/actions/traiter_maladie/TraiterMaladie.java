@@ -10,6 +10,7 @@ import modele.elements.enums.EtatVirus;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VirusDejaEradiqueException;
 import modele.exceptions.VirusInexistantDansLaVilleActuelException;
+import modele.utils.DonneesVariablesStatiques;
 
 @AllArgsConstructor
 
@@ -32,7 +33,7 @@ public class TraiterMaladie implements IAction {
         if (choixVirus.getEtatVirus().equals(EtatVirus.ERADIQUE))
             throw new VirusDejaEradiqueException();
         if (choixVirus.getEtatVirus().equals(EtatVirus.NON_TRAITE)) {
-            pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus, choixVirus.retirerCubesSac(1));
+            pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus, choixVirus.retirerCubesSac(DonneesVariablesStatiques.nbCubesARetirerLorsDuTraitementVirus));
         }
         //  cas maladie traite : retire tout cube
         //  cas maladie traite et dernier cube d'une couleur suppr, il faut check si parmis toutes les villes il n'ya plus aucun virus de cette couleur
@@ -49,7 +50,6 @@ public class TraiterMaladie implements IAction {
             pionJoueur.getPlateau().getLesVirus().get(choixVirus.getVirusCouleur()).setEtatVirus(EtatVirus.ERADIQUE);
 
         }
-
 
 
     }

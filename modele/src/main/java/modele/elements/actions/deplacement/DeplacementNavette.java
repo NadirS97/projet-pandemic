@@ -18,13 +18,13 @@ public class DeplacementNavette implements IAction {
 
     @Override
     public void execAction(PionJoueur pionJoueur) throws Exception {
-        if(pionJoueur.getVilleActuelle().equals(villeStationDeRecherche))
+        if (pionJoueur.getVilleActuelle().equals(villeStationDeRecherche))
             throw new VilleDestinationEstVilleActuelleException("Vous ne pouvez pas vous déplacer vers votre ville actuelle.");
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
-        if(!pionJoueur.getVilleActuelle().isStationDeRechercheVille())
+        if (!pionJoueur.getVilleActuelle().isStationDeRechercheVille())
             throw new VilleAvecAucuneStationDeRechercheException("La ville actuelle: " + pionJoueur.getVilleActuelle().getNomVille() + " ne possède pas de station de recherche.");
-        if(!pionJoueur.getPlateau().isVilleStationDeRecherche(villeStationDeRecherche))
+        if (!pionJoueur.getPlateau().isVilleStationDeRecherche(villeStationDeRecherche))
             throw new VilleAvecAucuneStationDeRechercheException("La ville de destination: " + villeStationDeRecherche.getNomVille() + " ne possède pas de station de recherche.");
         pionJoueur.setVilleActuelle(villeStationDeRecherche);
     }

@@ -12,9 +12,11 @@ import java.util.Optional;
 public class SubventionPublique extends CarteEvenement {
 
     private Plateau plateau;
+
     public SubventionPublique(Plateau plateau) {
         this.plateau = plateau;
     }
+
     private final NomsEvenement NOMEVENEMENT = NomsEvenement.SUBVENTION_PUBLIQUE;
     private final String DESCRIPTION = "Placez 1 station de recherche dans la ville de votre choix (sans avoir à défausser une carte Ville).";
 
@@ -33,8 +35,7 @@ public class SubventionPublique extends CarteEvenement {
         if (effetType.isPresent()) {
             EffetTypeSubventionPubliqueImpl effetTypeSubventionPubliqueImpl = (EffetTypeSubventionPubliqueImpl) effetType.get();
             plateau.getVilles().get(effetTypeSubventionPubliqueImpl.getVille().getNomVille()).setStationDeRechercheVille(true);
-        }
-        else {
+        } else {
             throw new EffetManquantException();
         }
     }

@@ -26,7 +26,6 @@ public class Ville {
 
     public Ville(String nomVille, int nbPopulationTotaleVille, int nbPopulationKmCarreeVille){
         this.villesVoisinesVille = new ArrayList<>();
-        this.nbCubeVirusVille = new HashMap<>();
         this.nomVille = nomVille;
         this.nbPopulationTotaleVille = nbPopulationTotaleVille;
         this.nbPopulationKmCarreeVille = nbPopulationKmCarreeVille;

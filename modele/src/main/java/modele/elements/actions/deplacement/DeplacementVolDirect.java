@@ -13,7 +13,6 @@ public class DeplacementVolDirect implements IAction {
 
     private Ville villeDestination;
 
-
     public DeplacementVolDirect(Ville villeDestination) {
         this.villeDestination = villeDestination;
     }

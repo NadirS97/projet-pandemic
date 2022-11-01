@@ -4,7 +4,6 @@ import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 
 import modele.elements.Ville;
-import modele.elements.Virus;
 import modele.elements.actions.IAction;
 import modele.elements.actions.construire_une_station.ConstruireUneStation;
 import modele.elements.actions.deplacement.DeplacementNavette;
@@ -13,7 +12,7 @@ import modele.elements.actions.deplacement.DeplacementVolCharter;
 import modele.elements.actions.deplacement.DeplacementVolDirect;
 import modele.elements.cartes.CarteVille;
 import modele.exceptions.*;
-import modele.utils.DonneesStatiques;
+import modele.utils.DonneesVariablesStatiques;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class FacadePandemic9ImplTest {
 
     private FacadePandemic9Impl instance;
-    private Plateau plateau;
     private PionJoueur pionJoueur;
     private Ville atlanta;
     private Ville chicago;
@@ -33,16 +31,14 @@ class FacadePandemic9ImplTest {
     private Ville tokyo;
     private Ville istanbul;
     private Ville miami;
-    private DonneesStatiques donneesStatiques = new DonneesStatiques();
 
 
     @BeforeEach
     void setUp() throws Exception {
         this.instance = new FacadePandemic9Impl();
-        plateau = new Plateau();
+        Plateau plateau = new Plateau();
         plateau.initialisationPlateau("src/main/resources/DonneesPlateau.json");
-        pionJoueur = new PionJoueur("joueur", plateau, donneesStatiques.getNbActionsParTour());
-
+        pionJoueur = new PionJoueur("joueur", plateau, DonneesVariablesStatiques.nbActionsMaxParTour);
         atlanta = plateau.getVilleByName("Atlanta");
         chicago = plateau.getVilleByName("Chicago");
         paris = plateau.getVilleByName("Paris");
@@ -52,7 +48,6 @@ class FacadePandemic9ImplTest {
         istanbul = plateau.getVilleByName("Istanbul");
         miami = plateau.getVilleByName("Miami");
         pionJoueur.setVilleActuelle(atlanta);
-
     }
 
 //=============================================================================================================================
@@ -102,8 +97,6 @@ class FacadePandemic9ImplTest {
                 () -> this.instance.jouerAction(pionJoueur,action));
     }
 
-
-
 //=============================================================================================================================
 //                                                ACTION DeplacementVolDirect
 //=============================================================================================================================
@@ -137,6 +130,7 @@ class FacadePandemic9ImplTest {
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));
     }
+
 //=============================================================================================================================
 //                                                ACTION DeplacementVolCharter
 //=============================================================================================================================
@@ -151,24 +145,16 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionDeplacementVolCharterPasDeCarteVilleActuel() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        Ville madrid = plateau.getVilleByName("Madrid");
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Madrid")));
-        IAction action = new DeplacementVolCharter(madrid);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        IAction action = new DeplacementVolCharter(milan);
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,() -> this.instance.jouerAction(pionJoueur,action));
-
     }
 
     @Test
     void jouerTourActionDeplacementVolCharterVilleIntrouvable() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        Ville madrid = plateau.getVilleByName("Madrid");
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Madrid")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         IAction action = new DeplacementVolCharter(new Ville("ae"));
         Assertions.assertThrows(VilleIntrouvableException.class,() -> this.instance.jouerAction(pionJoueur,action));
-
     }
 
 //=============================================================================================================================
@@ -311,7 +297,6 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourActionDeplacementNavetteNbActionsMaxTourAtteint() {
         atlanta.setStationDeRechercheVille(true);
-        pionJoueur.setVilleActuelle(atlanta);
         alger.setStationDeRechercheVille(true);
         IAction action1 = new DeplacementNavette(alger);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
@@ -330,14 +315,10 @@ class FacadePandemic9ImplTest {
 //                                                 ACTION TRAITER MALADIE
 //=============================================================================================================================
 
-
     @Test
     void jouerTourActionTraiterMaladieNonTraiteOK(){
-
         System.out.println(atlanta.getNbCubeVirusVille());
     }
-
-
 
     @Test
     void piocherCartes(){
@@ -350,18 +331,11 @@ class FacadePandemic9ImplTest {
 
     @Test
     void propagation() throws VilleDejaEclosException {
-
-
         System.out.println(this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille());
-       Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
-       Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
-       Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
         System.out.println(this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille());
-
-
-
     }
-
-
 
 }
