@@ -5,13 +5,16 @@ import modele.elements.Plateau;
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
 import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
+import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VilleActuellePossedeDejaUneStationDeRechercheException;
 import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
+import modele.utils.DonneesStatiques;
 
 
 public class ConstruireUneStation implements IAction {
 
     private Ville villeStationDeRecherche;
+    private DonneesStatiques donneesStatiques = new DonneesStatiques();
 
     public ConstruireUneStation() {
     }
@@ -24,7 +27,9 @@ public class ConstruireUneStation implements IAction {
     public void execAction(PionJoueur pionJoueur) throws Exception {
         Ville villeActuelle = pionJoueur.getVilleActuelle();
         Plateau plateau = pionJoueur.getPlateau();
-        if (plateau.getNbStationsDeRechercheConstruites() < 6) {
+        if (pionJoueur.getNbActions() <= 0)
+            throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
+        if (plateau.getNbStationsDeRechercheConstruites() < donneesStatiques.getNbStationsRechercheMaxAutorise()) {
             if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(villeActuelle))
                 throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeActuelle.getNomVille() + " n'est pas présente dans votre deck.");
             if(plateau.isVilleStationDeRecherche(villeActuelle)) {

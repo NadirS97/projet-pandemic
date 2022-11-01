@@ -12,11 +12,10 @@ import modele.elements.actions.deplacement.DeplacementVolCharter;
 import modele.elements.actions.deplacement.DeplacementVolDirect;
 import modele.elements.cartes.CarteVille;
 import modele.exceptions.*;
+import modele.utils.DonneesStatiques;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,12 +23,35 @@ class FacadePandemic9ImplTest {
 
     private FacadePandemic9Impl instance;
     private Plateau plateau;
+    private PionJoueur pionJoueur;
+    private Ville atlanta;
+    private Ville chicago;
+    private Ville paris;
+    private Ville alger;
+    private Ville milan;
+    private Ville tokyo;
+    private Ville istanbul;
+    private Ville miami;
+    private DonneesStatiques donneesStatiques = new DonneesStatiques();
+
 
     @BeforeEach
     void setUp() throws Exception {
         this.instance = new FacadePandemic9Impl();
         plateau = new Plateau();
         plateau.initialisationPlateau("src/main/resources/DonneesPlateau.json");
+        pionJoueur = new PionJoueur("joueur", plateau, donneesStatiques.getNbActionsParTour());
+
+        atlanta = plateau.getVilleByName("Atlanta");
+        chicago = plateau.getVilleByName("Chicago");
+        paris = plateau.getVilleByName("Paris");
+        alger = plateau.getVilleByName("Alger");
+        milan = plateau.getVilleByName("Milan");
+        tokyo = plateau.getVilleByName("Tokyo");
+        istanbul = plateau.getVilleByName("Istanbul");
+        miami = plateau.getVilleByName("Miami");
+        pionJoueur.setVilleActuelle(atlanta);
+
     }
 
 //=============================================================================================================================
@@ -38,19 +60,13 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionDeplacementVoitureOK() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        Ville atlanta = plateau.getVilleByName("Atlanta");
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
-        IAction action = new DeplacementVoiture(atlanta);
+        IAction action = new DeplacementVoiture(chicago);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
-        assertEquals(pionJoueur.getVilleActuelle(), plateau.getVilleByName("Atlanta"));
+        assertEquals(pionJoueur.getVilleActuelle(), chicago);
     }
 
     @Test
     void jouerTourActionDeplacementVoitureVilleDestinationEstVilleActuelle() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        Ville atlanta = plateau.getVilleByName("Atlanta");
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Atlanta"));
         IAction action = new DeplacementVoiture(atlanta);
         Assertions.assertThrows(VilleDestinationEstVilleActuelleException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
@@ -58,25 +74,21 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionDeplacementVoitureNbTourMaxAtteint() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
-        IAction action = new DeplacementVoiture(plateau.getVilleByName("Atlanta"));
+        IAction action = new DeplacementVoiture(chicago);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
-        IAction action1 = new DeplacementVoiture(plateau.getVilleByName("Chicago"));
+        IAction action1 = new DeplacementVoiture(atlanta);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action1));
-        IAction action2 = new DeplacementVoiture(plateau.getVilleByName("Atlanta"));
+        IAction action2 = new DeplacementVoiture(chicago);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action2));
-        IAction action3 = new DeplacementVoiture(plateau.getVilleByName("Chicago"));
+        IAction action3 = new DeplacementVoiture(atlanta);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action3));
-        IAction action4 = new DeplacementVoiture(plateau.getVilleByName("Atlanta"));
+        IAction action4 = new DeplacementVoiture(chicago);
         Assertions.assertThrows(NbActionsMaxTourAtteintException.class,
                 () -> this.instance.jouerTour(pionJoueur,action4));
     }
 
     @Test
     void jouerTourActionDeplacementVoitureVilleIntrouvable() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
         IAction action = new DeplacementVoiture(new Ville("Introuvable"));
         Assertions.assertThrows(VilleIntrouvableException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
@@ -84,9 +96,7 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionDeplacementVoitureVilleNonVoisine() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
-        IAction action = new DeplacementVoiture(plateau.getVilleByName("Paris"));
+        IAction action = new DeplacementVoiture(paris);
         Assertions.assertThrows(VilleNonVoisineException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
@@ -99,57 +109,43 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionDeplacementVolDirectOK() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        Ville madrid = plateau.getVilleByName("Madrid");
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(madrid));
-        IAction action = new DeplacementVolDirect(madrid);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        IAction action = new DeplacementVolDirect(paris);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
-        assertEquals(pionJoueur.getVilleActuelle(), madrid);
+        assertEquals(pionJoueur.getVilleActuelle(), paris);
     }
 
     @Test
     void jouerTourActionDeplacementVolDirectVilleDestinationEstVilleActuelle() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        Ville chicago = plateau.getVilleByName("Chicago");
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-        IAction action = new DeplacementVolDirect(chicago);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new DeplacementVolDirect(atlanta);
         Assertions.assertThrows(VilleDestinationEstVilleActuelleException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionDeplacementVolDirectVilleIntrouvable() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
         IAction action = new DeplacementVolDirect(new Ville("ville_introuvable"));
-        Assertions.assertThrows(VilleIntrouvableException.class,() -> this.instance.jouerTour(pionJoueur,action));
-
+        Assertions.assertThrows(VilleIntrouvableException.class,
+                () -> this.instance.jouerTour(pionJoueur,action));
     }
 
     @Test
     void actionSeDeplacerVolDirectVilleInexistanteDeckJoueur() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Atlanta"));
-        Ville madrid = plateau.getVilleByName("Madrid");
-        IAction action = new DeplacementVolDirect(madrid);
+        IAction action = new DeplacementVolDirect(paris);
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
-    //=============================================================================================================================
-    //                                                ACTION DeplacementVolCharter
-    //=============================================================================================================================
+//=============================================================================================================================
+//                                                ACTION DeplacementVolCharter
+//=============================================================================================================================
 
     @Test
     void jouerTourActionDeplacementVolCharterOK() {
-        PionJoueur pionJoueur = new PionJoueur("jo",plateau,4);
-        Ville madrid = plateau.getVilleByName("Madrid");
-        pionJoueur.setVilleActuelle(plateau.getVilleByName("Chicago"));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Chicago")));
-        IAction action = new DeplacementVolCharter(madrid);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new DeplacementVolCharter(paris);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action));
-        assertEquals(pionJoueur.getVilleActuelle(), madrid);
+        assertEquals(pionJoueur.getVilleActuelle(), paris);
     }
 
     @Test
@@ -174,105 +170,90 @@ class FacadePandemic9ImplTest {
 
     }
 
-
-
-
-
 //=============================================================================================================================
 //                                                ACTION ConstruireUneStation
 //=============================================================================================================================
 
     @Test
     void jouerTourActionConstruireUneStationOK() {
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeActuelle = plateau.getVilleByName("Atlanta");
-        pionJoueur.setVilleActuelle(villeActuelle);
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(villeActuelle));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new ConstruireUneStation();
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur, action));
         assertTrue(pionJoueur.getVilleActuelle().isStationDeRechercheVille());
-        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(villeActuelle));
+        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
     }
 
     @Test
     void jouerTourActionConstruireUneStationDeplacementStationOK(){
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeSansStationRecherche = plateau.getVilleByName("Atlanta");
-        villeSansStationRecherche.setStationDeRechercheVille(false);
-        Ville ville1 = plateau.getVilleByName("Chicago");
-        ville1.setStationDeRechercheVille(true);
-        Ville ville2 = plateau.getVilleByName("Alger");
-        ville2.setStationDeRechercheVille(true);
-        Ville ville3 = plateau.getVilleByName("Paris");
-        ville3.setStationDeRechercheVille(true);
-        Ville ville4 = plateau.getVilleByName("Milan");
-        ville4.setStationDeRechercheVille(true);
-        Ville ville5 = plateau.getVilleByName("Tokyo");
-        ville5.setStationDeRechercheVille(true);
-        Ville ville6 = plateau.getVilleByName("Miami");
-        ville6.setStationDeRechercheVille(true);
-        pionJoueur.setVilleActuelle(villeSansStationRecherche);
-        IAction action = new ConstruireUneStation(ville1);
+        atlanta.setStationDeRechercheVille(false);
+        chicago.setStationDeRechercheVille(true);
+        paris.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(true);
+        milan.setStationDeRechercheVille(true);
+        tokyo.setStationDeRechercheVille(true);
+        istanbul.setStationDeRechercheVille(true);
+        pionJoueur.setVilleActuelle(atlanta);
+        IAction action = new ConstruireUneStation(chicago);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur, action));
-        assertTrue(villeSansStationRecherche.isStationDeRechercheVille());
-        assertFalse(ville1.isStationDeRechercheVille());
+        assertTrue(atlanta.isStationDeRechercheVille());
+        assertFalse(chicago.isStationDeRechercheVille());
+    }
+
+    @Test
+    void jouerTourActionConstruireUneStationNbActionsMaxTourAtteint() {
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(alger));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        IAction action1 = new DeplacementVolDirect(chicago);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action1));
+        IAction action2 = new DeplacementVolDirect(paris);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action2));
+        IAction action3 = new DeplacementVolDirect(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action3));
+        IAction action4 =  new DeplacementVolDirect(milan);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action4));
+        IAction action5 = new ConstruireUneStation();
+        Assertions.assertThrows(NbActionsMaxTourAtteintException.class,
+                () -> this.instance.jouerTour(pionJoueur,action5));
     }
 
     @Test
     void jouerTourActionConstruireUneStationDeplacementStationVilleAvecAucuneStationDeRecherche(){
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeSansStationRecherche = plateau.getVilleByName("Atlanta");
-        villeSansStationRecherche.setStationDeRechercheVille(false);
-        Ville villeSansStationRecherche2 = plateau.getVilleByName("Istanbul");
-        villeSansStationRecherche2.setStationDeRechercheVille(false);
-        Ville ville1 = plateau.getVilleByName("Chicago");
-        ville1.setStationDeRechercheVille(true);
-        Ville ville2 = plateau.getVilleByName("Alger");
-        ville2.setStationDeRechercheVille(true);
-        Ville ville3 = plateau.getVilleByName("Paris");
-        ville3.setStationDeRechercheVille(true);
-        Ville ville4 = plateau.getVilleByName("Milan");
-        ville4.setStationDeRechercheVille(true);
-        Ville ville5 = plateau.getVilleByName("Tokyo");
-        ville5.setStationDeRechercheVille(true);
-        Ville ville6 = plateau.getVilleByName("Miami");
-        ville6.setStationDeRechercheVille(true);
-        pionJoueur.setVilleActuelle(villeSansStationRecherche);
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(villeSansStationRecherche));
-        IAction action = new ConstruireUneStation(villeSansStationRecherche2);
+        atlanta.setStationDeRechercheVille(false);
+        istanbul.setStationDeRechercheVille(false);
+        chicago.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(true);
+        paris.setStationDeRechercheVille(true);
+        milan.setStationDeRechercheVille(true);
+        tokyo.setStationDeRechercheVille(true);
+        miami.setStationDeRechercheVille(true);
+        pionJoueur.setVilleActuelle(atlanta);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new ConstruireUneStation(istanbul);
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionConstruireUneStationDeplacementStationVilleActuellePossedeDejaUneStationDeRecherche(){
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeSansStationRecherche = plateau.getVilleByName("Atlanta");
-        villeSansStationRecherche.setStationDeRechercheVille(true);
-        Ville ville1 = plateau.getVilleByName("Chicago");
-        ville1.setStationDeRechercheVille(true);
-        Ville ville2 = plateau.getVilleByName("Alger");
-        ville2.setStationDeRechercheVille(true);
-        Ville ville3 = plateau.getVilleByName("Paris");
-        ville3.setStationDeRechercheVille(true);
-        Ville ville4 = plateau.getVilleByName("Milan");
-        ville4.setStationDeRechercheVille(true);
-        Ville ville5 = plateau.getVilleByName("Tokyo");
-        ville5.setStationDeRechercheVille(true);
-        Ville ville6 = plateau.getVilleByName("Miami");
-        ville6.setStationDeRechercheVille(true);
-        pionJoueur.setVilleActuelle(villeSansStationRecherche);
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(villeSansStationRecherche));
-        IAction action = new ConstruireUneStation(ville1);
+        atlanta.setStationDeRechercheVille(true);
+        chicago.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(true);
+        paris.setStationDeRechercheVille(true);
+        milan.setStationDeRechercheVille(true);
+        tokyo.setStationDeRechercheVille(true);
+        miami.setStationDeRechercheVille(true);
+        pionJoueur.setVilleActuelle(atlanta);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new ConstruireUneStation(chicago);
         Assertions.assertThrows(VilleActuellePossedeDejaUneStationDeRechercheException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionConstruireUneStationCarteVilleInexistanteDansDeckJoueur(){
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeActuelle = plateau.getVilleByName("Atlanta");
-        pionJoueur.setVilleActuelle(villeActuelle);
         IAction action = new ConstruireUneStation();
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
@@ -280,11 +261,8 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionConstruireUneStationVilleActuellePossedeDejaUneStationDeRecherche(){
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville ville = plateau.getVilleByName("Atlanta");
-        ville.setStationDeRechercheVille(true);
-        pionJoueur.setVilleActuelle(ville);
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(ville));
+        atlanta.setStationDeRechercheVille(true);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new ConstruireUneStation();
         Assertions.assertThrows(VilleActuellePossedeDejaUneStationDeRechercheException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
@@ -296,75 +274,60 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionDeplacementNavetteOK() {
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeActuelle = plateau.getVilleByName("Atlanta");
-        villeActuelle.setStationDeRechercheVille(true);
-        pionJoueur.setVilleActuelle(villeActuelle);
-        Ville villeAvecStationDeRecherche = plateau.getVilleByName("Alger");
-        villeAvecStationDeRecherche.setStationDeRechercheVille(true);
-        IAction action = new DeplacementNavette(villeAvecStationDeRecherche);
+        atlanta.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(true);
+        IAction action = new DeplacementNavette(alger);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur, action));
-        assertEquals(pionJoueur.getVilleActuelle(), villeAvecStationDeRecherche);
+        assertEquals(pionJoueur.getVilleActuelle(), alger);
     }
 
     @Test
     void jouerTourActionDeplacementNavetteVilleAvecAucuneStationDeRechercheVilleDestination() {
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeActuelle = plateau.getVilleByName("Atlanta");
-        villeActuelle.setStationDeRechercheVille(true);
-        pionJoueur.setVilleActuelle(villeActuelle);
-        Ville villeAvecStationDeRecherche = plateau.getVilleByName("Alger");
-        villeAvecStationDeRecherche.setStationDeRechercheVille(false);
-        IAction action = new DeplacementNavette(villeAvecStationDeRecherche);
+        atlanta.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(false);
+        IAction action = new DeplacementNavette(alger);
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionDeplacementNavetteVilleAvecAucuneStationDeRechercheVilleActuelle() {
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeActuelle = plateau.getVilleByName("Atlanta");
-        villeActuelle.setStationDeRechercheVille(false);
-        pionJoueur.setVilleActuelle(villeActuelle);
-        Ville villeAvecStationDeRecherche = plateau.getVilleByName("Alger");
-        villeAvecStationDeRecherche.setStationDeRechercheVille(true);
-        IAction action = new DeplacementNavette(villeAvecStationDeRecherche);
+        atlanta.setStationDeRechercheVille(false);
+        alger.setStationDeRechercheVille(true);
+        IAction action = new DeplacementNavette(alger);
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionDeplacementNavetteVilleDestinationEstVilleActuelle() {
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeActuelle = plateau.getVilleByName("Atlanta");
-        villeActuelle.setStationDeRechercheVille(true);
-        pionJoueur.setVilleActuelle(villeActuelle);
-        IAction action = new DeplacementNavette(villeActuelle);
+        atlanta.setStationDeRechercheVille(true);
+        IAction action = new DeplacementNavette(atlanta);
         Assertions.assertThrows(VilleDestinationEstVilleActuelleException.class,
                 () -> this.instance.jouerTour(pionJoueur,action));
     }
 
     @Test
     void jouerTourActionDeplacementNavetteNbActionsMaxTourAtteint() {
-        PionJoueur pionJoueur = new PionJoueur("nadir", plateau, 4);
-        Ville villeActuelle = plateau.getVilleByName("Atlanta");
-        villeActuelle.setStationDeRechercheVille(true);
-        pionJoueur.setVilleActuelle(villeActuelle);
-        Ville ville1 = plateau.getVilleByName("Miami");
-        ville1.setStationDeRechercheVille(true);
-        IAction action1 = new DeplacementNavette(ville1);
+        atlanta.setStationDeRechercheVille(true);
+        pionJoueur.setVilleActuelle(atlanta);
+        alger.setStationDeRechercheVille(true);
+        IAction action1 = new DeplacementNavette(alger);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action1));
-        IAction action2 = new DeplacementNavette(villeActuelle);
+        IAction action2 = new DeplacementNavette(atlanta);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action2));
-        IAction action3 = new DeplacementNavette(ville1);
+        IAction action3 = new DeplacementNavette(alger);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action3));
-        IAction action4 = new DeplacementNavette(villeActuelle);
+        IAction action4 = new DeplacementNavette(atlanta);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerTour(pionJoueur,action4));
-        IAction action5 = new DeplacementNavette(ville1);
+        IAction action5 = new DeplacementNavette(alger);
         Assertions.assertThrows(NbActionsMaxTourAtteintException.class,
                 () -> this.instance.jouerTour(pionJoueur,action5));
     }
 
+//=============================================================================================================================
+//                                                 ACTION
+//=============================================================================================================================
 
 
 
