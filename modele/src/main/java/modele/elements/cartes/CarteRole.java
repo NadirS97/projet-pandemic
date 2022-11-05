@@ -22,5 +22,4 @@ public abstract class CarteRole {
 
     public abstract void effet(Optional<IEffetType> effetType) throws Exception;
 
-
 }

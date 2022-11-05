@@ -33,7 +33,7 @@ public class Plateau {
     private Map<String, Ville> villes;
     private int marqueurVitessePropagation;   // entre 1 et 3 = vitesse2 , 4, 5 = vitesse3 , 6, 7 vitesse 4, pas vraiment besoin d'un tableau ?
     private int marqueurVitesseEclosion;
-    private List<CarteJoueur> piocheCarteJoueur;
+    private LinkedList<CarteJoueur> piocheCarteJoueur;
     private List<CarteJoueur> defausseCarteJoueur;
     private List<CartePropagation> piocheCartePropagation;
     private List<CartePropagation> defausseCartePropagation;
@@ -53,7 +53,7 @@ public class Plateau {
         marqueurVitessePropagation = 0; // 0,1,3 = 2 ; 3,4 = 3 ; 4,5 = 4
         marqueurVitesseEclosion = 0;
         nbStationsDeRechercheConstruites = 0;
-        piocheCarteJoueur = new ArrayList<>();
+        piocheCarteJoueur = new LinkedList<>();
         defausseCarteJoueur = new ArrayList<>();
         piocheCartePropagation = new ArrayList<>();
         defausseCartePropagation = new ArrayList<>();
@@ -139,6 +139,14 @@ public class Plateau {
                 }
             }
         });
+    }
+
+    public CarteJoueur piocherCarteJoueur() {
+        return piocheCarteJoueur.remove(0);
+    }
+
+    public void ajouterDansPiocheCarteJoueur(CarteJoueur carteJoueur) {
+        piocheCarteJoueur.addFirst(carteJoueur);
     }
 
     public Ville piocherCartePropagation() {
