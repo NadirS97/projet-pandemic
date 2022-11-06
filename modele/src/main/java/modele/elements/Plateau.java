@@ -141,10 +141,12 @@ public class Plateau {
         });
     }
 
+    // Sert exclusivement à l'effet Prevision
     public CarteJoueur piocherCarteJoueur() {
         return piocheCarteJoueur.remove(0);
     }
 
+    // Sert exclusivement à l'effet Prevision
     public void ajouterDansPiocheCarteJoueur(CarteJoueur carteJoueur) {
         piocheCarteJoueur.addFirst(carteJoueur);
     }

@@ -337,5 +337,4 @@ class FacadePandemic9ImplTest {
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
         System.out.println(this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille());
     }
-
 }
