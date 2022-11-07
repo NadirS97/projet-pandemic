@@ -93,8 +93,8 @@ public class Plateau {
         for (NomsEvenement nomEvenement : NomsEvenement.values()) {
             switch (nomEvenement) {
                 case PONT_AERIEN -> piocheCarteJoueur.add(new CartePontAerien());
-                case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new SubventionPublique(this));
-                case PREVISION -> piocheCarteJoueur.add(new Prevision(this));
+                case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new CarteSubventionPublique(this));
+                case PREVISION -> piocheCarteJoueur.add(new CartePrevision(this));
                 case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new CarteParUneNuitTranquille());
                 case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new CartePopulationResiliente());
                 default -> throw new EvenementInnexistantException(

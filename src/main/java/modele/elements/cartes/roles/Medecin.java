@@ -1,13 +1,13 @@
 package modele.elements.cartes.roles;
 
+import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteRole;
-import modele.elements.cartes.effets.IEffetType;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
 import java.util.Optional;
 
-public class Medecin extends CarteRole {
+public class Medecin extends CarteRole  {
 
     public Medecin(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
@@ -18,9 +18,9 @@ public class Medecin extends CarteRole {
                         "(et empêchez d'autres cubes d'une maladie guérie d'y être placés).");
     }
 
+
     @Override
-    public void effet(Optional<IEffetType> effetType) throws Exception {
+    public void execEffet(PionJoueur pionJoueur) throws Exception {
 
     }
-
 }

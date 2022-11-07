@@ -2,16 +2,11 @@ package modele.elements.cartes;
 
 import lombok.Getter;
 import lombok.ToString;
-import modele.elements.cartes.evenements.IEvent;
 import modele.elements.enums.NomsEvenement;
-import modele.elements.cartes.effets.IEffetType;
-import modele.exceptions.EffetManquantException;
-
-import java.util.Optional;
 
 @ToString
 @Getter
-public abstract class CarteEvenement extends CarteJoueur implements IEvent {
+public abstract class CarteEvenement extends CarteJoueur implements IEffet {
 
     private NomsEvenement nomEvenement;
     private String description;

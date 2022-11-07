@@ -30,28 +30,12 @@ public class CartePontAerien extends CarteEvenement {
     }
 
     @Override
-    public void execEvent(PionJoueur pionJoueur) throws PermissionNonAccordeException {
+    public void execEffet(PionJoueur pionJoueur) throws PermissionNonAccordeException {
         if (!pionChoisis.isPermissionPontAerien())
             throw new PermissionNonAccordeException();
         pionChoisis.setVilleActuelle(villeChoisis);
 
     }
-
-//    @Override
-//    public void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException {
-//        if (effetType.isPresent()) {
-//            EffetTypePontAerienImpl effetTypePontAerienImpl = (EffetTypePontAerienImpl) effetType.get();
-//            if (effetTypePontAerienImpl.isAutorisationDuJoueur()) {
-//                plateau.getVilles().get(effetTypePontAerienImpl.getPionJoueur().getVilleActuelle().getNomVille()).getListePionsJoueursPresents().remove(effetTypePontAerienImpl.getPionJoueur());
-//                plateau.getVilles().get(effetTypePontAerienImpl.getVilleDestination().getNomVille()).getListePionsJoueursPresents().add(effetTypePontAerienImpl.getPionJoueur());
-//                effetTypePontAerienImpl.getPionJoueur().setVilleActuelle(effetTypePontAerienImpl.getVilleDestination());
-//            } else {
-//                throw new DeplacementRefuseException();
-//            }
-//        } else {
-//            throw new EffetManquantException();
-//        }
-//    }
 
 
     public void setVilleChoisis(Ville villeChoisis) {

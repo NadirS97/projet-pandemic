@@ -3,20 +3,13 @@ package modele.elements.cartes.evenements;
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.cartes.CarteEvenement;
-import modele.elements.cartes.CarteJoueur;
-import modele.elements.cartes.effets.evenements.EffetTypePrevisionImpl;
 import modele.elements.enums.NomsEvenement;
-import modele.elements.cartes.effets.IEffetType;
-import modele.exceptions.EffetManquantException;
 
-import java.util.LinkedHashMap;
-import java.util.Optional;
-
-public class Prevision extends CarteEvenement {
+public class CartePrevision extends CarteEvenement {
 
     private Plateau plateau;
 
-    public Prevision(Plateau plateau) {
+    public CartePrevision(Plateau plateau) {
         this.plateau = plateau;
     }
 
@@ -56,7 +49,7 @@ public class Prevision extends CarteEvenement {
 //    }
 
     @Override
-    public void execEvent(PionJoueur pionJoueur) {
+    public void execEffet(PionJoueur pionJoueur) {
 
     }
 }

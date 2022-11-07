@@ -30,7 +30,7 @@ public class CartePopulationResiliente extends CarteEvenement {
 
 
     @Override
-    public void execEvent(PionJoueur pionJoueur) throws Exception {
+    public void execEffet(PionJoueur pionJoueur) throws Exception {
         if (!pionJoueur.getPlateau().getDefausseCartePropagation().contains(cartePropagationChoisis))
             throw new CartePropagationNotInDefausseException();
 

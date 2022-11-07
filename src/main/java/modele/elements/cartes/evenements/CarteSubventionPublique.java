@@ -3,18 +3,13 @@ package modele.elements.cartes.evenements;
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.cartes.CarteEvenement;
-import modele.elements.cartes.effets.evenements.EffetTypeSubventionPubliqueImpl;
 import modele.elements.enums.NomsEvenement;
-import modele.elements.cartes.effets.IEffetType;
-import modele.exceptions.EffetManquantException;
 
-import java.util.Optional;
-
-public class SubventionPublique extends CarteEvenement {
+public class CarteSubventionPublique extends CarteEvenement {
 
     private Plateau plateau;
 
-    public SubventionPublique(Plateau plateau) {
+    public CarteSubventionPublique(Plateau plateau) {
         this.plateau = plateau;
     }
 
@@ -42,7 +37,7 @@ public class SubventionPublique extends CarteEvenement {
 //    }
 
     @Override
-    public void execEvent(PionJoueur pionJoueur) {
+    public void execEffet(PionJoueur pionJoueur) {
 
     }
 }

@@ -1,13 +1,14 @@
 package modele.elements.cartes.roles;
 
+import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteRole;
-import modele.elements.cartes.effets.IEffetType;
+import modele.elements.cartes.IEffet;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
 import java.util.Optional;
 
-public class Chercheuse extends CarteRole {
+public class Chercheuse extends CarteRole  {
 
     public Chercheuse(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
@@ -18,9 +19,9 @@ public class Chercheuse extends CarteRole {
                         "un joueur qui partage des connaissance avec vous peut vous prendre n'importe quelle carte.");
     }
 
+
     @Override
-    public void effet(Optional<IEffetType> effetType) throws Exception {
+    public void execEffet(PionJoueur pionJoueur) throws Exception {
 
     }
-
 }

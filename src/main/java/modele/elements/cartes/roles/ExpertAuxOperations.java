@@ -1,7 +1,7 @@
 package modele.elements.cartes.roles;
 
+import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteRole;
-import modele.elements.cartes.effets.IEffetType;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
@@ -18,8 +18,9 @@ public class ExpertAuxOperations extends CarteRole {
                         "Ville pour vous déplacer d'une ville avec une station de recherche vers n'importe quelle ville.");
     }
 
+
     @Override
-    public void effet(Optional<IEffetType> effetType) throws Exception {
+    public void execEffet(PionJoueur pionJoueur) throws Exception {
 
     }
 }

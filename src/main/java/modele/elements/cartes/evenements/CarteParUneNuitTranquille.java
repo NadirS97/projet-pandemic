@@ -21,7 +21,7 @@ public class CarteParUneNuitTranquille extends CarteEvenement {
     }
 
     @Override
-    public void execEvent(PionJoueur pionJoueur) {
+    public void execEffet(PionJoueur pionJoueur) {
         pionJoueur.getPlateau().setEffetParUneNuitTranquilleActif(true);
     }
 
