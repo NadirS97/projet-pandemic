@@ -56,13 +56,14 @@ public class Ville {
     @Override
     public String toString() {
         return "Ville{" +
-                "nomVille='" + nomVille + '\'' +
-                ", villesVoisinesVille=" + villesVoisinesVille +
-                ", nbCubesVirusVille="+ retourneVirusNbCubeVirusVille() +
-                ", nbPopulationTotaleVille=" + nbPopulationTotaleVille +
-                ", nbPopulationKmCarreeVille=" + nbPopulationKmCarreeVille +
-                ", stationDeRechercheVille=" + stationDeRechercheVille +
-                ", eclosionVille=" + eclosionVille +
+                "nomVille = '" + nomVille + '\'' +
+                ", villesVoisinesVille = " + villesVoisinesVille +
+                ", couleurVirusVille = "+ couleurVirusVille +
+                ", nbCubesVirusVille = "+ retourneVirusNbCubeVirusVille() +
+                ", nbPopulationTotaleVille = " + nbPopulationTotaleVille +
+                ", nbPopulationKmCarreeVille = " + nbPopulationKmCarreeVille +
+                ", stationDeRechercheVille = " + stationDeRechercheVille +
+                ", eclosionVille = " + eclosionVille +
                 '}';
     }
 

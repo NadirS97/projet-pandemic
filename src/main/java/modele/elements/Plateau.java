@@ -47,7 +47,7 @@ public class Plateau {
     private boolean effetParUneNuitTranquilleActif;
     private DonneesPlateauDTO donneesPlateauDTO;
 
-    public Plateau(String cheminDonneesJson)throws Exception {
+    public Plateau()throws Exception {
         lesVirus = new HashMap<>();
         villes = new HashMap<>();
         // indicateur du nombre d'éclosion doit être placé sur la case 0.
@@ -61,7 +61,7 @@ public class Plateau {
         listeCouleursPionsJoueurs = new ArrayList<>();
         toutesLesCartesRolesExistante = new ArrayList<>();
         effetParUneNuitTranquilleActif = false;
-        initialisationPlateau(cheminDonneesJson);
+        initialisationPlateau();
     }
 
     public Ville getVilleByName(String name) {
@@ -77,8 +77,8 @@ public class Plateau {
         return nbStationsDeRechercheConstruites;
     }
 
-    public void initialisationPlateau(String cheminDonneesJson) throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException, RoleIntrouvableException, EvenementInnexistantException {
-        donneesPlateauDTO = lectureDonneesPlateau(cheminDonneesJson);
+    public void initialisationPlateau() throws FileNotFoundException, VilleIntrouvableException, VirusIntrouvableException, RoleIntrouvableException, EvenementInnexistantException {
+        donneesPlateauDTO = lectureDonneesPlateau();
         initialisationCartesRoles();
         initialisationVirus();
         initialisationVilles();
@@ -119,13 +119,13 @@ public class Plateau {
     public void initialisationCartesRoles() throws RoleIntrouvableException {
         for (NomsRoles role : NomsRoles.values()) {
             switch (role) {
-                case CHERCHEUSE -> toutesLesCartesRolesExistante.add(new Chercheuse(CouleurPionsRole.MARRON));
-                case SCIENTIFIQUE -> toutesLesCartesRolesExistante.add(new Scientifique(CouleurPionsRole.BLANC));
-                case REPARTITEUR -> toutesLesCartesRolesExistante.add(new Repartiteur(CouleurPionsRole.ROSE));
-                case SPECIALISTE_EN_MISE_EN_QUARANTAINE -> toutesLesCartesRolesExistante.add(new SpecialisteEnMiseEnQuarantaine(CouleurPionsRole.VERT_FONCE));
-                case EXPERT_AUX_OPERATIONS ->toutesLesCartesRolesExistante.add(new ExpertAuxOperations(CouleurPionsRole.VERT_CLAIR));
-                case MEDECIN -> toutesLesCartesRolesExistante.add(new Medecin(CouleurPionsRole.ORANGE));
-                case PLANIFICATEUR_D_URGENCE -> toutesLesCartesRolesExistante.add(new PlanificateurDUrgence(CouleurPionsRole.BLEU));
+                case CHERCHEUSE -> toutesLesCartesRolesExistante.add(new CarteChercheuse(CouleurPionsRole.MARRON));
+                case SCIENTIFIQUE -> toutesLesCartesRolesExistante.add(new CarteScientifique(CouleurPionsRole.BLANC));
+                case REPARTITEUR -> toutesLesCartesRolesExistante.add(new CarteRepartiteur(CouleurPionsRole.ROSE));
+                case SPECIALISTE_EN_MISE_EN_QUARANTAINE -> toutesLesCartesRolesExistante.add(new CarteSpecialisteEnMiseEnQuarantaine(CouleurPionsRole.VERT_FONCE));
+                case EXPERT_AUX_OPERATIONS ->toutesLesCartesRolesExistante.add(new CarteExpertAuxOperations(CouleurPionsRole.VERT_CLAIR));
+                case MEDECIN -> toutesLesCartesRolesExistante.add(new CarteMedecin(CouleurPionsRole.ORANGE));
+                case PLANIFICATEUR_D_URGENCE -> toutesLesCartesRolesExistante.add(new CartePlanificateurDUrgence(CouleurPionsRole.BLEU));
                 default -> throw new RoleIntrouvableException("Le rôle : " + role + " est inexistant.");
             }
         }
@@ -178,10 +178,8 @@ public class Plateau {
         }
     }
 
-
     public void eclosion(Ville ville, Virus virus) {
         for (String villeVoisineString : ville.getVillesVoisinesVille()) {
-
             villes.get(villeVoisineString)
                     .getNbCubeVirusVille().put(virus, villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) + 1);
             // si la ville est d'une autre couleur que le virus propagé, il faut l'ajouter à la map
@@ -221,8 +219,8 @@ public class Plateau {
         return villeDestination.isStationDeRechercheVille();
     }
 
-    public DonneesPlateauDTO lectureDonneesPlateau(String cheminDonneesJson) throws FileNotFoundException {
-        FileReader reader = new FileReader(cheminDonneesJson);
+    public DonneesPlateauDTO lectureDonneesPlateau() throws FileNotFoundException {
+        FileReader reader = new FileReader("src/main/resources/DonneesPlateau.json");
         BufferedReader br = new BufferedReader(reader);
         String donnees = br.lines().collect(Collectors.joining());
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

@@ -8,9 +8,12 @@ import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
+import modele.utils.DonneesVariablesStatiques;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -26,11 +29,11 @@ public class PionJoueur {
     private Plateau plateau;
     private boolean permissionPontAerien;
 
-    public PionJoueur(String pseudoJoueur, Plateau plateau, int nbActions) {
+    public PionJoueur(String pseudoJoueur, Plateau plateau) {
         this.pseudoJoueur = pseudoJoueur;
         this.plateau = plateau;
         this.deckJoueur = new ArrayList<>();
-        this.nbActions = nbActions;
+        this.nbActions = DonneesVariablesStatiques.nbActionsMaxParTour;
     }
 
     public PionJoueur(){
@@ -51,6 +54,22 @@ public class PionJoueur {
             }
         }
         return listeVillesDeckJoueur.contains(ville); //True
+    }
+
+    public Map.Entry<String, Integer> getNbMaxCarteVilleMemeCouleurDeckJoueur(){
+        Map<String, Integer> maMap= new HashMap<>();
+        plateau.getLesVirus().keySet().forEach(s -> {
+            maMap.put(s, 0);
+        });
+        deckJoueur.forEach(carteJoueur -> {
+            if(carteJoueur instanceof CarteVille){
+                String couleurVirusVille = ((CarteVille) carteJoueur).getVilleCarteVille().getCouleurVirusVille();
+                int nbCarteVille = maMap.get(couleurVirusVille);
+                maMap.put(couleurVirusVille, nbCarteVille + 1);
+            }
+        });
+        Map.Entry<String, Integer> maxEntry = maMap.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
+        return maxEntry;
     }
 
     public void defausseCarteVilleDeDeckJoueur(Ville ville) {

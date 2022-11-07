@@ -2,15 +2,12 @@ package modele.elements.cartes.roles;
 
 import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteRole;
-import modele.elements.cartes.IEffet;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
-import java.util.Optional;
+public class CarteChercheuse extends CarteRole  {
 
-public class Chercheuse extends CarteRole  {
-
-    public Chercheuse(CouleurPionsRole couleurPionRole) {
+    public CarteChercheuse(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
         super.setNomRole(NomsRoles.CHERCHEUSE);
         super.setDescriptionRole(

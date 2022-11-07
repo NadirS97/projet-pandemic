@@ -5,11 +5,9 @@ import modele.elements.cartes.CarteRole;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
-import java.util.Optional;
+public class CartePlanificateurDUrgence extends CarteRole {
 
-public class PlanificateurDUrgence extends CarteRole {
-
-    public PlanificateurDUrgence(CouleurPionsRole couleurPionRole) {
+    public CartePlanificateurDUrgence(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
         super.setNomRole(NomsRoles.PLANIFICATEUR_D_URGENCE);
         super.setDescriptionRole(

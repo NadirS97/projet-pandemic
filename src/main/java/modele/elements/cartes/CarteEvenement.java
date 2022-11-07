@@ -7,10 +7,8 @@ import modele.elements.enums.NomsEvenement;
 @ToString
 @Getter
 public abstract class CarteEvenement extends CarteJoueur implements IEffet {
-
     private NomsEvenement nomEvenement;
     private String description;
-
 
     public NomsEvenement getNomEvennement() {
         return nomEvenement;
@@ -19,7 +17,5 @@ public abstract class CarteEvenement extends CarteJoueur implements IEffet {
     public String getDescription() {
         return description;
     }
-
-//    public abstract void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException;
 
 }

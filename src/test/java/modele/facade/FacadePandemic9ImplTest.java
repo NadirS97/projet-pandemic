@@ -44,9 +44,9 @@ class FacadePandemic9ImplTest {
 
     @BeforeEach
     void setUp() throws Exception {
-        instance = new FacadePandemic9Impl("src/main/resources/DonneesPlateau.json",4);
+        instance = new FacadePandemic9Impl(4);
         plateau = instance.partie.getPlateau();
-        pionJoueur = new PionJoueur("joueur", plateau, DonneesVariablesStatiques.nbActionsMaxParTour);
+        pionJoueur = new PionJoueur("joueur", plateau);
         atlanta = plateau.getVilleByName("Atlanta");
         chicago = plateau.getVilleByName("Chicago");
         paris = plateau.getVilleByName("Paris");

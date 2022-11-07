@@ -1,8 +1,10 @@
 package programme;
 
 import modele.elements.Partie;
+import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.actions.traiter_maladie.TraiterMaladie;
+import modele.elements.cartes.CarteVille;
 import modele.exceptions.*;
 
 
@@ -19,20 +21,31 @@ public class Main {
 //      ================================================================================================================
 
         try {
-            Plateau plateau = new Plateau("src/main/resources/DonneesPlateau.json");
+            Plateau plateau = new Plateau();
 
             plateau.getVilles().values().forEach(ville -> {
                 System.out.println(ville);
             });
+            System.out.println("=====================================");
+
             plateau.getToutesLesCartesRolesExistante().forEach(carteRole -> {
                 System.out.println(carteRole);
             });
+            System.out.println("=====================================");
+
             plateau.getLesVirus().values().forEach(virus -> {
                 System.out.println(virus);
             });
-        } catch (FileNotFoundException | VilleIntrouvableException | VirusIntrouvableException |
-                 RoleIntrouvableException | EvenementInnexistantException e){
-            throw new RuntimeException(e);
+            System.out.println("=====================================");
+
+            PionJoueur joueur = new PionJoueur("Nadir", plateau);
+            joueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Atlanta")));
+            joueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Chicago")));
+            joueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Tokyo")));
+            joueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Alger")));
+            System.out.println(joueur.getNbMaxCarteVilleMemeCouleurDeckJoueur());
+            System.out.println("=====================================");
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

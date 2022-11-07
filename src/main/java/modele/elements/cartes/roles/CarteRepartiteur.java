@@ -5,11 +5,9 @@ import modele.elements.cartes.CarteRole;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
-import java.util.Optional;
+public class CarteRepartiteur extends CarteRole {
 
-public class Repartiteur extends CarteRole {
-
-    public Repartiteur(CouleurPionsRole couleurPionRole) {
+    public CarteRepartiteur(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
         super.setNomRole(NomsRoles.REPARTITEUR);
         super.setDescriptionRole(

@@ -15,16 +15,16 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     Partie partie;
 
-    public FacadePandemic9Impl(String jsonFile,int nbJoueurs) throws Exception {
-        partie = new Partie(jsonFile,nbJoueurs);
+    public FacadePandemic9Impl(int nbJoueurs) throws Exception {
+        partie = new Partie(nbJoueurs);
     }
-
 
     @Override
     public void jouerAction(PionJoueur joueurActuel, IAction action) throws Exception {
         joueurActuel.setAction(action);
         joueurActuel.executerAction();
     }
+
     public void jouerEvent(PionJoueur joueurActuel, CarteEvenement carteEvenement) throws Exception {
         joueurActuel.jouerCarteEvenement(carteEvenement);
     }
@@ -32,10 +32,8 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     public void piocherCartes(PionJoueur joueur){
         joueur.piocherCartes();
     }
+
     public void propagation(PionJoueur joueur) throws VilleDejaEclosException, NuitTranquilleException {
         joueur.getPlateau().initialiserPropagation();
-
     }
-
-
 }

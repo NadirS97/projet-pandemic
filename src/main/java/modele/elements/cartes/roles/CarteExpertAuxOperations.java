@@ -5,11 +5,9 @@ import modele.elements.cartes.CarteRole;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
-import java.util.Optional;
+public class CarteExpertAuxOperations extends CarteRole {
 
-public class ExpertAuxOperations extends CarteRole {
-
-    public ExpertAuxOperations(CouleurPionsRole couleurPionRole) {
+    public CarteExpertAuxOperations(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
         super.setNomRole(NomsRoles.EXPERT_AUX_OPERATIONS);
         super.setDescriptionRole(
