@@ -95,8 +95,8 @@ public class Plateau {
                 case PONT_AERIEN -> piocheCarteJoueur.add(new PontAerien(this));
                 case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new SubventionPublique(this));
                 case PREVISION -> piocheCarteJoueur.add(new Prevision(this));
-                case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new ParUneNuitTranquille());
-                case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new PopulationResiliente(this));
+                case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new CarteParUneNuitTranquille());
+                case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new CartePopulationResiliente());
                 default -> throw new EvenementInnexistantException(
                         "L'évènement : " + nomEvenement + " est inexistant.");
             }

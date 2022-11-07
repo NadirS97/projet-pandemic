@@ -1,16 +1,10 @@
 package modele.elements.cartes.evenements;
 
 import modele.elements.PionJoueur;
-import modele.elements.Plateau;
 import modele.elements.cartes.CarteEvenement;
-import modele.elements.cartes.effets.evenements.EffetTypeParUneNuitTranquilleImpl;
 import modele.elements.enums.NomsEvenement;
-import modele.elements.cartes.effets.IEffetType;
-import modele.exceptions.EffetManquantException;
 
-import java.util.Optional;
-
-public class ParUneNuitTranquille extends CarteEvenement {
+public class CarteParUneNuitTranquille extends CarteEvenement {
 
 
     private final NomsEvenement NOMEVENEMENT = NomsEvenement.PAR_UNE_NUIT_TRANQUILE;

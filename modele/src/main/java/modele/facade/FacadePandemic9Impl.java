@@ -25,7 +25,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         joueurActuel.setAction(action);
         joueurActuel.executerAction();
     }
-    public void jouerEvent(PionJoueur joueurActuel, CarteEvenement carteEvenement) throws CarteEvenementNotFoundInDeckException {
+    public void jouerEvent(PionJoueur joueurActuel, CarteEvenement carteEvenement) throws Exception {
         joueurActuel.jouerCarteEvenement(carteEvenement);
     }
 

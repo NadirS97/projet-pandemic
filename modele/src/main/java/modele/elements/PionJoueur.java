@@ -63,7 +63,7 @@ public class PionJoueur {
         }
     }
 
-    public void jouerCarteEvenement(CarteEvenement carteEvenement) throws CarteEvenementNotFoundInDeckException {
+    public void jouerCarteEvenement(CarteEvenement carteEvenement) throws Exception {
         if (!deckJoueur.contains(carteEvenement))
             throw new CarteEvenementNotFoundInDeckException();
         carteEvenement.execEvent(this);

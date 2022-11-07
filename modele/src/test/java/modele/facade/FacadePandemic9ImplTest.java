@@ -1,6 +1,5 @@
 package modele.facade;
 
-import modele.elements.Partie;
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 
@@ -12,8 +11,10 @@ import modele.elements.actions.deplacement.DeplacementVoiture;
 import modele.elements.actions.deplacement.DeplacementVolCharter;
 import modele.elements.actions.deplacement.DeplacementVolDirect;
 import modele.elements.cartes.CarteEvenement;
+import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
-import modele.elements.cartes.evenements.ParUneNuitTranquille;
+import modele.elements.cartes.evenements.CarteParUneNuitTranquille;
+import modele.elements.cartes.evenements.CartePopulationResiliente;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
 import org.junit.jupiter.api.Assertions;
@@ -351,20 +352,24 @@ class FacadePandemic9ImplTest {
     }
 
 
-    /*
-    PAR UNE NUIT TRANQUILLE
-    // quand la carte
-     */
-
     @Test
     void jouerCarteEventParUneNuitTranquille(){
-        CarteEvenement carteEvenementNuitTranquille = new ParUneNuitTranquille();
+        CarteEvenement carteEvenementNuitTranquille = new CarteParUneNuitTranquille();
         pionJoueur.getDeckJoueur().add(carteEvenementNuitTranquille);
 
         assertDoesNotThrow(() -> instance.jouerEvent(pionJoueur,carteEvenementNuitTranquille));
         assertThrows(NuitTranquilleException.class,() -> instance.propagation(pionJoueur));
         assertTrue(pionJoueur.getPlateau().isEffetParUneNuitTranquilleActif());
 
+    }
 
+    @Test
+    void jouerCarteEventPopulationResiliente(){
+        CartePropagation cartePropagation = new CartePropagation(atlanta);
+        pionJoueur.getPlateau().getDefausseCartePropagation().add(cartePropagation);
+        CartePopulationResiliente carteEvenementPopulationResiliente = new CartePopulationResiliente();
+        pionJoueur.getDeckJoueur().add(carteEvenementPopulationResiliente);
+       carteEvenementPopulationResiliente.setCartePropagationChoisis(cartePropagation);
+        assertDoesNotThrow(() -> instance.jouerEvent(pionJoueur,carteEvenementPopulationResiliente));
     }
 }
