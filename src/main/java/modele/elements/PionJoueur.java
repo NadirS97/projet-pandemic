@@ -31,7 +31,6 @@ public class PionJoueur {
         this.plateau = plateau;
         this.deckJoueur = new ArrayList<>();
         this.nbActions = nbActions;
-        permissionPontAerien = false;
     }
 
     public PionJoueur(){
@@ -89,6 +88,7 @@ public class PionJoueur {
         this.action.execAction(this);
         this.nbActions--;
     }
+
 
 }
 
