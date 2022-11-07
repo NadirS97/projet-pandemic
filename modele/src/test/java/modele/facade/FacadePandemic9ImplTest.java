@@ -16,6 +16,7 @@ import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
 import modele.elements.cartes.evenements.CarteParUneNuitTranquille;
+import modele.elements.cartes.evenements.CartePontAerien;
 import modele.elements.cartes.evenements.CartePopulationResiliente;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
@@ -383,5 +384,20 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(carteEvenementPopulationResiliente);
        carteEvenementPopulationResiliente.setCartePropagationChoisis(cartePropagation);
         assertDoesNotThrow(() -> instance.jouerEvent(pionJoueur,carteEvenementPopulationResiliente));
+    }
+
+    @Test
+    void jouerCarteEventPontAerien(){
+        PionJoueur pionJoueur2 = new PionJoueur();
+        pionJoueur2.setVilleActuelle(atlanta);
+        pionJoueur2.setPermissionPontAerien(true);
+        System.out.println(pionJoueur2.getVilleActuelle());
+        CartePontAerien cartePontAerien = new CartePontAerien();
+        cartePontAerien.setPionChoisis(pionJoueur2);
+        cartePontAerien.setVilleChoisis(paris);
+        pionJoueur.getDeckJoueur().add(cartePontAerien);
+        assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur,cartePontAerien));
+        System.out.println(pionJoueur2.getVilleActuelle());
+
     }
 }

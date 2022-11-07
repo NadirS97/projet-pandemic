@@ -1,22 +1,19 @@
 package modele.elements.cartes.evenements;
 
 import modele.elements.PionJoueur;
-import modele.elements.Plateau;
+import modele.elements.Ville;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.enums.NomsEvenement;
-import modele.exceptions.DeplacementRefuseException;
-import modele.elements.cartes.effets.evenements.EffetTypePontAerienImpl;
-import modele.elements.cartes.effets.IEffetType;
-import modele.exceptions.EffetManquantException;
+import modele.exceptions.PermissionNonAccordeException;
 
-import java.util.Optional;
+public class CartePontAerien extends CarteEvenement {
 
-public class PontAerien extends CarteEvenement {
 
-    private Plateau plateau;
+    private Ville villeChoisis;
+    private PionJoueur pionChoisis;
 
-    public PontAerien(Plateau plateau) {
-        this.plateau = plateau;
+    public CartePontAerien() {
+
     }
 
     private final NomsEvenement NOMEVENEMENT = NomsEvenement.PONT_AERIEN;
@@ -33,7 +30,10 @@ public class PontAerien extends CarteEvenement {
     }
 
     @Override
-    public void execEvent(PionJoueur pionJoueur) {
+    public void execEvent(PionJoueur pionJoueur) throws PermissionNonAccordeException {
+        if (!pionChoisis.isPermissionPontAerien())
+            throw new PermissionNonAccordeException();
+        pionChoisis.setVilleActuelle(villeChoisis);
 
     }
 
@@ -52,4 +52,13 @@ public class PontAerien extends CarteEvenement {
 //            throw new EffetManquantException();
 //        }
 //    }
+
+
+    public void setVilleChoisis(Ville villeChoisis) {
+        this.villeChoisis = villeChoisis;
+    }
+
+    public void setPionChoisis(PionJoueur pionChoisis) {
+        this.pionChoisis = pionChoisis;
+    }
 }

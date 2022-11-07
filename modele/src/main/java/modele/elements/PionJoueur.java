@@ -24,12 +24,14 @@ public class PionJoueur {
     private List<CarteJoueur> deckJoueur;
     private Ville villeActuelle;
     private Plateau plateau;
+    private boolean permissionPontAerien;
 
     public PionJoueur(String pseudoJoueur, Plateau plateau, int nbActions) {
         this.pseudoJoueur = pseudoJoueur;
         this.plateau = plateau;
         this.deckJoueur = new ArrayList<>();
         this.nbActions = nbActions;
+        permissionPontAerien = false;
     }
 
     public PionJoueur(){
