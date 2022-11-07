@@ -1,5 +1,6 @@
 package modele.facade;
 
+import modele.elements.Partie;
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 
@@ -31,13 +32,14 @@ class FacadePandemic9ImplTest {
     private Ville tokyo;
     private Ville istanbul;
     private Ville miami;
+    private Plateau plateau;
+
 
 
     @BeforeEach
     void setUp() throws Exception {
-        this.instance = new FacadePandemic9Impl();
-        Plateau plateau = new Plateau();
-        plateau.initialisationPlateau("src/main/resources/DonneesPlateau.json");
+        instance = new FacadePandemic9Impl("src/main/resources/DonneesPlateau.json",4);
+        plateau = instance.partie.getPlateau();
         pionJoueur = new PionJoueur("joueur", plateau, DonneesVariablesStatiques.nbActionsMaxParTour);
         atlanta = plateau.getVilleByName("Atlanta");
         chicago = plateau.getVilleByName("Chicago");
@@ -330,11 +332,19 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void propagation() throws VilleDejaEclosException {
-        System.out.println(this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille());
+    void propagation()  {
+
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
-        System.out.println(this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille());
+        Assertions.assertEquals(3,this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille().get(plateau.getLesVirus().get("BLEU")));
+
+    }
+
+    @Test
+    void creationPartieRoleRandom4JoueursOk(){
+        System.out.println(instance.partie.getJoueurs());
+        Assertions.assertEquals(4,this.instance.partie.getJoueurs().size());
+
     }
 }

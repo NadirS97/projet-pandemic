@@ -47,9 +47,10 @@ public class Plateau {
     private boolean effetParUneNuitTranquilleActif;
     private DonneesPlateauDTO donneesPlateauDTO;
 
-    public Plateau() {
+    public Plateau(String cheminDonneesJson)throws Exception {
         lesVirus = new HashMap<>();
         villes = new HashMap<>();
+        //
         marqueurVitessePropagation = 0; // 0,1,3 = 2 ; 3,4 = 3 ; 4,5 = 4
         marqueurVitesseEclosion = 0;
         nbStationsDeRechercheConstruites = 0;
@@ -60,6 +61,7 @@ public class Plateau {
         listeCouleursPionsJoueurs = new ArrayList<>();
         toutesLesCartesRolesExistante = new ArrayList<>();
         effetParUneNuitTranquilleActif = false;
+        initialisationPlateau(cheminDonneesJson);
     }
 
     public Ville getVilleByName(String name) {

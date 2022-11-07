@@ -12,29 +12,10 @@ import java.util.Objects;
 
 public class FacadePandemic9Impl implements FacadePandemic9 {
 
-    private Map<String, Partie> parties;
+    Partie partie;
 
-    public FacadePandemic9Impl() {
-        this.parties = new HashMap<>();
-    }
-
-    @Override
-    public String creerPartie(String pseudoJoueurPartie) throws CasCouleurVilleIncorrectException {
-        Partie partie = new Partie(pseudoJoueurPartie);
-        parties.put(partie.getCodePartie(), partie);
-        return partie.getCodePartie();
-    }
-
-    @Override
-    public void rejoindrePartie(String codePartie, String pseudoJoueurPartie) throws PseudoDejaExistantException, CodePartieInexistantException, DonneManquanteException {
-        if (Objects.isNull(parties.get(codePartie)))
-            throw new CodePartieInexistantException();
-        if (parties.get(codePartie).isJoueurDejaDansPartie(pseudoJoueurPartie))
-            throw new PseudoDejaExistantException();
-
-        Plateau plateau = parties.get(codePartie).getPlateauPartie();
-        PionJoueur nouveauPionJoueur = new PionJoueur(pseudoJoueurPartie, plateau,4);
-        parties.get(codePartie).getJoueursPartie().put(pseudoJoueurPartie, nouveauPionJoueur);
+    public FacadePandemic9Impl(String jsonFile,int nbJoueurs) throws Exception {
+        partie = new Partie(jsonFile,nbJoueurs);
     }
 
 
@@ -52,8 +33,5 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     }
 
-    @Override
-    public boolean estPartieTerminee(String pseudoJoueurPartie) throws CodePartieInexistantException {
-        return false;
-    }
+
 }

@@ -1,5 +1,6 @@
 package programme;
 
+import modele.elements.Partie;
 import modele.elements.Plateau;
 import modele.elements.actions.traiter_maladie.TraiterMaladie;
 import modele.exceptions.*;
@@ -16,9 +17,9 @@ public class Main {
 //       facadePandemic9Impl.JouerTourr("211",new PartageConnaissance());
 //       facade.jouerTour(new Joueur());
 //      ================================================================================================================
-        Plateau plateau = new Plateau();
+
         try {
-            plateau.initialisationPlateau("modele/src/main/resources/DonneesPlateau.json");
+            Plateau plateau = new Plateau("modele/src/main/resources/DonneesPlateau.json");
 
             plateau.getVilles().values().forEach(ville -> {
                 System.out.println(ville);
@@ -31,6 +32,8 @@ public class Main {
             });
         } catch (FileNotFoundException | VilleIntrouvableException | VirusIntrouvableException |
                  RoleIntrouvableException | EvenementInnexistantException e){
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 //      ================================================================================================================

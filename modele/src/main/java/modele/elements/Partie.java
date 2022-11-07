@@ -2,43 +2,53 @@ package modele.elements;
 
 
 import lombok.Getter;
+import modele.elements.cartes.CarteRole;
+import modele.elements.cartes.roles.Chercheuse;
+import modele.elements.cartes.roles.Scientifique;
+import modele.elements.enums.CouleurPionsRole;
 import modele.exceptions.CasCouleurVilleIncorrectException;
+import modele.exceptions.NbJoueursPartieIncorrectException;
 import modele.utils.DonneesVariablesStatiques;
 
+import javax.management.relation.Role;
 import java.util.*;
 
 @Getter
 public class Partie {
 
-    private String codePartie;
-    private Map<String, PionJoueur> joueursPartie;
-    private List<String> ordreTourDeJeuPseudoJoueur;
-    private int indexJoueur = 0;
-    private Plateau plateauPartie;
+    Map<PionJoueur,CarteRole> joueurs;
+    List<Role> roles;
+    Plateau plateau;
 
-    public Partie(String pseudoJoueurPartie) throws CasCouleurVilleIncorrectException {
-        this.codePartie = UUID.randomUUID().toString();
-        this.plateauPartie = new Plateau();
-        this.joueursPartie = new HashMap<>();
-        this.joueursPartie.put(pseudoJoueurPartie, new PionJoueur(pseudoJoueurPartie, plateauPartie, DonneesVariablesStatiques.nbActionsMaxParTour));
-        this.ordreTourDeJeuPseudoJoueur = new ArrayList<>();
-        this.ordreTourDeJeuPseudoJoueur.add(pseudoJoueurPartie);
+
+
+
+    public Partie(String cheminJson, int nbJoueurs) throws Exception {
+
+        if (nbJoueurs <= 0 || nbJoueurs > 4)
+            throw new NbJoueursPartieIncorrectException();
+
+       this.plateau = new Plateau(cheminJson);
+       joueurs = new HashMap<>();
+       attributionRolesRandom(nbJoueurs);
+
+
+
     }
 
-    public String aQuiLeTour() {
-        if (indexJoueur == 4)
-            indexJoueur = 0;
-        String joueur = ordreTourDeJeuPseudoJoueur.get(indexJoueur);
-        indexJoueur++;
-        return joueur;
-    }
+    /*
+        MISE EN PLACE DU JEU
+        1. Rôles distribués aléatoirement de telle sorte que chaque joueur ait un seul rôle
+     */
 
-    public boolean isJoueurDejaDansPartie(String pseudoJoueurPartie) {
-        for (PionJoueur pionJoueur : joueursPartie.values()) {
-            if (pionJoueur.getPseudoJoueur().equals(pseudoJoueurPartie))
-                return true;
+    public void attributionRolesRandom(int nbJoueurs){
+        for (int i = 0 ; i < nbJoueurs ; i++){
+            int randomIndex = new Random().nextInt(plateau.getToutesLesCartesRolesExistante().size());
+            CarteRole carteRole = plateau.getToutesLesCartesRolesExistante().remove(randomIndex);
+            joueurs.put(new PionJoueur(),carteRole);
         }
-        return false;
+
     }
+
 
 }

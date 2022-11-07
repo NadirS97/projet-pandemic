@@ -31,6 +31,10 @@ public class PionJoueur {
         this.nbActions = nbActions;
     }
 
+    public PionJoueur(){
+        this.deckJoueur = new ArrayList<>();
+    }
+
     /**
      * Fonction permettant de savoir si le joueur possède une carteVille dans sa main correspondant à la ville en paramètre
      *
