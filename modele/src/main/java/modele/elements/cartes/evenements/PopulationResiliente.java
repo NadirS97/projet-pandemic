@@ -1,5 +1,6 @@
 package modele.elements.cartes.evenements;
 
+import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.effets.evenements.EffetTypePopulationResilienteImpl;
@@ -30,13 +31,18 @@ public class PopulationResiliente extends CarteEvenement {
         return DESCRIPTION;
     }
 
+//    @Override
+//    public void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException {
+//        if (effetType.isPresent()) {
+//            EffetTypePopulationResilienteImpl effetTypePopulationResilienteImpl = (EffetTypePopulationResilienteImpl) effetType.get();
+//            plateau.getDefausseCartePropagation().remove(effetTypePopulationResilienteImpl.getCartePropagation());
+//        } else {
+//            throw new EffetManquantException();
+//        }
+//    }
+
     @Override
-    public void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException {
-        if (effetType.isPresent()) {
-            EffetTypePopulationResilienteImpl effetTypePopulationResilienteImpl = (EffetTypePopulationResilienteImpl) effetType.get();
-            plateau.getDefausseCartePropagation().remove(effetTypePopulationResilienteImpl.getCartePropagation());
-        } else {
-            throw new EffetManquantException();
-        }
+    public void execEvent(PionJoueur pionJoueur) {
+
     }
 }

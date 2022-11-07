@@ -3,6 +3,7 @@ package modele.facade;
 import modele.elements.actions.IAction;
 import modele.elements.Partie;
 import modele.elements.Plateau;
+import modele.elements.cartes.CarteEvenement;
 import modele.exceptions.*;
 import modele.elements.PionJoueur;
 
@@ -24,11 +25,14 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         joueurActuel.setAction(action);
         joueurActuel.executerAction();
     }
+    public void jouerEvent(PionJoueur joueurActuel, CarteEvenement carteEvenement) throws CarteEvenementNotFoundInDeckException {
+        joueurActuel.jouerCarteEvenement(carteEvenement);
+    }
 
     public void piocherCartes(PionJoueur joueur){
         joueur.piocherCartes();
     }
-    public void propagation(PionJoueur joueur) throws VilleDejaEclosException {
+    public void propagation(PionJoueur joueur) throws VilleDejaEclosException, NuitTranquilleException {
         joueur.getPlateau().initialiserPropagation();
 
     }

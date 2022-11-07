@@ -2,6 +2,7 @@ package modele.elements.cartes;
 
 import lombok.Getter;
 import lombok.ToString;
+import modele.elements.cartes.evenements.IEvent;
 import modele.elements.enums.NomsEvenement;
 import modele.elements.cartes.effets.IEffetType;
 import modele.exceptions.EffetManquantException;
@@ -10,10 +11,11 @@ import java.util.Optional;
 
 @ToString
 @Getter
-public abstract class CarteEvenement extends CarteJoueur {
+public abstract class CarteEvenement extends CarteJoueur implements IEvent {
 
     private NomsEvenement nomEvenement;
     private String description;
+
 
     public NomsEvenement getNomEvennement() {
         return nomEvenement;
@@ -23,5 +25,6 @@ public abstract class CarteEvenement extends CarteJoueur {
         return description;
     }
 
-    public abstract void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException;
+//    public abstract void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException;
+
 }

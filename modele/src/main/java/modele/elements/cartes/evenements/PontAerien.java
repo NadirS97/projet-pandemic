@@ -1,5 +1,6 @@
 package modele.elements.cartes.evenements;
 
+import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.enums.NomsEvenement;
@@ -32,18 +33,23 @@ public class PontAerien extends CarteEvenement {
     }
 
     @Override
-    public void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException {
-        if (effetType.isPresent()) {
-            EffetTypePontAerienImpl effetTypePontAerienImpl = (EffetTypePontAerienImpl) effetType.get();
-            if (effetTypePontAerienImpl.isAutorisationDuJoueur()) {
-                plateau.getVilles().get(effetTypePontAerienImpl.getPionJoueur().getVilleActuelle().getNomVille()).getListePionsJoueursPresents().remove(effetTypePontAerienImpl.getPionJoueur());
-                plateau.getVilles().get(effetTypePontAerienImpl.getVilleDestination().getNomVille()).getListePionsJoueursPresents().add(effetTypePontAerienImpl.getPionJoueur());
-                effetTypePontAerienImpl.getPionJoueur().setVilleActuelle(effetTypePontAerienImpl.getVilleDestination());
-            } else {
-                throw new DeplacementRefuseException();
-            }
-        } else {
-            throw new EffetManquantException();
-        }
+    public void execEvent(PionJoueur pionJoueur) {
+
     }
+
+//    @Override
+//    public void effet(Optional<IEffetType> effetType) throws Exception, EffetManquantException {
+//        if (effetType.isPresent()) {
+//            EffetTypePontAerienImpl effetTypePontAerienImpl = (EffetTypePontAerienImpl) effetType.get();
+//            if (effetTypePontAerienImpl.isAutorisationDuJoueur()) {
+//                plateau.getVilles().get(effetTypePontAerienImpl.getPionJoueur().getVilleActuelle().getNomVille()).getListePionsJoueursPresents().remove(effetTypePontAerienImpl.getPionJoueur());
+//                plateau.getVilles().get(effetTypePontAerienImpl.getVilleDestination().getNomVille()).getListePionsJoueursPresents().add(effetTypePontAerienImpl.getPionJoueur());
+//                effetTypePontAerienImpl.getPionJoueur().setVilleActuelle(effetTypePontAerienImpl.getVilleDestination());
+//            } else {
+//                throw new DeplacementRefuseException();
+//            }
+//        } else {
+//            throw new EffetManquantException();
+//        }
+//    }
 }

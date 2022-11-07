@@ -3,6 +3,7 @@ package modele.elements;
 import lombok.Getter;
 import lombok.Setter;
 import modele.elements.actions.IAction;
+import modele.elements.cartes.CarteEvenement;
 import modele.exceptions.*;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
@@ -62,6 +63,13 @@ public class PionJoueur {
         }
     }
 
+    public void jouerCarteEvenement(CarteEvenement carteEvenement) throws CarteEvenementNotFoundInDeckException {
+        if (!deckJoueur.contains(carteEvenement))
+            throw new CarteEvenementNotFoundInDeckException();
+        carteEvenement.execEvent(this);
+        deckJoueur.remove(carteEvenement);
+    }
+
     public void piocherCartes() {
         deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
         deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
@@ -79,5 +87,6 @@ public class PionJoueur {
         this.action.execAction(this);
         this.nbActions--;
     }
+
 }
 

@@ -50,7 +50,7 @@ public class Plateau {
     public Plateau(String cheminDonneesJson)throws Exception {
         lesVirus = new HashMap<>();
         villes = new HashMap<>();
-        //
+        // indicateur du nombre d'éclosion doit être placé sur la case 0.
         marqueurVitessePropagation = 0; // 0,1,3 = 2 ; 3,4 = 3 ; 4,5 = 4
         marqueurVitesseEclosion = 0;
         nbStationsDeRechercheConstruites = 0;
@@ -95,7 +95,7 @@ public class Plateau {
                 case PONT_AERIEN -> piocheCarteJoueur.add(new PontAerien(this));
                 case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new SubventionPublique(this));
                 case PREVISION -> piocheCarteJoueur.add(new Prevision(this));
-                case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new ParUneNuitTranquille(this));
+                case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new ParUneNuitTranquille());
                 case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new PopulationResiliente(this));
                 default -> throw new EvenementInnexistantException(
                         "L'évènement : " + nomEvenement + " est inexistant.");
@@ -158,14 +158,16 @@ public class Plateau {
         return villes.get(cartePropagation.getVilleCartePropagation().getNomVille());
     }
 
-    public void initialiserPropagation() throws VilleDejaEclosException {
+    public void initialiserPropagation() throws VilleDejaEclosException, NuitTranquilleException {
+        if (isEffetParUneNuitTranquilleActif())
+            throw new NuitTranquilleException();
         for (int i = 0; i < nbCartePropagationPiocherSelonVitesse(); i++) {
             Ville villePropagation = piocherCartePropagation();
             propagationMaladie(villePropagation);
         }
     }
 
-    public void propagationMaladie(Ville villePropagation) throws VilleDejaEclosException {
+    public void propagationMaladie(Ville villePropagation) throws VilleDejaEclosException, NuitTranquilleException{
         Virus virus = lesVirus.get(villePropagation.getCouleurVirusVille());
         if (villePropagation.isEclosionVille())
             throw new VilleDejaEclosException();
