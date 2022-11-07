@@ -4,12 +4,14 @@ import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 
 import modele.elements.Ville;
+import modele.elements.Virus;
 import modele.elements.actions.IAction;
 import modele.elements.actions.construire_une_station.ConstruireUneStation;
 import modele.elements.actions.deplacement.DeplacementNavette;
 import modele.elements.actions.deplacement.DeplacementVoiture;
 import modele.elements.actions.deplacement.DeplacementVolCharter;
 import modele.elements.actions.deplacement.DeplacementVolDirect;
+import modele.elements.actions.traiter_maladie.TraiterMaladie;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
@@ -320,9 +322,19 @@ class FacadePandemic9ImplTest {
 //                                                 ACTION TRAITER MALADIE
 //=============================================================================================================================
 
+
     @Test
     void jouerTourActionTraiterMaladieNonTraiteOK(){
-        System.out.println(atlanta.getNbCubeVirusVille());
+        System.out.println(atlanta);
+        // pour simplifier le test on choisis la ville qui se propage plutot que de tester la propagation random
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
+        System.out.println(atlanta);
+        Virus virusBleu = plateau.getLesVirus().get("BLEU");
+        IAction traiter = new TraiterMaladie(virusBleu);
+        pionJoueur.setVilleActuelle(atlanta);
+        Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,traiter));
+        System.out.println(atlanta);
+
     }
 
     @Test
