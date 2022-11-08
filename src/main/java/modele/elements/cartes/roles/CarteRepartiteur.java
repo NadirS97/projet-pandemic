@@ -20,6 +20,5 @@ public class CarteRepartiteur extends CarteRole {
 
     @Override
     public void execEffet(PionJoueur pionJoueur) throws Exception {
-
     }
 }

@@ -1,5 +1,6 @@
 package modele.elements.cartes;
 
+import lombok.Builder;
 import lombok.Getter;
 import modele.elements.Ville;
 
@@ -7,9 +8,11 @@ import modele.elements.Ville;
 public class CarteVille extends CarteJoueur {
 
     private Ville villeCarteVille;
+    private String nomCarte;
 
     public CarteVille(Ville villeCarteVille) {
         this.villeCarteVille = villeCarteVille;
+        this.nomCarte = villeCarteVille.getNomVille();
     }
 
     @Override

@@ -1,11 +1,13 @@
 package modele.elements.cartes.evenements;
 
+import lombok.Getter;
 import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.enums.NomsEvenement;
 import modele.exceptions.CartePropagationNotInDefausseException;
 
+@Getter
 public class CartePopulationResiliente extends CarteEvenement {
 
    private CartePropagation cartePropagationChoisis;
@@ -13,21 +15,9 @@ public class CartePopulationResiliente extends CarteEvenement {
     public CartePopulationResiliente() {
     }
 
-
-
-    private final NomsEvenement NOMEVENEMENT = NomsEvenement.POPULATION_RESILIENTE;
-    private final String DESCRIPTION = "Retirez du jeu 1 carte de votre choix de la défausse Propagation. (Vous pouvez jouer Population résiliente entre les étapes Infection et Intensification d'une carte Épidémie.)";
-
-    @Override
-    public NomsEvenement getNomEvennement() {
-        return NOMEVENEMENT;
-    }
-
-    @Override
-    public String getDescription() {
-        return DESCRIPTION;
-    }
-
+    private final NomsEvenement nomEvenement = NomsEvenement.POPULATION_RESILIENTE;
+    private String nomCarte = nomEvenement.toString();
+    private final String descriptionN = "Retirez du jeu 1 carte de votre choix de la défausse Propagation. (Vous pouvez jouer Population résiliente entre les étapes Infection et Intensification d'une carte Épidémie.)";
 
     @Override
     public void execEffet(PionJoueur pionJoueur) throws Exception {
@@ -36,7 +26,6 @@ public class CartePopulationResiliente extends CarteEvenement {
 
         pionJoueur.getPlateau().getDefausseCartePropagation().remove(cartePropagationChoisis);
     }
-
 
     public void setCartePropagationChoisis(CartePropagation cartePropagationChoisis) {
         this.cartePropagationChoisis = cartePropagationChoisis;

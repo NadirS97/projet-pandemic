@@ -47,7 +47,7 @@ public class Plateau {
     private boolean effetParUneNuitTranquilleActif;
     private DonneesPlateauDTO donneesPlateauDTO;
 
-    public Plateau()throws Exception {
+    public Plateau() throws Exception {
         lesVirus = new HashMap<>();
         villes = new HashMap<>();
         // indicateur du nombre d'éclosion doit être placé sur la case 0.
@@ -93,8 +93,8 @@ public class Plateau {
         for (NomsEvenement nomEvenement : NomsEvenement.values()) {
             switch (nomEvenement) {
                 case PONT_AERIEN -> piocheCarteJoueur.add(new CartePontAerien());
-                case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new CarteSubventionPublique(this));
-                case PREVISION -> piocheCarteJoueur.add(new CartePrevision(this));
+                case SUBVENTION_PUBLIQUE -> piocheCarteJoueur.add(new CarteSubventionPublique());
+                case PREVISION -> piocheCarteJoueur.add(new CartePrevision());
                 case PAR_UNE_NUIT_TRANQUILE -> piocheCarteJoueur.add(new CarteParUneNuitTranquille());
                 case POPULATION_RESILIENTE -> piocheCarteJoueur.add(new CartePopulationResiliente());
                 default -> throw new EvenementInnexistantException(
@@ -151,6 +151,11 @@ public class Plateau {
     // Sert exclusivement à l'effet Prevision
     public void ajouterDansPiocheCarteJoueur(CarteJoueur carteJoueur) {
         piocheCarteJoueur.addFirst(carteJoueur);
+    }
+
+    // sert exclusivement au test de l'évènement Prévision
+    public void setPiocheCarteJoueur(LinkedList<CarteJoueur> piocheCarteJoueur) {
+        this.piocheCarteJoueur = piocheCarteJoueur;
     }
 
     public Ville piocherCartePropagation() {
