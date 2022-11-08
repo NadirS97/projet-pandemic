@@ -11,6 +11,8 @@ import modele.elements.actions.deplacement.DeplacementNavette;
 import modele.elements.actions.deplacement.DeplacementVoiture;
 import modele.elements.actions.deplacement.DeplacementVolCharter;
 import modele.elements.actions.deplacement.DeplacementVolDirect;
+import modele.elements.actions.partager_connaissance.DonnerConnaissance;
+import modele.elements.actions.partager_connaissance.PrendreConnaissance;
 import modele.elements.actions.traiter_maladie.TraiterMaladie;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CartePropagation;
@@ -335,6 +337,35 @@ class FacadePandemic9ImplTest {
         pionJoueur.setVilleActuelle(atlanta);
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,traiter));
         System.out.println(atlanta);
+
+    }
+
+    //=============================================================================================================================
+//                                                 ACTION PARTAGE_CONAISSANCE
+//=============================================================================================================================
+
+    @Test
+    void donnerConaissanceOk(){
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(atlanta);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction donnerConaissance = new DonnerConnaissance(joueur2);
+
+        assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,donnerConaissance));
+        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
+        assertTrue(joueur2.isVilleOfCarteVilleDeckJoueur(atlanta));
+    }
+
+    @Test
+    void prendreConaissanceOk(){
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(atlanta);
+        joueur2.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction donnerConaissance = new PrendreConnaissance(joueur2);
+
+        assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,donnerConaissance));
+        assertFalse(joueur2.isVilleOfCarteVilleDeckJoueur(atlanta));
+        assertTrue(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
 
     }
 

@@ -72,15 +72,16 @@ public class PionJoueur {
         return maxEntry;
     }
 
-    public void defausseCarteVilleDeDeckJoueur(Ville ville) {
+    public CarteJoueur defausseCarteVilleDeDeckJoueur(Ville ville) {
         for (CarteJoueur carteJoueur : deckJoueur) {
             if (carteJoueur instanceof CarteVille) {
                 if (((CarteVille) carteJoueur).getVilleCarteVille().equals(ville)) {
                     deckJoueur.remove(carteJoueur);
-                    break;
+                    return carteJoueur;
                 }
             }
         }
+        return null;
     }
 
     public void jouerCarteEvenement(CarteEvenement carteEvenement) throws Exception {
