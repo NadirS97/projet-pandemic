@@ -335,7 +335,7 @@ class FacadePandemic9ImplTest {
     void jouerTourActionTraiterMaladieNonTraiteOK(){
         System.out.println(atlanta);
         // pour simplifier le test on choisis la ville qui se propage plutot que de tester la propagation random
-        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
         System.out.println(atlanta);
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
         IAction traiter = new TraiterMaladie(virusBleu);
@@ -384,9 +384,9 @@ class FacadePandemic9ImplTest {
 
     @Test
     void propagation()  {
-        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
-        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
-        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
         Assertions.assertEquals(3,this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille().get(plateau.getLesVirus().get("BLEU")));
     }
 

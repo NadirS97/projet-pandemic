@@ -3,7 +3,7 @@ package modele.elements;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import modele.dto.DonneesPlateauDTO;
-import modele.elements.cartes.CarteRole;
+import modele.elements.cartes.*;
 import modele.elements.cartes.evenements.*;
 import modele.elements.cartes.roles.*;
 import modele.elements.enums.CouleurPionsRole;
@@ -11,9 +11,6 @@ import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import lombok.Getter;
-import modele.elements.cartes.CarteJoueur;
-import modele.elements.cartes.CartePropagation;
-import modele.elements.cartes.CarteVille;
 
 import modele.elements.enums.NomsEvenement;
 import modele.utils.DonneesVariablesStatiques;
@@ -101,6 +98,10 @@ public class Plateau {
                         "L'évènement : " + nomEvenement + " est inexistant.");
             }
         }
+        for (int i = 0; i < DonneesVariablesStatiques.nbCartesEpidemieACreer ; i++) {
+            piocheCarteJoueur.add(new CarteEpidemie());
+        }
+
         melangerPaquet(piocheCarteJoueur);
     }
 
@@ -163,21 +164,29 @@ public class Plateau {
         return villes.get(cartePropagation.getVilleCartePropagation().getNomVille());
     }
 
-    public void initialiserPropagation() throws VilleDejaEclosException, NuitTranquilleException {
+    public void initialiserPropagation() throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException {
         if (isEffetParUneNuitTranquilleActif())
             throw new NuitTranquilleException();
         for (int i = 0; i < nbCartePropagationPiocherSelonVitesse(); i++) {
             Ville villePropagation = piocherCartePropagation();
-            propagationMaladie(villePropagation);
+            propagationMaladie(villePropagation, 1);
         }
     }
 
-    public void propagationMaladie(Ville villePropagation) throws VilleDejaEclosException, NuitTranquilleException{
+    public void propagationMaladie(Ville villePropagation, int nbCubes) throws VilleDejaEclosException, NbCubesAAjouterInvalideException {
         Virus virus = lesVirus.get(villePropagation.getCouleurVirusVille());
+        if(nbCubes<=0)
+            throw new NbCubesAAjouterInvalideException("Le nombre de cubes à rajouter est incorrect.");
         if (villePropagation.isEclosionVille())
             throw new VilleDejaEclosException();
-        villePropagation.getNbCubeVirusVille().put(virus, villePropagation.getNbCubeVirusVille().get(virus) + 1);
-        if (villePropagation.getNbCubeVirusVille().get(virus) == 3) {
+        if (villePropagation.getNbCubeVirusVille().get(virus) == DonneesVariablesStatiques.nbCubeMaxAvantEclosion) {
+            villePropagation.setEclosionVille(true);
+            eclosion(villePropagation, virus);
+        }
+        if(villePropagation.getNbCubeVirusVille().get(virus) + nbCubes <= DonneesVariablesStatiques.nbCubeMaxAvantEclosion){
+            villePropagation.getNbCubeVirusVille().put(virus, villePropagation.getNbCubeVirusVille().get(virus) + nbCubes);
+        }else{
+            villePropagation.getNbCubeVirusVille().put(virus, (DonneesVariablesStatiques.nbCubeMaxAvantEclosion - villePropagation.getNbCubeVirusVille().get(virus)) + villePropagation.getNbCubeVirusVille().get(virus));
             villePropagation.setEclosionVille(true);
             eclosion(villePropagation, virus);
         }
@@ -192,7 +201,7 @@ public class Plateau {
                 villes.get(villeVoisineString).getNbCubeVirusVille().put(virus, 0);
 
             System.out.println(villes.get(villeVoisineString) + " :" + villes.get(villeVoisineString).getNbCubeVirusVille().get(virus));
-            if (villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) == 3) {
+            if (villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) == DonneesVariablesStatiques.nbCubeMaxAvantEclosion) {
                 villes.get(villeVoisineString).setEclosionVille(true);
                 eclosion(villes.get(villeVoisineString), virus);
             }

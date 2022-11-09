@@ -1,4 +1,4 @@
 package modele.exceptions;
 
-public class VilleDejaEclosException extends Throwable {
+public class VilleDejaEclosException extends Exception {
 }
