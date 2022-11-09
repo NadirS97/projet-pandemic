@@ -1,30 +1,20 @@
 package modele.elements.cartes.evenements;
 
+import lombok.Getter;
 import modele.elements.PionJoueur;
-import modele.elements.Plateau;
 import modele.elements.cartes.CarteEvenement;
+import modele.elements.cartes.CarteJoueur;
 import modele.elements.enums.NomsEvenement;
 
+import java.util.LinkedList;
+import java.util.List;
+
+@Getter
 public class CartePrevision extends CarteEvenement {
 
-    private Plateau plateau;
-
-    public CartePrevision(Plateau plateau) {
-        this.plateau = plateau;
-    }
-
     private final NomsEvenement nomEvenement = NomsEvenement.PREVISION;
+    private String nomCarte = nomEvenement.toString();
     private final String description = "Piochez, consultez et réorganisez dans l'ordre de votre choix les 6 premières cartes du paquet Propagation. Replacez-les ensuite sur le dessus du paquet.";
-
-    @Override
-    public NomsEvenement getNomEvennement() {
-        return nomEvenement;
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
 
 //    @Override
 //    public void effet(Optional<IEffetType> effetType) throws Exception {
@@ -51,5 +41,20 @@ public class CartePrevision extends CarteEvenement {
     @Override
     public void execEffet(PionJoueur pionJoueur) {
 
+    }
+
+    public List<CarteJoueur> piocherDansPiocheJoueurs(PionJoueur pionJoueur) {
+        LinkedList<CarteJoueur> aReorganiser = new LinkedList<>();
+        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
+        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
+        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
+        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
+        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
+        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
+        return aReorganiser;
+    }
+
+    public void ajouterDansPiocheJoueurs(PionJoueur pionJoueur, List<CarteJoueur> cartesReorganisees) {
+        cartesReorganisees.forEach(c -> pionJoueur.getPlateau().ajouterDansPiocheCarteJoueur(c));
     }
 }

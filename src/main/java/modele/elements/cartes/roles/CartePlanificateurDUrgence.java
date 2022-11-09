@@ -19,6 +19,5 @@ public class CartePlanificateurDUrgence extends CarteRole {
 
     @Override
     public void execEffet(PionJoueur pionJoueur) throws Exception {
-
     }
 }

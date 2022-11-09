@@ -15,16 +15,22 @@ import modele.elements.actions.partager_connaissance.DonnerConnaissance;
 import modele.elements.actions.partager_connaissance.PrendreConnaissance;
 import modele.elements.actions.traiter_maladie.TraiterMaladie;
 import modele.elements.cartes.CarteEvenement;
+import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
 import modele.elements.cartes.evenements.CarteParUneNuitTranquille;
 import modele.elements.cartes.evenements.CartePontAerien;
 import modele.elements.cartes.evenements.CartePopulationResiliente;
+import modele.elements.cartes.evenements.CartePrevision;
 import modele.exceptions.*;
-import modele.utils.DonneesVariablesStatiques;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -325,7 +331,6 @@ class FacadePandemic9ImplTest {
 //                                                 ACTION TRAITER MALADIE
 //=============================================================================================================================
 
-
     @Test
     void jouerTourActionTraiterMaladieNonTraiteOK(){
         System.out.println(atlanta);
@@ -337,7 +342,6 @@ class FacadePandemic9ImplTest {
         pionJoueur.setVilleActuelle(atlanta);
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,traiter));
         System.out.println(atlanta);
-
     }
 
     //=============================================================================================================================
@@ -380,31 +384,26 @@ class FacadePandemic9ImplTest {
 
     @Test
     void propagation()  {
-
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta));
         Assertions.assertEquals(3,this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille().get(plateau.getLesVirus().get("BLEU")));
-
     }
 
     @Test
     void creationPartieRoleRandom4JoueursOk(){
         System.out.println(instance.partie.getJoueurs());
         Assertions.assertEquals(4,this.instance.partie.getJoueurs().size());
-
     }
-
 
     @Test
     void jouerCarteEventParUneNuitTranquille(){
         CarteEvenement carteEvenementNuitTranquille = new CarteParUneNuitTranquille();
         pionJoueur.getDeckJoueur().add(carteEvenementNuitTranquille);
 
-        assertDoesNotThrow(() -> instance.jouerEvent(pionJoueur,carteEvenementNuitTranquille));
-        assertThrows(NuitTranquilleException.class,() -> instance.propagation(pionJoueur));
+        assertDoesNotThrow(() -> instance.jouerEvent(pionJoueur, carteEvenementNuitTranquille));
+        assertThrows(NuitTranquilleException.class, () -> instance.propagation(pionJoueur));
         assertTrue(pionJoueur.getPlateau().isEffetParUneNuitTranquilleActif());
-
     }
 
     @Test
@@ -413,7 +412,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.getPlateau().getDefausseCartePropagation().add(cartePropagation);
         CartePopulationResiliente carteEvenementPopulationResiliente = new CartePopulationResiliente();
         pionJoueur.getDeckJoueur().add(carteEvenementPopulationResiliente);
-       carteEvenementPopulationResiliente.setCartePropagationChoisis(cartePropagation);
+        carteEvenementPopulationResiliente.setCartePropagationChoisis(cartePropagation);
         assertDoesNotThrow(() -> instance.jouerEvent(pionJoueur,carteEvenementPopulationResiliente));
     }
 
@@ -429,6 +428,27 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(cartePontAerien);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur,cartePontAerien));
         System.out.println(pionJoueur2.getVilleActuelle());
+    }
 
+    @Test
+    void jouerCarteEventPrevision() {
+        PionJoueur pionJoueur = new PionJoueur();
+        Plateau plateauTest = instance.partie.getPlateau();
+        LinkedList<CarteJoueur> cartesJoueurTests = new LinkedList<>();
+        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test1").build()));
+        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test2").build()));
+        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test3").build()));
+        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test4").build()));
+        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test5").build()));
+        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test6").build()));
+        plateauTest.setPiocheCarteJoueur(cartesJoueurTests);
+        pionJoueur.setPlateau(plateauTest);
+
+        CartePrevision cartePrevision = new CartePrevision();
+        List<CarteJoueur> aReorganiser = cartePrevision.piocherDansPiocheJoueurs(pionJoueur);
+        aReorganiser.forEach(c -> System.out.println("Nom de carte : " + c.getNomCarte()));
+        Collections.shuffle(aReorganiser);
+        cartePrevision.ajouterDansPiocheJoueurs(pionJoueur, aReorganiser);
+        plateauTest.getPiocheCarteJoueur().forEach(c -> System.out.println("Nom de carte réorganisée : " + c.getNomCarte()));
     }
 }
