@@ -105,7 +105,7 @@ public class Plateau {
         melangerPaquet(piocheCarteJoueur);
     }
 
-    public void initialiserCartesPropagation() throws EvenementInnexistantException {
+    public void initialiserCartesPropagation() {
         for (Ville ville : this.getVilles().values()) {
             piocheCartePropagation.add(new CartePropagation(ville));
         }
@@ -159,8 +159,9 @@ public class Plateau {
         this.piocheCarteJoueur = piocheCarteJoueur;
     }
 
-    public Ville piocherCartePropagation() {
-        CartePropagation cartePropagation = piocheCartePropagation.remove(0);
+    public Ville piocherCartePropagation(int index) {
+        CartePropagation cartePropagation = piocheCartePropagation.remove(index);
+        defausseCartePropagation.add(cartePropagation);
         return villes.get(cartePropagation.getVilleCartePropagation().getNomVille());
     }
 
@@ -168,7 +169,7 @@ public class Plateau {
         if (isEffetParUneNuitTranquilleActif())
             throw new NuitTranquilleException();
         for (int i = 0; i < nbCartePropagationPiocherSelonVitesse(); i++) {
-            Ville villePropagation = piocherCartePropagation();
+            Ville villePropagation = piocherCartePropagation(0);
             propagationMaladie(villePropagation, 1);
         }
     }
@@ -186,7 +187,7 @@ public class Plateau {
         if(villePropagation.getNbCubeVirusVille().get(virus) + nbCubes <= DonneesVariablesStatiques.nbCubeMaxAvantEclosion){
             villePropagation.getNbCubeVirusVille().put(virus, villePropagation.getNbCubeVirusVille().get(virus) + nbCubes);
         }else{
-            villePropagation.getNbCubeVirusVille().put(virus, (DonneesVariablesStatiques.nbCubeMaxAvantEclosion - villePropagation.getNbCubeVirusVille().get(virus)) + villePropagation.getNbCubeVirusVille().get(virus));
+            villePropagation.getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubeMaxAvantEclosion);
             villePropagation.setEclosionVille(true);
             eclosion(villePropagation, virus);
         }

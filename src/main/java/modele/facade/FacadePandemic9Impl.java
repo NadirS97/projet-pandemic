@@ -33,7 +33,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         joueur.piocherCartes();
     }
 
-    public void propagation(PionJoueur joueur) throws VilleDejaEclosException, NuitTranquilleException {
+    public void propagation(PionJoueur joueur) throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException {
         joueur.getPlateau().initialiserPropagation();
     }
 }

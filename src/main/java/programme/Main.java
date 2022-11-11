@@ -4,6 +4,7 @@ import modele.elements.Partie;
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.actions.traiter_maladie.TraiterMaladie;
+import modele.elements.cartes.CarteEpidemie;
 import modele.elements.cartes.CarteVille;
 import modele.exceptions.*;
 

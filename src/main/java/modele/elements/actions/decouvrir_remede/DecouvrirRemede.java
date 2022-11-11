@@ -9,10 +9,10 @@ public class DecouvrirRemede implements IAction {
 
     @Override
     public void execAction(PionJoueur pionJoueur) {
-        if(pionJoueur.getNbMaxCarteVilleMemeCouleurDeckJoueur().getValue()<=4 && pionJoueur.getRoleJoueur().getNomRole() == NomsRoles.SCIENTIFIQUE) {
+        if(pionJoueur.getNbMaxCarteVilleMemeCouleurDeckJoueur().getValue()>=4 && pionJoueur.getRoleJoueur().getNomRole() == NomsRoles.SCIENTIFIQUE) {
 
         }
-        if(pionJoueur.getNbMaxCarteVilleMemeCouleurDeckJoueur().getValue()<=5){
+        if(pionJoueur.getNbMaxCarteVilleMemeCouleurDeckJoueur().getValue()>=5){
 
         }
     }

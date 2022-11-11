@@ -1,29 +1,20 @@
 package modele.elements.cartes;
 
 import lombok.Getter;
+import lombok.ToString;
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
-import modele.elements.enums.NomsEffetsEpidemie;
+import modele.elements.Ville;
 import modele.exceptions.NbCubesAAjouterInvalideException;
-import modele.exceptions.NomsEffetsEpidemieInvalideException;
 import modele.exceptions.VilleDejaEclosException;
 import modele.utils.DonneesVariablesStatiques;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Getter
+@ToString
 public class CarteEpidemie extends CarteJoueur implements IEffet {
-    private Map<NomsEffetsEpidemie,String> effetsEpidemie;
-
-    public CarteEpidemie() {
-        effetsEpidemie = new HashMap<>();
-        effetsEpidemie.put(NomsEffetsEpidemie.ACCELERATION, "La description de Acceleration");
-        effetsEpidemie.put(NomsEffetsEpidemie.INFECTION, "La description de Infection");
-        effetsEpidemie.put(NomsEffetsEpidemie.INTENSIFICATION, "La description de Intensification");
-    }
 
     private void applicationEffetIntensification(Plateau plateau){
         plateau.melangerPaquet(plateau.getDefausseCartePropagation());
@@ -34,29 +25,19 @@ public class CarteEpidemie extends CarteJoueur implements IEffet {
 
     private void applicationEffetInfection(Plateau plateau) throws VilleDejaEclosException, NbCubesAAjouterInvalideException {
         List<CartePropagation> piocheCartePropagation = plateau.getPiocheCartePropagation();
-        CartePropagation cartePropagation = piocheCartePropagation.get(piocheCartePropagation.size() - 1);
-        piocheCartePropagation.remove(cartePropagation);
-        plateau.getDefausseCartePropagation().add(cartePropagation);
-        plateau.propagationMaladie(cartePropagation.getVilleCartePropagation(), DonneesVariablesStatiques.nbCubeMaxAvantEclosion);
+        Ville ville = plateau.piocherCartePropagation(piocheCartePropagation.size() - 1);
+        plateau.propagationMaladie(ville, DonneesVariablesStatiques.nbCubesEffetInfectionCarteEpidemie);
     }
 
     private void applicationEffetAcceleration(Plateau plateau){
-       // plateau.getMarqueurVitessePropagation()
+        // plateau.getMarqueurVitessePropagation()
         // TODO: EffetAcceleration à faire
     }
 
     @Override
     public void execEffet(PionJoueur pionJoueur) throws Exception {
-        for(NomsEffetsEpidemie nomEffet : effetsEpidemie.keySet()){
-            switch (nomEffet) {
-                case INFECTION ->
-                    applicationEffetInfection(pionJoueur.getPlateau());
-                case ACCELERATION ->
-                    applicationEffetAcceleration(pionJoueur.getPlateau());
-                case INTENSIFICATION ->
-                    applicationEffetAcceleration(pionJoueur.getPlateau());
-                default -> throw new NomsEffetsEpidemieInvalideException("Le nom de l'effet pour la carte épidémie est invalide.");
-            }
-        }
+        applicationEffetInfection(pionJoueur.getPlateau());
+        applicationEffetAcceleration(pionJoueur.getPlateau());
+        applicationEffetIntensification(pionJoueur.getPlateau());
     }
 }

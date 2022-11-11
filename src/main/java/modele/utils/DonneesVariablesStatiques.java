@@ -11,5 +11,6 @@ public class DonneesVariablesStatiques {
     public static int nbCubesExistantParVirus = 24;
     public static int nbCubesInitialementPresentDansChaqueVille = 0;
     public static int nbCubeMaxAvantEclosion = 3;
+    public static int nbCubesEffetInfectionCarteEpidemie = 3;
     public static int nbCartesEpidemieACreer = 5;
 }
