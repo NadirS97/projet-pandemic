@@ -28,6 +28,7 @@ public class PionJoueur {
     private Ville villeActuelle;
     private Plateau plateau;
     private boolean permissionPontAerien;
+    private List<CarteJoueur> mainAReorganiser = new ArrayList<>();
 
     public PionJoueur(String pseudoJoueur, Plateau plateau) {
         this.pseudoJoueur = pseudoJoueur;

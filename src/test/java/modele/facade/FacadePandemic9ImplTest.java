@@ -28,7 +28,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -453,10 +452,11 @@ class FacadePandemic9ImplTest {
         pionJoueur.setPlateau(plateauTest);
 
         CartePrevision cartePrevision = new CartePrevision();
-        List<CarteJoueur> aReorganiser = cartePrevision.piocherDansPiocheJoueurs(pionJoueur);
-        aReorganiser.forEach(c -> System.out.println("Nom de carte : " + c.getNomCarte()));
-        Collections.shuffle(aReorganiser);
-        cartePrevision.ajouterDansPiocheJoueurs(pionJoueur, aReorganiser);
+        cartePrevision.execEffet(pionJoueur);
+        List<CarteJoueur> mainAMelanger = pionJoueur.getMainAReorganiser();
+        mainAMelanger.forEach(c -> System.out.println("Nom de carte : " + c.getNomCarte()));
+        Collections.shuffle(mainAMelanger);
+        cartePrevision.ajouterDansPiocheJoueurs(pionJoueur, mainAMelanger);
         plateauTest.getPiocheCarteJoueur().forEach(c -> System.out.println("Nom de carte réorganisée : " + c.getNomCarte()));
     }
 }

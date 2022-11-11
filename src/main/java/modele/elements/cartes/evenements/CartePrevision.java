@@ -6,6 +6,7 @@ import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.enums.NomsEvenement;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,21 +41,13 @@ public class CartePrevision extends CarteEvenement {
 
     @Override
     public void execEffet(PionJoueur pionJoueur) {
-
-    }
-
-    public List<CarteJoueur> piocherDansPiocheJoueurs(PionJoueur pionJoueur) {
-        LinkedList<CarteJoueur> aReorganiser = new LinkedList<>();
-        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
-        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
-        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
-        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
-        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
-        aReorganiser.add(pionJoueur.getPlateau().piocherCarteJoueur());
-        return aReorganiser;
+        for (int i = 0; i < 6; i++) {
+            pionJoueur.getMainAReorganiser().add(pionJoueur.getPlateau().piocherCarteJoueur());
+        }
     }
 
     public void ajouterDansPiocheJoueurs(PionJoueur pionJoueur, List<CarteJoueur> cartesReorganisees) {
         cartesReorganisees.forEach(c -> pionJoueur.getPlateau().ajouterDansPiocheCarteJoueur(c));
+        pionJoueur.setMainAReorganiser(new ArrayList<>());
     }
 }
