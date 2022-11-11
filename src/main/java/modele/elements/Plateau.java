@@ -145,8 +145,8 @@ public class Plateau {
     }
 
     // Sert exclusivement à l'effet Prevision
-    public CarteJoueur piocherCarteJoueur() {
-        return piocheCarteJoueur.remove(0);
+    public CartePropagation piocherCartePropagationEventPrevision() {
+        return piocheCartePropagation.remove(0);
     }
 
     public CarteRole piocherCarteRole(){
@@ -154,13 +154,13 @@ public class Plateau {
     }
 
     // Sert exclusivement à l'effet Prevision
-    public void ajouterDansPiocheCarteJoueur(CarteJoueur carteJoueur) {
-        piocheCarteJoueur.addFirst(carteJoueur);
+    public void ajouterDansPiocheCartePropagation(CartePropagation cartePropagation) {
+        piocheCartePropagation.add(cartePropagation);
     }
 
     // sert exclusivement au test de l'évènement Prévision
-    public void setPiocheCarteJoueur(LinkedList<CarteJoueur> piocheCarteJoueur) {
-        this.piocheCarteJoueur = piocheCarteJoueur;
+    public void setPiocheCartePropagation(List<CartePropagation> piocheCartePropagation) {
+        this.piocheCartePropagation = piocheCartePropagation;
     }
 
     public Ville piocherCartePropagation(int index) {

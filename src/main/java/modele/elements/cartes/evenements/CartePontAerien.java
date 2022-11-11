@@ -19,7 +19,6 @@ public class CartePontAerien extends CarteEvenement {
     }
 
     private final NomsEvenement nomEvenement = NomsEvenement.PONT_AERIEN;
-    private final String nomCarte = nomEvenement.toString();
     private final String description = "Déplacez un pion quelconque sur la ville de votre choix. Vous devez avoir la permission du propriétaire du pion qui sera déplacé.";
 
     @Override

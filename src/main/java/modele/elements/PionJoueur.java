@@ -3,11 +3,8 @@ package modele.elements;
 import lombok.Getter;
 import lombok.Setter;
 import modele.elements.actions.IAction;
-import modele.elements.cartes.CarteEvenement;
+import modele.elements.cartes.*;
 import modele.exceptions.*;
-import modele.elements.cartes.CarteJoueur;
-import modele.elements.cartes.CarteRole;
-import modele.elements.cartes.CarteVille;
 import modele.utils.DonneesVariablesStatiques;
 
 import java.util.ArrayList;
@@ -28,7 +25,7 @@ public class PionJoueur {
     private Ville villeActuelle;
     private Plateau plateau;
     private boolean permissionPontAerien;
-    private List<CarteJoueur> mainAReorganiser = new ArrayList<>();
+    private List<CartePropagation> mainAReorganiser = new ArrayList<>();
 
     public PionJoueur(String pseudoJoueur, Plateau plateau) {
         this.pseudoJoueur = pseudoJoueur;

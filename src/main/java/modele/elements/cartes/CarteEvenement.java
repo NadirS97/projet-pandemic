@@ -11,7 +11,6 @@ import java.util.LinkedList;
 @Getter
 public abstract class CarteEvenement extends CarteJoueur implements IEffet {
     private NomsEvenement nomEvenement;
-    private String nomCarte;
     private String description;
 
     public String getDescription() {

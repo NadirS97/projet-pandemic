@@ -16,7 +16,6 @@ public class CartePopulationResiliente extends CarteEvenement {
     }
 
     private final NomsEvenement nomEvenement = NomsEvenement.POPULATION_RESILIENTE;
-    private String nomCarte = nomEvenement.toString();
     private final String descriptionN = "Retirez du jeu 1 carte de votre choix de la défausse Propagation. (Vous pouvez jouer Population résiliente entre les étapes Infection et Intensification d'une carte Épidémie.)";
 
     @Override

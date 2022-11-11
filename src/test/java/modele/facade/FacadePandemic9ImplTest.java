@@ -19,10 +19,7 @@ import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
-import modele.elements.cartes.evenements.CarteParUneNuitTranquille;
-import modele.elements.cartes.evenements.CartePontAerien;
-import modele.elements.cartes.evenements.CartePopulationResiliente;
-import modele.elements.cartes.evenements.CartePrevision;
+import modele.elements.cartes.evenements.*;
 import modele.elements.cartes.roles.CarteScientifique;
 import modele.elements.enums.CouleurPionsRole;
 import modele.exceptions.*;
@@ -450,7 +447,7 @@ class FacadePandemic9ImplTest {
         CartePopulationResiliente carteEvenementPopulationResiliente = new CartePopulationResiliente();
         pionJoueur.getDeckJoueur().add(carteEvenementPopulationResiliente);
         carteEvenementPopulationResiliente.setCartePropagationChoisis(cartePropagation);
-        assertDoesNotThrow(() -> instance.jouerEvent(pionJoueur,carteEvenementPopulationResiliente));
+        assertDoesNotThrow(() -> instance.jouerEvent(pionJoueur, carteEvenementPopulationResiliente));
     }
 
     @Test
@@ -463,7 +460,7 @@ class FacadePandemic9ImplTest {
         cartePontAerien.setPionChoisis(pionJoueur2);
         cartePontAerien.setVilleChoisis(paris);
         pionJoueur.getDeckJoueur().add(cartePontAerien);
-        assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur,cartePontAerien));
+        assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, cartePontAerien));
         System.out.println(pionJoueur2.getVilleActuelle());
     }
 
@@ -471,22 +468,33 @@ class FacadePandemic9ImplTest {
     void jouerCarteEventPrevision() {
         PionJoueur pionJoueur = new PionJoueur();
         Plateau plateauTest = instance.partie.getPlateau();
-        LinkedList<CarteJoueur> cartesJoueurTests = new LinkedList<>();
-        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test1").build()));
-        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test2").build()));
-        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test3").build()));
-        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test4").build()));
-        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test5").build()));
-        cartesJoueurTests.add(new CarteVille(Ville.builder().nomVille("Test6").build()));
-        plateauTest.setPiocheCarteJoueur(cartesJoueurTests);
+        List<CartePropagation> cartesPropagationTests = new LinkedList<>();
+        cartesPropagationTests.add(new CartePropagation(Ville.builder().nomVille("Test1").build()));
+        cartesPropagationTests.add(new CartePropagation(Ville.builder().nomVille("Test2").build()));
+        cartesPropagationTests.add(new CartePropagation(Ville.builder().nomVille("Test3").build()));
+        cartesPropagationTests.add(new CartePropagation(Ville.builder().nomVille("Test4").build()));
+        cartesPropagationTests.add(new CartePropagation(Ville.builder().nomVille("Test5").build()));
+        cartesPropagationTests.add(new CartePropagation(Ville.builder().nomVille("Test6").build()));
+        plateauTest.setPiocheCartePropagation(cartesPropagationTests);
         pionJoueur.setPlateau(plateauTest);
 
         CartePrevision cartePrevision = new CartePrevision();
         cartePrevision.execEffet(pionJoueur);
-        List<CarteJoueur> mainAMelanger = pionJoueur.getMainAReorganiser();
-        mainAMelanger.forEach(c -> System.out.println("Nom de carte : " + c.getNomCarte()));
+        List<CartePropagation> mainAMelanger = pionJoueur.getMainAReorganiser();
         Collections.shuffle(mainAMelanger);
-        cartePrevision.ajouterDansPiocheJoueurs(pionJoueur, mainAMelanger);
-        plateauTest.getPiocheCarteJoueur().forEach(c -> System.out.println("Nom de carte réorganisée : " + c.getNomCarte()));
+        cartePrevision.ajouterDansPiochePropagation(pionJoueur, mainAMelanger);
+        pionJoueur.getDeckJoueur().add(cartePrevision);
+        assertEquals(mainAMelanger, pionJoueur.getPlateau().getPiocheCartePropagation());
+    }
+
+    @Test
+    void jouerCarteSubventionPublique() throws VilleIntrouvableException {
+        PionJoueur pionJoueur = new PionJoueur();
+        Plateau plateauTest = plateau;
+        pionJoueur.setPlateau(plateauTest);
+        CarteSubventionPublique carteSubventionPublique = new CarteSubventionPublique();
+        carteSubventionPublique.placerStationRecherche(pionJoueur, "Atlanta");
+        pionJoueur.getDeckJoueur().add(carteSubventionPublique);
+        assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, carteSubventionPublique));
     }
 }

@@ -9,7 +9,6 @@ import modele.elements.enums.NomsEvenement;
 public class CarteParUneNuitTranquille extends CarteEvenement {
 
     private final NomsEvenement nomEvenement = NomsEvenement.PAR_UNE_NUIT_TRANQUILE;
-    private String nomCarte = nomEvenement.toString();
     private final String description = "Ne faites pas la prochaine phase Propagation des maladies (ne dévoilez aucune carte Propagation).";
 
     @Override

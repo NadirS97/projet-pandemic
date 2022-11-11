@@ -4,5 +4,4 @@ import lombok.Getter;
 
 @Getter
 public abstract class CarteJoueur {
-    private String nomCarte;
 }
