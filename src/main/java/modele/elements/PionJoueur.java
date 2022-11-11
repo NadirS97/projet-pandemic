@@ -35,6 +35,7 @@ public class PionJoueur {
         this.plateau = plateau;
         this.deckJoueur = new ArrayList<>();
         this.nbActions = DonneesVariablesStatiques.nbActionsMaxParTour;
+        this.roleJoueur = plateau.piocherCarteRole();
     }
 
     public PionJoueur(){
@@ -69,8 +70,19 @@ public class PionJoueur {
                 maMap.put(couleurVirusVille, nbCarteVille + 1);
             }
         });
-        Map.Entry<String, Integer> maxEntry = maMap.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
-        return maxEntry;
+        return maMap.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
+    }
+
+    public List<CarteVille> getLesCartesVilleDeMemeCouleurDeDeckJoueur(String couleurVirus){
+        List<CarteVille> cartesVilleDeMemeCouleur= new ArrayList<>();
+        deckJoueur.forEach(carteJoueur -> {
+            if(carteJoueur instanceof CarteVille){
+                if(((CarteVille) carteJoueur).getVilleCarteVille().getCouleurVirusVille().equals(couleurVirus)){
+                    cartesVilleDeMemeCouleur.add((CarteVille) carteJoueur);
+                }
+            }
+        });
+        return cartesVilleDeMemeCouleur;
     }
 
     public CarteJoueur defausseCarteVilleDeDeckJoueur(Ville ville) {

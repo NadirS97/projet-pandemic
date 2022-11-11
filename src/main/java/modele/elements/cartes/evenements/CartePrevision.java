@@ -5,6 +5,7 @@ import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.enums.NomsEvenement;
+import modele.utils.DonneesVariablesStatiques;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -41,7 +42,7 @@ public class CartePrevision extends CarteEvenement {
 
     @Override
     public void execEffet(PionJoueur pionJoueur) {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < DonneesVariablesStatiques.nbCartesJoueurAPiocherEffetEvenementPrevision; i++) {
             pionJoueur.getMainAReorganiser().add(pionJoueur.getPlateau().piocherCarteJoueur());
         }
     }

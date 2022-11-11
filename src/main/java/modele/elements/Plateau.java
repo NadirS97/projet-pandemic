@@ -149,6 +149,10 @@ public class Plateau {
         return piocheCarteJoueur.remove(0);
     }
 
+    public CarteRole piocherCarteRole(){
+        return toutesLesCartesRolesExistante.remove(0);
+    }
+
     // Sert exclusivement à l'effet Prevision
     public void ajouterDansPiocheCarteJoueur(CarteJoueur carteJoueur) {
         piocheCarteJoueur.addFirst(carteJoueur);

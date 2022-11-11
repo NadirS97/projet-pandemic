@@ -7,6 +7,7 @@ import modele.elements.Ville;
 import modele.elements.Virus;
 import modele.elements.actions.IAction;
 import modele.elements.actions.construire_une_station.ConstruireUneStation;
+import modele.elements.actions.decouvrir_remede.DecouvrirRemede;
 import modele.elements.actions.deplacement.DeplacementNavette;
 import modele.elements.actions.deplacement.DeplacementVoiture;
 import modele.elements.actions.deplacement.DeplacementVolCharter;
@@ -22,6 +23,8 @@ import modele.elements.cartes.evenements.CarteParUneNuitTranquille;
 import modele.elements.cartes.evenements.CartePontAerien;
 import modele.elements.cartes.evenements.CartePopulationResiliente;
 import modele.elements.cartes.evenements.CartePrevision;
+import modele.elements.cartes.roles.CarteScientifique;
+import modele.elements.enums.CouleurPionsRole;
 import modele.exceptions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -370,6 +373,33 @@ class FacadePandemic9ImplTest {
         assertFalse(joueur2.isVilleOfCarteVilleDeckJoueur(atlanta));
         assertTrue(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
 
+    }
+
+//=============================================================================================================================
+//                                                 ACTION DecouvrirRemede
+//=============================================================================================================================
+
+    @Test
+    void jouerTourActionDecouvrirRemedeOK() {
+        atlanta.setStationDeRechercheVille(true);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        IAction action = new DecouvrirRemede();
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
+    }
+    @Test
+    void jouerTourActionDecouvrirRemedeScientifiqueOK() {
+        atlanta.setStationDeRechercheVille(true);
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new DecouvrirRemede();
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
     }
 
 //=============================================================================================================================
