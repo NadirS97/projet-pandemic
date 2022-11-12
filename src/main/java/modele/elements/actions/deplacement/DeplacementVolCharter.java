@@ -4,6 +4,7 @@ import modele.elements.PionJoueur;
 
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
+import modele.elements.cartes.CarteJoueur;
 import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VilleIntrouvableException;
@@ -31,7 +32,8 @@ public class DeplacementVolCharter implements IAction {
             throw new VilleIntrouvableException(villeDestination.getNomVille() + " non trouvé");
         if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(pionJoueur.getVilleActuelle()))
             throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + pionJoueur.getVilleActuelle().getNomVille() + " n'est pas présente dans votre deck.");
-        pionJoueur.defausseCarteVilleDeDeckJoueur(pionJoueur.getVilleActuelle());
+        CarteJoueur carteVille = pionJoueur.defausseCarteVilleDeDeckJoueur(pionJoueur.getVilleActuelle());
+        pionJoueur.getPlateau().defausserCarteJoueur(carteVille);
         pionJoueur.setVilleActuelle(villeDestination);
 
     }

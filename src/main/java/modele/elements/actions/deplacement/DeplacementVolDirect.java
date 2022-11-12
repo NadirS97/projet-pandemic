@@ -4,6 +4,7 @@ import modele.elements.PionJoueur;
 
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
+import modele.elements.cartes.CarteJoueur;
 import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VilleDestinationEstVilleActuelleException;
@@ -27,7 +28,8 @@ public class DeplacementVolDirect implements IAction {
             throw new VilleIntrouvableException(villeDestination.getNomVille()+" non trouvé");
         if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(villeDestination))
             throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeDestination.getNomVille() + " n'est pas présente dans votre main.");
-        pionJoueur.defausseCarteVilleDeDeckJoueur(villeDestination);
+        CarteJoueur carteVille = pionJoueur.defausseCarteVilleDeDeckJoueur(villeDestination);
+        pionJoueur.getPlateau().defausserCarteJoueur(carteVille);
         pionJoueur.setVilleActuelle(villeDestination);
     }
 }

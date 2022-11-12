@@ -144,6 +144,14 @@ public class Plateau {
         });
     }
 
+    public void defausserCarteJoueur(CarteJoueur carteJoueur){
+        defausseCarteJoueur.add(carteJoueur);
+    }
+
+    public void defausserCartePropagation(CartePropagation cartePropagation){
+        defausseCartePropagation.add(cartePropagation);
+    }
+
     // Sert exclusivement à l'effet Prevision
     public CartePropagation piocherCartePropagationEventPrevision() {
         return piocheCartePropagation.remove(0);

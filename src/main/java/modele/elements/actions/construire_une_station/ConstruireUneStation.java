@@ -4,6 +4,7 @@ import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
+import modele.elements.cartes.CarteJoueur;
 import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VilleActuellePossedeDejaUneStationDeRechercheException;
@@ -36,7 +37,8 @@ public class ConstruireUneStation implements IAction {
             } else {
                 plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
             }
-            pionJoueur.defausseCarteVilleDeDeckJoueur(villeActuelle);
+            CarteJoueur carteJoueur = pionJoueur.defausseCarteVilleDeDeckJoueur(villeActuelle);
+            pionJoueur.getPlateau().defausserCarteJoueur(carteJoueur);
         } else {
             if (plateau.isVilleStationDeRecherche(villeActuelle))
                 throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.getNomVille() + " possède déjà une station de recherche.");

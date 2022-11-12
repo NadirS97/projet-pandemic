@@ -22,6 +22,7 @@ import modele.elements.cartes.CarteVille;
 import modele.elements.cartes.evenements.*;
 import modele.elements.cartes.roles.CarteScientifique;
 import modele.elements.enums.CouleurPionsRole;
+import modele.elements.enums.EtatVirus;
 import modele.exceptions.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -384,9 +385,16 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        int tailleDeckApresAjoutDesCartes = pionJoueur.getDeckJoueur().size();
+        int tailleDefausseInitial = pionJoueur.getPlateau().getDefausseCarteJoueur().size();
         IAction action = new DecouvrirRemede();
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
+        assertEquals(tailleDeckApresAjoutDesCartes - 5, pionJoueur.getDeckJoueur().size());
+        assertEquals(tailleDefausseInitial + 5, pionJoueur.getPlateau().getDefausseCarteJoueur().size());
+        String couleurVirus = atlanta.getCouleurVirusVille();
+        assertEquals(pionJoueur.getPlateau().getLesVirus().get(couleurVirus).getEtatVirus(), EtatVirus.TRAITE);
     }
+
     @Test
     void jouerTourActionDecouvrirRemedeScientifiqueOK() {
         atlanta.setStationDeRechercheVille(true);
@@ -395,8 +403,137 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
+        int tailleDefausseInitial = pionJoueur.getPlateau().getDefausseCarteJoueur().size();
         IAction action = new DecouvrirRemede();
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
+        assertEquals(tailleDeckInitial - 4, pionJoueur.getDeckJoueur().size());
+        assertEquals(tailleDefausseInitial + 4, pionJoueur.getPlateau().getDefausseCarteJoueur().size());
+        String couleurVirus = atlanta.getCouleurVirusVille();
+        assertEquals(pionJoueur.getPlateau().getLesVirus().get(couleurVirus).getEtatVirus(), EtatVirus.TRAITE);
+    }
+
+    @Test
+    void jouerTourActionDecouvrirRemedeVilleAvecAucuneStationDeRecherche() {
+        atlanta.setStationDeRechercheVille(false);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        IAction action = new DecouvrirRemede();
+        Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class, () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void jouerTourActionDecouvrirRemedeScientifiqueVilleAvecAucuneStationDeRecherche() {
+        atlanta.setStationDeRechercheVille(false);
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new DecouvrirRemede();
+        Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class, () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void jouerTourActionDecouvrirRemedeNombreDeCartesVilleDansDeckJoueurInvalide() {
+        atlanta.setStationDeRechercheVille(true);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new DecouvrirRemede();
+        Assertions.assertThrows(NombreDeCartesVilleDansDeckJoueurInvalideException.class, () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void jouerTourActionDecouvrirRemedeScientifiqueNombreDeCartesVilleDansDeckJoueurInvalide() {
+        atlanta.setStationDeRechercheVille(true);
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new DecouvrirRemede();
+        Assertions.assertThrows(NombreDeCartesVilleDansDeckJoueurInvalideException.class, () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void jouerTourActionDecouvrirRemedeNbActionsMaxTourAtteintException() {
+        atlanta.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(true);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        IAction action1 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
+        IAction action2 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action2));
+        IAction action3 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action3));
+        IAction action4 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action4));
+        IAction action5 = new DecouvrirRemede();
+        Assertions.assertThrows(NbActionsMaxTourAtteintException.class, () -> this.instance.jouerAction(pionJoueur, action5));
+    }
+
+    @Test
+    void jouerTourActionDecouvrirRemedeScientifiqueNbActionsMaxTourAtteintException() {
+        atlanta.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(true);
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action1 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
+        IAction action2 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action2));
+        IAction action3 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action3));
+        IAction action4 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action4));
+        IAction action5 = new DecouvrirRemede();
+        Assertions.assertThrows(NbActionsMaxTourAtteintException.class, () -> this.instance.jouerAction(pionJoueur, action5));
+    }
+
+    @Test
+    void jouerTourActionDecouvrirRemedeVirusDejaTraite() {
+        atlanta.setStationDeRechercheVille(true);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        IAction action1 = new DecouvrirRemede();
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action1));
+
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        IAction action2 = new DecouvrirRemede();
+        Assertions.assertThrows(VirusDejaTraiteException.class, () -> this.instance.jouerAction(pionJoueur, action2));
+    }
+
+    @Test
+    void jouerTourActionDecouvrirScientifiqueRemedeVirusDejaTraite() {
+        atlanta.setStationDeRechercheVille(true);
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action1 = new DecouvrirRemede();
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action1));
+
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action2 = new DecouvrirRemede();
+        Assertions.assertThrows(VirusDejaTraiteException.class, () -> this.instance.jouerAction(pionJoueur, action2));
     }
 
 //=============================================================================================================================
