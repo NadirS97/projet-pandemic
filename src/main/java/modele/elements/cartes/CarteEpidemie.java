@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @ToString
 public class CarteEpidemie extends CarteJoueur implements IEffet {
-
     private void applicationEffetIntensification(Plateau plateau){
         plateau.melangerPaquet(plateau.getDefausseCartePropagation());
         plateau.getDefausseCartePropagation().forEach(cartePropagation -> {
@@ -30,8 +29,9 @@ public class CarteEpidemie extends CarteJoueur implements IEffet {
     }
 
     private void applicationEffetAcceleration(Plateau plateau){
-        // plateau.getMarqueurVitessePropagation()
-        // TODO: EffetAcceleration à faire
+        if (plateau.getMarqueurVitessePropagation() < 7){
+            plateau.avancerMarqueurVitesse();
+        }
     }
 
     @Override

@@ -302,4 +302,24 @@ public class Plateau {
     public void setEffetParUneNuitTranquilleActif(boolean effetParUneNuitTranquilleActif) {
         this.effetParUneNuitTranquilleActif = effetParUneNuitTranquilleActif;
     }
+
+    public int vitesseDePropagation() {
+        if (marqueurVitessePropagation >= 1 && marqueurVitessePropagation <= 3)
+            return 2;
+        if (marqueurVitessePropagation >= 4 && marqueurVitessePropagation <= 5)
+            return 3;
+        if (marqueurVitessePropagation >= 6 && marqueurVitessePropagation <= 7)
+            return 4;
+
+        return marqueurVitessePropagation;
+    }
+
+    public void avancerMarqueurVitesse(){
+        marqueurVitessePropagation++;
+
+    }
+
+
+
+
 }
