@@ -2,7 +2,9 @@ package modele.elements;
 
 
 import lombok.Getter;
+import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
+import modele.elements.cartes.CarteVille;
 import modele.exceptions.NbJoueursPartieIncorrectException;
 
 import javax.management.relation.Role;
@@ -16,6 +18,7 @@ public class Partie {
     List<Role> roles;
     Plateau plateau;
     int nbJoueurs;
+    PionJoueur joueurActuel;
 
     public Partie(int nbJoueurs) throws Exception {
         if (nbJoueurs <= 0 || nbJoueurs > 4)
@@ -25,12 +28,18 @@ public class Partie {
        this.nbJoueurs = nbJoueurs;
        joueurs = new ArrayList<>();
 
+       ajoutJoueursDansPartie(nbJoueurs);
        miseEnPlaceJeuCartePropagation();
        distributionCarteJoueurs();
+       determinerQuiCommencePartie();
     }
 
 
-
+    private void ajoutJoueursDansPartie(int nbJoueurs){
+        for (int i = 0 ; i < nbJoueurs ; i++){
+            joueurs.add(new PionJoueur(plateau));
+        }
+    }
 
     /**
      * Les 3 premières cartes retournées seront les 3 villes contaminées
@@ -70,6 +79,28 @@ public class Partie {
                 pionJoueur.getDeckJoueur().add(plateau.getPiocheCarteJoueur().remove(0));
             }
         }
+        // une fois la distribution mise en place, on insere les carte epidémie
+        plateau.insererCartesEpidemie();
+    }
+
+    private void determinerQuiCommencePartie(){
+        PionJoueur joueurAvecPlusGrandeVille = joueurs.get(0);
+        int plusGrandePopulation = 0;
+        for (PionJoueur pionJoueur : joueurs){
+            for (CarteJoueur carteJoueur : pionJoueur.getDeckJoueur()) {
+                // dans cette boucle on va chercher si le joueur possede 0 ou plusieurs carte villes, et sa plus grande ville
+                if (carteJoueur instanceof CarteVille) {
+                    // on compare la population de chaque carte joueur ville avec la population la plus grande qu'on a trouvé
+                    // si on trouve une ville qui possède une population plus élevé, le joueur qui l'a possede devient le joeuur avec la plus grandeville
+                    if ( plusGrandePopulation < ((CarteVille) carteJoueur).getVilleCarteVille().getNbPopulationTotaleVille()){
+                        plusGrandePopulation = ((CarteVille) carteJoueur).getVilleCarteVille().getNbPopulationTotaleVille();
+                        joueurAvecPlusGrandeVille = pionJoueur;
+                    }
+                }
+            }
+        }
+        System.out.println(joueurAvecPlusGrandeVille);
+        joueurActuel = joueurAvecPlusGrandeVille;
     }
 
 

@@ -129,6 +129,11 @@ public class PionJoueur {
         this.nbActions--;
     }
 
-
+    @Override
+    public String toString() {
+        return "PionJoueur{" +
+                "roleJoueur=" + roleJoueur.getNomRole() +
+                '}';
+    }
 }
 

@@ -1,10 +1,7 @@
 package modele.facade;
 
-import modele.elements.PionJoueur;
-import modele.elements.Plateau;
+import modele.elements.*;
 
-import modele.elements.Ville;
-import modele.elements.Virus;
 import modele.elements.actions.IAction;
 import modele.elements.actions.construire_une_station.ConstruireUneStation;
 import modele.elements.actions.decouvrir_remede.DecouvrirRemede;
@@ -65,6 +62,8 @@ class FacadePandemic9ImplTest {
         miami = plateau.getVilleByName("Miami");
         pionJoueur.setVilleActuelle(atlanta);
     }
+
+
 
 //=============================================================================================================================
 //                                                ACTION DeplacementVoiture
@@ -629,6 +628,9 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(carteSubventionPublique);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, carteSubventionPublique));
     }
+
+
+
 
 
 }
