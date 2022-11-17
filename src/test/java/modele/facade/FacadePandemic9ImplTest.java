@@ -333,15 +333,15 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionTraiterMaladieNonTraiteOK(){
-        System.out.println(atlanta);
+
         // pour simplifier le test on choisis la ville qui se propage plutot que de tester la propagation random
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
-        System.out.println(atlanta);
+
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
         IAction traiter = new TraiterMaladie(virusBleu);
         pionJoueur.setVilleActuelle(atlanta);
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,traiter));
-        System.out.println(atlanta);
+
     }
 
 //=============================================================================================================================
@@ -542,11 +542,10 @@ class FacadePandemic9ImplTest {
 
     @Test
     void piocherCartes(){
-        System.out.println(pionJoueur.getDeckJoueur());
+
         int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
         instance.piocherCartes(pionJoueur);
         assertEquals(tailleDeckInitial+2,pionJoueur.getDeckJoueur().size());
-        System.out.println(pionJoueur.getDeckJoueur());
     }
 
     @Test
@@ -559,7 +558,6 @@ class FacadePandemic9ImplTest {
 
     @Test
     void creationPartieRoleRandom4JoueursOk(){
-        System.out.println(instance.partie.getJoueurs());
         Assertions.assertEquals(4,this.instance.partie.getJoueurs().size());
     }
 
@@ -592,13 +590,13 @@ class FacadePandemic9ImplTest {
         PionJoueur pionJoueur2 = new PionJoueur();
         pionJoueur2.setVilleActuelle(atlanta);
         pionJoueur2.setPermissionPontAerien(true);
-        System.out.println(pionJoueur2.getVilleActuelle());
+
         CartePontAerien cartePontAerien = new CartePontAerien();
         cartePontAerien.setPionChoisis(pionJoueur2);
         cartePontAerien.setVilleChoisis(paris);
         pionJoueur.getDeckJoueur().add(cartePontAerien);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, cartePontAerien));
-        System.out.println(pionJoueur2.getVilleActuelle());
+
     }
 
     @Test
