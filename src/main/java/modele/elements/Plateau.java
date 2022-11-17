@@ -213,12 +213,14 @@ public class Plateau {
             if (!villes.get(villeVoisineString).getNbCubeVirusVille().containsKey(virus))
                 villes.get(villeVoisineString).getNbCubeVirusVille().put(virus, 0);
 
-            System.out.println(villes.get(villeVoisineString) + " :" + villes.get(villeVoisineString).getNbCubeVirusVille().get(virus));
+           // System.out.println(villes.get(villeVoisineString) + " :" + villes.get(villeVoisineString).getNbCubeVirusVille().get(virus));
             if (villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) == DonneesVariablesStatiques.nbCubeMaxAvantEclosion) {
                 villes.get(villeVoisineString).setEclosionVille(true);
                 eclosion(villes.get(villeVoisineString), virus);
             }
         }
+        marqueurVitesseEclosion++;
+
     }
 
     public int nbCartePropagationPiocherSelonVitesse() {
@@ -319,7 +321,12 @@ public class Plateau {
 
     }
 
+   /* public void avancerMarqueurVitesseEclosion(){
+        marqueurVitesseEclosion++;
+
+    }
 
 
+*/
 
 }
