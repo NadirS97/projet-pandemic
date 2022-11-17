@@ -98,10 +98,15 @@ public class Plateau {
                         "L'évènement : " + nomEvenement + " est inexistant.");
             }
         }
+
+
+        melangerPaquet(piocheCarteJoueur);
+    }
+
+    public void insererCartesEpidemie(){
         for (int i = 0; i < DonneesVariablesStatiques.nbCartesEpidemieACreer ; i++) {
             piocheCarteJoueur.add(new CarteEpidemie());
         }
-
         melangerPaquet(piocheCarteJoueur);
     }
 

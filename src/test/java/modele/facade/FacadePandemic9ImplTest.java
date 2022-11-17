@@ -54,7 +54,7 @@ class FacadePandemic9ImplTest {
     void setUp() throws Exception {
         instance = new FacadePandemic9Impl(4);
         plateau = instance.partie.getPlateau();
-        pionJoueur = new PionJoueur("joueur", plateau);
+        pionJoueur = new PionJoueur( plateau);
         atlanta = plateau.getVilleByName("Atlanta");
         chicago = plateau.getVilleByName("Chicago");
         paris = plateau.getVilleByName("Paris");
@@ -556,10 +556,7 @@ class FacadePandemic9ImplTest {
         Assertions.assertEquals(3,this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille().get(plateau.getLesVirus().get("BLEU")));
     }
 
-    @Test
-    void creationPartieRoleRandom4JoueursOk(){
-        Assertions.assertEquals(4,this.instance.partie.getJoueurs().size());
-    }
+
 
 //=============================================================================================================================
 //                                                 EFFET Evenement
@@ -632,4 +629,6 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(carteSubventionPublique);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, carteSubventionPublique));
     }
+
+
 }

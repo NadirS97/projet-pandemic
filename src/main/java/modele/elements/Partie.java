@@ -24,23 +24,13 @@ public class Partie {
        this.plateau = new Plateau();
        this.nbJoueurs = nbJoueurs;
        joueurs = new ArrayList<>();
-       attributionRolesRandom(nbJoueurs);
+
        miseEnPlaceJeuCartePropagation();
+       distributionCarteJoueurs();
     }
 
-    /*
-        MISE EN PLACE DU JEU
-        1. Rôles distribués aléatoirement de telle sorte que chaque joueur ait un seul rôle
-     */
-    private void attributionRolesRandom(int nbJoueurs){
-        for (int i = 0 ; i < nbJoueurs ; i++){
-            int randomIndex = new Random().nextInt(plateau.getToutesLesCartesRolesExistante().size());
-            CarteRole carteRole = plateau.getToutesLesCartesRolesExistante().remove(randomIndex);
-            PionJoueur joueur = new PionJoueur();
-            joueur.setRoleJoueur(carteRole);
-           joueurs.add(joueur);
-        }
-    }
+
+
 
     /**
      * Les 3 premières cartes retournées seront les 3 villes contaminées
@@ -66,6 +56,19 @@ public class Partie {
             Ville villeContamine =  plateau.piocherCartePropagation(0);
             Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
             plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus,1);
+        }
+    }
+
+    /**
+     * On ne garde dans un premier temps que les cartes ville et évènement. Chaque joueur reçoit
+     * alors 4 cartes pour une partie à 2 joueurs, 3 cartes pour une partie à 3 joueurs ou 2 cartes
+     * pour une partie à 4 joueurs.
+     */
+    private void distributionCarteJoueurs(){
+        for (PionJoueur pionJoueur : joueurs){
+            for (int i = 0 ; i < nbJoueurs ; i++){
+                pionJoueur.getDeckJoueur().add(plateau.getPiocheCarteJoueur().remove(0));
+            }
         }
     }
 
