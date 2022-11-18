@@ -114,6 +114,7 @@ public class Partie {
             indexJoueur = 0;
         }
         joueurActuel = joueurs.get(indexJoueur);
+        joueurActuel.setNbActions(4);
 
     }
 

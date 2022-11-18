@@ -17,6 +17,8 @@ import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
 import modele.elements.cartes.evenements.*;
+import modele.elements.cartes.roles.CarteChercheuse;
+import modele.elements.cartes.roles.CarteMedecin;
 import modele.elements.cartes.roles.CarteScientifique;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.EtatVirus;
@@ -256,6 +258,7 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionConstruireUneStationCarteVilleInexistanteDansDeckJoueur(){
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
         IAction action = new ConstruireUneStation();
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));
@@ -348,7 +351,7 @@ class FacadePandemic9ImplTest {
 //=============================================================================================================================
 
     @Test
-    void donnerConaissanceOk(){
+    void donnerConnaissanceOk(){
         PionJoueur joueur2 = new PionJoueur();
         joueur2.setVilleActuelle(atlanta);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
@@ -360,16 +363,181 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void prendreConaissanceOk(){
+    void donnerConnaissanceChercheuseOk(){
+        pionJoueur.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
         PionJoueur joueur2 = new PionJoueur();
         joueur2.setVilleActuelle(atlanta);
-        joueur2.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
-        IAction donnerConaissance = new PrendreConnaissance(joueur2);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new DonnerConnaissance(joueur2, chicago);
+        assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,action));
+        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(chicago));
+        assertTrue(joueur2.isVilleOfCarteVilleDeckJoueur(chicago));
+    }
 
-        assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,donnerConaissance));
+    @Test
+    void donnerConnaissanceChercheuseDonneeManquante(){
+        pionJoueur.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(atlanta);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new DonnerConnaissance(joueur2);
+        Assertions.assertThrows(DonneeManquanteException.class,
+                () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void donnerConnaissanceChercheuseCarteVilleInexistanteDansDeckJoueur(){
+        pionJoueur.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(atlanta);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new DonnerConnaissance(joueur2, chicago);
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void donnerConnaissanceNbActionsMaxTourAtteint(){
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(atlanta);
+        atlanta.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(true);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action1 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
+        IAction action2 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action2));
+        IAction action3 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action3));
+        IAction action4 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action4));
+        IAction action5 = new DonnerConnaissance(joueur2);
+        Assertions.assertThrows(NbActionsMaxTourAtteintException.class,
+                () -> this.instance.jouerAction(pionJoueur,action5));
+    }
+
+    @Test
+    void donnerConnaissanceJoueursNonPresentMemeVille(){
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(chicago);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new DonnerConnaissance(joueur2);
+        Assertions.assertThrows(JoueursNonPresentMemeVilleException.class,
+                () -> this.instance.jouerAction(pionJoueur,action));
+    }
+
+    @Test
+    void donnerConnaissanceCarteVilleInexistanteDansDeckJoueur(){
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(atlanta);
+        IAction action = new DonnerConnaissance(joueur2);
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.jouerAction(pionJoueur,action));
+    }
+
+    @Test
+    void prendreConnaissanceOk(){
+        // pionJoueur : Joueur qui va prendre
+        // joueur2 : Joueur qui va donner
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
+        joueur2.setVilleActuelle(atlanta);
+        joueur2.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction prendreConnaissance = new PrendreConnaissance(joueur2);
+        assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,prendreConnaissance));
         assertFalse(joueur2.isVilleOfCarteVilleDeckJoueur(atlanta));
         assertTrue(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
+    }
 
+    @Test
+    void prendreConnaissanceChercheuseOk(){
+        // pionJoueur : Joueur qui va prendre
+        // joueur2 : Role CHERCHEUSE : Joueur qui va donner
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
+        joueur2.setVilleActuelle(atlanta);
+        joueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction prendreConnaissance = new PrendreConnaissance(joueur2, chicago);
+        assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,prendreConnaissance));
+        assertTrue(pionJoueur.isVilleOfCarteVilleDeckJoueur(chicago));
+        assertFalse(joueur2.isVilleOfCarteVilleDeckJoueur(chicago));
+    }
+
+    @Test
+    void prendreConnaissanceChercheuseDonneeManquante(){
+        // pionJoueur : Joueur qui va prendre
+        // joueur2 : Role CHERCHEUSE : Joueur qui va donner
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
+        joueur2.setVilleActuelle(atlanta);
+        joueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new PrendreConnaissance(joueur2);
+        Assertions.assertThrows(DonneeManquanteException.class,
+                () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void prendreConnaissanceChercheuseCarteVilleInexistanteDansDeckJoueur(){
+        // pionJoueur : Joueur qui va prendre
+        // joueur2 : Role CHERCHEUSE : Joueur qui va donner
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
+        joueur2.setVilleActuelle(atlanta);
+        joueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new PrendreConnaissance(joueur2, atlanta);
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void prendreConnaissanceNbActionsMaxTourAtteint(){
+        // pionJoueur : Joueur qui va prendre
+        // joueur2 : Joueur qui va donner
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(atlanta);
+        joueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        atlanta.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(true);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action1 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
+        IAction action2 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action2));
+        IAction action3 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action3));
+        IAction action4 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action4));
+        IAction action5 = new PrendreConnaissance(joueur2);
+        Assertions.assertThrows(NbActionsMaxTourAtteintException.class,
+                () -> this.instance.jouerAction(pionJoueur,action5));
+    }
+
+    @Test
+    void prendreConnaissanceJoueursNonPresentMemeVille(){
+        // pionJoueur : Joueur qui va prendre
+        // joueur2 : Joueur qui va donner
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(chicago);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new PrendreConnaissance(joueur2);
+        Assertions.assertThrows(JoueursNonPresentMemeVilleException.class,
+                () -> this.instance.jouerAction(pionJoueur,action));
+    }
+
+    @Test
+    void prendreConnaissanceCarteVilleInexistanteDansDeckJoueur(){
+        // pionJoueur : Joueur qui va prendre
+        // joueur2 : Joueur qui va donner
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        PionJoueur joueur2 = new PionJoueur();
+        joueur2.setVilleActuelle(atlanta);
+        joueur2.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
+        IAction action = new PrendreConnaissance(joueur2);
+        Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.jouerAction(pionJoueur,action));
     }
 
 //=============================================================================================================================
@@ -628,9 +796,5 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(carteSubventionPublique);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, carteSubventionPublique));
     }
-
-
-
-
 
 }

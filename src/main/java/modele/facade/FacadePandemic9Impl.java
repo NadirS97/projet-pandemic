@@ -1,6 +1,7 @@
 package modele.facade;
 
 import modele.elements.Virus;
+import modele.elements.Ville;
 import modele.elements.actions.IAction;
 import modele.elements.Partie;
 import modele.elements.cartes.CarteEvenement;
@@ -12,7 +13,6 @@ import modele.elements.PionJoueur;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FacadePandemic9Impl implements FacadePandemic9 {
 
@@ -65,6 +65,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
             partie.joueurSuivant();
     }
+
     @Override
     public void jouerAction(PionJoueur joueurActuel, IAction action) throws Exception {
         joueurActuel.setAction(action);
@@ -91,5 +92,16 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     @Override
     public void propagation(PionJoueur joueurActuel) throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException {
         joueurActuel.getPlateau().initialiserPropagation();
+    }
+
+
+    @Override
+    public void repartiteurActionDeplacementAutrePion(PionJoueur joueurActuel, PionJoueur joueurCible, IAction action) throws Exception {
+        joueurActuel.setAction(action);
+        joueurActuel.repartiteurActionDeplacementAutrePion(joueurCible);
+    }
+
+    public void repartiteurDeplacementPion(PionJoueur joueurActuel,PionJoueur joueurCible, Ville villeDestination) throws AucunJoueurDansVilleDestinationException, AutorisationManquanteException {
+        joueurActuel.repartiteurDeplacementPion(joueurCible,villeDestination);
     }
 }

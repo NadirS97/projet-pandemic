@@ -178,7 +178,7 @@ public class Plateau {
 
     public Ville piocherCartePropagation(int index) {
         CartePropagation cartePropagation = piocheCartePropagation.remove(index);
-        defausseCartePropagation.add(cartePropagation);
+        defausserCartePropagation(cartePropagation);
         return villes.get(cartePropagation.getVilleCartePropagation().getNomVille());
     }
 
@@ -268,9 +268,7 @@ public class Plateau {
                         listeVillesVirusNonValide);
         donneesPlateauDTO.getVilles().forEach(villesDTO -> {
             Ville ville = new Ville(villesDTO.getNomVille(), villesDTO.getPopulationTotaleVille(), villesDTO.getPopulationKmCarreVille());
-            lesVirus.values().forEach(virus -> {
-                ville.getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubesInitialementPresentDansChaqueVille);
-            });
+            lesVirus.values().forEach(virus -> ville.getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubesInitialementPresentDansChaqueVille));
             ville.setCouleurVirusVille(villesDTO.getCouleurVirusVille());
             getVilles().put(villesDTO.getNomVille(), ville);
         });
@@ -281,19 +279,15 @@ public class Plateau {
         if (!listeVillesNonValide.isEmpty()) throw new VilleIntrouvableException(
                 "Une erreur vient de se produire, le nom des villes ci-joint ne sont pas corrects: " +
                         listeVillesNonValide);
-        donneesPlateauDTO.getVilles().forEach(villesDTO -> {
-            villes.get(villesDTO.getNomVille()).setVillesVoisines(villesDTO.getListeNomsVillesVoisines());
-        });
+        donneesPlateauDTO.getVilles().forEach(villesDTO -> villes.get(villesDTO.getNomVille()).setVillesVoisines(villesDTO.getListeNomsVillesVoisines()));
     }
 
     private List<String> listeVillesVoisinesNonValide(DonneesPlateauDTO donneesPlateauDTO) {
         List<String> listeVillesNonValide = new ArrayList<>();
-        donneesPlateauDTO.getVilles().forEach(villesDTO -> {
-            villesDTO.getListeNomsVillesVoisines().forEach(s -> {
-                if (!villes.containsKey(s))
-                    listeVillesNonValide.add(s);
-            });
-        });
+        donneesPlateauDTO.getVilles().forEach(villesDTO -> villesDTO.getListeNomsVillesVoisines().forEach(s -> {
+            if (!villes.containsKey(s))
+                listeVillesNonValide.add(s);
+        }));
         return listeVillesNonValide;
     }
 

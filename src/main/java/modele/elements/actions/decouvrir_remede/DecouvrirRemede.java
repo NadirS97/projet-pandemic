@@ -21,7 +21,7 @@ public class DecouvrirRemede implements IAction {
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
         if(!pionJoueur.getVilleActuelle().isStationDeRechercheVille())
             throw new VilleAvecAucuneStationDeRechercheException("Vous devez être sur une ville possédant une station de recherche afin d'exécuter cette action. Or, la ville actuelle n'en possède pas.");
-        if((pionJoueur.getNbMaxCarteVilleMemeCouleurDeckJoueur().getValue()>= DonneesVariablesStatiques.nbCartesMemeCouleurDecouvrirRemedeScientifique && pionJoueur.getRoleJoueur().getNomRole() == NomsRoles.SCIENTIFIQUE)
+        if((pionJoueur.getNbMaxCarteVilleMemeCouleurDeckJoueur().getValue()>= DonneesVariablesStatiques.nbCartesMemeCouleurDecouvrirRemedeScientifique && pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.SCIENTIFIQUE))
                 || pionJoueur.getNbMaxCarteVilleMemeCouleurDeckJoueur().getValue()>=DonneesVariablesStatiques.nbCartesMemeCouleurDecouvrirRemede) {
             String couleurVirus = pionJoueur.getNbMaxCarteVilleMemeCouleurDeckJoueur().getKey();
             Virus virus = pionJoueur.getPlateau().getLesVirus().get(couleurVirus);
