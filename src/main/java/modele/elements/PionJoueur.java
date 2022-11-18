@@ -110,7 +110,9 @@ public class PionJoueur {
         deckJoueur.remove(carteEvenement);
     }
 
-    public void piocherCartes() {
+    public void piocherCartes() throws PlusDeCarteJoueursException  {
+        if (plateau.getPiocheCarteJoueur().isEmpty())
+            throw new PlusDeCarteJoueursException();
         deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
         deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
     }

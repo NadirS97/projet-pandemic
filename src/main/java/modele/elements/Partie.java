@@ -2,6 +2,7 @@ package modele.elements;
 
 
 import lombok.Getter;
+import lombok.Setter;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
@@ -11,14 +12,17 @@ import javax.management.relation.Role;
 import java.util.*;
 
 @Getter
+@Setter
 public class Partie {
 
 //    Map<PionJoueur,CarteRole> joueurs;
     List<PionJoueur> joueurs;
+    int indexJoueur;
     List<Role> roles;
     Plateau plateau;
     int nbJoueurs;
     PionJoueur joueurActuel;
+
 
     public Partie(int nbJoueurs) throws Exception {
         if (nbJoueurs <= 0 || nbJoueurs > 4)
@@ -101,7 +105,21 @@ public class Partie {
         }
         System.out.println(joueurAvecPlusGrandeVille);
         joueurActuel = joueurAvecPlusGrandeVille;
+        indexJoueur = joueurs.indexOf(joueurActuel);
     }
+
+    public void joueurSuivant(){
+        indexJoueur++;
+        if (indexJoueur >= joueurs.size()) {
+            indexJoueur = 0;
+        }
+        joueurActuel = joueurs.get(indexJoueur);
+
+    }
+
+
+
+
 
 
 }

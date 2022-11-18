@@ -6,6 +6,8 @@ import modele.elements.cartes.CarteEvenement;
 import modele.exceptions.*;
 import modele.elements.PionJoueur;
 
+import java.util.List;
+
 public class FacadePandemic9Impl implements FacadePandemic9 {
 
 
@@ -18,23 +20,38 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
 
     @Override
+    public void jouerTour(List<IAction> listeAction) throws Exception, EchecDeLaPartieException {
+        for (IAction action : listeAction){
+            jouerAction(partie.getJoueurActuel(),action);
+        }
+        try {
+            piocherCartes(partie.getJoueurActuel());
+        }
+        catch (PlusDeCarteJoueursException e){
+            throw new EchecDeLaPartieException();
+        }
+        propagation(partie.getJoueurActuel());
+        partie.joueurSuivant();
+
+    }
+    @Override
     public void jouerAction(PionJoueur joueurActuel, IAction action) throws Exception {
         joueurActuel.setAction(action);
         joueurActuel.executerAction();
     }
 
     @Override
-    public void jouerEvent(PionJoueur joueurActuel, CarteEvenement carteEvenement) throws Exception {
-        joueurActuel.jouerCarteEvenement(carteEvenement);
+    public void jouerEvent(PionJoueur joueur, CarteEvenement carteEvenement) throws Exception {
+        joueur.jouerCarteEvenement(carteEvenement);
     }
 
     @Override
-    public void piocherCartes(PionJoueur joueur){
-        joueur.piocherCartes();
+    public void piocherCartes(PionJoueur joueurActuel) throws PlusDeCarteJoueursException {
+        joueurActuel.piocherCartes();
     }
 
     @Override
-    public void propagation(PionJoueur joueur) throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException {
-        joueur.getPlateau().initialiserPropagation();
+    public void propagation(PionJoueur joueurActuel) throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException {
+        joueurActuel.getPlateau().initialiserPropagation();
     }
 }

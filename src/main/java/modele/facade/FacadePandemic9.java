@@ -1,10 +1,11 @@
 package modele.facade;
 
-import modele.elements.Partie;
 import modele.elements.actions.IAction;
 import modele.elements.cartes.CarteEvenement;
 import modele.exceptions.*;
 import modele.elements.PionJoueur;
+
+import java.util.List;
 
 public interface FacadePandemic9 {
 
@@ -13,12 +14,15 @@ public interface FacadePandemic9 {
 
 
 
+
+    void jouerTour(List<IAction> listeAction) throws Exception, EchecDeLaPartieException;
+
     void jouerAction(PionJoueur joueurActuel, IAction action) throws Exception;
 
 
     void jouerEvent(PionJoueur joueurActuel, CarteEvenement carteEvenement) throws Exception;
 
-    void piocherCartes(PionJoueur joueur);
+    void piocherCartes(PionJoueur joueur) throws PlusDeCarteJoueursException;
 
     void propagation(PionJoueur joueur) throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException;
 }
