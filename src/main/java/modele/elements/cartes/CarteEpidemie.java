@@ -6,6 +6,7 @@ import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.Ville;
 import modele.exceptions.NbCubesAAjouterInvalideException;
+import modele.exceptions.PropagationImpossibleCarSpecialisteQuarantaineException;
 import modele.exceptions.VilleDejaEclosException;
 import modele.utils.DonneesVariablesStatiques;
 
@@ -22,7 +23,7 @@ public class CarteEpidemie extends CarteJoueur implements IEffet {
         });
     }
 
-    private void applicationEffetInfection(Plateau plateau) throws VilleDejaEclosException, NbCubesAAjouterInvalideException {
+    private void applicationEffetInfection(Plateau plateau) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
         List<CartePropagation> piocheCartePropagation = plateau.getPiocheCartePropagation();
         Ville ville = plateau.piocherCartePropagation(piocheCartePropagation.size() - 1);
         plateau.propagationMaladie(ville, DonneesVariablesStatiques.nbCubesEffetInfectionCarteEpidemie);

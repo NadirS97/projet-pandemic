@@ -24,7 +24,7 @@ public interface FacadePandemic9 {
 
     void piocherCartes(PionJoueur joueur) throws PlusDeCarteJoueursException, TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException;
 
-    void propagation(PionJoueur joueur) throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException;
+    void propagation(PionJoueur joueur) throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException;
 
     void repartiteurActionDeplacementAutrePion(PionJoueur joueurActuel, PionJoueur joueurCible, IAction action) throws Exception;
 }

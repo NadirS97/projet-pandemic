@@ -356,6 +356,7 @@ class FacadePandemic9ImplTest {
         PionJoueur joueur2 = new PionJoueur();
         joueur2.setVilleActuelle(atlanta);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        joueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.BLANC));
         IAction donnerConaissance = new DonnerConnaissance(joueur2);
 
         assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,donnerConaissance));
@@ -716,13 +717,7 @@ class FacadePandemic9ImplTest {
         assertEquals(tailleDeckInitial+2,pionJoueur.getDeckJoueur().size());
     }
 
-    @Test
-    void propagation()  {
-        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
-        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
-        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
-        Assertions.assertEquals(3,this.pionJoueur.getPlateau().getVilles().get("Atlanta").getNbCubeVirusVille().get(plateau.getLesVirus().get("BLEU")));
-    }
+
 
 
 

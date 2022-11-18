@@ -1,4 +1,4 @@
 package modele.exceptions;
 
-public class TropDeCarteEnMainException extends Throwable {
+public class TropDeCarteEnMainException extends Exception {
 }
