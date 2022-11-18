@@ -1,11 +1,20 @@
 package modele.elements.cartes.roles;
 
+import lombok.Getter;
 import modele.elements.PionJoueur;
+import modele.elements.cartes.CarteEvenement;
+import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
+@Getter
 public class CartePlanificateurDUrgence extends CarteRole {
+
+
+    CarteEvenement carteEvenementEntrepose;
+
+
 
     public CartePlanificateurDUrgence(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
@@ -19,5 +28,10 @@ public class CartePlanificateurDUrgence extends CarteRole {
 
     @Override
     public void execEffet(PionJoueur pionJoueur) throws Exception {
+
+    }
+
+    public void setCarteEvenementEntrepose(CarteEvenement carteEvenementEntrepose) {
+        this.carteEvenementEntrepose = carteEvenementEntrepose;
     }
 }
