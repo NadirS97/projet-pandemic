@@ -29,6 +29,9 @@ public class CartePlanificateurDUrgence extends CarteRole {
     @Override
     public void execEffet(PionJoueur pionJoueur) throws Exception {
 
+        // on joue l'effet de la carte entreposé et on la retire de la partie
+        carteEvenementEntrepose.execEffet(pionJoueur);
+        carteEvenementEntrepose = null;
     }
 
     public void setCarteEvenementEntrepose(CarteEvenement carteEvenementEntrepose) {

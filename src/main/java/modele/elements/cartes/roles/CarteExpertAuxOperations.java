@@ -20,5 +20,6 @@ public class CarteExpertAuxOperations extends CarteRole {
     @Override
     public void execEffet(PionJoueur pionJoueur) throws Exception {
 
+
     }
 }

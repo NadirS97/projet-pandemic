@@ -26,6 +26,7 @@ public class EntreposerEvenementRolePlanificateur implements IAction {
             if (carteJoueur instanceof CarteEvenement)
                 if (carteJoueur.equals(carteEvenementChoisis)) {
                    carteEvenementEntrepose = carteEvenementChoisis;
+                   pionJoueur.getPlateau().getDefausseCarteJoueur().remove(carteEvenementChoisis);
                 }
 
         if (carteEvenementEntrepose == null)
