@@ -256,6 +256,7 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionConstruireUneStationCarteVilleInexistanteDansDeckJoueur(){
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
         IAction action = new ConstruireUneStation();
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));

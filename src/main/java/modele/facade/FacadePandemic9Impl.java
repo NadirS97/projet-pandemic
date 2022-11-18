@@ -1,5 +1,6 @@
 package modele.facade;
 
+import modele.elements.Ville;
 import modele.elements.actions.IAction;
 import modele.elements.Partie;
 import modele.elements.cartes.CarteEvenement;
@@ -36,6 +37,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         joueurActuel.executerAction();
     }
 
+
     @Override
     public void jouerEvent(PionJoueur joueur, CarteEvenement carteEvenement) throws Exception {
 
@@ -56,5 +58,16 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     @Override
     public void propagation(PionJoueur joueurActuel) throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException {
         joueurActuel.getPlateau().initialiserPropagation();
+    }
+
+
+    @Override
+    public void repartiteurActionDeplacementAutrePion(PionJoueur joueurActuel, PionJoueur joueurCible, IAction action) throws Exception {
+        joueurActuel.setAction(action);
+        joueurActuel.repartiteurActionDeplacementAutrePion(joueurCible);
+    }
+
+    public void repartiteurDeplacementPion(PionJoueur joueurActuel,PionJoueur joueurCible, Ville villeDestination) throws AucunJoueurDansVilleDestinationException, AutorisationManquanteException {
+        joueurActuel.repartiteurDeplacementPion(joueurCible,villeDestination);
     }
 }

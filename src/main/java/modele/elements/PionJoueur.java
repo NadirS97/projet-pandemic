@@ -3,6 +3,7 @@ package modele.elements;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import modele.elements.actions.Deplacement;
 import modele.elements.actions.IAction;
 import modele.elements.cartes.*;
 import modele.exceptions.*;
@@ -26,7 +27,9 @@ public class PionJoueur {
     private List<CarteJoueur> deckJoueur;
     private Ville villeActuelle;
     private Plateau plateau;
+    private Partie partie;
     private boolean permissionPontAerien;
+    private boolean autorisationDeplacementRepartiteur;
     private List<CartePropagation> mainAReorganiser = new ArrayList<>();
 
     public PionJoueur(String pseudoJoueur, Plateau plateau) {
@@ -35,6 +38,7 @@ public class PionJoueur {
         this.deckJoueur = new ArrayList<>();
         this.nbActions = DonneesVariablesStatiques.nbActionsMaxParTour;
         this.roleJoueur = plateau.piocherCarteRole();
+        this.autorisationDeplacementRepartiteur = false;
     }
 
     public PionJoueur(Plateau plateau) {
@@ -42,7 +46,10 @@ public class PionJoueur {
         this.deckJoueur = new ArrayList<>();
         this.nbActions = DonneesVariablesStatiques.nbActionsMaxParTour;
         this.roleJoueur = plateau.piocherCarteRole();
+        this.autorisationDeplacementRepartiteur = false;
     }
+
+
 
     public PionJoueur(){
         this.deckJoueur = new ArrayList<>();
@@ -144,6 +151,32 @@ public class PionJoueur {
     public void executerAction() throws Exception {
         this.action.execAction(this);
         this.nbActions--;
+    }
+
+    public void repartiteurActionDeplacementAutrePion(PionJoueur joueurCible) throws Exception {
+        if (!this.autorisationDeplacementRepartiteur)
+            throw new AutorisationManquanteException();
+        if (this.action instanceof Deplacement){
+            joueurCible.setAction(action);
+            joueurCible.executerAction();
+            this.nbActions--;
+        }
+        throw new ActionNonDeplacementException();
+
+    }
+
+    public void repartiteurDeplacementPion(PionJoueur joueurCible,Ville villeDestination) throws AutorisationManquanteException, AucunJoueurDansVilleDestinationException {
+        if (!this.autorisationDeplacementRepartiteur)
+            throw new AutorisationManquanteException();
+
+        // verif si la ville destination possède un joueur
+        for (PionJoueur pionJoueur : partie.joueurs){
+            if (pionJoueur.getVilleActuelle().equals(villeDestination)){
+                joueurCible.setVilleActuelle(villeDestination);
+                return;
+            }
+        }
+        throw new AucunJoueurDansVilleDestinationException();
     }
 
     @Override

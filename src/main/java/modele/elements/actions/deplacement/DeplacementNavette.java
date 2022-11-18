@@ -3,13 +3,14 @@ package modele.elements.actions.deplacement;
 import modele.elements.PionJoueur;
 
 import modele.elements.Ville;
+import modele.elements.actions.Deplacement;
 import modele.elements.actions.IAction;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.exceptions.VilleDestinationEstVilleActuelleException;
 
-public class DeplacementNavette implements IAction {
+public class DeplacementNavette implements IAction , Deplacement {
 
     private Ville villeDestination;
 
