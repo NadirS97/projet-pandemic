@@ -110,11 +110,26 @@ public class PionJoueur {
         deckJoueur.remove(carteEvenement);
     }
 
-    public void piocherCartes() throws PlusDeCarteJoueursException  {
+    public void piocherCartes() throws  TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException {
         if (plateau.getPiocheCarteJoueur().isEmpty())
-            throw new PlusDeCarteJoueursException();
+            throw new EchecDeLaPartiePlusDeCarteJoueurException();
         deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
         deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
+        if (deckJoueur.size() >= 7){
+            throw new TropDeCarteEnMainException();
+        }
+    }
+
+    public void defausserListeCarteJoueurEnTrop(List<CarteJoueur> carteJoueurs) throws CarteJoueurInexistanteDansDeckException {
+        for (CarteJoueur carteJoueurDefausser : carteJoueurs){
+            defausserCarteJoueur(carteJoueurDefausser);
+        }
+    }
+    public void defausserCarteJoueur(CarteJoueur carteJoueur) throws CarteJoueurInexistanteDansDeckException {
+        if (!deckJoueur.contains(carteJoueur))
+            throw new CarteJoueurInexistanteDansDeckException();
+        deckJoueur.remove(carteJoueur);
+        plateau.getDefausseCarteJoueur().add(carteJoueur);
     }
 
 

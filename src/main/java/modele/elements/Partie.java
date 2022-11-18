@@ -103,7 +103,7 @@ public class Partie {
                 }
             }
         }
-        System.out.println(joueurAvecPlusGrandeVille);
+
         joueurActuel = joueurAvecPlusGrandeVille;
         indexJoueur = joueurs.indexOf(joueurActuel);
     }

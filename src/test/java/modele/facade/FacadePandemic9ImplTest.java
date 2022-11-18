@@ -543,7 +543,7 @@ class FacadePandemic9ImplTest {
     void piocherCartes(){
 
         int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
-        instance.piocherCartes(pionJoueur);
+        Assertions.assertDoesNotThrow(() -> this.instance.piocherCartes(pionJoueur));
         assertEquals(tailleDeckInitial+2,pionJoueur.getDeckJoueur().size());
     }
 

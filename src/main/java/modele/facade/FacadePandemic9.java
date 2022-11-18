@@ -15,14 +15,14 @@ public interface FacadePandemic9 {
 
 
 
-    void jouerTour(List<IAction> listeAction) throws Exception, EchecDeLaPartieException;
+    void jouerTour(List<IAction> listeAction) throws Exception, EchecDeLaPartieException, TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException;
 
     void jouerAction(PionJoueur joueurActuel, IAction action) throws Exception;
 
 
     void jouerEvent(PionJoueur joueurActuel, CarteEvenement carteEvenement) throws Exception;
 
-    void piocherCartes(PionJoueur joueur) throws PlusDeCarteJoueursException;
+    void piocherCartes(PionJoueur joueur) throws PlusDeCarteJoueursException, TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException;
 
     void propagation(PionJoueur joueur) throws VilleDejaEclosException, NuitTranquilleException, NbCubesAAjouterInvalideException;
 }
