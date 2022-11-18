@@ -5,6 +5,7 @@ import modele.elements.Plateau;
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
 import modele.elements.cartes.CarteJoueur;
+import modele.elements.enums.NomsRoles;
 import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VilleActuellePossedeDejaUneStationDeRechercheException;
@@ -29,16 +30,22 @@ public class ConstruireUneStation implements IAction {
         Plateau plateau = pionJoueur.getPlateau();
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
+        // construire une station de recherche quand la limite n'a pas été atteinte
         if (plateau.getNbStationsDeRechercheConstruites() < DonneesVariablesStatiques.nbStationsRechercheMaxAutorise) {
-            if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(villeActuelle))
-                throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeActuelle.getNomVille() + " n'est pas présente dans votre deck.");
-            if (plateau.isVilleStationDeRecherche(villeActuelle)) {
+            if (plateau.isVilleStationDeRecherche(villeActuelle))
                 throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.getNomVille() + " possède déjà une station de recherche.");
-            } else {
+            // SI JOUEUR = EXPERT AUX OPERATIONS, PAS DE DE DE DEFAUSSE NECESSAIRE
+            if (pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.EXPERT_AUX_OPERATIONS)){
                 plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
             }
-            CarteJoueur carteJoueur = pionJoueur.defausseCarteVilleDeDeckJoueur(villeActuelle);
-            pionJoueur.getPlateau().defausserCarteJoueur(carteJoueur);
+            else {
+                if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(villeActuelle))
+                    throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeActuelle.getNomVille() + " n'est pas présente dans votre deck.");
+                CarteJoueur carteJoueur = pionJoueur.defausseCarteVilleDeDeckJoueur(villeActuelle);
+                pionJoueur.getPlateau().defausserCarteJoueur(carteJoueur);
+                plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
+            }
+            // limite atteinte, on ne peut pas construire en revanche on peut déplacer la station
         } else {
             if (plateau.isVilleStationDeRecherche(villeActuelle))
                 throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.getNomVille() + " possède déjà une station de recherche.");

@@ -1,6 +1,7 @@
 package modele.elements.actions.partager_connaissance;
 
 import modele.elements.PionJoueur;
+import modele.elements.Ville;
 import modele.elements.actions.IAction;
 import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
 import modele.exceptions.JoueursNonPresentMemeVilleException;
