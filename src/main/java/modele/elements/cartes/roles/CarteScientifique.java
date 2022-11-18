@@ -13,8 +13,6 @@ public class CarteScientifique extends CarteRole {
         super.setDescriptionRole("Vous n'avez besoin que de 4 cartes de la même couleur pour découvrir un remède.");
     }
 
-
-
     @Override
     public void execEffet(PionJoueur pionJoueur) throws Exception {
     }
