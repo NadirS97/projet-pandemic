@@ -21,6 +21,7 @@ public class Partie {
     List<Role> roles;
     Plateau plateau;
     int nbJoueurs;
+    boolean victoire;
     PionJoueur joueurActuel;
 
 
@@ -31,6 +32,7 @@ public class Partie {
        this.plateau = new Plateau();
        this.nbJoueurs = nbJoueurs;
        joueurs = new ArrayList<>();
+       victoire = false;
 
        ajoutJoueursDansPartie(nbJoueurs);
        miseEnPlaceJeuCartePropagation();
@@ -118,6 +120,10 @@ public class Partie {
 
     }
 
+
+    public boolean isVictoire(){
+        return plateau.isToutLesRemedeDecouvert();
+    }
 
 
 

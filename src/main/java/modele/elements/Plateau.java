@@ -345,6 +345,15 @@ public class Plateau {
 
     }
 
+    public boolean isToutLesRemedeDecouvert(){
+        boolean toutLesRemedeDecouvert = true;
+        for (Virus virus : lesVirus.values()){
+            if (virus.getEtatVirus().equals(EtatVirus.NON_TRAITE))
+                toutLesRemedeDecouvert = false;
+        }
+        return toutLesRemedeDecouvert;
+    }
+
    /* public void avancerMarqueurVitesseEclosion(){
         marqueurVitesseEclosion++;
 

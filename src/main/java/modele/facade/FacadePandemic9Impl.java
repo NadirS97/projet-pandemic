@@ -32,39 +32,14 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
             piocherCartes(partie.getJoueurActuel());
             propagation(partie.getJoueurActuel());
 
-            List<Virus> virusDejaGueris = partie.getPlateau()
-                    .getLesVirus()
-                    .values()
-                    .stream()
-                    .filter(virus -> virus.getEtatVirus().equals(EtatVirus.TRAITE))
-                    .toList();
-
-            virusDejaGueris.forEach(partie
-                    .getJoueurs()
-                    .stream()
-                    .filter(pionJoueur -> pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN))
-                    .findFirst()
-                    .orElseThrow()
-                    .getVilleActuelle()
-                    .getNbCubeVirusVille()
-                    .keySet()::remove);
-
-            virusDejaGueris.forEach(v -> {
-                HashMap<String, Virus> listeVaccinationContreVirus = null;
-                listeVaccinationContreVirus = partie.getJoueurs()
-                        .stream()
-                        .filter(pionJoueur -> pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN))
-                        .findFirst()
-                        .orElseThrow()
-                        .getVilleActuelle()
-                        .getListeVaccinationContreVirus();
-
-                if (!listeVaccinationContreVirus.containsKey(v.getVirusCouleur()))
-                    listeVaccinationContreVirus.put(v.getVirusCouleur(), v);
-            });
+            effetCarteMedecin();
 
             partie.joueurSuivant();
+
+           partie.isVictoire();
     }
+
+
 
     @Override
     public void jouerAction(PionJoueur joueurActuel, IAction action) throws Exception {
@@ -103,5 +78,37 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     public void repartiteurDeplacementPion(PionJoueur joueurActuel,PionJoueur joueurCible, Ville villeDestination) throws AucunJoueurDansVilleDestinationException, AutorisationManquanteException {
         joueurActuel.repartiteurDeplacementPion(joueurCible,villeDestination);
+    }
+    public void effetCarteMedecin(){
+        List<Virus> virusDejaGueris = partie.getPlateau()
+                .getLesVirus()
+                .values()
+                .stream()
+                .filter(virus -> virus.getEtatVirus().equals(EtatVirus.TRAITE))
+                .toList();
+
+        virusDejaGueris.forEach(partie
+                .getJoueurs()
+                .stream()
+                .filter(pionJoueur -> pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN))
+                .findFirst()
+                .orElseThrow()
+                .getVilleActuelle()
+                .getNbCubeVirusVille()
+                .keySet()::remove);
+
+        virusDejaGueris.forEach(v -> {
+            HashMap<String, Virus> listeVaccinationContreVirus = null;
+            listeVaccinationContreVirus = partie.getJoueurs()
+                    .stream()
+                    .filter(pionJoueur -> pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN))
+                    .findFirst()
+                    .orElseThrow()
+                    .getVilleActuelle()
+                    .getListeVaccinationContreVirus();
+
+            if (!listeVaccinationContreVirus.containsKey(v.getVirusCouleur()))
+                listeVaccinationContreVirus.put(v.getVirusCouleur(), v);
+        });
     }
 }
