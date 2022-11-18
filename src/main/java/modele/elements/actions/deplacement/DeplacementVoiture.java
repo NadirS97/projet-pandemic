@@ -1,14 +1,13 @@
 package modele.elements.actions.deplacement;
 
+import modele.elements.actions.Deplacement;
 import modele.elements.actions.IAction;
 import modele.elements.PionJoueur;
 import modele.elements.Ville;
-import modele.exceptions.NbActionsMaxTourAtteintException;
-import modele.exceptions.VilleDestinationEstVilleActuelleException;
-import modele.exceptions.VilleIntrouvableException;
-import modele.exceptions.VilleNonVoisineException;
+import modele.elements.enums.NomsRoles;
+import modele.exceptions.*;
 
-public class DeplacementVoiture implements IAction {
+public class DeplacementVoiture implements IAction, Deplacement {
 
     private Ville villeDestination;
 
@@ -27,6 +26,15 @@ public class DeplacementVoiture implements IAction {
             throw new VilleIntrouvableException(villeDestination.getNomVille() + " non trouvé");
         if (!pionJoueur.getPlateau().isVilleVoisine(pionJoueur.getVilleActuelle(), villeDestination))
             throw new VilleNonVoisineException();
+         if (pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.SPECIALISTE_EN_MISE_EN_QUARANTAINE)) {
+             conditionRoleAffectantDeplacement(pionJoueur, pionJoueur.getVilleActuelle(), villeDestination);
+         }
         pionJoueur.setVilleActuelle(villeDestination);
+    }
+
+    @Override
+    public void conditionRoleAffectantDeplacement(PionJoueur pionJoueur, Ville villeDepart, Ville villeArrive) throws VilleIntrouvableException {
+        pionJoueur.getPlateau().specialisteQuarantainePartVille(villeDepart);
+        pionJoueur.getPlateau().specialisteQuarantaineArriveVille(villeArrive);
     }
 }

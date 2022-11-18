@@ -3,14 +3,16 @@ package modele.elements.actions.deplacement;
 import modele.elements.PionJoueur;
 
 import modele.elements.Ville;
+import modele.elements.actions.Deplacement;
 import modele.elements.actions.IAction;
 import modele.elements.cartes.CarteJoueur;
+import modele.elements.enums.NomsRoles;
 import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VilleDestinationEstVilleActuelleException;
 import modele.exceptions.VilleIntrouvableException;
 
-public class DeplacementVolDirect implements IAction {
+public class DeplacementVolDirect implements IAction, Deplacement {
 
     private Ville villeDestination;
 
@@ -28,8 +30,17 @@ public class DeplacementVolDirect implements IAction {
             throw new VilleIntrouvableException(villeDestination.getNomVille()+" non trouvé");
         if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(villeDestination))
             throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeDestination.getNomVille() + " n'est pas présente dans votre main.");
+        if (pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.SPECIALISTE_EN_MISE_EN_QUARANTAINE)) {
+            conditionRoleAffectantDeplacement(pionJoueur, pionJoueur.getVilleActuelle(), villeDestination);
+        }
         CarteJoueur carteVille = pionJoueur.defausseCarteVilleDeDeckJoueur(villeDestination);
         pionJoueur.getPlateau().defausserCarteJoueur(carteVille);
         pionJoueur.setVilleActuelle(villeDestination);
+    }
+
+    @Override
+    public void conditionRoleAffectantDeplacement(PionJoueur pionJoueur, Ville villeDepart, Ville villeArrive) throws VilleIntrouvableException {
+        pionJoueur.getPlateau().specialisteQuarantainePartVille(villeDepart);
+        pionJoueur.getPlateau().specialisteQuarantaineArriveVille(villeArrive);
     }
 }

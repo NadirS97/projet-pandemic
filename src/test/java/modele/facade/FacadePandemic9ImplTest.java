@@ -297,8 +297,9 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionDeplacementNavetteVilleAvecAucuneStationDeRechercheVilleActuelle() {
-        atlanta.setStationDeRechercheVille(false);
-        alger.setStationDeRechercheVille(true);
+        atlanta.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(false);
+        pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.BLANC));
         IAction action = new DeplacementNavette(alger);
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));

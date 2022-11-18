@@ -315,6 +315,26 @@ public class Plateau {
         return marqueurVitessePropagation;
     }
 
+    public void specialisteQuarantaineArriveVille(Ville ville) throws VilleIntrouvableException {
+
+        if (!isVille(ville.getNomVille()))
+            throw new VilleIntrouvableException("");
+        villes.get(ville.getNomVille()).setSpeicalisteMiseEnQuarantainePresent(true);
+        for (String sVilleVoisine : ville.getVillesVoisinesVille()){
+            villes.get(sVilleVoisine).setSpeicalisteMiseEnQuarantainePresent(true);
+        }
+    }
+
+    public void specialisteQuarantainePartVille(Ville ville) throws VilleIntrouvableException {
+
+        if (!isVille(ville.getNomVille()))
+            throw new VilleIntrouvableException("");
+        villes.get(ville.getNomVille()).setSpeicalisteMiseEnQuarantainePresent(false);
+        for (String sVilleVoisine : ville.getVillesVoisinesVille()){
+            villes.get(sVilleVoisine).setSpeicalisteMiseEnQuarantainePresent(false);
+        }
+    }
+
     public void avancerMarqueurVitesse(){
         marqueurVitessePropagation++;
 

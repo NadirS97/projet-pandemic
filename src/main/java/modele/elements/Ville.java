@@ -7,6 +7,7 @@ import java.util.*;
 
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 public class Ville {
 
@@ -18,6 +19,7 @@ public class Ville {
     private boolean stationDeRechercheVille = false;
     private boolean eclosionVille = false;
     private String couleurVirusVille;
+    private boolean speicalisteMiseEnQuarantainePresent;
 
     private HashMap<String, Virus> listeVaccinationContreVirus;
 
@@ -50,6 +52,8 @@ public class Ville {
         }
         return s + "]";
     }
+
+
 
     public void setEclosionVille(boolean eclosionVille) {
         this.eclosionVille = eclosionVille;
