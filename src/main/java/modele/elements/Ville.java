@@ -12,12 +12,14 @@ public class Ville {
 
     private String nomVille;
     private List<String> villesVoisinesVille;
-    private Map<Virus,Integer> nbCubeVirusVille;
+    private Map<Virus, Integer> nbCubeVirusVille;
     private int nbPopulationTotaleVille;
     private int nbPopulationKmCarreeVille;
     private boolean stationDeRechercheVille = false;
     private boolean eclosionVille = false;
     private String couleurVirusVille;
+
+    private HashMap<String, Virus> listeVaccinationContreVirus;
 
 
     public Ville(String nomVille) {
@@ -30,7 +32,7 @@ public class Ville {
         this.nbPopulationTotaleVille = nbPopulationTotaleVille;
         this.nbPopulationKmCarreeVille = nbPopulationKmCarreeVille;
         this.nbCubeVirusVille = new HashMap<>();
-
+        this.listeVaccinationContreVirus = new HashMap<>();
     }
 
     public void setVillesVoisines(List<String> villesVoisines) {

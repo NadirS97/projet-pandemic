@@ -19,5 +19,6 @@ public class CarteMedecin extends CarteRole  {
 
     @Override
     public void execEffet(PionJoueur pionJoueur) throws Exception {
+
     }
 }

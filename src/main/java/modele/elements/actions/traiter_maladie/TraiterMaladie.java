@@ -7,6 +7,7 @@ import modele.elements.Ville;
 import modele.elements.Virus;
 import modele.elements.actions.IAction;
 import modele.elements.enums.EtatVirus;
+import modele.elements.enums.NomsRoles;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VirusDejaEradiqueException;
 import modele.exceptions.VirusInexistantDansLaVilleActuelException;
@@ -33,10 +34,14 @@ public class TraiterMaladie implements IAction {
         if (choixVirus.getEtatVirus().equals(EtatVirus.ERADIQUE))
             throw new VirusDejaEradiqueException();
         if (choixVirus.getEtatVirus().equals(EtatVirus.NON_TRAITE)) {
-            pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus,
-                    nbCubesVirusVilleActuel-1);
-
-
+            if (pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN)) {
+                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus,
+                        0);
+            }
+            else {
+                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus,
+                        nbCubesVirusVilleActuel-1);
+            }
         }
         //  cas maladie traite : retire tout cube
         //  cas maladie traite et dernier cube d'une couleur suppr, il faut check si parmis toutes les villes il n'ya plus aucun virus de cette couleur
