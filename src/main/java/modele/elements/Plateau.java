@@ -61,6 +61,8 @@ public class Plateau {
         initialisationPlateau();
     }
 
+
+
     public Ville getVilleByName(String name) {
         return villes.get(name);
     }

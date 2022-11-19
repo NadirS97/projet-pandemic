@@ -13,7 +13,11 @@ public interface FacadePandemic9 {
     // l'id retourné pourra être utiliser par un autre utiliseur pour rejoindre sa partie
 
 
+    void creerPartieTroisJoueurs() throws Exception;
 
+    void creerPartieDeuxJoueurs() throws Exception;
+
+    void creerPartieQuatreJoueurs() throws Exception;
 
     void jouerTour(List<IAction> listeAction) throws Exception, EchecDeLaPartieException, TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException;
 

@@ -16,34 +16,54 @@ import java.util.*;
 public class Partie {
 
 //    Map<PionJoueur,CarteRole> joueurs;
-    List<PionJoueur> joueurs;
+
+    private List<PionJoueur> joueurs;
     int indexJoueur;
-    List<Role> roles;
-    Plateau plateau;
-    int nbJoueurs;
-    boolean victoire;
-    PionJoueur joueurActuel;
+    private List<Role> roles;
+    private Plateau plateau;
+    private boolean victoire;
+    private PionJoueur joueurActuel;
 
 
-    public Partie(int nbJoueurs) throws Exception {
-        if (nbJoueurs <= 0 || nbJoueurs > 4)
-            throw new NbJoueursPartieIncorrectException();
+    public Partie() throws Exception {
+
         // marqueur eclosion et propagation placé à 0 lors de la création du plateau
+        // lors de la création du plateau, toute la créations des cartes du jeu se font
        this.plateau = new Plateau();
-       this.nbJoueurs = nbJoueurs;
        joueurs = new ArrayList<>();
        victoire = false;
-
-       ajoutJoueursDansPartie(nbJoueurs);
-       miseEnPlaceJeuCartePropagation();
-       distributionCarteJoueurs();
-       determinerQuiCommencePartie();
     }
 
 
+    public static Partie creerPartieDeuxJoueurs() throws Exception {
+        Partie partie = new Partie();
+        partie.ajoutJoueursDansPartie(2);
+        partie.distributionCarteJoueurs(4);
+        partie.miseEnPlaceJeuCartePropagation();
+        partie.determinerQuiCommencePartie();
+        return partie;
+    }
+
+    public static Partie creerPartieTroisJoueurs() throws Exception {
+        Partie partie = new Partie();
+        partie.ajoutJoueursDansPartie(3);
+        partie.distributionCarteJoueurs(3);
+        partie.miseEnPlaceJeuCartePropagation();
+        partie.determinerQuiCommencePartie();
+        return partie;
+    }
+
+    public static Partie creerPartieQuatreJoueurs() throws Exception {
+        Partie partie = new Partie();
+        partie.ajoutJoueursDansPartie(4);
+        partie.distributionCarteJoueurs(2);
+        partie.miseEnPlaceJeuCartePropagation();
+        partie.determinerQuiCommencePartie();
+        return partie;
+    }
     private void ajoutJoueursDansPartie(int nbJoueurs){
         for (int i = 0 ; i < nbJoueurs ; i++){
-            joueurs.add(new PionJoueur(plateau));
+            joueurs.add(new PionJoueur(this));
         }
     }
 
@@ -79,9 +99,9 @@ public class Partie {
      * alors 4 cartes pour une partie à 2 joueurs, 3 cartes pour une partie à 3 joueurs ou 2 cartes
      * pour une partie à 4 joueurs.
      */
-    private void distributionCarteJoueurs(){
+    private void distributionCarteJoueurs(int nbCartesDistribue){
         for (PionJoueur pionJoueur : joueurs){
-            for (int i = 0 ; i < nbJoueurs ; i++){
+            for (int i = 0 ; i < nbCartesDistribue ; i++){
                 pionJoueur.getDeckJoueur().add(plateau.getPiocheCarteJoueur().remove(0));
             }
         }

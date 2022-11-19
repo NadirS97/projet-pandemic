@@ -18,11 +18,19 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     Partie partie;
 
-    public FacadePandemic9Impl(int nbJoueurs) throws Exception {
-        partie = new Partie(nbJoueurs);
+
+    @Override
+    public void creerPartieDeuxJoueurs() throws Exception {
+        partie = Partie.creerPartieDeuxJoueurs();
     }
-
-
+    @Override
+    public void creerPartieTroisJoueurs() throws Exception {
+        partie = Partie.creerPartieTroisJoueurs();
+    }
+    @Override
+    public void creerPartieQuatreJoueurs() throws Exception {
+        partie = Partie.creerPartieQuatreJoueurs();
+    }
 
     @Override
     public void jouerTour(List<IAction> listeAction) throws Exception, TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException {
