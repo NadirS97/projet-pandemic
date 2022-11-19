@@ -1,19 +1,16 @@
 package modele.facade;
 
-import modele.elements.Virus;
+
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
 import modele.elements.Partie;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteJoueur;
-import modele.elements.cartes.IEffet;
-import modele.elements.cartes.roles.CarteMedecin;
-import modele.elements.enums.EtatVirus;
-import modele.elements.enums.NomsRoles;
+
 import modele.exceptions.*;
 import modele.elements.PionJoueur;
 
-import java.util.HashMap;
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class FacadePandemic9Impl implements FacadePandemic9 {

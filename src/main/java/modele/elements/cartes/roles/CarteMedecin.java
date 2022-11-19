@@ -20,9 +20,4 @@ public class CarteMedecin extends CarteRole  {
                         "ville où vous êtes retirez automatiquement tous les cubes de la couleur d'une maladie guérie " +
                         "(et empêchez d'autres cubes d'une maladie guérie d'y être placés).");
     }
-
-    @Override
-    public void execEffet(PionJoueur pionJoueur) throws Exception {
-
-    }
 }

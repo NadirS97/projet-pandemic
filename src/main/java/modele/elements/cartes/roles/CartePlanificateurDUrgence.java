@@ -8,9 +8,7 @@ import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.IEffet;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
-import modele.exceptions.NbCubesAAjouterInvalideException;
-import modele.exceptions.PropagationImpossibleCarSpecialisteQuarantaineException;
-import modele.exceptions.VilleDejaEclosException;
+import modele.exceptions.*;
 
 @Getter
 public class CartePlanificateurDUrgence extends CarteRole implements IEffet {
@@ -31,7 +29,7 @@ public class CartePlanificateurDUrgence extends CarteRole implements IEffet {
 
 
 
-    public void execEffet(PionJoueur pionJoueur) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
+    public void execEffet(PionJoueur pionJoueur) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, PermissionNonAccordeException, CartePropagationNotInDefausseException {
 
         // on joue l'effet de la carte entreposé et on la retire de la partie
         carteEvenementEntrepose.execEffet(pionJoueur);
