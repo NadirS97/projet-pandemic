@@ -6,6 +6,8 @@ import lombok.ToString;
 import modele.elements.actions.Deplacement;
 import modele.elements.actions.IAction;
 import modele.elements.cartes.*;
+import modele.elements.enums.EtatVirus;
+import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
 

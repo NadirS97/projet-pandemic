@@ -6,6 +6,8 @@ import modele.elements.actions.IAction;
 import modele.elements.Partie;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteJoueur;
+import modele.elements.cartes.IEffet;
+import modele.elements.cartes.roles.CarteMedecin;
 import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
@@ -17,7 +19,6 @@ import java.util.List;
 public class FacadePandemic9Impl implements FacadePandemic9 {
 
     Partie partie;
-
 
     @Override
     public void creerPartieDeuxJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
@@ -40,10 +41,11 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
             piocherCartes(partie.getJoueurActuel());
             propagation(partie.getJoueurActuel());
 
+        if (partie.presenceMedecin())
+            partie.effetCarteMedecin();
 
-            partie.joueurSuivant();
-
-           partie.isVictoire();
+        partie.joueurSuivant();
+        partie.isVictoire();
     }
 
 

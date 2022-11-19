@@ -4,8 +4,9 @@ package modele.elements;
 import lombok.Getter;
 import lombok.Setter;
 import modele.elements.cartes.CarteJoueur;
-import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
+import modele.elements.enums.EtatVirus;
+import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 
 import javax.management.relation.Role;
@@ -141,13 +142,44 @@ public class Partie {
 
     }
 
-
     public boolean isVictoire(){
         return plateau.isToutLesRemedeDecouvert();
     }
 
+    public void effetCarteMedecin() {
+        List<Virus> virusDejaGueris = this.getPlateau()
+                .getLesVirus()
+                .values()
+                .stream()
+                .filter(virus -> virus.getEtatVirus().equals(EtatVirus.TRAITE))
+                .toList();
 
+        Optional<PionJoueur> medecin = this.getJoueurs()
+                .stream()
+                .filter(joueur -> joueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN))
+                .findFirst();
 
+        if (medecin.isPresent()) {
+            virusDejaGueris.forEach(medecin
+                    .get()
+                    .getVilleActuelle()
+                    .getNbCubeVirusVille()
+                    .keySet()::remove);
 
+            virusDejaGueris.forEach(v -> {
+                HashMap<String, Virus> listeVaccinationContreVirus = null;
+                listeVaccinationContreVirus = medecin
+                        .get()
+                        .getVilleActuelle()
+                        .getListeVaccinationContreVirus();
 
+                if (!listeVaccinationContreVirus.containsKey(v.getVirusCouleur()))
+                    listeVaccinationContreVirus.put(v.getVirusCouleur(), v);
+            });
+        }
+    }
+
+    public boolean presenceMedecin() {
+        return joueurs.stream().anyMatch(joueur -> joueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN));
+    }
 }
