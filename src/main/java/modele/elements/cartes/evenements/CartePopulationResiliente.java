@@ -19,7 +19,7 @@ public class CartePopulationResiliente extends CarteEvenement {
     private final String descriptionN = "Retirez du jeu 1 carte de votre choix de la défausse Propagation. (Vous pouvez jouer Population résiliente entre les étapes Infection et Intensification d'une carte Épidémie.)";
 
     @Override
-    public void execEffet(PionJoueur pionJoueur) throws Exception {
+    public void execEffet(PionJoueur pionJoueur) throws CartePropagationNotInDefausseException {
         if (!pionJoueur.getPlateau().getDefausseCartePropagation().contains(cartePropagationChoisis))
             throw new CartePropagationNotInDefausseException();
 
