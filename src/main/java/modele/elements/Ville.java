@@ -53,8 +53,6 @@ public class Ville {
         return s + "]";
     }
 
-
-
     public void setEclosionVille(boolean eclosionVille) {
         this.eclosionVille = eclosionVille;
     }

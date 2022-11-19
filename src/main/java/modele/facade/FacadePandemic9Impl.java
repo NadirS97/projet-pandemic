@@ -6,6 +6,8 @@ import modele.elements.actions.IAction;
 import modele.elements.Partie;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteJoueur;
+import modele.elements.cartes.IEffet;
+import modele.elements.cartes.roles.CarteMedecin;
 import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
@@ -33,18 +35,15 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     }
 
     @Override
-    public void jouerTour(List<IAction> listeAction) throws Exception, TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException {
+    public void jouerTour(List<IAction> listeAction) throws Exception, EchecDeLaPartiePlusDeCarteJoueurException {
         for (IAction action : listeAction){
-            jouerAction(partie.getJoueurActuel(),action);
+            jouerAction(partie.getJoueurActuel(), action);
         }
-            piocherCartes(partie.getJoueurActuel());
-            propagation(partie.getJoueurActuel());
+        piocherCartes(partie.getJoueurActuel());
+        propagation(partie.getJoueurActuel());
 
-            effetCarteMedecin();
-
-            partie.joueurSuivant();
-
-           partie.isVictoire();
+        partie.joueurSuivant();
+        partie.isVictoire();
     }
 
 
@@ -86,37 +85,5 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     public void repartiteurDeplacementPion(PionJoueur joueurActuel,PionJoueur joueurCible, Ville villeDestination) throws AucunJoueurDansVilleDestinationException, AutorisationManquanteException {
         joueurActuel.repartiteurDeplacementPion(joueurCible,villeDestination);
-    }
-    public void effetCarteMedecin(){
-        List<Virus> virusDejaGueris = partie.getPlateau()
-                .getLesVirus()
-                .values()
-                .stream()
-                .filter(virus -> virus.getEtatVirus().equals(EtatVirus.TRAITE))
-                .toList();
-
-        virusDejaGueris.forEach(partie
-                .getJoueurs()
-                .stream()
-                .filter(pionJoueur -> pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN))
-                .findFirst()
-                .orElseThrow()
-                .getVilleActuelle()
-                .getNbCubeVirusVille()
-                .keySet()::remove);
-
-        virusDejaGueris.forEach(v -> {
-            HashMap<String, Virus> listeVaccinationContreVirus = null;
-            listeVaccinationContreVirus = partie.getJoueurs()
-                    .stream()
-                    .filter(pionJoueur -> pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN))
-                    .findFirst()
-                    .orElseThrow()
-                    .getVilleActuelle()
-                    .getListeVaccinationContreVirus();
-
-            if (!listeVaccinationContreVirus.containsKey(v.getVirusCouleur()))
-                listeVaccinationContreVirus.put(v.getVirusCouleur(), v);
-        });
     }
 }
