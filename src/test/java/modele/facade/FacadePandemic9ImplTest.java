@@ -66,6 +66,14 @@ class FacadePandemic9ImplTest {
         istanbul = plateau.getVilleByName("Istanbul");
         miami = plateau.getVilleByName("Miami");
 
+
+        // trop de conflit avec les initialisation des cartes distribué aux joueurs créee et les assert/throw qui check si
+        // le joueur possèdent la carte dite
+        // donc on vide les deck des deux joueurs
+        pionJoueur.getDeckJoueur().remove(0);
+        pionJoueur.getDeckJoueur().remove(0);
+        pionJoueur2.getDeckJoueur().remove(0);
+        pionJoueur2.getDeckJoueur().remove(0);
     }
 
 
@@ -182,6 +190,7 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourActionDeplacementVolCharterPasDeCarteVilleActuel() {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+
         IAction action = new DeplacementVolCharter(milan);
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,() -> this.instance.jouerAction(pionJoueur,action));
     }
@@ -312,6 +321,7 @@ class FacadePandemic9ImplTest {
     void jouerTourActionDeplacementNavetteVilleAvecAucuneStationDeRechercheVilleDestination() {
         atlanta.setStationDeRechercheVille(true);
         alger.setStationDeRechercheVille(false);
+        pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         IAction action = new DeplacementNavette(alger);
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));
@@ -321,7 +331,7 @@ class FacadePandemic9ImplTest {
     void jouerTourActionDeplacementNavetteVilleAvecAucuneStationDeRechercheVilleActuelle() {
         atlanta.setStationDeRechercheVille(true);
         alger.setStationDeRechercheVille(false);
-        pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.BLANC));
+        pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         IAction action = new DeplacementNavette(alger);
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));
@@ -377,8 +387,10 @@ class FacadePandemic9ImplTest {
     void donnerConnaissanceOk(){
 
         pionJoueur2.setVilleActuelle(atlanta);
+
+
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
-        pionJoueur2.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
+        pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         IAction donnerConaissance = new DonnerConnaissance(pionJoueur2);
 
         assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,donnerConaissance));
@@ -391,6 +403,8 @@ class FacadePandemic9ImplTest {
         pionJoueur.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
 
         pionJoueur2.setVilleActuelle(atlanta);
+
+
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         IAction action = new DonnerConnaissance(pionJoueur2, chicago);
@@ -459,7 +473,7 @@ class FacadePandemic9ImplTest {
 
         pionJoueur2.setVilleActuelle(atlanta);
         pionJoueur2.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
-        IAction action = new DonnerConnaissance(pionJoueur2);
+        IAction action = new DonnerConnaissance(pionJoueur2,atlanta);
         assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));
     }
@@ -469,6 +483,8 @@ class FacadePandemic9ImplTest {
         // pionJoueur : Joueur qui va prendre
         // joueur2 : Joueur qui va donner
         pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+
+
 
         pionJoueur2.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         pionJoueur2.setVilleActuelle(atlanta);
@@ -486,6 +502,8 @@ class FacadePandemic9ImplTest {
 
         pionJoueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
         pionJoueur2.setVilleActuelle(atlanta);
+
+
         pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         IAction prendreConnaissance = new PrendreConnaissance(pionJoueur2, chicago);
         assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,prendreConnaissance));
@@ -502,7 +520,7 @@ class FacadePandemic9ImplTest {
         pionJoueur2.setVilleActuelle(atlanta);
         pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
 
-        IAction action = new PrendreConnaissance(pionJoueur2,chicago);
+        IAction action = new PrendreConnaissance(pionJoueur2,null);
         assertThrows(DonneeManquanteException.class,
                 () -> this.instance.jouerAction(pionJoueur, action));
     }
@@ -514,6 +532,8 @@ class FacadePandemic9ImplTest {
 
         pionJoueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
         pionJoueur2.setVilleActuelle(atlanta);
+
+
         pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         IAction action = new PrendreConnaissance(pionJoueur2, atlanta);
         assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
@@ -561,8 +581,9 @@ class FacadePandemic9ImplTest {
         // pionJoueur : Joueur qui va prendre
         // joueur2 : Joueur qui va donner
         pionJoueur2.setVilleActuelle(atlanta);
-        pionJoueur2.getDeckJoueur().remove(0);
-        pionJoueur2.getDeckJoueur().remove(0);
+        pionJoueur2.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
+
+
         IAction action = new PrendreConnaissance(pionJoueur2);
         assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));
@@ -578,8 +599,6 @@ class FacadePandemic9ImplTest {
         atlanta.setStationDeRechercheVille(true);
         // pour le test on clear le deck actuel qui contient de base 2cartes distribués
         // pour ajouter 5 cartes de la même couleur
-        pionJoueur.getDeckJoueur().remove(0);
-        pionJoueur.getDeckJoueur().remove(0);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
@@ -603,8 +622,6 @@ class FacadePandemic9ImplTest {
         pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
         // pour le test on clear le deck actuel qui contient de base 2cartes distribués
         // pour ajouter 5 cartes de la même couleur
-        pionJoueur.getDeckJoueur().remove(0);
-        pionJoueur.getDeckJoueur().remove(0);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
