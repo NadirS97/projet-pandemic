@@ -235,13 +235,12 @@ public class Plateau {
 
     }
 
+    /**
+     * Récuperer le nombre de cartes en fonction de la vitesse de propagation
+     * @return
+     */
     public int nbCartePropagationPiocherSelonVitesse() {
-        if (marqueurVitesseEclosion >= 5)
-            return 4;
-        else if (marqueurVitesseEclosion >= 3)
-            return 3;
-        else
-            return 2;
+      return getVitesseDePropagation();
     }
 
     public void melangerPaquet(List<?> paquet) {
@@ -310,17 +309,17 @@ public class Plateau {
     public void setEffetParUneNuitTranquilleActif(boolean effetParUneNuitTranquilleActif) {
         this.effetParUneNuitTranquilleActif = effetParUneNuitTranquilleActif;
     }
-
-    public int vitesseDePropagation() {
-        if (marqueurVitessePropagation >= 1 && marqueurVitessePropagation <= 3)
-            return 2;
-        if (marqueurVitessePropagation >= 4 && marqueurVitessePropagation <= 5)
-            return 3;
-        if (marqueurVitessePropagation >= 6 && marqueurVitessePropagation <= 7)
-            return 4;
-
-        return marqueurVitessePropagation;
+    public int getVitesseDePropagation() {
+        return DonneesVariablesStatiques.tabMarqueurVitesseDePropagation[marqueurVitessePropagation];
     }
+
+    public void avancerMarqueurVitesse(){
+        marqueurVitessePropagation++;
+    }
+    public void avancerMarqueurVitesseEclosion(){
+        marqueurVitesseEclosion++;
+    }
+
 
     public void specialisteQuarantaineArriveVille(Ville ville) throws VilleIntrouvableException {
 
@@ -342,11 +341,6 @@ public class Plateau {
         }
     }
 
-    public void avancerMarqueurVitesse(){
-        marqueurVitessePropagation++;
-
-    }
-
     public boolean isToutLesRemedeDecouvert(){
         boolean toutLesRemedeDecouvert = true;
         for (Virus virus : lesVirus.values()){
@@ -356,12 +350,5 @@ public class Plateau {
         return toutLesRemedeDecouvert;
     }
 
-   /* public void avancerMarqueurVitesseEclosion(){
-        marqueurVitesseEclosion++;
-
-    }
-
-
-*/
 
 }

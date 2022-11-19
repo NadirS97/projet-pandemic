@@ -30,9 +30,10 @@ public class CarteEpidemie extends CarteJoueur implements IEffet {
     }
 
     private void applicationEffetAcceleration(Plateau plateau){
-        if (plateau.getMarqueurVitessePropagation() < 7){
+        if (plateau.getMarqueurVitessePropagation() < DonneesVariablesStatiques.tabMarqueurVitesseDePropagation.length){
             plateau.avancerMarqueurVitesse();
         }
+
     }
 
     @Override

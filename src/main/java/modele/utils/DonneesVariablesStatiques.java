@@ -2,6 +2,8 @@ package modele.utils;
 
 import lombok.Getter;
 
+import java.util.ArrayList;
+
 @Getter
 public class DonneesVariablesStatiques {
 
@@ -41,4 +43,7 @@ public class DonneesVariablesStatiques {
 
     //Nombre de cartes à piocher lors de l'exécution de l'effet de l'événement "Prévision"
     public static int nbCartesJoueurAPiocherEffetEvenementPrevision = 6;
+
+    // Tableau statique pour marqueurVitesseDePropagation
+    public static int[] tabMarqueurVitesseDePropagation = {2,2,2,3,3,4,4};
 }
