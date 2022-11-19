@@ -47,8 +47,7 @@ public class Plateau {
     public Plateau() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         lesVirus = new HashMap<>();
         villes = new HashMap<>();
-        // indicateur du nombre d'éclosion doit être placé sur la case 0.
-        marqueurVitessePropagation = 0; // 0,1,3 = 2 ; 3,4 = 3 ; 4,5 = 4
+        marqueurVitessePropagation = 0;
         marqueurVitesseEclosion = 0;
         nbStationsDeRechercheConstruites = 0;
         piocheCarteJoueur = new LinkedList<>();

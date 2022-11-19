@@ -1,5 +1,6 @@
 package modele.facade;
 
+import lombok.SneakyThrows;
 import modele.elements.*;
 
 import modele.elements.actions.IAction;
@@ -27,6 +28,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,8 +52,9 @@ class FacadePandemic9ImplTest {
 
 
 
+
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         instance = new FacadePandemic9Impl();
         instance.creerPartieQuatreJoueurs();
         plateau = instance.partie.getPlateau();
@@ -69,7 +72,7 @@ class FacadePandemic9ImplTest {
 
         // trop de conflit avec les initialisation des cartes distribué aux joueurs créee et les assert/throw qui check si
         // le joueur possèdent la carte dite
-        // donc on vide les deck des deux joueurs
+        // donc on vide les deck des deux joueurs qui possèdent chacun 2 cartes à la base pour une partie de 4
         pionJoueur.getDeckJoueur().remove(0);
         pionJoueur.getDeckJoueur().remove(0);
         pionJoueur2.getDeckJoueur().remove(0);
@@ -77,21 +80,18 @@ class FacadePandemic9ImplTest {
     }
 
 
-    //=============================================================================================================================
-    //                                                TEST MISE EN PLACE DU JEU
-    //=============================================================================================================================
-
-    /**
-     *
-     * Test pour vérifier la distribution des roles random
-     * Le role random est attribué dans le constructeur du pionJoueur
-     */
     @Test
-    void initCartesRoles(){
+    void creationPartie4Joueurs(){
+        Assertions.assertDoesNotThrow(()-> this.instance.creerPartieQuatreJoueurs());
+
+        // on verifie que l'on a bien 4 pionsJoueur creer dans la partie
+        assertEquals(4,instance.partie.getJoueurs().size());
+        // que les 4 cartes roles ont bien été distribué parmis les 7 présente dans le plateau de base lors de la création
+        assertEquals(3,instance.partie.getPlateau().getToutesLesCartesRolesExistante().size());
+        // que la piocheCartePropagation contient 48 cartes - les 9 retourné à l'initialisation du jeu
+        assertEquals(39,instance.partie.getPlateau().getPiocheCartePropagation().size());
 
     }
-
-
 
 
 //=============================================================================================================================
@@ -458,9 +458,6 @@ class FacadePandemic9ImplTest {
 
     @Test
     void donnerConnaissanceJoueursNonPresentMemeVille(){
-
-        System.out.println(pionJoueur);
-        System.out.println(pionJoueur2);
         pionJoueur2.setVilleActuelle(chicago);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new DonnerConnaissance(pionJoueur2);

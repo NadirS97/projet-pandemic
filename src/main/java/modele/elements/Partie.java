@@ -26,7 +26,7 @@ public class Partie {
     private PionJoueur joueurActuel;
 
 
-    public Partie() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+    private Partie() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
 
         // marqueur eclosion et propagation placé à 0 lors de la création du plateau
         // lors de la création du plateau, toute la créations des cartes du jeu se font
