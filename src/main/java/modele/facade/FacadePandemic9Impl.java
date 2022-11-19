@@ -20,7 +20,6 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     Partie partie;
 
-
     @Override
     public void creerPartieDeuxJoueurs() throws Exception {
         partie = Partie.creerPartieDeuxJoueurs();
@@ -41,6 +40,9 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         }
         piocherCartes(partie.getJoueurActuel());
         propagation(partie.getJoueurActuel());
+
+        if (partie.presenceMedecin())
+            partie.effetCarteMedecin();
 
         partie.joueurSuivant();
         partie.isVictoire();
