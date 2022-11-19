@@ -738,7 +738,7 @@ class FacadePandemic9ImplTest {
 //=============================================================================================================================
 
     @Test
-    void jouerCarteEventParUneNuitTranquille(){
+    void jouerCarteEventParUneNuitTranquille() {
         CarteEvenement carteEvenementNuitTranquille = new CarteParUneNuitTranquille();
         pionJoueur.getDeckJoueur().add(carteEvenementNuitTranquille);
 
@@ -748,7 +748,7 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void jouerCarteEventPopulationResiliente(){
+    void jouerCarteEventPopulationResiliente() {
         CartePropagation cartePropagation = new CartePropagation(atlanta);
         pionJoueur.getPlateau().getDefausseCartePropagation().add(cartePropagation);
         CartePopulationResiliente carteEvenementPopulationResiliente = new CartePopulationResiliente();
@@ -758,7 +758,7 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void jouerCarteEventPontAerien(){
+    void jouerCarteEventPontAerien() {
         pionJoueur2.setVilleActuelle(atlanta);
         pionJoueur2.setPermissionPontAerien(true);
 
@@ -767,12 +767,10 @@ class FacadePandemic9ImplTest {
         cartePontAerien.setVilleChoisis(paris);
         pionJoueur.getDeckJoueur().add(cartePontAerien);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, cartePontAerien));
-
     }
 
     @Test
     void jouerCarteEventPrevision() {
-
         Plateau plateauTest = instance.partie.getPlateau();
         List<CartePropagation> cartesPropagationTests = new LinkedList<>();
         cartesPropagationTests.add(new CartePropagation(Ville.builder().nomVille("Test1").build()));
@@ -795,7 +793,6 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerCarteSubventionPublique() throws VilleIntrouvableException {
-
         Plateau plateauTest = plateau;
         pionJoueur.setPlateau(plateauTest);
         CarteSubventionPublique carteSubventionPublique = new CarteSubventionPublique();
@@ -803,5 +800,4 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(carteSubventionPublique);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, carteSubventionPublique));
     }
-
 }
