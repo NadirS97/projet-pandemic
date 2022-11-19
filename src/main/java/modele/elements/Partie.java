@@ -21,7 +21,6 @@ public class Partie {
 
     private List<PionJoueur> joueurs;
     int indexJoueur;
-    private List<Role> roles;
     private Plateau plateau;
     private boolean victoire;
     private PionJoueur joueurActuel;
@@ -139,6 +138,18 @@ public class Partie {
         }
         joueurActuel = joueurs.get(indexJoueur);
         joueurActuel.setNbActions(4);
+
+    }
+
+    public PionJoueur getJoueurSuivant(){
+        int indexJoueur  = getIndexJoueur() + 1;
+
+
+        if (indexJoueur >= joueurs.size()) {
+            return joueurs.get(0);
+        }
+        return joueurs.get(indexJoueur);
+
 
     }
 

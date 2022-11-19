@@ -19,6 +19,10 @@ public abstract class CarteRole {
         this.couleurPionRole = couleurPionRole;
     }
 
-
-
+    @Override
+    public String toString() {
+        return "CarteRole{" +
+                "nomRole=" + nomRole +
+                '}';
+    }
 }

@@ -55,8 +55,10 @@ class FacadePandemic9ImplTest {
         instance = new FacadePandemic9Impl();
         instance.creerPartieQuatreJoueurs();
         plateau = instance.partie.getPlateau();
+        System.out.println(instance.partie.getJoueurs());
+        instance.partie.setIndexJoueur(4);
         pionJoueur = instance.partie.getJoueurActuel();
-        pionJoueur2 = instance.partie.getJoueurs().get(1);
+        pionJoueur2 = instance.partie.getJoueurSuivant();
         atlanta = plateau.getVilleByName("Atlanta");
         chicago = plateau.getVilleByName("Chicago");
         paris = plateau.getVilleByName("Paris");
@@ -77,6 +79,11 @@ class FacadePandemic9ImplTest {
      * Test pour vérifier la distribution des roles random
      * Le role random est attribué dans le constructeur du pionJoueur
      */
+    @Test
+    void initCartesRoles(){
+        System.out.println(instance.partie.getPlateau().getToutesLesCartesRolesExistante().size());
+        System.out.println(instance.partie.getPlateau().getToutesLesCartesRolesExistante());
+    }
 
 
 
@@ -533,6 +540,8 @@ class FacadePandemic9ImplTest {
 
     @Test
     void prendreConnaissanceJoueursNonPresentMemeVille(){
+        System.out.println(pionJoueur);
+        System.out.println(pionJoueur2);
         // pionJoueur : Joueur qui va prendre
         // pionJoueur2 : Joueur qui va donner
         pionJoueur2.setVilleActuelle(chicago);

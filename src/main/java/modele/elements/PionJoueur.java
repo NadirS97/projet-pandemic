@@ -18,7 +18,6 @@ import java.util.Map;
 
 @Getter
 @Setter
-@ToString
 public class PionJoueur {
 
     private IAction action;
@@ -102,7 +101,7 @@ public class PionJoueur {
         return null;
     }
 
-    public void jouerCarteEvenement(CarteEvenement carteEvenement) throws CarteEvenementNotFoundInDeckException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
+    public void jouerCarteEvenement(CarteEvenement carteEvenement) throws CarteEvenementNotFoundInDeckException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, PermissionNonAccordeException, CartePropagationNotInDefausseException {
         if (!deckJoueur.contains(carteEvenement))
             throw new CarteEvenementNotFoundInDeckException();
         carteEvenement.execEffet(this);
@@ -171,11 +170,11 @@ public class PionJoueur {
         throw new AucunJoueurDansVilleDestinationException();
     }
 
-    @Override
-    public String toString() {
-        return "PionJoueur{" +
-                "roleJoueur=" + roleJoueur.getNomRole() +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "PionJoueur{" +
+//                "roleJoueur=" + roleJoueur.getNomRole() +
+//                '}';
+//    }
 }
 
