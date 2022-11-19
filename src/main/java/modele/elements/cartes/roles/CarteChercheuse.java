@@ -17,8 +17,5 @@ public class CarteChercheuse extends CarteRole  {
     }
 
 
-    @Override
-    public void execEffet(PionJoueur pionJoueur) throws Exception {
 
-    }
 }

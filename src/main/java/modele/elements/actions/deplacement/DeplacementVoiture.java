@@ -17,7 +17,7 @@ public class DeplacementVoiture implements IAction, Deplacement {
     }
 
     @Override
-    public void execAction(PionJoueur pionJoueur) throws Exception {
+    public void execAction(PionJoueur pionJoueur) throws VilleDestinationEstVilleActuelleException, NbActionsMaxTourAtteintException, VilleIntrouvableException, VilleNonVoisineException {
         if (pionJoueur.getVilleActuelle().equals(villeDestination))
             throw new VilleDestinationEstVilleActuelleException("Vous ne pouvez pas vous déplacer vers votre ville actuelle.");
         if (pionJoueur.getNbActions() <= 0)

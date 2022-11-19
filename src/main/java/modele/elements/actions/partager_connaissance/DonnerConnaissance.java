@@ -24,7 +24,7 @@ public class DonnerConnaissance implements IAction {
     }
 
     @Override
-    public void execAction(PionJoueur pionJoueur) throws Exception {
+    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, JoueursNonPresentMemeVilleException, CarteVilleInexistanteDansDeckJoueurException, DonneeManquanteException {
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
         if (!pionJoueur2.getVilleActuelle().equals(pionJoueur.getVilleActuelle()))

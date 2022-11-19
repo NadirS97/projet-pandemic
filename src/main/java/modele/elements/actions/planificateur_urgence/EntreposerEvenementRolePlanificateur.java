@@ -16,7 +16,7 @@ public class EntreposerEvenementRolePlanificateur implements IAction {
     private CarteEvenement carteEvenementChoisis;
     private CarteEvenement carteEvenementEntrepose;
     @Override
-    public void execAction(PionJoueur pionJoueur) throws Exception {
+    public void execAction(PionJoueur pionJoueur) throws MauvaisRoleException, CarteEvenementNonTrouveDansDefausseException {
         // prendre une carte evenement de la defausse et l'entreposer sur cette carte
         if (!pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.PLANIFICATEUR_D_URGENCE))
             throw new MauvaisRoleException();

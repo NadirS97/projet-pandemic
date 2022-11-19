@@ -6,9 +6,10 @@ import lombok.Setter;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.CarteVille;
-import modele.exceptions.NbJoueursPartieIncorrectException;
+import modele.exceptions.*;
 
 import javax.management.relation.Role;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 @Getter
@@ -25,7 +26,7 @@ public class Partie {
     private PionJoueur joueurActuel;
 
 
-    public Partie() throws Exception {
+    public Partie() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
 
         // marqueur eclosion et propagation placé à 0 lors de la création du plateau
         // lors de la création du plateau, toute la créations des cartes du jeu se font
@@ -35,7 +36,7 @@ public class Partie {
     }
 
 
-    public static Partie creerPartieDeuxJoueurs() throws Exception {
+    public static Partie creerPartieDeuxJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         Partie partie = new Partie();
         partie.ajoutJoueursDansPartie(2);
         partie.distributionCarteJoueurs(4);
@@ -44,7 +45,7 @@ public class Partie {
         return partie;
     }
 
-    public static Partie creerPartieTroisJoueurs() throws Exception {
+    public static Partie creerPartieTroisJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         Partie partie = new Partie();
         partie.ajoutJoueursDansPartie(3);
         partie.distributionCarteJoueurs(3);
@@ -53,7 +54,7 @@ public class Partie {
         return partie;
     }
 
-    public static Partie creerPartieQuatreJoueurs() throws Exception {
+    public static Partie creerPartieQuatreJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         Partie partie = new Partie();
         partie.ajoutJoueursDansPartie(4);
         partie.distributionCarteJoueurs(2);

@@ -20,7 +20,7 @@ public class TraiterMaladie implements IAction {
     private Virus choixVirus;
 
     @Override
-    public void execAction(PionJoueur pionJoueur) throws Exception {
+    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VirusInexistantDansLaVilleActuelException, VirusDejaEradiqueException {
 
         // Verif nb actions
         if (pionJoueur.getNbActions() <= 0)

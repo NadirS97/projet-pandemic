@@ -44,7 +44,7 @@ public class Plateau {
     private boolean effetParUneNuitTranquilleActif;
     private DonneesPlateauDTO donneesPlateauDTO;
 
-    public Plateau() throws Exception {
+    public Plateau() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         lesVirus = new HashMap<>();
         villes = new HashMap<>();
         // indicateur du nombre d'éclosion doit être placé sur la case 0.

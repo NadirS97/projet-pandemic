@@ -26,7 +26,7 @@ public class DeplacementVolCharter implements IAction, Deplacement {
     }
 
     @Override
-    public void execAction(PionJoueur pionJoueur) throws Exception {
+    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException {
 
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");

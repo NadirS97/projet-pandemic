@@ -7,10 +7,7 @@ import modele.elements.actions.Deplacement;
 import modele.elements.actions.IAction;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.enums.NomsRoles;
-import modele.exceptions.CarteVilleInexistanteDansDeckJoueurException;
-import modele.exceptions.NbActionsMaxTourAtteintException;
-import modele.exceptions.VilleDestinationEstVilleActuelleException;
-import modele.exceptions.VilleIntrouvableException;
+import modele.exceptions.*;
 
 public class DeplacementVolDirect implements IAction, Deplacement {
 
@@ -21,7 +18,7 @@ public class DeplacementVolDirect implements IAction, Deplacement {
     }
 
     @Override
-    public void execAction(PionJoueur pionJoueur) throws Exception {
+    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException, VilleDestinationEstVilleActuelleException {
         if(pionJoueur.getVilleActuelle().equals(villeDestination))
             throw new VilleDestinationEstVilleActuelleException("Vous ne pouvez pas vous déplacer vers votre ville actuelle.");
         if (pionJoueur.getNbActions() <= 0)
@@ -43,4 +40,6 @@ public class DeplacementVolDirect implements IAction, Deplacement {
         pionJoueur.getPlateau().specialisteQuarantainePartVille(villeDepart);
         pionJoueur.getPlateau().specialisteQuarantaineArriveVille(villeArrive);
     }
+
+
 }

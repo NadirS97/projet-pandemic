@@ -16,7 +16,7 @@ import modele.utils.DonneesVariablesStatiques;
 public class DecouvrirRemede implements IAction {
 
     @Override
-    public void execAction(PionJoueur pionJoueur) throws Exception {
+    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VilleAvecAucuneStationDeRechercheException, VirusDejaTraiteException, NombreDeCartesVilleDansDeckJoueurInvalideException {
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
         if(!pionJoueur.getVilleActuelle().isStationDeRechercheVille())

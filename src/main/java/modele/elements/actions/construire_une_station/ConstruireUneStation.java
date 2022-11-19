@@ -25,7 +25,7 @@ public class ConstruireUneStation implements IAction {
     }
 
     @Override
-    public void execAction(PionJoueur pionJoueur) throws Exception {
+    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteVilleInexistanteDansDeckJoueurException, VilleAvecAucuneStationDeRechercheException {
         Ville villeActuelle = pionJoueur.getVilleActuelle();
         Plateau plateau = pionJoueur.getPlateau();
         if (pionJoueur.getNbActions() <= 0)

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Getter
 @Setter
 @ToString
-public abstract class CarteRole implements IEffet {
+public abstract class CarteRole {
 
     private NomsRoles nomRole;
     private CouleurPionsRole couleurPionRole;

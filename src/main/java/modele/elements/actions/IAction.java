@@ -1,12 +1,15 @@
 package modele.elements.actions;
 
 import modele.elements.PionJoueur;
-import modele.exceptions.CarteEvenementNonTrouveDansDefausseException;
-import modele.exceptions.NbActionsMaxTourAtteintException;
-import modele.exceptions.VilleIntrouvableException;
-import modele.exceptions.VilleNonVoisineException;
+import modele.exceptions.*;
 
 public interface IAction {
 
-    void execAction(PionJoueur pionJoueur) throws Exception, CarteEvenementNonTrouveDansDefausseException;
+    void execAction(PionJoueur pionJoueur) throws VilleDestinationEstVilleActuelleException,
+            NbActionsMaxTourAtteintException, VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException,
+            VilleNonVoisineException, VilleAvecAucuneStationDeRechercheException, VirusDejaTraiteException,
+            NombreDeCartesVilleDansDeckJoueurInvalideException, VilleActuellePossedeDejaUneStationDeRechercheException,
+            JoueursNonPresentMemeVilleException, DonneeManquanteException,
+            MauvaisRoleException, CarteEvenementNonTrouveDansDefausseException,
+            VirusInexistantDansLaVilleActuelException, VirusDejaEradiqueException;
 }

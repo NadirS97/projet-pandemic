@@ -100,7 +100,7 @@ public class PionJoueur {
         return null;
     }
 
-    public void jouerCarteEvenement(CarteEvenement carteEvenement) throws Exception {
+    public void jouerCarteEvenement(CarteEvenement carteEvenement) throws CarteEvenementNotFoundInDeckException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
         if (!deckJoueur.contains(carteEvenement))
             throw new CarteEvenementNotFoundInDeckException();
         carteEvenement.execEffet(this);
@@ -138,12 +138,12 @@ public class PionJoueur {
         this.villeActuelle = villeActuelle;
     }
 
-    public void executerAction() throws Exception {
+    public void executerAction() throws CarteVilleInexistanteDansDeckJoueurException, NombreDeCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException {
         this.action.execAction(this);
         this.nbActions--;
     }
 
-    public void repartiteurActionDeplacementAutrePion(PionJoueur joueurCible) throws Exception {
+    public void repartiteurActionDeplacementAutrePion(PionJoueur joueurCible) throws AutorisationManquanteException, CarteVilleInexistanteDansDeckJoueurException, NombreDeCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException, ActionNonDeplacementException {
         if (!this.autorisationDeplacementRepartiteur)
             throw new AutorisationManquanteException();
         if (this.action instanceof Deplacement){
