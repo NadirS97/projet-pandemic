@@ -793,7 +793,17 @@ class FacadePandemic9ImplTest {
 
     }
 
+    //=============================================================================================================================
+//                                                 ROLE SPECIALISTE_MISE_EN_QUARANTAINE
+//=============================================================================================================================
 
+    @Test
+    void miseEnQuarantaineVille(){
+        pionJoueur.setRoleJoueur(new CarteSpecialisteEnMiseEnQuarantaine(CouleurPionsRole.VERT_FONCE));
+        IAction actionDeplacement = new DeplacementVoiture(chicago);
+        assertDoesNotThrow(()->instance.jouerAction(pionJoueur,actionDeplacement));
+        assertThrows((PropagationImpossibleCarSpecialisteQuarantaineException.class),() -> pionJoueur.getPlateau().propagationMaladie(pionJoueur.getVilleActuelle(),2));
+    }
 
 //=============================================================================================================================
 //                                                 AUTRES TESTS
