@@ -24,6 +24,15 @@ public class PrendreConnaissance implements IAction {
         this.villeChoisis = villeChoisis;
     }
 
+    /**
+     * Fonction permettant d'executer l'action PrendreConnaissance :
+     * prendre d’un autre joueur la carte ville où les deux joueurs sont au même moment
+     * @param pionJoueur
+     * @throws NbActionsMaxTourAtteintException
+     * @throws JoueursNonPresentMemeVilleException
+     * @throws CarteVilleInexistanteDansDeckJoueurException
+     * @throws DonneeManquanteException
+     */
     @Override
     public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, JoueursNonPresentMemeVilleException, CarteVilleInexistanteDansDeckJoueurException, DonneeManquanteException {
         if (pionJoueur.getNbActions() <= 0)

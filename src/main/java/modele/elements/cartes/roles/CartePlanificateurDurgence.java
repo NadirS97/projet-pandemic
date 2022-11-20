@@ -14,10 +14,7 @@ import modele.exceptions.*;
 @Setter
 public class CartePlanificateurDurgence extends CarteRole {
 
-
     CarteEvenement carteEvenementEntrepose;
-
-
 
     public CartePlanificateurDurgence(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
@@ -27,12 +24,5 @@ public class CartePlanificateurDurgence extends CarteRole {
                         "Lorsque vous jouez la carte Evenement entreprosée. Retirez la de la partie. " +
                         "Limite de 1 carte Evenement sur cette carte. Elle ne fait pas partie de votre main.");
     }
-
-
-
-
-
-
-
 
 }

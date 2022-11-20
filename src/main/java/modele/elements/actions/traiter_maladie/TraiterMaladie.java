@@ -19,6 +19,16 @@ public class TraiterMaladie implements IAction {
 
     private Virus choixVirus;
 
+    /**
+     * Fonction permettant d'executer l'action TraiterMaladie :
+     * il peut traiter une maladie en retirant un cube si la maladie n’a pas encore été traitée ou alors
+     * tous les cubes d’une couleur d’une maladie traitée. Si le dernier cube d’une couleur a été
+     * supprimé et que la maladie concernée a été traitée, la maladie est alors éradiquée.
+     * @param pionJoueur
+     * @throws NbActionsMaxTourAtteintException
+     * @throws VirusInexistantDansLaVilleActuelException
+     * @throws VirusDejaEradiqueException
+     */
     @Override
     public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VirusInexistantDansLaVilleActuelException, VirusDejaEradiqueException {
 
