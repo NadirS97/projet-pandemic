@@ -935,13 +935,11 @@ class FacadePandemic9ImplTest {
     @Test
     void piocherCartesEpidemie(){
         CarteJoueur premiereCarteVille = new CarteVille(atlanta);
-        CarteEpidemie carteEpidemie = new CarteEpidemie();
+        CarteJoueur carteEpidemie = new CarteEpidemie();
         CartePropagation cartePropagation = plateau.getPiocheCartePropagation().get(plateau.getPiocheCartePropagation().size() -1);
         Virus virus = plateau.getLesVirus().get(cartePropagation.getVilleCartePropagation().getCouleurVirusVille());
         plateau.getPiocheCarteJoueur().addFirst(premiereCarteVille);
         plateau.getPiocheCarteJoueur().addFirst(carteEpidemie);
-        plateau.getDefausseCartePropagation().add(plateau.getPiocheCartePropagation().get(0));
-        plateau.getDefausseCartePropagation().add(plateau.getPiocheCartePropagation().get(0));
         int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
         int taillePiocheInitial = plateau.getPiocheCarteJoueur().size();
         int tailleDefausseCarteJoueurInitial = plateau.getDefausseCarteJoueur().size();
@@ -956,8 +954,8 @@ class FacadePandemic9ImplTest {
         assertEquals(2,plateau.getVitesseDePropagation());
         assertEquals(3,cartePropagation.getVilleCartePropagation().getNbCubeVirusVille().get(virus));
         assertEquals(tailleDefausseCartePropagationInitial + 1,plateau.getDefausseCartePropagation().size());
-        assertEquals(taillePiocheCartePropagationInitial -1, plateau.getPiocheCartePropagation().size());
-
+        assertEquals(0, plateau.getDefausseCartePropagation().size());
+        assertEquals(48, plateau.getPiocheCartePropagation().size());
     }
 
 
