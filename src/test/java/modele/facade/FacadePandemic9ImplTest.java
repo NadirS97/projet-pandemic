@@ -805,6 +805,22 @@ class FacadePandemic9ImplTest {
         assertThrows((PropagationImpossibleCarSpecialisteQuarantaineException.class),() -> pionJoueur.getPlateau().propagationMaladie(pionJoueur.getVilleActuelle(),2));
     }
 
+
+    //=============================================================================================================================
+//                                                 ROLE REPARTITEUR
+//=============================================================================================================================
+
+    @Test
+    void repartiteurOk(){
+        pionJoueur.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
+        PionJoueur pionJoueur3 = new PionJoueur(instance.partie);
+        pionJoueur2.setAutorisationDeplacementRepartiteur(true);
+        pionJoueur3.setVilleActuelle(alger);
+        instance.partie.getJoueurs().add(pionJoueur3);
+        assertDoesNotThrow(()->instance.repartiteurDeplacementPion(pionJoueur,pionJoueur2,alger));
+
+    }
+
 //=============================================================================================================================
 //                                                 AUTRES TESTS
 //=============================================================================================================================

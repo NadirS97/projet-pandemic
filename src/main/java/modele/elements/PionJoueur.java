@@ -38,6 +38,7 @@ public class PionJoueur {
 
     public PionJoueur(Partie partie) {
         this.plateau = partie.getPlateau();
+        this.partie = partie;
         this.deckJoueur = new ArrayList<>();
         this.nbActions = DonneesVariablesStatiques.nbActionsMaxParTour;
         this.roleJoueur = plateau.piocherCarteRole();
@@ -168,16 +169,18 @@ public class PionJoueur {
     }
 
     public void repartiteurDeplacementPion(PionJoueur joueurCible,Ville villeDestination) throws AutorisationManquanteException, AucunJoueurDansVilleDestinationException {
-        if (!this.autorisationDeplacementRepartiteur)
+        if (!joueurCible.autorisationDeplacementRepartiteur)
             throw new AutorisationManquanteException();
 
         // verif si la ville destination possède un joueur
         for (PionJoueur pionJoueur : partie.getJoueurs()){
             if (pionJoueur.getVilleActuelle().equals(villeDestination)){
                 joueurCible.setVilleActuelle(villeDestination);
+                nbActions++;
                 return;
             }
         }
+
         throw new AucunJoueurDansVilleDestinationException();
     }
 
