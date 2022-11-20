@@ -206,13 +206,14 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourActionConstruireUneStationOK() {
         pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.setVilleActuelle(alger);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(alger));
         IAction action = new ConstruireUneStation();
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
         assertTrue(pionJoueur.getVilleActuelle().isStationDeRechercheVille());
         // cette assert ne passera pas si le role est EXPERT AUX OPERATIONS car celui ci ne defausse pas
         // , on set donc un role autre que expert
-        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
+        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(alger));
     }
 
     @Test
@@ -287,6 +288,7 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourActionConstruireUneStationCarteVilleInexistanteDansDeckJoueur(){
         pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+       pionJoueur.setVilleActuelle(alger);
         IAction action = new ConstruireUneStation();
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));
@@ -800,6 +802,7 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourOk(){
         PionJoueur joueurActuel = instance.partie.getJoueurActuel();
+        joueurActuel.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
         IAction action = new DeplacementVoiture(plateau.getVilleByName("Washington"));
         IAction action1 = new DeplacementVoiture(atlanta);
         IAction action2 = new DeplacementVoiture(chicago);
