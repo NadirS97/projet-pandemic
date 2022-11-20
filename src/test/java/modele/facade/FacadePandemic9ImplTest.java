@@ -882,12 +882,14 @@ class FacadePandemic9ImplTest {
      */
 
     @Test
-    void medecinOk() throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
+    void medecinOk() {
         // cas propagation de maladie
         pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         Virus virus = instance.partie.getPlateau().getLesVirus().get(pionJoueur.getVilleActuelle().getCouleurVirusVille());
+        IAction traiter = new TraiterMaladie(virus);
+        Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur, traiter));
         pionJoueur.getVilleActuelle().getListeVaccinationContreVirus().put(pionJoueur.getVilleActuelle().getCouleurVirusVille(), virus);
-        instance.partie.getPlateau().propagationMaladie(pionJoueur.getVilleActuelle(), 1);
+        Assertions.assertDoesNotThrow(() -> instance.partie.getPlateau().propagationMaladie(pionJoueur.getVilleActuelle(), 1));
         assertEquals(0, pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(virus));
 
         // cas éclosion dans une ville voisine
@@ -895,7 +897,7 @@ class FacadePandemic9ImplTest {
         Virus virus2 = instance.partie.getPlateau().getLesVirus().get(miami.getCouleurVirusVille());
         miami.getNbCubeVirusVille().put(virus2, 3);
         pionJoueur.getVilleActuelle().getListeVaccinationContreVirus().put(miami.getCouleurVirusVille(), virus2);
-        instance.partie.getPlateau().eclosion(miami, virus2);
+        Assertions.assertDoesNotThrow(() -> instance.partie.getPlateau().eclosion(miami, virus2));
         assertEquals(0, pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(virus2));
     }
 
