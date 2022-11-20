@@ -2,7 +2,6 @@ package modele.elements.cartes.evenements;
 
 import lombok.Getter;
 import modele.elements.PionJoueur;
-import modele.elements.Ville;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.enums.NomsEvenement;
 import modele.exceptions.VilleIntrouvableException;

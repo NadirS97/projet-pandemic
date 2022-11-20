@@ -2,8 +2,6 @@ package modele.utils;
 
 import lombok.Getter;
 
-import java.util.ArrayList;
-
 @Getter
 public class DonneesVariablesStatiques {
 

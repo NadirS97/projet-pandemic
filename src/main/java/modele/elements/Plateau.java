@@ -156,6 +156,10 @@ public class Plateau {
         defausseCartePropagation.add(cartePropagation);
     }
 
+    public void viderDefausseCartePropagation(){
+        defausseCartePropagation.clear();
+    }
+
     // Sert exclusivement à l'effet Prevision
     public CartePropagation piocherCartePropagationEventPrevision() {
         return piocheCartePropagation.remove(0);

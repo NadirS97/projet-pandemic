@@ -3,13 +3,11 @@ package modele.elements.cartes.evenements;
 import lombok.Getter;
 import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteEvenement;
-import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.enums.NomsEvenement;
 import modele.utils.DonneesVariablesStatiques;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Getter

@@ -2,12 +2,10 @@ package modele.elements.cartes;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
 import modele.elements.Ville;
 
 @Getter
 @AllArgsConstructor
-
 public class CartePropagation {
 
     private Ville villeCartePropagation;

@@ -8,8 +8,6 @@ import modele.elements.cartes.CarteVille;
 import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
-
-import javax.management.relation.Role;
 import java.io.FileNotFoundException;
 import java.util.*;
 

@@ -2,11 +2,9 @@ package modele.elements;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import modele.elements.actions.Deplacement;
 import modele.elements.actions.IAction;
 import modele.elements.cartes.*;
-import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
@@ -150,12 +148,12 @@ public class PionJoueur {
         this.villeActuelle = villeActuelle;
     }
 
-    public void executerAction() throws CarteVilleInexistanteDansDeckJoueurException, NombreDeCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException {
+    public void executerAction() throws CarteVilleInexistanteDansDeckJoueurException, NbCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException {
         this.action.execAction(this);
         this.nbActions--;
     }
 
-    public void repartiteurActionDeplacementAutrePion(PionJoueur joueurCible) throws AutorisationManquanteException, CarteVilleInexistanteDansDeckJoueurException, NombreDeCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException, ActionNonDeplacementException {
+    public void repartiteurActionDeplacementAutrePion(PionJoueur joueurCible) throws AutorisationManquanteException, CarteVilleInexistanteDansDeckJoueurException, NbCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException, ActionNonDeplacementException {
         if (!this.autorisationDeplacementRepartiteur)
             throw new AutorisationManquanteException();
         if (this.action instanceof Deplacement){

@@ -8,7 +8,7 @@ import modele.elements.cartes.CarteJoueur;
 import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.NbActionsMaxTourAtteintException;
-import modele.exceptions.NombreDeCartesVilleDansDeckJoueurInvalideException;
+import modele.exceptions.NbCartesVilleDansDeckJoueurInvalideException;
 import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.exceptions.VirusDejaTraiteException;
 import modele.utils.DonneesVariablesStatiques;
@@ -24,10 +24,10 @@ public class DecouvrirRemede implements IAction {
      * @throws NbActionsMaxTourAtteintException
      * @throws VilleAvecAucuneStationDeRechercheException
      * @throws VirusDejaTraiteException
-     * @throws NombreDeCartesVilleDansDeckJoueurInvalideException
+     * @throws NbCartesVilleDansDeckJoueurInvalideException
      */
     @Override
-    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VilleAvecAucuneStationDeRechercheException, VirusDejaTraiteException, NombreDeCartesVilleDansDeckJoueurInvalideException {
+    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VilleAvecAucuneStationDeRechercheException, VirusDejaTraiteException, NbCartesVilleDansDeckJoueurInvalideException {
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
         if(!pionJoueur.getVilleActuelle().isStationDeRechercheVille())
@@ -46,7 +46,7 @@ public class DecouvrirRemede implements IAction {
                 throw new VirusDejaTraiteException("Le remède pour ce virus est déjà trouvé.");
             }
         }else{
-            throw new NombreDeCartesVilleDansDeckJoueurInvalideException("Le nombre de cartes villes de même couleur dans votre deck est insuffisant pour exécution de cette action.");
+            throw new NbCartesVilleDansDeckJoueurInvalideException("Le nombre de cartes villes de même couleur dans votre deck est insuffisant pour exécution de cette action.");
         }
     }
 }

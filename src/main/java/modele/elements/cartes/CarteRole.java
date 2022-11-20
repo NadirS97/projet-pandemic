@@ -1,12 +1,8 @@
 package modele.elements.cartes;
 
 import lombok.*;
-import modele.elements.PionJoueur;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
-import modele.exceptions.*;
-
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -19,13 +15,6 @@ public abstract class CarteRole {
 
     public CarteRole(CouleurPionsRole couleurPionRole) {
         this.couleurPionRole = couleurPionRole;
-    }
-
-    @Override
-    public String toString() {
-        return "CarteRole{" +
-                "nomRole=" + nomRole +
-                '}';
     }
 
 }

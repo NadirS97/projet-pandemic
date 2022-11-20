@@ -1,6 +1,5 @@
 package modele.elements.cartes;
 
-import lombok.Builder;
 import lombok.Getter;
 import modele.elements.Ville;
 

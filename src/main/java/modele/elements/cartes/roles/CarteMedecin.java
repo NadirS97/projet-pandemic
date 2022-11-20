@@ -1,15 +1,8 @@
 package modele.elements.cartes.roles;
 
-import modele.elements.PionJoueur;
-import modele.elements.Virus;
 import modele.elements.cartes.CarteRole;
 import modele.elements.enums.CouleurPionsRole;
-import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
-import modele.exceptions.*;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class CarteMedecin extends CarteRole  {
 

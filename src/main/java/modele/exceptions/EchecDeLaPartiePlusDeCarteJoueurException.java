@@ -1,4 +1,4 @@
 package modele.exceptions;
 
-public class EchecDeLaPartiePlusDeCarteJoueurException extends Throwable {
+public class EchecDeLaPartiePlusDeCarteJoueurException extends Exception {
 }

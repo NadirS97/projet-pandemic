@@ -2,13 +2,10 @@ package modele.elements.cartes.roles;
 
 import lombok.Getter;
 import lombok.Setter;
-import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteRole;
-import modele.elements.cartes.IEffet;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
-import modele.exceptions.*;
 
 @Getter
 @Setter

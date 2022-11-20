@@ -1,10 +1,8 @@
 package modele.elements.cartes.roles;
 
-import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
-import modele.exceptions.*;
 
 public class CarteExpertAuxOperations extends CarteRole {
 

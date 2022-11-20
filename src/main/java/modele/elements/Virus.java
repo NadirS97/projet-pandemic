@@ -5,7 +5,6 @@ import lombok.Setter;
 import modele.elements.enums.EtatVirus;
 import modele.utils.DonneesVariablesStatiques;
 
-
 @Getter
 @Setter
 public class Virus {
@@ -24,7 +23,6 @@ public class Virus {
 
         return nbCubes = nbCubes- nbCubesRetirer;
    }
-
 
     @Override
     public String toString() {

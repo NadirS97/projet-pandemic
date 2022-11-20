@@ -23,7 +23,6 @@ import modele.elements.cartes.roles.*;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.EtatVirus;
 import modele.exceptions.*;
-import modele.utils.DonneesVariablesStatiques;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -724,7 +723,7 @@ class FacadePandemic9ImplTest {
         atlanta.setStationDeRechercheVille(true);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new DecouvrirRemede();
-        Assertions.assertThrows(NombreDeCartesVilleDansDeckJoueurInvalideException.class, () -> this.instance.jouerAction(pionJoueur, action));
+        Assertions.assertThrows(NbCartesVilleDansDeckJoueurInvalideException.class, () -> this.instance.jouerAction(pionJoueur, action));
     }
 
     @Test
@@ -788,7 +787,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction action = new DecouvrirRemede();
-        Assertions.assertThrows(NombreDeCartesVilleDansDeckJoueurInvalideException.class, () -> this.instance.jouerAction(pionJoueur, action));
+        Assertions.assertThrows(NbCartesVilleDansDeckJoueurInvalideException.class, () -> this.instance.jouerAction(pionJoueur, action));
     }
 
     @Test
@@ -936,6 +935,7 @@ class FacadePandemic9ImplTest {
 
     @Test
     void piocherCartesEpidemie(){
+        //Une carte épidémie à trois effets à tester
         CarteJoueur premiereCarteVille = new CarteVille(atlanta);
         CarteJoueur carteEpidemie = new CarteEpidemie();
         CartePropagation cartePropagation = plateau.getPiocheCartePropagation().get(plateau.getPiocheCartePropagation().size() -1);
@@ -945,21 +945,27 @@ class FacadePandemic9ImplTest {
         int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
         int taillePiocheInitial = plateau.getPiocheCarteJoueur().size();
         int tailleDefausseCarteJoueurInitial = plateau.getDefausseCarteJoueur().size();
-        int tailleDefausseCartePropagationInitial = plateau.getDefausseCartePropagation().size();
-        int taillePiocheCartePropagationInitial = plateau.getPiocheCartePropagation().size();
         int ancienMarqueurVitesseDePropagation = plateau.getMarqueurVitessePropagation();
+
         Assertions.assertDoesNotThrow(() -> this.instance.piocherCartes(pionJoueur));
+
         assertEquals(tailleDeckInitial + 1,pionJoueur.getDeckJoueur().size());
         assertEquals(tailleDefausseCarteJoueurInitial + 1, plateau.getDefausseCarteJoueur().size());
         assertEquals(taillePiocheInitial - 2, plateau.getPiocheCarteJoueur().size());
-        assertEquals(ancienMarqueurVitesseDePropagation +1, plateau.getMarqueurVitessePropagation());
+
+        // EFFET 1 : ACCELERATION
+        assertEquals(ancienMarqueurVitesseDePropagation + 1, plateau.getMarqueurVitessePropagation());
         assertEquals(2,plateau.getVitesseDePropagation());
+
+        // EFFET 2 : INFECTION
         assertEquals(3,cartePropagation.getVilleCartePropagation().getNbCubeVirusVille().get(virus));
-        assertEquals(tailleDefausseCartePropagationInitial + 1,plateau.getDefausseCartePropagation().size());
+
+        // EFFET 3 : INTENSIFICATION
+        // 0, car notre defausseCartePropagation doit être vide
         assertEquals(0, plateau.getDefausseCartePropagation().size());
+        // 48 = le nombre de cartes Propagation existante
         assertEquals(48, plateau.getPiocheCartePropagation().size());
     }
-
 
 //=============================================================================================================================
 //                                                 EFFET Evenement
