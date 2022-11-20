@@ -38,8 +38,8 @@ public class CarteEpidemie extends CarteJoueur implements IEffet {
 
     @Override
     public void execEffet(PionJoueur pionJoueur) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
-        applicationEffetInfection(pionJoueur.getPlateau());
         applicationEffetAcceleration(pionJoueur.getPlateau());
+        applicationEffetInfection(pionJoueur.getPlateau());
         applicationEffetIntensification(pionJoueur.getPlateau());
     }
 }

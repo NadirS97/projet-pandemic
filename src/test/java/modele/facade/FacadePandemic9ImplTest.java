@@ -13,6 +13,7 @@ import modele.elements.actions.partager_connaissance.DonnerConnaissance;
 import modele.elements.actions.partager_connaissance.PrendreConnaissance;
 import modele.elements.actions.planificateur_urgence.EntreposerEvenementRolePlanificateur;
 import modele.elements.actions.traiter_maladie.TraiterMaladie;
+import modele.elements.cartes.CarteEpidemie;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CartePropagation;
@@ -931,6 +932,25 @@ class FacadePandemic9ImplTest {
         assertTrue(pionJoueur.getDeckJoueur().contains(deuxiemeCarteVille));
     }
 
+    @Test
+    void piocherCartesEpidemie(){
+        CarteJoueur premiereCarteVille = new CarteVille(atlanta);
+        CarteEpidemie carteEpidemie = new CarteEpidemie();
+        plateau.getPiocheCarteJoueur().addFirst(premiereCarteVille);
+        plateau.getPiocheCarteJoueur().addFirst(carteEpidemie);
+        int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
+        int taillePiocheInitial = plateau.getPiocheCarteJoueur().size();
+        int tailleDefausseCarteJoueurInitial = plateau.getDefausseCarteJoueur().size();
+        int ancienMarqueurVitesseDePropagation = plateau.getMarqueurVitessePropagation();
+        Assertions.assertDoesNotThrow(() -> this.instance.piocherCartes(pionJoueur));
+        assertEquals(tailleDeckInitial + 1,pionJoueur.getDeckJoueur().size());
+        assertEquals(tailleDefausseCarteJoueurInitial + 1, plateau.getDefausseCarteJoueur().size());
+        assertEquals(taillePiocheInitial - 2, plateau.getPiocheCarteJoueur().size());
+        assertEquals(ancienMarqueurVitesseDePropagation +1, plateau.getMarqueurVitessePropagation());
+        assertEquals(2,plateau.getVitesseDePropagation());
+
+    }
+
 
 //=============================================================================================================================
 //                                                 EFFET Evenement
@@ -999,27 +1019,4 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(carteSubventionPublique);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, carteSubventionPublique));
     }
-
-//=================================================================================================================================================================================
-//                                                 EFFET CARTE EPIDEMIE
-//=================================================================================================================================================================================
-
-    @Test
-    void applicationEffetAcceleration(){
-        Plateau plateauTest = plateau;
-        assertTrue(plateauTest.getMarqueurVitessePropagation() >= 0,"Le marqueur vitesse de propagation ne peut pas être négatif");
-        assertTrue(plateauTest.getMarqueurVitessePropagation() < DonneesVariablesStatiques.tabMarqueurVitesseDePropagation.length,
-                "Marqueur vitesse de propagation ne peut pas être supérieur à la taille du tableau marqueur vitesse de propagation");
-    }
-
-    @Test
-    void applicationEffetIntensification(){
-
-    }
-
-    @Test
-    void applicationEffetInfection(){
-
-    }
-
 }
