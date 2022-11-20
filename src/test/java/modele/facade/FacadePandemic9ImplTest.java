@@ -407,20 +407,21 @@ class FacadePandemic9ImplTest {
         IAction traiter = new TraiterMaladie(virusBleu);
         pionJoueur.setVilleActuelle(atlanta);
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,traiter));
+        Assertions.assertEquals(1, atlanta.getNbCubeVirusVille().get(virusBleu));
     }
 
-//------------ 2- Tests jouerAction() avec l'action TraiterMaladie OK (test spécifique au Role : "MEDECIN")
+    //------------ 2- Tests jouerAction() avec l'action TraiterMaladie OK (test spécifique au Role : "MEDECIN")
 
     @Test
     void jouerTourActionTraiterAvecMedecinMaladieNonTraiteOK() throws VilleIntrouvableException {
-        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 3));
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
         IAction traiter = new TraiterMaladie(virusBleu);
         PionJoueur pionJoueur3 = new PionJoueur(instance.partie);
         pionJoueur3.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         pionJoueur3.setVilleActuelle(atlanta);
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur3, traiter));
-        Assertions.assertEquals(0, instance.partie.getPlateau().getVilleByName(atlanta.getNomVille()).getNbCubeVirusVille().get(virusBleu));
+        Assertions.assertEquals(0, atlanta.getNbCubeVirusVille().get(virusBleu));
     }
 
 //------------ 4- Tests jouerAction() avec l'action TraiterMaladie KO
@@ -699,7 +700,7 @@ class FacadePandemic9ImplTest {
         assertEquals(tailleDeckInitial - 4, pionJoueur.getDeckJoueur().size());
         assertEquals(tailleDefausseInitial + 4, pionJoueur.getPlateau().getDefausseCarteJoueur().size());
         String couleurVirus = atlanta.getCouleurVirusVille();
-        assertEquals(pionJoueur.getPlateau().getLesVirus().get(couleurVirus).getEtatVirus(), EtatVirus.TRAITE);
+        assertEquals(EtatVirus.TRAITE, pionJoueur.getPlateau().getLesVirus().get(couleurVirus).getEtatVirus());
     }
 
 //------------ 3- Tests jouerAction() avec l'action DecouvrirRemede KO
@@ -813,8 +814,8 @@ class FacadePandemic9ImplTest {
 //=============================================================================================================================
 
  /*
- Verif que si le role du joueur est expert aux opérations, l'action construire une station de recherche dans la ville que l'on occupe
- ne defausse aucune carte
+ Vérifie que si le role du joueur est expert aux opérations, l'action construire une station de recherche dans la ville que l'on occupe
+ ne défausse aucune carte
   */
 
     @Test
