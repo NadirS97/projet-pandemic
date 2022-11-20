@@ -25,6 +25,15 @@ public class DeplacementVolCharter implements IAction, Deplacement {
         this.villeDestination = villeDestination;
     }
 
+    /**
+     * Fonction permettant d'executer l'action DeplacementVolCharter :
+     * défausser la carte ville correspondant à la ville où se trouve le pion pour atteindre n’importe
+     * quelle autre ville du plateau
+     * @param pionJoueur
+     * @throws NbActionsMaxTourAtteintException
+     * @throws VilleIntrouvableException
+     * @throws CarteVilleInexistanteDansDeckJoueurException
+     */
     @Override
     public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException {
 

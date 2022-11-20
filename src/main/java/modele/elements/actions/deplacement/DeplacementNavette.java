@@ -19,6 +19,15 @@ public class DeplacementNavette implements IAction , Deplacement {
         this.villeDestination = villeStationDeRecherche;
     }
 
+    /**
+     * Fonction permettant d'executer l'action DeplacementNavette :
+     * déplacer le pion entre deux stations de recherche
+     * @param pionJoueur
+     * @throws VilleDestinationEstVilleActuelleException
+     * @throws NbActionsMaxTourAtteintException
+     * @throws VilleAvecAucuneStationDeRechercheException
+     * @throws VilleIntrouvableException
+     */
     @Override
     public void execAction(PionJoueur pionJoueur) throws VilleDestinationEstVilleActuelleException, NbActionsMaxTourAtteintException, VilleAvecAucuneStationDeRechercheException, VilleIntrouvableException {
         if (pionJoueur.getVilleActuelle().equals(villeDestination))

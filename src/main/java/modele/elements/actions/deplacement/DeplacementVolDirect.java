@@ -17,6 +17,15 @@ public class DeplacementVolDirect implements IAction, Deplacement {
         this.villeDestination = villeDestination;
     }
 
+    /**
+     * Fonction permettant d'executer l'action DeplacementVolDirect :
+     * défausser une carte ville pour déplacer le pion sur la ville de la carte défaussée
+     * @param pionJoueur
+     * @throws NbActionsMaxTourAtteintException
+     * @throws VilleIntrouvableException
+     * @throws CarteVilleInexistanteDansDeckJoueurException
+     * @throws VilleDestinationEstVilleActuelleException
+     */
     @Override
     public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VilleIntrouvableException, CarteVilleInexistanteDansDeckJoueurException, VilleDestinationEstVilleActuelleException {
         if(pionJoueur.getVilleActuelle().equals(villeDestination))

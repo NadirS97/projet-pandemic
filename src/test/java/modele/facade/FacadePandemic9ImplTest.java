@@ -14,6 +14,7 @@ import modele.elements.actions.partager_connaissance.PrendreConnaissance;
 import modele.elements.actions.planificateur_urgence.EntreposerEvenementRolePlanificateur;
 import modele.elements.actions.traiter_maladie.TraiterMaladie;
 import modele.elements.cartes.CarteEvenement;
+import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
 import modele.elements.cartes.evenements.*;
@@ -917,9 +918,17 @@ class FacadePandemic9ImplTest {
 
     @Test
     void piocherCartes(){
+        CarteJoueur premiereCarteVille = new CarteVille(atlanta);
+        CarteJoueur deuxiemeCarteVille = new CarteVille(chicago);
+        plateau.getPiocheCarteJoueur().addFirst(premiereCarteVille);
+        plateau.getPiocheCarteJoueur().addFirst(deuxiemeCarteVille);
         int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
+        int taillePiocheInitial = plateau.getPiocheCarteJoueur().size();
         Assertions.assertDoesNotThrow(() -> this.instance.piocherCartes(pionJoueur));
-        assertEquals(tailleDeckInitial+2,pionJoueur.getDeckJoueur().size());
+        assertEquals(taillePiocheInitial-2, plateau.getPiocheCarteJoueur().size());
+        assertEquals(tailleDeckInitial+2, pionJoueur.getDeckJoueur().size());
+        assertTrue(pionJoueur.getDeckJoueur().contains(premiereCarteVille));
+        assertTrue(pionJoueur.getDeckJoueur().contains(deuxiemeCarteVille));
     }
 
 

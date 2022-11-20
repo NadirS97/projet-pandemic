@@ -24,6 +24,17 @@ public class ConstruireUneStation implements IAction {
         this.villeStationDeRecherche = villeStationDeRecherche;
     }
 
+    /**
+     * Fonction permettant d'executer l'action ConstruireUneStation :
+     * Pour une action le joueur peut construire une station de recherche en défaussant la carte correspondant
+     * à la ville où le joueur se situe. Une fois que 6 stations ont été construites, le joueur ne peut plus
+     * en créer, mais il peut en déplacer une autre déjà existante sur sa case.
+     * @param pionJoueur
+     * @throws NbActionsMaxTourAtteintException
+     * @throws VilleActuellePossedeDejaUneStationDeRechercheException
+     * @throws CarteVilleInexistanteDansDeckJoueurException
+     * @throws VilleAvecAucuneStationDeRechercheException
+     */
     @Override
     public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteVilleInexistanteDansDeckJoueurException, VilleAvecAucuneStationDeRechercheException {
         Ville villeActuelle = pionJoueur.getVilleActuelle();
