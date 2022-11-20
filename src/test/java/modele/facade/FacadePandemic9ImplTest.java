@@ -21,6 +21,7 @@ import modele.elements.cartes.roles.*;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.EtatVirus;
 import modele.exceptions.*;
+import modele.utils.DonneesVariablesStatiques;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -904,4 +905,27 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(carteSubventionPublique);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, carteSubventionPublique));
     }
+
+//=================================================================================================================================================================================
+//                                                 EFFET CARTE EPIDEMIE
+//=================================================================================================================================================================================
+
+    @Test
+    void applicationEffetAcceleration(){
+        Plateau plateauTest = plateau;
+        assertTrue(plateauTest.getMarqueurVitessePropagation() >= 0,"Le marqueur vitesse de propagation ne peut pas être négatif");
+        assertTrue(plateauTest.getMarqueurVitessePropagation() < DonneesVariablesStatiques.tabMarqueurVitesseDePropagation.length,
+                "Marqueur vitesse de propagation ne peut pas être supérieur à la taille du tableau marqueur vitesse de propagation");
+    }
+
+    @Test
+    void applicationEffetIntensification(){
+
+    }
+
+    @Test
+    void applicationEffetInfection(){
+
+    }
+
 }
