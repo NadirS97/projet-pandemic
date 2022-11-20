@@ -35,8 +35,7 @@ public class TraiterMaladie implements IAction {
             throw new VirusDejaEradiqueException();
         if (choixVirus.getEtatVirus().equals(EtatVirus.NON_TRAITE)) {
             if (pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN)) {
-                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus,
-                        0);
+                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus, 0);
             }
             else {
                 pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus,

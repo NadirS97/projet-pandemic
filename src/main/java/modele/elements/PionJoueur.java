@@ -36,7 +36,7 @@ public class PionJoueur {
 
 
 
-    public PionJoueur(Partie partie) {
+    public PionJoueur(Partie partie) throws VilleIntrouvableException {
         this.plateau = partie.getPlateau();
         this.partie = partie;
         this.deckJoueur = new ArrayList<>();

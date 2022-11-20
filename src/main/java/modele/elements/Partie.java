@@ -63,7 +63,7 @@ public class Partie {
         partie.determinerQuiCommencePartie();
         return partie;
     }
-    private void ajoutJoueursDansPartie(int nbJoueurs){
+    private void ajoutJoueursDansPartie(int nbJoueurs) throws VilleIntrouvableException {
         for (int i = 0 ; i < nbJoueurs ; i++){
             joueurs.add(new PionJoueur(this));
         }
@@ -77,7 +77,7 @@ public class Partie {
      * avec un cube de leur couleur. Les cartes utilisées sont alors déposées face visible dans la
      * défausse « propagation ».
      */
-    private void miseEnPlaceJeuCartePropagation(){
+    private void miseEnPlaceJeuCartePropagation() throws VilleIntrouvableException {
         // 3 premiere, 3 cubes
         for (int i = 0 ; i < 3 ; i++){
            Ville villeContamine =  plateau.piocherCartePropagation(0);

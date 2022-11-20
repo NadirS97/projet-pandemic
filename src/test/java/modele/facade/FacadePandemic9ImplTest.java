@@ -369,7 +369,7 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourActionTraiterMaladieNonTraiteOK(){
 
-        // pour simplifier le test on choisis la ville qui se propage plutot que de tester la propagation random
+        // pour simplifier le test, on choisit la ville qui se propage plutôt que de tester la propagation random
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
 
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
@@ -378,6 +378,20 @@ class FacadePandemic9ImplTest {
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,traiter));
 
     }
+    @Test
+    void jouerTourActionTraiterAvecMedecinMaladieNonTraiteOK() throws VilleIntrouvableException {
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
+
+        Virus virusBleu = plateau.getLesVirus().get("BLEU");
+        IAction traiter = new TraiterMaladie(virusBleu);
+        PionJoueur pionJoueur3 = new PionJoueur(instance.partie);
+        pionJoueur3.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
+        pionJoueur3.setVilleActuelle(atlanta);
+
+        Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur3, traiter));
+        Assertions.assertEquals(0, instance.partie.getPlateau().getVilleByName(atlanta.getNomVille()).getNbCubeVirusVille().get(virusBleu));
+    }
+
 
 //=============================================================================================================================
 //                                                 ACTION PARTAGE_CONAISSANCE
@@ -591,7 +605,7 @@ class FacadePandemic9ImplTest {
 //=============================================================================================================================
 
     @Test
-    void jouerTourActionDecouvrirRemedeOK() {
+    void jouerTourActionDecouvrirRemedeOK() throws VilleIntrouvableException {
 
         atlanta.setStationDeRechercheVille(true);
         // pour le test on clear le deck actuel qui contient de base 2cartes distribués
@@ -634,7 +648,7 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void jouerTourActionDecouvrirRemedeVilleAvecAucuneStationDeRecherche() {
+    void jouerTourActionDecouvrirRemedeVilleAvecAucuneStationDeRecherche() throws VilleIntrouvableException {
         atlanta.setStationDeRechercheVille(false);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
@@ -675,7 +689,7 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void jouerTourActionDecouvrirRemedeNbActionsMaxTourAtteintException() {
+    void jouerTourActionDecouvrirRemedeNbActionsMaxTourAtteintException() throws VilleIntrouvableException {
         atlanta.setStationDeRechercheVille(true);
         alger.setStationDeRechercheVille(true);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
@@ -717,7 +731,7 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void jouerTourActionDecouvrirRemedeVirusDejaTraite() {
+    void jouerTourActionDecouvrirRemedeVirusDejaTraite() throws VilleIntrouvableException {
         atlanta.setStationDeRechercheVille(true);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
@@ -757,7 +771,7 @@ class FacadePandemic9ImplTest {
     }
 
 
-    //=============================================================================================================================
+//=============================================================================================================================
 //                                                 ROLE EXPERT_AUX_OPERATIONS
 //=============================================================================================================================
 
@@ -779,7 +793,7 @@ class FacadePandemic9ImplTest {
     }
 
 
-    //=============================================================================================================================
+//=============================================================================================================================
 //                                                 ROLE PLANIFICATEUR D'URGENCE
 //=============================================================================================================================
 
@@ -794,7 +808,7 @@ class FacadePandemic9ImplTest {
 
     }
 
-    //=============================================================================================================================
+//=============================================================================================================================
 //                                                 ROLE SPECIALISTE_MISE_EN_QUARANTAINE
 //=============================================================================================================================
 
@@ -806,13 +820,12 @@ class FacadePandemic9ImplTest {
         assertThrows((PropagationImpossibleCarSpecialisteQuarantaineException.class),() -> pionJoueur.getPlateau().propagationMaladie(pionJoueur.getVilleActuelle(),2));
     }
 
-
-    //=============================================================================================================================
+//=============================================================================================================================
 //                                                 ROLE REPARTITEUR
 //=============================================================================================================================
 
     @Test
-    void repartiteurOk(){
+    void repartiteurOk() throws VilleIntrouvableException {
         pionJoueur.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
         PionJoueur pionJoueur3 = new PionJoueur(instance.partie);
         pionJoueur2.setAutorisationDeplacementRepartiteur(true);
@@ -827,7 +840,7 @@ class FacadePandemic9ImplTest {
 //=============================================================================================================================
 
     @Test
-    void jouerTourOk(){
+    void jouerTourOk() throws VilleIntrouvableException {
         PionJoueur joueurActuel = instance.partie.getJoueurActuel();
         joueurActuel.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
         IAction action = new DeplacementVoiture(plateau.getVilleByName("Washington"));

@@ -62,8 +62,12 @@ public class Plateau {
 
 
 
-    public Ville getVilleByName(String name) {
-        return villes.get(name);
+    public Ville getVilleByName(String name) throws VilleIntrouvableException {
+        Ville ville = villes.get(name);
+        if (ville == null) {
+            throw new VilleIntrouvableException(name);
+        }
+        return ville;
     }
 
     public int getNbStationsDeRechercheConstruites() {
