@@ -32,6 +32,12 @@ public class DonneesVariablesStatiques {
     //Nombre de cubes à rajouter lors de l'execution de l'effet "Infection" de la carte épidémie
     public static int nbCubesEffetInfectionCarteEpidemie = 3;
 
+    //Nombre de cartes à piocher par tour et par joueur
+    public static int nbCartesAPiocherParTour = 2;
+
+    //Nombre de cartes max qu'un joueur peut avoir en main
+    public static int nbCartesJoueurMaxEnMain = 7;
+
     //Nombre de cartes épidémie à créer (à rajouter au jeu)
     public static int nbCartesEpidemieACreer = 5;
 

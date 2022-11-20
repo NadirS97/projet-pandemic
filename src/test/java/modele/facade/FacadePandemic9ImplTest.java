@@ -402,7 +402,7 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourActionTraiterMaladieNonTraiteOK(){
         // pour simplifier le test, on choisit la ville qui se propage plutôt que de tester la propagation random
-        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
+        Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 2));
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
         IAction traiter = new TraiterMaladie(virusBleu);
         pionJoueur.setVilleActuelle(atlanta);
@@ -410,17 +410,15 @@ class FacadePandemic9ImplTest {
         Assertions.assertEquals(1, atlanta.getNbCubeVirusVille().get(virusBleu));
     }
 
-    //------------ 2- Tests jouerAction() avec l'action TraiterMaladie OK (test spécifique au Role : "MEDECIN")
+//------------ 2- Tests jouerAction() avec l'action TraiterMaladie OK (test spécifique au Role : "MEDECIN")
 
     @Test
-    void jouerTourActionTraiterAvecMedecinMaladieNonTraiteOK() throws VilleIntrouvableException {
+    void jouerTourActionTraiterAvecMedecinMaladieNonTraiteOK() {
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 3));
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
+        pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         IAction traiter = new TraiterMaladie(virusBleu);
-        PionJoueur pionJoueur3 = new PionJoueur(instance.partie);
-        pionJoueur3.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
-        pionJoueur3.setVilleActuelle(atlanta);
-        Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur3, traiter));
+        Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur, traiter));
         Assertions.assertEquals(0, atlanta.getNbCubeVirusVille().get(virusBleu));
     }
 
@@ -662,7 +660,7 @@ class FacadePandemic9ImplTest {
 //------------ 1- Tests jouerAction() avec l'action DecouvrirRemede OK
 
     @Test
-    void jouerTourActionDecouvrirRemedeOK() throws VilleIntrouvableException {
+    void jouerTourActionDecouvrirRemedeOK() {
         atlanta.setStationDeRechercheVille(true);
         // pour le test on clear le deck actuel qui contient de base 2cartes distribués
         // pour ajouter 5 cartes de la même couleur
@@ -706,7 +704,7 @@ class FacadePandemic9ImplTest {
 //------------ 3- Tests jouerAction() avec l'action DecouvrirRemede KO
 
     @Test
-    void jouerTourActionDecouvrirRemedeVilleAvecAucuneStationDeRecherche() throws VilleIntrouvableException {
+    void jouerTourActionDecouvrirRemedeVilleAvecAucuneStationDeRecherche() {
         atlanta.setStationDeRechercheVille(false);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
@@ -726,7 +724,7 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void jouerTourActionDecouvrirRemedeNbActionsMaxTourAtteint() throws VilleIntrouvableException {
+    void jouerTourActionDecouvrirRemedeNbActionsMaxTourAtteint() {
         atlanta.setStationDeRechercheVille(true);
         alger.setStationDeRechercheVille(true);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
@@ -747,7 +745,7 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void jouerTourActionDecouvrirRemedeVirusDejaTraite() throws VilleIntrouvableException {
+    void jouerTourActionDecouvrirRemedeVirusDejaTraite() {
         atlanta.setStationDeRechercheVille(true);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
@@ -861,7 +859,7 @@ class FacadePandemic9ImplTest {
 //=============================================================================================================================
 
     @Test
-    void repartiteurOk() throws VilleIntrouvableException {
+    void repartiteurOk() {
         pionJoueur.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
         PionJoueur pionJoueur3 = new PionJoueur(instance.partie);
         pionJoueur2.setAutorisationDeplacementRepartiteur(true);
@@ -875,7 +873,7 @@ class FacadePandemic9ImplTest {
 //=============================================================================================================================
 
     @Test
-    void jouerTourOk() throws VilleIntrouvableException {
+    void jouerTourOk() {
         PionJoueur joueurActuel = instance.partie.getJoueurActuel();
         joueurActuel.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
         IAction action = new DeplacementVoiture(plateau.getVilleByName("Washington"));

@@ -60,7 +60,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     }
 
     @Override
-    public void piocherCartes(PionJoueur joueurActuel) throws TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException {
+    public void piocherCartes(PionJoueur joueurActuel) throws TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
 
             joueurActuel.piocherCartes();
 

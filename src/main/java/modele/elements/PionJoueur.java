@@ -36,7 +36,7 @@ public class PionJoueur {
 
 
 
-    public PionJoueur(Partie partie) throws VilleIntrouvableException {
+    public PionJoueur(Partie partie){
         this.plateau = partie.getPlateau();
         this.partie = partie;
         this.deckJoueur = new ArrayList<>();
@@ -110,12 +110,22 @@ public class PionJoueur {
         deckJoueur.remove(carteEvenement);
     }
 
-    public void piocherCartes() throws  TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException {
+    public void piocherCartes() throws TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
         if (plateau.getPiocheCarteJoueur().isEmpty())
             throw new EchecDeLaPartiePlusDeCarteJoueurException();
-        deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
-        deckJoueur.add(plateau.getPiocheCarteJoueur().remove(0));
-        if (deckJoueur.size() >= 7){
+
+        for (int i = 0; i < DonneesVariablesStatiques.nbCartesAPiocherParTour; i++) {
+            CarteJoueur carte = plateau.piocherCarteJoueur();
+            if(carte instanceof CarteVille) {
+                deckJoueur.add(carte);
+            }else{
+                if (carte instanceof CarteEpidemie) {
+                    ((CarteEpidemie) carte).execEffet(this);
+                }
+            }
+        }
+
+        if (deckJoueur.size() >= DonneesVariablesStatiques.nbCartesJoueurMaxEnMain){
             throw new TropDeCarteEnMainException();
         }
     }

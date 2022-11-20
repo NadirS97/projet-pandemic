@@ -26,7 +26,7 @@ public class Partie {
     private PionJoueur joueurActuel;
 
 
-    private Partie() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+    private Partie() throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
 
         // marqueur eclosion et propagation placé à 0 lors de la création du plateau
         // lors de la création du plateau, toute la créations des cartes du jeu se font
@@ -37,7 +37,7 @@ public class Partie {
     }
 
 
-    public static Partie creerPartieDeuxJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+    public static Partie creerPartieDeuxJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
         Partie partie = new Partie();
         partie.ajoutJoueursDansPartie(2);
         partie.distributionCarteJoueurs(4);
@@ -77,7 +77,7 @@ public class Partie {
      * avec un cube de leur couleur. Les cartes utilisées sont alors déposées face visible dans la
      * défausse « propagation ».
      */
-    private void miseEnPlaceJeuCartePropagation() throws VilleIntrouvableException {
+    private void miseEnPlaceJeuCartePropagation(){
         // 3 premiere, 3 cubes
         for (int i = 0 ; i < 3 ; i++){
            Ville villeContamine =  plateau.piocherCartePropagation(0);

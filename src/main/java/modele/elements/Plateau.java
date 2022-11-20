@@ -60,12 +60,8 @@ public class Plateau {
 
 
 
-    public Ville getVilleByName(String name) throws VilleIntrouvableException {
-        Ville ville = villes.get(name);
-        if (ville == null) {
-            throw new VilleIntrouvableException(name);
-        }
-        return ville;
+    public Ville getVilleByName(String name){
+        return villes.get(name);
     }
 
     public int getNbStationsDeRechercheConstruites() {
@@ -167,6 +163,10 @@ public class Plateau {
 
     public CarteRole piocherCarteRole(){
         return toutesLesCartesRolesExistante.remove(0);
+    }
+
+    public CarteJoueur piocherCarteJoueur(){
+        return piocheCarteJoueur.remove(0);
     }
 
     // Sert exclusivement à l'effet Prevision
