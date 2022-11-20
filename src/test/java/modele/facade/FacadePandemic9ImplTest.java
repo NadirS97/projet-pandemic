@@ -936,11 +936,17 @@ class FacadePandemic9ImplTest {
     void piocherCartesEpidemie(){
         CarteJoueur premiereCarteVille = new CarteVille(atlanta);
         CarteEpidemie carteEpidemie = new CarteEpidemie();
+        CartePropagation cartePropagation = plateau.getPiocheCartePropagation().get(plateau.getPiocheCartePropagation().size() -1);
+        Virus virus = plateau.getLesVirus().get(cartePropagation.getVilleCartePropagation().getCouleurVirusVille());
         plateau.getPiocheCarteJoueur().addFirst(premiereCarteVille);
         plateau.getPiocheCarteJoueur().addFirst(carteEpidemie);
+        plateau.getDefausseCartePropagation().add(plateau.getPiocheCartePropagation().get(0));
+        plateau.getDefausseCartePropagation().add(plateau.getPiocheCartePropagation().get(0));
         int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
         int taillePiocheInitial = plateau.getPiocheCarteJoueur().size();
         int tailleDefausseCarteJoueurInitial = plateau.getDefausseCarteJoueur().size();
+        int tailleDefausseCartePropagationInitial = plateau.getDefausseCartePropagation().size();
+        int taillePiocheCartePropagationInitial = plateau.getPiocheCartePropagation().size();
         int ancienMarqueurVitesseDePropagation = plateau.getMarqueurVitessePropagation();
         Assertions.assertDoesNotThrow(() -> this.instance.piocherCartes(pionJoueur));
         assertEquals(tailleDeckInitial + 1,pionJoueur.getDeckJoueur().size());
@@ -948,6 +954,9 @@ class FacadePandemic9ImplTest {
         assertEquals(taillePiocheInitial - 2, plateau.getPiocheCarteJoueur().size());
         assertEquals(ancienMarqueurVitesseDePropagation +1, plateau.getMarqueurVitessePropagation());
         assertEquals(2,plateau.getVitesseDePropagation());
+        assertEquals(3,cartePropagation.getVilleCartePropagation().getNbCubeVirusVille().get(virus));
+        assertEquals(tailleDefausseCartePropagationInitial + 1,plateau.getDefausseCartePropagation().size());
+        assertEquals(taillePiocheCartePropagationInitial -1, plateau.getPiocheCartePropagation().size());
 
     }
 
