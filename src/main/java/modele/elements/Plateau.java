@@ -35,8 +35,6 @@ public class Plateau {
     private List<CartePropagation> piocheCartePropagation;
     private List<CartePropagation> defausseCartePropagation;
     private List<CarteRole> toutesLesCartesRolesExistante;
-
-    // TODO : créer méthode pour y mettre les couleurs des pions de joueurs
     private List<String> listeCouleursPionsJoueurs;
     private int nbStationsDeRechercheConstruites;
 

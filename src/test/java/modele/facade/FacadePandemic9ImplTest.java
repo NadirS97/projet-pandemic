@@ -49,8 +49,6 @@ class FacadePandemic9ImplTest {
     private Plateau plateau;
 
 
-
-
     @BeforeEach
     void setUp() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         instance = new FacadePandemic9Impl();
@@ -68,9 +66,9 @@ class FacadePandemic9ImplTest {
         miami = plateau.getVilleByName("Miami");
 
 
-        // trop de conflit avec les initialisation des cartes distribué aux joueurs créee et les assert/throw qui check si
+        // trop de conflit avec les initialisations des cartes distribué aux joueurs créés et les assert/throw qui check si
         // le joueur possèdent la carte dite
-        // donc on vide les deck des deux joueurs qui possèdent chacun 2 cartes à la base pour une partie de 4
+        // donc on vide les deck des deux joueurs qui possèdent chacun 2 cartes à la base pour une partie de 4.
         pionJoueur.getDeckJoueur().remove(0);
         pionJoueur.getDeckJoueur().remove(0);
         pionJoueur2.getDeckJoueur().remove(0);
@@ -81,14 +79,12 @@ class FacadePandemic9ImplTest {
     @Test
     void creationPartie4Joueurs(){
         Assertions.assertDoesNotThrow(()-> this.instance.creerPartieQuatreJoueurs());
-
         // on verifie que l'on a bien 4 pionsJoueur creer dans la partie
         assertEquals(4,instance.partie.getJoueurs().size());
         // que les 4 cartes roles ont bien été distribué parmis les 7 présente dans le plateau de base lors de la création
         assertEquals(3,instance.partie.getPlateau().getToutesLesCartesRolesExistante().size());
         // que la piocheCartePropagation contient 48 cartes - les 9 retourné à l'initialisation du jeu
         assertEquals(39,instance.partie.getPlateau().getPiocheCartePropagation().size());
-
     }
 
 
@@ -96,6 +92,7 @@ class FacadePandemic9ImplTest {
 //                                                ACTION DeplacementVoiture
 //=============================================================================================================================
 
+//------------ 1- Tests jouerAction() avec l'action DeplacementVoiture OK
     @Test
     void jouerTourActionDeplacementVoitureOK() {
         IAction action = new DeplacementVoiture(chicago);
@@ -103,6 +100,7 @@ class FacadePandemic9ImplTest {
         assertEquals(pionJoueur.getVilleActuelle(), chicago);
     }
 
+//------------ 2- Tests jouerAction() avec l'action DeplacementVoiture KO
     @Test
     void jouerTourActionDeplacementVoitureVilleDestinationEstVilleActuelle() {
         IAction action = new DeplacementVoiture(atlanta);
@@ -143,6 +141,7 @@ class FacadePandemic9ImplTest {
 //                                                ACTION DeplacementVolDirect
 //=============================================================================================================================
 
+//------------ 1- Tests jouerAction() avec l'action DeplacementVolDirect OK
     @Test
     void jouerTourActionDeplacementVolDirectOK() {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
@@ -151,6 +150,7 @@ class FacadePandemic9ImplTest {
         assertEquals(pionJoueur.getVilleActuelle(), paris);
     }
 
+//------------ 2- Tests jouerAction() avec l'action DeplacementVolDirect KO
     @Test
     void jouerTourActionDeplacementVolDirectVilleDestinationEstVilleActuelle() {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
@@ -177,6 +177,8 @@ class FacadePandemic9ImplTest {
 //                                                ACTION DeplacementVolCharter
 //=============================================================================================================================
 
+//------------ 1- Tests jouerAction() avec l'action DeplacementVolCharter OK
+
     @Test
     void jouerTourActionDeplacementVolCharterOK() {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
@@ -184,6 +186,8 @@ class FacadePandemic9ImplTest {
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action));
         assertEquals(pionJoueur.getVilleActuelle(), paris);
     }
+
+//------------ 2- Tests jouerAction() avec l'action DeplacementVolCharter KO
 
     @Test
     void jouerTourActionDeplacementVolCharterPasDeCarteVilleActuel() {
@@ -204,6 +208,15 @@ class FacadePandemic9ImplTest {
 //                                                ACTION ConstruireUneStation
 //=============================================================================================================================
 
+//-----------------------------------------------------------------------------------------------------------------------------
+// - Les roles sont distribués aléatoirement entre les joueurs en début de partie
+// - Etant une action qui s'execute differemment si le role du joueur est : "EXPERT_AUX_OPERATIONS"
+// Alors, pour effectuer certains tests on est contraint de set un role autre que "EXPERT_AUX_OPERATIONS"
+// (Tests fonctionnent avec n'importe quel autre role mis à part EXPERT_AUX_OPERATIONS, qui lui a un/des tests propres)
+//-----------------------------------------------------------------------------------------------------------------------------
+
+//------------ 1- Tests jouerAction() avec l'action ConstruireUneStation OK
+
     @Test
     void jouerTourActionConstruireUneStationOK() {
         pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
@@ -212,8 +225,6 @@ class FacadePandemic9ImplTest {
         IAction action = new ConstruireUneStation();
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
         assertTrue(pionJoueur.getVilleActuelle().isStationDeRechercheVille());
-        // cette assert ne passera pas si le role est EXPERT AUX OPERATIONS car celui ci ne defausse pas
-        // , on set donc un role autre que expert
         assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(alger));
     }
 
@@ -232,6 +243,8 @@ class FacadePandemic9ImplTest {
         assertTrue(atlanta.isStationDeRechercheVille());
         assertFalse(chicago.isStationDeRechercheVille());
     }
+
+//------------ 2- Tests jouerAction() avec l'action ConstruireUneStation KO
 
     @Test
     void jouerTourActionConstruireUneStationNbActionsMaxTourAtteint() {
@@ -289,7 +302,7 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourActionConstruireUneStationCarteVilleInexistanteDansDeckJoueur(){
         pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
-       pionJoueur.setVilleActuelle(alger);
+        pionJoueur.setVilleActuelle(alger);
         IAction action = new ConstruireUneStation();
         Assertions.assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));
@@ -308,6 +321,15 @@ class FacadePandemic9ImplTest {
 //                                                 ACTION DeplacementNavette
 //=============================================================================================================================
 
+//-----------------------------------------------------------------------------------------------------------------------------
+// - Les roles sont distribués aléatoirement entre les joueurs en début de partie
+// - Etant une action qui s'execute differemment si le role du joueur est : "EXPERT_AUX_OPERATIONS"
+// Alors, pour effectuer certains tests on est contraint de set un role autre que "EXPERT_AUX_OPERATIONS"
+// (Tests fonctionnent avec n'importe quel autre role mis à part EXPERT_AUX_OPERATIONS, qui lui a un/des tests propres)
+//-----------------------------------------------------------------------------------------------------------------------------
+
+//------------ 1- Tests jouerAction() avec l'action DeplacementNavette OK
+
     @Test
     void jouerTourActionDeplacementNavetteOK() {
         atlanta.setStationDeRechercheVille(true);
@@ -316,6 +338,8 @@ class FacadePandemic9ImplTest {
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
         assertEquals(pionJoueur.getVilleActuelle(), alger);
     }
+
+//------------ 2- Tests jouerAction() avec l'action DeplacementNavette KO
 
     @Test
     void jouerTourActionDeplacementNavetteVilleAvecAucuneStationDeRechercheVilleDestination() {
@@ -363,62 +387,84 @@ class FacadePandemic9ImplTest {
     }
 
 //=============================================================================================================================
-//                                                 ACTION TRAITER MALADIE
+//                                                 ACTION TraiterMaladie
 //=============================================================================================================================
+
+//-----------------------------------------------------------------------------------------------------------------------------
+// - Les roles sont distribués aléatoirement entre les joueurs en début de partie
+// - Etant une action qui s'execute differemment si le role du joueur est : "MEDECIN"
+// Alors, pour effectuer certains tests on est contraint de set un role autre que "MEDECIN"
+// (Tests fonctionnent avec n'importe quel autre role mis à part MEDECIN, qui lui a un/des tests propres)
+//-----------------------------------------------------------------------------------------------------------------------------
+
+//------------ 1- Tests jouerAction() avec l'action TraiterMaladie OK
 
     @Test
     void jouerTourActionTraiterMaladieNonTraiteOK(){
-
         // pour simplifier le test, on choisit la ville qui se propage plutôt que de tester la propagation random
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
-
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
         IAction traiter = new TraiterMaladie(virusBleu);
         pionJoueur.setVilleActuelle(atlanta);
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,traiter));
-
     }
+
+//------------ 2- Tests jouerAction() avec l'action TraiterMaladie OK (test spécifique au Role : "MEDECIN")
+
     @Test
     void jouerTourActionTraiterAvecMedecinMaladieNonTraiteOK() throws VilleIntrouvableException {
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 1));
-
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
         IAction traiter = new TraiterMaladie(virusBleu);
         PionJoueur pionJoueur3 = new PionJoueur(instance.partie);
         pionJoueur3.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         pionJoueur3.setVilleActuelle(atlanta);
-
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur3, traiter));
         Assertions.assertEquals(0, instance.partie.getPlateau().getVilleByName(atlanta.getNomVille()).getNbCubeVirusVille().get(virusBleu));
     }
 
+//------------ 4- Tests jouerAction() avec l'action TraiterMaladie KO
+
+    //TODO
+
+//------------ 3- Tests jouerAction() avec l'action TraiterMaladie KO (tests spécifiques au Role : "MEDECIN")
+
+    //TODO
 
 //=============================================================================================================================
-//                                                 ACTION PARTAGE_CONAISSANCE
+//                                          ACTION DonnerConnaissance (PartagerConnaissance)
 //=============================================================================================================================
+
+//-----------------------------------------------------------------------------------------------------------------------------
+// - Les roles sont distribués aléatoirement entre les joueurs en début de partie
+// - Etant une action qui s'execute differemment si le role du joueur est : "CHERCHEUSE"
+// Alors, pour effectuer certains tests on est contraint de set un role autre que "CHERCHEUSE"
+// (Tests fonctionnent avec n'importe quel autre role mis à part CHERCHEUSE, qui lui a un/des tests propres)
+//-----------------------------------------------------------------------------------------------------------------------------
+
+//------------ 1- Tests jouerAction() avec l'action DonnerConnaissance OK
 
     @Test
     void donnerConnaissanceOk(){
-
+        // pionJoueur : Joueur qui va donner
+        // pionJoueur2 : Joueur qui va prendre
         pionJoueur2.setVilleActuelle(atlanta);
-
-
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         IAction donnerConaissance = new DonnerConnaissance(pionJoueur2);
-
         assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,donnerConaissance));
         assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
         assertTrue(pionJoueur2.isVilleOfCarteVilleDeckJoueur(atlanta));
     }
 
+//------------ 2- Tests jouerAction() avec l'action DonnerConnaissance OK (test spécifique au Role : "CHERCHEUSE")
+
     @Test
     void donnerConnaissanceChercheuseOk(){
+        // pionJoueur : Role: CHERCHEUSE : Joueur qui va donner
+        // pionJoueur2 : Joueur qui va prendre
         pionJoueur.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
-
         pionJoueur2.setVilleActuelle(atlanta);
-
-
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         IAction action = new DonnerConnaissance(pionJoueur2, chicago);
@@ -427,32 +473,10 @@ class FacadePandemic9ImplTest {
         assertTrue(pionJoueur2.isVilleOfCarteVilleDeckJoueur(chicago));
     }
 
-    @Test
-    void donnerConnaissanceChercheuseDonneeManquante(){
-        pionJoueur.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
-
-        pionJoueur2.setVilleActuelle(atlanta);
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-        IAction action = new DonnerConnaissance(pionJoueur2);
-        assertThrows(DonneeManquanteException.class,
-                () -> this.instance.jouerAction(pionJoueur, action));
-    }
-
-    @Test
-    void donnerConnaissanceChercheuseCarteVilleInexistanteDansDeckJoueur(){
-        pionJoueur.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
-
-        pionJoueur2.setVilleActuelle(atlanta);
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
-        IAction action = new DonnerConnaissance(pionJoueur2, chicago);
-        assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
-                () -> this.instance.jouerAction(pionJoueur, action));
-    }
+//------------ 3- Tests jouerAction() avec l'action DonnerConnaissance KO
 
     @Test
     void donnerConnaissanceNbActionsMaxTourAtteint(){
-
         pionJoueur2.setVilleActuelle(atlanta);
         atlanta.setStationDeRechercheVille(true);
         alger.setStationDeRechercheVille(true);
@@ -481,7 +505,6 @@ class FacadePandemic9ImplTest {
 
     @Test
     void donnerConnaissanceCarteVilleInexistanteDansDeckJoueur(){
-
         pionJoueur2.setVilleActuelle(atlanta);
         pionJoueur2.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         IAction action = new DonnerConnaissance(pionJoueur2,atlanta);
@@ -489,14 +512,47 @@ class FacadePandemic9ImplTest {
                 () -> this.instance.jouerAction(pionJoueur,action));
     }
 
+//------------ 4- Tests jouerAction() avec l'action DonnerConnaissance KO (tests spécifiques au Role : "CHERCHEUSE")
+
+    @Test
+    void donnerConnaissanceChercheuseDonneeManquante(){
+        pionJoueur.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
+        pionJoueur2.setVilleActuelle(atlanta);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new DonnerConnaissance(pionJoueur2);
+        assertThrows(DonneeManquanteException.class,
+                () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void donnerConnaissanceChercheuseCarteVilleInexistanteDansDeckJoueur(){
+        pionJoueur.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
+        pionJoueur2.setVilleActuelle(atlanta);
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new DonnerConnaissance(pionJoueur2, chicago);
+        assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+//=============================================================================================================================
+//                                          ACTION PrendreConnaissance (PartagerConnaissance)
+//=============================================================================================================================
+
+//-----------------------------------------------------------------------------------------------------------------------------
+// - Les roles sont distribués aléatoirement entre les joueurs en début de partie
+// - Etant une action qui s'execute differemment si le role du joueur est : "CHERCHEUSE"
+// Alors, pour effectuer certains tests on est contraint de set un role autre que "CHERCHEUSE"
+// (Tests fonctionnent avec n'importe quel autre role mis à part CHERCHEUSE, qui lui a un/des tests propres)
+//-----------------------------------------------------------------------------------------------------------------------------
+
+//------------ 1- Tests jouerAction() avec l'action PrendreConnaissance OK
+
     @Test
     void prendreConnaissanceOk(){
         // pionJoueur : Joueur qui va prendre
-        // joueur2 : Joueur qui va donner
+        // pionJoueur2 : Joueur qui va donner
         pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
-
-
-
         pionJoueur2.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         pionJoueur2.setVilleActuelle(atlanta);
         pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
@@ -506,15 +562,14 @@ class FacadePandemic9ImplTest {
         assertTrue(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
     }
 
+//------------ 2- Tests jouerAction() avec l'action PrendreConnaissance OK (test spécifique au Role : "CHERCHEUSE")
+
     @Test
     void prendreConnaissanceChercheuseOk(){
         // pionJoueur : Joueur qui va prendre
-        // joueur2 : Role CHERCHEUSE : Joueur qui va donner
-
+        // pionJoueur2 : Role CHERCHEUSE : Joueur qui va donner
         pionJoueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
         pionJoueur2.setVilleActuelle(atlanta);
-
-
         pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         IAction prendreConnaissance = new PrendreConnaissance(pionJoueur2, chicago);
         assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,prendreConnaissance));
@@ -522,40 +577,12 @@ class FacadePandemic9ImplTest {
         assertFalse(pionJoueur2.isVilleOfCarteVilleDeckJoueur(chicago));
     }
 
-    @Test
-    void prendreConnaissanceChercheuseDonneeManquante(){
-        // pionJoueur : Joueur qui va prendre
-        // joueur2 : Role CHERCHEUSE : Joueur qui va donner
-
-        pionJoueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
-        pionJoueur2.setVilleActuelle(atlanta);
-        pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-
-        IAction action = new PrendreConnaissance(pionJoueur2,null);
-        assertThrows(DonneeManquanteException.class,
-                () -> this.instance.jouerAction(pionJoueur, action));
-    }
-
-    @Test
-    void prendreConnaissanceChercheuseCarteVilleInexistanteDansDeckJoueur(){
-        // pionJoueur : Joueur qui va prendre
-        // joueur2 : Role CHERCHEUSE : Joueur qui va donner
-
-        pionJoueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
-        pionJoueur2.setVilleActuelle(atlanta);
-
-
-        pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-        IAction action = new PrendreConnaissance(pionJoueur2, atlanta);
-        assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
-                () -> this.instance.jouerAction(pionJoueur, action));
-    }
+//------------ 3- Tests jouerAction() avec l'action PrendreConnaissance KO
 
     @Test
     void prendreConnaissanceNbActionsMaxTourAtteint(){
         // pionJoueur : Joueur qui va prendre
-        // joueur2 : Joueur qui va donner
-
+        // pionJoueur2 : Joueur qui va donner
         pionJoueur2.setVilleActuelle(atlanta);
         pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         atlanta.setStationDeRechercheVille(true);
@@ -576,7 +603,6 @@ class FacadePandemic9ImplTest {
 
     @Test
     void prendreConnaissanceJoueursNonPresentMemeVille(){
-
         // pionJoueur : Joueur qui va prendre
         // pionJoueur2 : Joueur qui va donner
         pionJoueur2.setVilleActuelle(chicago);
@@ -588,25 +614,54 @@ class FacadePandemic9ImplTest {
 
     @Test
     void prendreConnaissanceCarteVilleInexistanteDansDeckJoueur(){
-
         // pionJoueur : Joueur qui va prendre
-        // joueur2 : Joueur qui va donner
+        // pionJoueur2 : Joueur qui va donner
         pionJoueur2.setVilleActuelle(atlanta);
         pionJoueur2.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
-
-
         IAction action = new PrendreConnaissance(pionJoueur2);
         assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
                 () -> this.instance.jouerAction(pionJoueur,action));
+    }
+
+//------------ 4- Tests jouerAction() avec l'action PrendreConnaissance KO (tests spécifiques au Role : "CHERCHEUSE")
+
+    @Test
+    void prendreConnaissanceChercheuseDonneeManquante(){
+        // pionJoueur : Joueur qui va prendre
+        // pionJoueur2 : Role CHERCHEUSE : Joueur qui va donner
+        pionJoueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
+        pionJoueur2.setVilleActuelle(atlanta);
+        pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new PrendreConnaissance(pionJoueur2,null);
+        assertThrows(DonneeManquanteException.class,
+                () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void prendreConnaissanceChercheuseCarteVilleInexistanteDansDeckJoueur(){
+        // pionJoueur : Joueur qui va prendre
+        // pionJoueur2 : Role CHERCHEUSE : Joueur qui va donner
+        pionJoueur2.setRoleJoueur(new CarteChercheuse(CouleurPionsRole.MARRON));
+        pionJoueur2.setVilleActuelle(atlanta);
+        pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new PrendreConnaissance(pionJoueur2, atlanta);
+        assertThrows(CarteVilleInexistanteDansDeckJoueurException.class,
+                () -> this.instance.jouerAction(pionJoueur, action));
     }
 
 //=============================================================================================================================
 //                                                 ACTION DecouvrirRemede
 //=============================================================================================================================
 
+//-----------------------------------------------------------------------------------------------------------------------------
+// - Les roles sont distribués aléatoirement entre les joueurs en début de partie
+// Alors, pour effectuer certains tests, on devra préciser lorsqu'il s'agit du role "SCIENTIFIQUE"
+//-----------------------------------------------------------------------------------------------------------------------------
+
+//------------ 1- Tests jouerAction() avec l'action DecouvrirRemede OK
+
     @Test
     void jouerTourActionDecouvrirRemedeOK() throws VilleIntrouvableException {
-
         atlanta.setStationDeRechercheVille(true);
         // pour le test on clear le deck actuel qui contient de base 2cartes distribués
         // pour ajouter 5 cartes de la même couleur
@@ -619,13 +674,13 @@ class FacadePandemic9ImplTest {
         int tailleDefausseInitial = pionJoueur.getPlateau().getDefausseCarteJoueur().size();
         IAction action = new DecouvrirRemede();
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
-
-
         assertEquals(tailleDeckApresAjoutDesCartes - 5, pionJoueur.getDeckJoueur().size());
         assertEquals(tailleDefausseInitial + 5, pionJoueur.getPlateau().getDefausseCarteJoueur().size());
         String couleurVirus = atlanta.getCouleurVirusVille();
         assertEquals(pionJoueur.getPlateau().getLesVirus().get(couleurVirus).getEtatVirus(), EtatVirus.TRAITE);
     }
+
+//------------ 2- Tests jouerAction() avec l'action DecouvrirRemede OK (test spécifique au Role : "SCIENTIFIQUE")
 
     @Test
     void jouerTourActionDecouvrirRemedeScientifiqueOK() {
@@ -647,6 +702,8 @@ class FacadePandemic9ImplTest {
         assertEquals(pionJoueur.getPlateau().getLesVirus().get(couleurVirus).getEtatVirus(), EtatVirus.TRAITE);
     }
 
+//------------ 3- Tests jouerAction() avec l'action DecouvrirRemede KO
+
     @Test
     void jouerTourActionDecouvrirRemedeVilleAvecAucuneStationDeRecherche() throws VilleIntrouvableException {
         atlanta.setStationDeRechercheVille(false);
@@ -660,18 +717,6 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void jouerTourActionDecouvrirRemedeScientifiqueVilleAvecAucuneStationDeRecherche() {
-        atlanta.setStationDeRechercheVille(false);
-        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-        IAction action = new DecouvrirRemede();
-        Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class, () -> this.instance.jouerAction(pionJoueur, action));
-    }
-
-    @Test
     void jouerTourActionDecouvrirRemedeNombreDeCartesVilleDansDeckJoueurInvalide() {
         atlanta.setStationDeRechercheVille(true);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
@@ -680,16 +725,7 @@ class FacadePandemic9ImplTest {
     }
 
     @Test
-    void jouerTourActionDecouvrirRemedeScientifiqueNombreDeCartesVilleDansDeckJoueurInvalide() {
-        atlanta.setStationDeRechercheVille(true);
-        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
-        IAction action = new DecouvrirRemede();
-        Assertions.assertThrows(NombreDeCartesVilleDansDeckJoueurInvalideException.class, () -> this.instance.jouerAction(pionJoueur, action));
-    }
-
-    @Test
-    void jouerTourActionDecouvrirRemedeNbActionsMaxTourAtteintException() throws VilleIntrouvableException {
+    void jouerTourActionDecouvrirRemedeNbActionsMaxTourAtteint() throws VilleIntrouvableException {
         atlanta.setStationDeRechercheVille(true);
         alger.setStationDeRechercheVille(true);
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
@@ -697,27 +733,6 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
-        IAction action1 = new DeplacementNavette(alger);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
-        IAction action2 = new DeplacementNavette(atlanta);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action2));
-        IAction action3 = new DeplacementNavette(alger);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action3));
-        IAction action4 = new DeplacementNavette(atlanta);
-        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action4));
-        IAction action5 = new DecouvrirRemede();
-        Assertions.assertThrows(NbActionsMaxTourAtteintException.class, () -> this.instance.jouerAction(pionJoueur, action5));
-    }
-
-    @Test
-    void jouerTourActionDecouvrirRemedeScientifiqueNbActionsMaxTourAtteintException() {
-        atlanta.setStationDeRechercheVille(true);
-        alger.setStationDeRechercheVille(true);
-        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         IAction action1 = new DeplacementNavette(alger);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
         IAction action2 = new DeplacementNavette(atlanta);
@@ -750,6 +765,29 @@ class FacadePandemic9ImplTest {
         Assertions.assertThrows(VirusDejaTraiteException.class, () -> this.instance.jouerAction(pionJoueur, action2));
     }
 
+//------------ 4- Tests jouerAction() avec l'action DecouvrirRemede KO (tests spécifiques au Role : "SCIENTIFIQUE")
+
+    @Test
+    void jouerTourActionDecouvrirRemedeScientifiqueVilleAvecAucuneStationDeRecherche() {
+        atlanta.setStationDeRechercheVille(false);
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        IAction action = new DecouvrirRemede();
+        Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class, () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
+    @Test
+    void jouerTourActionDecouvrirRemedeScientifiqueNombreDeCartesVilleDansDeckJoueurInvalide() {
+        atlanta.setStationDeRechercheVille(true);
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        IAction action = new DecouvrirRemede();
+        Assertions.assertThrows(NombreDeCartesVilleDansDeckJoueurInvalideException.class, () -> this.instance.jouerAction(pionJoueur, action));
+    }
+
     @Test
     void jouerTourActionDecouvrirScientifiqueRemedeVirusDejaTraite() {
         atlanta.setStationDeRechercheVille(true);
@@ -770,7 +808,6 @@ class FacadePandemic9ImplTest {
         Assertions.assertThrows(VirusDejaTraiteException.class, () -> this.instance.jouerAction(pionJoueur, action2));
     }
 
-
 //=============================================================================================================================
 //                                                 ROLE EXPERT_AUX_OPERATIONS
 //=============================================================================================================================
@@ -789,7 +826,6 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(carteChicago);
         Assertions.assertDoesNotThrow(()-> instance.jouerAction(pionJoueur,action));
         assertEquals(pionJoueur.getDeckJoueur().get(0),carteChicago);
-
     }
 
 
@@ -805,7 +841,6 @@ class FacadePandemic9ImplTest {
         IAction action = new EntreposerEvenementRolePlanificateur(carteEvenement);
         assertDoesNotThrow(()-> instance.jouerAction(pionJoueur,action));
         assertEquals(carteEvenement,pionJoueur.getCartePlanificateurUrgenceEntrepose());
-
     }
 
 //=============================================================================================================================
@@ -832,7 +867,6 @@ class FacadePandemic9ImplTest {
         pionJoueur3.setVilleActuelle(alger);
         instance.partie.getJoueurs().add(pionJoueur3);
         assertDoesNotThrow(()->instance.repartiteurDeplacementPion(pionJoueur,pionJoueur2,alger));
-
     }
 
 //=============================================================================================================================
@@ -851,20 +885,14 @@ class FacadePandemic9ImplTest {
         assertDoesNotThrow(()-> instance.jouerTour(listeActions));
         // verif que c'est bien au joueur suivant après ce tour
         assertNotEquals(instance.partie.getJoueurActuel(),joueurActuel);
-
     }
-
 
     @Test
     void piocherCartes(){
-
         int tailleDeckInitial = pionJoueur.getDeckJoueur().size();
         Assertions.assertDoesNotThrow(() -> this.instance.piocherCartes(pionJoueur));
         assertEquals(tailleDeckInitial+2,pionJoueur.getDeckJoueur().size());
     }
-
-
-
 
 
 //=============================================================================================================================

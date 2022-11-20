@@ -127,7 +127,6 @@ public class Partie {
                 }
             }
         }
-
         joueurActuel = joueurAvecPlusGrandeVille;
         indexJoueur = joueurs.indexOf(joueurActuel);
     }
@@ -139,7 +138,6 @@ public class Partie {
         }
         joueurActuel = joueurs.get(indexJoueur);
         joueurActuel.setNbActions(4);
-
     }
 
     public PionJoueur getJoueurSuivant(){
