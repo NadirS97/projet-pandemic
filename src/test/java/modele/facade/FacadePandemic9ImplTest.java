@@ -401,9 +401,11 @@ class FacadePandemic9ImplTest {
 
     @Test
     void jouerTourActionTraiterMaladieNonTraiteOK(){
+        Virus virusBleu = plateau.getLesVirus().get("BLEU");
+        atlanta.getNbCubeVirusVille().put(virusBleu,0);
         // pour simplifier le test, on choisit la ville qui se propage plutôt que de tester la propagation random
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 2));
-        Virus virusBleu = plateau.getLesVirus().get("BLEU");
+        pionJoueur.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
         IAction traiter = new TraiterMaladie(virusBleu);
         pionJoueur.setVilleActuelle(atlanta);
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,traiter));
