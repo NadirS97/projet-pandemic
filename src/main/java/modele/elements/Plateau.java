@@ -198,20 +198,22 @@ public class Plateau {
         if (villePropagation.isSpeicalisteMiseEnQuarantainePresent())
             throw new PropagationImpossibleCarSpecialisteQuarantaineException();
         Virus virus = lesVirus.get(villePropagation.getCouleurVirusVille());
-        if(nbCubes<=0)
-            throw new NbCubesAAjouterInvalideException("Le nombre de cubes à rajouter est incorrect.");
-        if (villePropagation.isEclosionVille())
-            throw new VilleDejaEclosException();
-        if (villePropagation.getNbCubeVirusVille().get(virus) == DonneesVariablesStatiques.nbCubeMaxAvantEclosion) {
-            villePropagation.setEclosionVille(true);
-            eclosion(villePropagation, virus);
-        }
-        if(villePropagation.getNbCubeVirusVille().get(virus) + nbCubes <= DonneesVariablesStatiques.nbCubeMaxAvantEclosion){
-            villePropagation.getNbCubeVirusVille().put(virus, villePropagation.getNbCubeVirusVille().get(virus) + nbCubes);
-        }else{
-            villePropagation.getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubeMaxAvantEclosion);
-            villePropagation.setEclosionVille(true);
-            eclosion(villePropagation, virus);
+        if (!villePropagation.getListeVaccinationContreVirus().containsKey(villePropagation.getCouleurVirusVille())) {
+            if(nbCubes<=0)
+                throw new NbCubesAAjouterInvalideException("Le nombre de cubes à rajouter est incorrect.");
+            if (villePropagation.isEclosionVille())
+                throw new VilleDejaEclosException();
+            if (villePropagation.getNbCubeVirusVille().get(virus) == DonneesVariablesStatiques.nbCubeMaxAvantEclosion) {
+                villePropagation.setEclosionVille(true);
+                eclosion(villePropagation, virus);
+            }
+            if(villePropagation.getNbCubeVirusVille().get(virus) + nbCubes <= DonneesVariablesStatiques.nbCubeMaxAvantEclosion){
+                villePropagation.getNbCubeVirusVille().put(virus, villePropagation.getNbCubeVirusVille().get(virus) + nbCubes);
+            }else{
+                villePropagation.getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubeMaxAvantEclosion);
+                villePropagation.setEclosionVille(true);
+                eclosion(villePropagation, virus);
+            }
         }
     }
 
@@ -220,20 +222,23 @@ public class Plateau {
             throw new PropagationImpossibleCarSpecialisteQuarantaineException();
 
         for (String villeVoisineString : ville.getVillesVoisinesVille()) {
-            villes.get(villeVoisineString)
-                    .getNbCubeVirusVille().put(virus, villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) + 1);
-            // si la ville est d'une autre couleur que le virus propagé, il faut l'ajouter à la map
-            if (!villes.get(villeVoisineString).getNbCubeVirusVille().containsKey(virus))
-                villes.get(villeVoisineString).getNbCubeVirusVille().put(virus, 0);
+            // si la ville n'a pas été vaccinée par le médecin contre le virus en question
+            if (!villes.get(villeVoisineString).getListeVaccinationContreVirus().containsKey(virus.getVirusCouleur())) {
+                villes.get(villeVoisineString)
+                        .getNbCubeVirusVille()
+                        .put(virus, villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) + 1);
+                // si la ville est d'une autre couleur que le virus propagé, il faut l'ajouter à la map
+                if (!villes.get(villeVoisineString).getNbCubeVirusVille().containsKey(virus))
+                    villes.get(villeVoisineString).getNbCubeVirusVille().put(virus, 0);
 
-           // System.out.println(villes.get(villeVoisineString) + " :" + villes.get(villeVoisineString).getNbCubeVirusVille().get(virus));
-            if (villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) == DonneesVariablesStatiques.nbCubeMaxAvantEclosion) {
-                villes.get(villeVoisineString).setEclosionVille(true);
-                eclosion(villes.get(villeVoisineString), virus);
+                // System.out.println(villes.get(villeVoisineString) + " :" + villes.get(villeVoisineString).getNbCubeVirusVille().get(virus));
+                if (villes.get(villeVoisineString).getNbCubeVirusVille().get(virus) == DonneesVariablesStatiques.nbCubeMaxAvantEclosion) {
+                    villes.get(villeVoisineString).setEclosionVille(true);
+                    eclosion(villes.get(villeVoisineString), virus);
+                }
             }
         }
         marqueurVitesseEclosion++;
-
     }
 
     /**

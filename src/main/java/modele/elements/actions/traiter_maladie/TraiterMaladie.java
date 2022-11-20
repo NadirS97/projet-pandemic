@@ -57,7 +57,5 @@ public class TraiterMaladie implements IAction {
             pionJoueur.getPlateau().getLesVirus().get(choixVirus.getVirusCouleur()).setEtatVirus(EtatVirus.ERADIQUE);
 
         }
-
-
     }
 }

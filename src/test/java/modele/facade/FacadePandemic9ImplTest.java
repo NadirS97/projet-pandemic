@@ -869,6 +869,24 @@ class FacadePandemic9ImplTest {
     }
 
 //=============================================================================================================================
+//                                                 ROLE MEDECIN
+//=============================================================================================================================
+
+    /*
+    S'assurer que l'on ne puisse pas ajouter de nouveau cube maladie déjà soignée
+    quelque part dans la ville qui compte le médecin parmi elle.
+     */
+
+    @Test
+    void medecinOk() throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
+        pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
+        Virus virus = instance.partie.getPlateau().getLesVirus().get(pionJoueur.getVilleActuelle().getCouleurVirusVille());
+        pionJoueur.getVilleActuelle().getListeVaccinationContreVirus().put(pionJoueur.getVilleActuelle().getCouleurVirusVille(), virus);
+        instance.partie.getPlateau().propagationMaladie(pionJoueur.getVilleActuelle(), 1);
+        assertEquals(0, pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(virus));
+    }
+
+//=============================================================================================================================
 //                                                 AUTRES TESTS
 //=============================================================================================================================
 
