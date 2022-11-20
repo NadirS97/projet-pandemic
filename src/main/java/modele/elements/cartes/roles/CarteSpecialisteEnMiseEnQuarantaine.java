@@ -4,6 +4,7 @@ import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
+import modele.exceptions.*;
 
 public class CarteSpecialisteEnMiseEnQuarantaine extends CarteRole {
 
@@ -14,6 +15,7 @@ public class CarteSpecialisteEnMiseEnQuarantaine extends CarteRole {
                 "Empêchez les éclosions et le placement de cubes dans la ville où vous êtes ainsi " +
                         "que dans toutes les villes qui y sont reliées.");
     }
+
 
 
 

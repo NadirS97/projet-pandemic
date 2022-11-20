@@ -30,6 +30,7 @@ public class PionJoueur {
     private Plateau plateau;
     private Partie partie;
     private boolean permissionPontAerien;
+    private CarteEvenement cartePlanificateurUrgenceEntrepose;
     private boolean autorisationDeplacementRepartiteur;
     private List<CartePropagation> mainAReorganiser = new ArrayList<>();
 
@@ -156,6 +157,16 @@ public class PionJoueur {
 
     }
 
+
+
+    public void jouerCarteEntreposerPlanificateurUrgence() throws MauvaisRoleException, VilleDejaEclosException, CarteEvenementNotFoundInDeckException, PermissionNonAccordeException, NbCubesAAjouterInvalideException, CartePropagationNotInDefausseException, PropagationImpossibleCarSpecialisteQuarantaineException {
+        if (!this.roleJoueur.getNomRole().equals(NomsRoles.PLANIFICATEUR_D_URGENCE))
+            throw new MauvaisRoleException();
+        jouerCarteEvenement(cartePlanificateurUrgenceEntrepose);
+        cartePlanificateurUrgenceEntrepose = null;
+
+    }
+
     public void repartiteurDeplacementPion(PionJoueur joueurCible,Ville villeDestination) throws AutorisationManquanteException, AucunJoueurDansVilleDestinationException {
         if (!this.autorisationDeplacementRepartiteur)
             throw new AutorisationManquanteException();
@@ -170,11 +181,11 @@ public class PionJoueur {
         throw new AucunJoueurDansVilleDestinationException();
     }
 
-//    @Override
-//    public String toString() {
-//        return "PionJoueur{" +
-//                "roleJoueur=" + roleJoueur.getNomRole() +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "PionJoueur{" +
+                "roleJoueur=" + roleJoueur.getNomRole() +
+                '}';
+    }
 }
 

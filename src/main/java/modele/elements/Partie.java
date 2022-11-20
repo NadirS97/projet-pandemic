@@ -33,6 +33,7 @@ public class Partie {
        this.plateau = new Plateau();
        joueurs = new ArrayList<>();
        victoire = false;
+       plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
     }
 
 

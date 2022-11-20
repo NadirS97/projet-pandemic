@@ -132,7 +132,7 @@ public class Plateau {
                 case SPECIALISTE_EN_MISE_EN_QUARANTAINE -> toutesLesCartesRolesExistante.add(new CarteSpecialisteEnMiseEnQuarantaine(CouleurPionsRole.VERT_FONCE));
                 case EXPERT_AUX_OPERATIONS ->toutesLesCartesRolesExistante.add(new CarteExpertAuxOperations(CouleurPionsRole.VERT_CLAIR));
                 case MEDECIN -> toutesLesCartesRolesExistante.add(new CarteMedecin(CouleurPionsRole.ORANGE));
-                case PLANIFICATEUR_D_URGENCE -> toutesLesCartesRolesExistante.add(new CartePlanificateurDUrgence(CouleurPionsRole.BLEU));
+                case PLANIFICATEUR_D_URGENCE -> toutesLesCartesRolesExistante.add(new CartePlanificateurDurgence(CouleurPionsRole.BLEU));
                 default -> throw new RoleIntrouvableException("Le rôle : " + role + " est inexistant.");
             }
         }

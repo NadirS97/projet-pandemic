@@ -1,6 +1,5 @@
 package modele.facade;
 
-import lombok.SneakyThrows;
 import modele.elements.*;
 
 import modele.elements.actions.IAction;
@@ -12,15 +11,13 @@ import modele.elements.actions.deplacement.DeplacementVolCharter;
 import modele.elements.actions.deplacement.DeplacementVolDirect;
 import modele.elements.actions.partager_connaissance.DonnerConnaissance;
 import modele.elements.actions.partager_connaissance.PrendreConnaissance;
+import modele.elements.actions.planificateur_urgence.EntreposerEvenementRolePlanificateur;
 import modele.elements.actions.traiter_maladie.TraiterMaladie;
 import modele.elements.cartes.CarteEvenement;
-import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.cartes.CarteVille;
 import modele.elements.cartes.evenements.*;
-import modele.elements.cartes.roles.CarteChercheuse;
-import modele.elements.cartes.roles.CarteMedecin;
-import modele.elements.cartes.roles.CarteScientifique;
+import modele.elements.cartes.roles.*;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.EtatVirus;
 import modele.exceptions.*;
@@ -756,9 +753,64 @@ class FacadePandemic9ImplTest {
         Assertions.assertThrows(VirusDejaTraiteException.class, () -> this.instance.jouerAction(pionJoueur, action2));
     }
 
+
+    //=============================================================================================================================
+//                                                 ROLE EXPERT_AUX_OPERATIONS
+//=============================================================================================================================
+
+ /*
+ Verif que si le role du joueur est expert aux opérations, l'action construire une station de recherche dans la ville que l'on occupe
+ ne defausse aucune carte
+  */
+
+    @Test
+    void construireStationRechercheExpertOperationOk(){
+        pionJoueur.setRoleJoueur(new CarteExpertAuxOperations(CouleurPionsRole.VERT_CLAIR));
+        IAction action = new ConstruireUneStation();
+        pionJoueur.setVilleActuelle(chicago);
+        CarteVille carteChicago = new CarteVille(chicago);
+        pionJoueur.getDeckJoueur().add(carteChicago);
+        Assertions.assertDoesNotThrow(()-> instance.jouerAction(pionJoueur,action));
+        assertEquals(pionJoueur.getDeckJoueur().get(0),carteChicago);
+
+    }
+
+
+    //=============================================================================================================================
+//                                                 ROLE PLANIFICATEUR D'URGENCE
+//=============================================================================================================================
+
+    @Test
+    void planificateurUrgenceOk(){
+        CarteEvenement carteEvenement = new CartePontAerien();
+        pionJoueur.getPlateau().getDefausseCarteJoueur().add(carteEvenement);
+        pionJoueur.setRoleJoueur(new CartePlanificateurDurgence(CouleurPionsRole.BLEU));
+        IAction action = new EntreposerEvenementRolePlanificateur(carteEvenement);
+        assertDoesNotThrow(()-> instance.jouerAction(pionJoueur,action));
+        assertEquals(carteEvenement,pionJoueur.getCartePlanificateurUrgenceEntrepose());
+
+    }
+
+
+
 //=============================================================================================================================
 //                                                 AUTRES TESTS
 //=============================================================================================================================
+
+    @Test
+    void jouerTourOk(){
+        PionJoueur joueurActuel = instance.partie.getJoueurActuel();
+        IAction action = new DeplacementVoiture(plateau.getVilleByName("Washington"));
+        IAction action1 = new DeplacementVoiture(atlanta);
+        IAction action2 = new DeplacementVoiture(chicago);
+        IAction action3 = new DeplacementVoiture(atlanta);
+        List<IAction> listeActions = List.of(action,action1,action2,action3);
+        assertDoesNotThrow(()-> instance.jouerTour(listeActions));
+        // verif que c'est bien au joueur suivant après ce tour
+        assertNotEquals(instance.partie.getJoueurActuel(),joueurActuel);
+
+    }
+
 
     @Test
     void piocherCartes(){

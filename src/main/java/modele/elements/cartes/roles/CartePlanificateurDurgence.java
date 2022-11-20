@@ -1,9 +1,9 @@
 package modele.elements.cartes.roles;
 
 import lombok.Getter;
+import lombok.Setter;
 import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteEvenement;
-import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteRole;
 import modele.elements.cartes.IEffet;
 import modele.elements.enums.CouleurPionsRole;
@@ -11,14 +11,15 @@ import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 
 @Getter
-public class CartePlanificateurDUrgence extends CarteRole implements IEffet {
+@Setter
+public class CartePlanificateurDurgence extends CarteRole {
 
 
     CarteEvenement carteEvenementEntrepose;
 
 
 
-    public CartePlanificateurDUrgence(CouleurPionsRole couleurPionRole) {
+    public CartePlanificateurDurgence(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);
         super.setNomRole(NomsRoles.PLANIFICATEUR_D_URGENCE);
         super.setDescriptionRole(
@@ -29,14 +30,9 @@ public class CartePlanificateurDUrgence extends CarteRole implements IEffet {
 
 
 
-    public void execEffet(PionJoueur pionJoueur) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, PermissionNonAccordeException, CartePropagationNotInDefausseException {
 
-        // on joue l'effet de la carte entreposé et on la retire de la partie
-        carteEvenementEntrepose.execEffet(pionJoueur);
-        carteEvenementEntrepose = null;
-    }
 
-    public void setCarteEvenementEntrepose(CarteEvenement carteEvenementEntrepose) {
-        this.carteEvenementEntrepose = carteEvenementEntrepose;
-    }
+
+
+
 }

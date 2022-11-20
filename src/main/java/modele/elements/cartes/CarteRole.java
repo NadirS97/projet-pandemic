@@ -1,8 +1,10 @@
 package modele.elements.cartes;
 
 import lombok.*;
+import modele.elements.PionJoueur;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
+import modele.exceptions.*;
 
 import java.util.Optional;
 
@@ -25,4 +27,5 @@ public abstract class CarteRole {
                 "nomRole=" + nomRole +
                 '}';
     }
+
 }
