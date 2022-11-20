@@ -10,6 +10,7 @@ import modele.exceptions.PropagationImpossibleCarSpecialisteQuarantaineException
 import modele.exceptions.VilleDejaEclosException;
 import modele.utils.DonneesVariablesStatiques;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,6 +22,7 @@ public class CarteEpidemie extends CarteJoueur implements IEffet {
         plateau.getDefausseCartePropagation().forEach(cartePropagation -> {
             plateau.getPiocheCartePropagation().add(0, cartePropagation );
         });
+        plateau.getDefausseCarteJoueur().clear();
     }
 
     private void applicationEffetInfection(Plateau plateau) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
@@ -33,7 +35,6 @@ public class CarteEpidemie extends CarteJoueur implements IEffet {
         if (plateau.getMarqueurVitessePropagation() < DonneesVariablesStatiques.tabMarqueurVitesseDePropagation.length){
             plateau.avancerMarqueurVitesse();
         }
-
     }
 
     @Override
