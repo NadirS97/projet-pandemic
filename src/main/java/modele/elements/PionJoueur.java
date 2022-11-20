@@ -116,13 +116,10 @@ public class PionJoueur {
 
         for (int i = 0; i < DonneesVariablesStatiques.nbCartesAPiocherParTour; i++) {
             CarteJoueur carte = plateau.piocherCarteJoueur();
-            if(carte instanceof CarteVille) {
+            if(carte instanceof CarteEpidemie)
+                ((CarteEpidemie) carte).execEffet(this);
+            else
                 deckJoueur.add(carte);
-            }else{
-                if (carte instanceof CarteEpidemie) {
-                    ((CarteEpidemie) carte).execEffet(this);
-                }
-            }
         }
 
         if (deckJoueur.size() >= DonneesVariablesStatiques.nbCartesJoueurMaxEnMain){
