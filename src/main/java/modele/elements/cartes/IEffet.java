@@ -5,5 +5,5 @@ import modele.exceptions.*;
 
 public interface IEffet {
 
-    void execEffet(PionJoueur pionJoueur) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, CartePropagationNotInDefausseException, PermissionNonAccordeException;
+    void execEffet(PionJoueur pionJoueur) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, CartePropagationNotInDefausseException, PermissionNonAccordeException, DefaitePartieTermineException;
 }

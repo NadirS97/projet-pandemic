@@ -21,6 +21,7 @@ public class Partie {
     int indexJoueur;
     private Plateau plateau;
     private boolean victoire;
+    private boolean defaite;
     private PionJoueur joueurActuel;
 
 
@@ -31,6 +32,7 @@ public class Partie {
        this.plateau = new Plateau();
        joueurs = new ArrayList<>();
        victoire = false;
+       defaite = false;
        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
     }
 
@@ -150,8 +152,12 @@ public class Partie {
 
     }
 
-    public boolean isVictoire(){
-        return plateau.isToutLesRemedeDecouvert();
+    public boolean isVictoire() throws VictoireFinDePartieException {
+        if (plateau.isToutLesRemedeDecouvert()) {
+            victoire = true;
+            throw new VictoireFinDePartieException();
+        }
+        return false;
     }
 
     public void effetCarteMedecin() {

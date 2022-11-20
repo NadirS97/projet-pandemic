@@ -5,6 +5,7 @@ import lombok.ToString;
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.Ville;
+import modele.exceptions.DefaitePartieTermineException;
 import modele.exceptions.NbCubesAAjouterInvalideException;
 import modele.exceptions.PropagationImpossibleCarSpecialisteQuarantaineException;
 import modele.exceptions.VilleDejaEclosException;
@@ -23,7 +24,7 @@ public class CarteEpidemie extends CarteJoueur implements IEffet {
         plateau.viderDefausseCartePropagation();
     }
 
-    private void applicationEffetInfection(Plateau plateau) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
+    private void applicationEffetInfection(Plateau plateau) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, DefaitePartieTermineException {
         List<CartePropagation> piocheCartePropagation = plateau.getPiocheCartePropagation();
         Ville ville = plateau.piocherCartePropagation(piocheCartePropagation.size() - 1);
         plateau.propagationMaladie(ville, DonneesVariablesStatiques.nbCubesEffetInfectionCarteEpidemie);
@@ -36,7 +37,7 @@ public class CarteEpidemie extends CarteJoueur implements IEffet {
     }
 
     @Override
-    public void execEffet(PionJoueur pionJoueur) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
+    public void execEffet(PionJoueur pionJoueur) throws VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, DefaitePartieTermineException {
         applicationEffetAcceleration(pionJoueur.getPlateau());
         applicationEffetInfection(pionJoueur.getPlateau());
         applicationEffetIntensification(pionJoueur.getPlateau());

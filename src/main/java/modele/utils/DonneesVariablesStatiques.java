@@ -50,4 +50,8 @@ public class DonneesVariablesStatiques {
 
     //Tableau statique pour marqueurVitesseDePropagation
     public static int[] tabMarqueurVitesseDePropagation = {2,2,2,3,3,4,4};
+
+    // Index maximal marqueur éclosion avant fin du jeu
+    public static int indexMaxEclosion = 8;
+
 }

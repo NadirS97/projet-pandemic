@@ -101,14 +101,14 @@ public class PionJoueur {
         return null;
     }
 
-    public void jouerCarteEvenement(CarteEvenement carteEvenement) throws CarteEvenementNotFoundInDeckException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, PermissionNonAccordeException, CartePropagationNotInDefausseException {
+    public void jouerCarteEvenement(CarteEvenement carteEvenement) throws CarteEvenementNotFoundInDeckException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, PermissionNonAccordeException, CartePropagationNotInDefausseException, DefaitePartieTermineException {
         if (!deckJoueur.contains(carteEvenement))
             throw new CarteEvenementNotFoundInDeckException();
         carteEvenement.execEffet(this);
         deckJoueur.remove(carteEvenement);
     }
 
-    public void piocherCartes() throws TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException {
+    public void piocherCartes() throws TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, DefaitePartieTermineException {
         if (plateau.getPiocheCarteJoueur().isEmpty())
             throw new EchecDeLaPartiePlusDeCarteJoueurException();
 
@@ -167,7 +167,7 @@ public class PionJoueur {
 
 
 
-    public void jouerCarteEntreposerPlanificateurUrgence() throws MauvaisRoleException, VilleDejaEclosException, CarteEvenementNotFoundInDeckException, PermissionNonAccordeException, NbCubesAAjouterInvalideException, CartePropagationNotInDefausseException, PropagationImpossibleCarSpecialisteQuarantaineException {
+    public void jouerCarteEntreposerPlanificateurUrgence() throws MauvaisRoleException, VilleDejaEclosException, CarteEvenementNotFoundInDeckException, PermissionNonAccordeException, NbCubesAAjouterInvalideException, CartePropagationNotInDefausseException, PropagationImpossibleCarSpecialisteQuarantaineException, DefaitePartieTermineException {
         if (!this.roleJoueur.getNomRole().equals(NomsRoles.PLANIFICATEUR_D_URGENCE))
             throw new MauvaisRoleException();
         jouerCarteEvenement(cartePlanificateurUrgenceEntrepose);
