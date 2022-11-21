@@ -202,8 +202,8 @@ public class Plateau {
         if (villePropagation.isSpeicalisteMiseEnQuarantainePresent())
             throw new PropagationImpossibleCarSpecialisteQuarantaineException();
         Virus virus = lesVirus.get(villePropagation.getCouleurVirusVille());
-        int nbCubesViruesRestant = virus.getNbCubes();
-        if (nbCubesViruesRestant -nbCubes < 0)
+        int nbCubesVirusRestant = virus.getNbCubes();
+        if (nbCubesVirusRestant - nbCubes < 0)
             throw new DefaitePartieTermineException();
         if (nbCubes <= 0)
             throw new NbCubesAAjouterInvalideException("Le nombre de cubes à rajouter est incorrect.");
@@ -216,11 +216,11 @@ public class Plateau {
             }
             if (villePropagation.getNbCubeVirusVille().get(virus) + nbCubes <= DonneesVariablesStatiques.nbCubeMaxAvantEclosion) {
                 villePropagation.getNbCubeVirusVille().put(virus, villePropagation.getNbCubeVirusVille().get(virus) + nbCubes);
-                virus.setNbCubes(virus.getNbCubes()-nbCubes);
+                virus.retirerCubesSac(nbCubes);
             } else {
                 villePropagation.getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubeMaxAvantEclosion);
-                int nbCutesArajoute = DonneesVariablesStatiques.nbCubeMaxAvantEclosion - villePropagation.getNbCubeVirusVille().get(virus);
-                virus.setNbCubes(virus.getNbCubes()-nbCutesArajoute);
+                int nbCubesARajouter = DonneesVariablesStatiques.nbCubeMaxAvantEclosion - villePropagation.getNbCubeVirusVille().get(virus);
+                virus.retirerCubesSac(nbCubesARajouter);
                 villePropagation.setEclosionVille(true);
                 eclosion(villePropagation, virus);
             }

@@ -401,7 +401,7 @@ class FacadePandemic9ImplTest {
 //------------ 1- Tests jouerAction() avec l'action TraiterMaladie OK
 
     @Test
-    void jouerTourActionTraiterMaladieNonTraiteOK(){
+    void jouerTourActionTraiterMaladieOK(){
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
         atlanta.getNbCubeVirusVille().put(virusBleu,0);
         // pour simplifier le test, on choisit la ville qui se propage plutôt que de tester la propagation random
@@ -416,7 +416,7 @@ class FacadePandemic9ImplTest {
 //------------ 2- Tests jouerAction() avec l'action TraiterMaladie OK (test spécifique au Role : "MEDECIN")
 
     @Test
-    void jouerTourActionTraiterAvecMedecinMaladieNonTraiteOK() {
+    void jouerTourActionTraiterAvecMedecinMaladieOK() {
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 3));
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
         pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
@@ -426,12 +426,23 @@ class FacadePandemic9ImplTest {
     }
 
 //------------ 4- Tests jouerAction() avec l'action TraiterMaladie KO
+    @Test
+    void jouerTourActionTraiterMaladieNbActionsMaxTourAtteint(){
+        atlanta.setStationDeRechercheVille(true);
+        alger.setStationDeRechercheVille(true);
+        IAction action1 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
+        IAction action2 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action2));
+        IAction action3 = new DeplacementNavette(alger);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action3));
+        IAction action4 = new DeplacementNavette(atlanta);
+        Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action4));
 
-    //TODO
-
-//------------ 3- Tests jouerAction() avec l'action TraiterMaladie KO (tests spécifiques au Role : "MEDECIN")
-
-    //TODO
+        Virus virusBleu = plateau.getLesVirus().get("BLEU");
+        IAction action5 = new TraiterMaladie(virusBleu);
+        Assertions.assertThrows(NbActionsMaxTourAtteintException.class,() -> this.instance.jouerAction(pionJoueur,action5));
+    }
 
 //=============================================================================================================================
 //                                          ACTION DonnerConnaissance (PartagerConnaissance)
@@ -1034,4 +1045,41 @@ class FacadePandemic9ImplTest {
         pionJoueur.getDeckJoueur().add(carteSubventionPublique);
         assertDoesNotThrow(()-> instance.jouerEvent(pionJoueur, carteSubventionPublique));
     }
+
+//=============================================================================================================================
+//                                               Tests Fin de partie
+//=============================================================================================================================
+
+    @Test
+    void jouerTourVictoirePartie(){
+        pionJoueur.setRoleJoueur(new CarteScientifique(CouleurPionsRole.BLANC));
+        // 4 cartes de virus BLEU
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
+        // 4 cartes de virus ROUGE
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Tokyo")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Seoul")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Osaka")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Sydney")));
+        // 4 cartes de virus JAUNE
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Mexico")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Miami")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Bogota")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Lima")));
+        // 4 cartes de virus NOIR
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Alger")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Karachi")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Chennai")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Mumbai")));
+
+        IAction action2 = new DecouvrirRemede();
+        IAction action1 = new DecouvrirRemede();
+        IAction action3 = new DecouvrirRemede();
+        IAction action4 = new DecouvrirRemede();
+        List<IAction> listeActionPionJoueur =List.of(action1,action2,action3, action4);
+        Assertions.assertThrows(VictoireFinDePartieException.class, () -> this.instance.jouerTour(listeActionPionJoueur));
+    }
+
 }

@@ -9,6 +9,18 @@ public class DonneesVariablesStatiques {
      * Classe permettant de configurer les variables du jeu
      */
 
+    //Nombre de cartes à retourner lors d'une phase
+    public static int nbCartesARetournerPhase = 3;
+
+    // Nombre de cubes à déposer pour les trois premières cartes Propagation retournées en début de la partie
+    public static int nbCubesAPlacerPremierePhase = 3;
+
+    // Nombre de cubes à déposer pour les trois prochaines cartes Propagation retournées en début de la partie
+    public static int nbCubesAPlacerDeuxiemePhase = 2;
+
+    // Nombre de cubes à déposer pour les trois prochaines cartes Propagation retournées en début de la partie
+    public static int nbCubesAPlacerTroisiemePhase = 1;
+
     // Nombre d'actions max autorisées par tour
     public static int nbActionsMaxParTour = 4;
 
