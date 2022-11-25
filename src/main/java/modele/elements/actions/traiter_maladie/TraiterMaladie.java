@@ -26,18 +26,15 @@ public class TraiterMaladie implements IAction {
      * supprimé et que la maladie concernée a été traitée, la maladie est alors éradiquée.
      * @param pionJoueur
      * @throws NbActionsMaxTourAtteintException
-     * @throws VirusInexistantDansLaVilleActuelException
      * @throws VirusDejaEradiqueException
      */
     @Override
-    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VirusInexistantDansLaVilleActuelException, VirusDejaEradiqueException {
+    public void execAction(PionJoueur pionJoueur) throws NbActionsMaxTourAtteintException, VirusDejaEradiqueException {
 
         // Verif nb actions
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
         // Le joueur choisis un virus a traite parmis les 3 potentiel present dans la ville
-        if (!pionJoueur.getVilleActuelle().getNbCubeVirusVille().keySet().contains(choixVirus))
-            throw new VirusInexistantDansLaVilleActuelException("Le virus dans la ville actuelle:" + choixVirus.getVirusCouleur() + "n'a pas été retrouvé");
         int nbCubesVirusVilleActuel = pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(choixVirus);
         // retirer du sac les cubes pour les 2 cas
         // Cas maladie non traite : retire 1 cube
@@ -45,17 +42,21 @@ public class TraiterMaladie implements IAction {
             throw new VirusDejaEradiqueException();
         if (choixVirus.getEtatVirus().equals(EtatVirus.NON_TRAITE)) {
             if (pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN)) {
+                int nbCubesPresentVille = pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(choixVirus);
                 pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus, 0);
+                choixVirus.rajouterCubesSac(nbCubesPresentVille);
             }
             else {
-                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus,
-                        nbCubesVirusVilleActuel-1);
+                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus, nbCubesVirusVilleActuel - 1);
+                choixVirus.rajouterCubesSac(1);
             }
         }
         //  cas maladie traite : retire tout cube
-        //  cas maladie traite et dernier cube d'une couleur suppr, il faut check si parmis toutes les villes il n'ya plus aucun virus de cette couleur
+        //  cas maladie traite et dernier cube d'une couleur suppr, il faut check si parmis toutes les villes il n'y a plus aucun virus de cette couleur
         if (choixVirus.getEtatVirus().equals(EtatVirus.TRAITE)) {
+            int nbCubesPresentVille = pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(choixVirus);
             pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus, 0);
+            choixVirus.rajouterCubesSac(nbCubesPresentVille);
 
             boolean eradique = true;
             // si on trouve une ville dans le plateau avec le virus choisis qui a toujours des cubes, alors la maladie n'est pas eradiqué

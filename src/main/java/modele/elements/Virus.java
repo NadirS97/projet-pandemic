@@ -20,9 +20,12 @@ public class Virus {
     }
 
    public int retirerCubesSac(int nbCubesRetirer){
-
         return nbCubes = nbCubes- nbCubesRetirer;
    }
+
+    public int rajouterCubesSac(int nbCubesRajoute){
+        return nbCubes = nbCubes + nbCubesRajoute;
+    }
 
     @Override
     public String toString() {

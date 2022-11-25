@@ -8,6 +8,8 @@ import modele.elements.cartes.CarteVille;
 import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
+import modele.utils.DonneesVariablesStatiques;
+
 import java.io.FileNotFoundException;
 import java.util.*;
 
@@ -63,7 +65,7 @@ public class Partie {
         partie.determinerQuiCommencePartie();
         return partie;
     }
-    private void ajoutJoueursDansPartie(int nbJoueurs) throws VilleIntrouvableException {
+    private void ajoutJoueursDansPartie(int nbJoueurs) {
         for (int i = 0 ; i < nbJoueurs ; i++){
             joueurs.add(new PionJoueur(this));
         }
@@ -79,20 +81,24 @@ public class Partie {
      */
     private void miseEnPlaceJeuCartePropagation(){
         // 3 premiere, 3 cubes
-        for (int i = 0 ; i < 3 ; i++){
+        for (int i = 0; i < DonneesVariablesStatiques.nbCartesARetournerPhase; i++){
            Ville villeContamine =  plateau.piocherCartePropagation(0);
            Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-           plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus,3);
+           plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
+           virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
+
         }
-        for (int i = 0 ; i < 3 ; i++){
+        for (int i = 0 ; i < DonneesVariablesStatiques.nbCartesARetournerPhase; i++){
             Ville villeContamine =  plateau.piocherCartePropagation(0);
             Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus,2);
+            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus,DonneesVariablesStatiques.nbCubesAPlacerDeuxiemePhase);
+            virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerDeuxiemePhase);
         }
-        for (int i = 0 ; i < 3 ; i++){
+        for (int i = 0 ; i < DonneesVariablesStatiques.nbCartesARetournerPhase; i++){
             Ville villeContamine =  plateau.piocherCartePropagation(0);
             Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus,1);
+            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubesAPlacerTroisiemePhase);
+            virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerTroisiemePhase);
         }
     }
 
@@ -137,7 +143,7 @@ public class Partie {
             indexJoueur = 0;
         }
         joueurActuel = joueurs.get(indexJoueur);
-        joueurActuel.setNbActions(4);
+        joueurActuel.setNbActions(DonneesVariablesStatiques.nbActionsMaxParTour);
     }
 
     public PionJoueur getJoueurSuivant(){
