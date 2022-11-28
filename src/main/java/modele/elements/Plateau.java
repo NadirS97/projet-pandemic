@@ -256,7 +256,7 @@ public class Plateau {
      * @return
      */
     public int nbCartePropagationPiocherSelonVitesse() {
-      return getVitesseDePropagation();
+        return getVitesseDePropagation();
     }
 
     public void melangerPaquet(List<?> paquet) {

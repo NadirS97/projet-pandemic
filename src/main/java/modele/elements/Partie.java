@@ -26,21 +26,23 @@ public class Partie {
     private boolean defaite;
     private PionJoueur joueurActuel;
 
+    private String codePartie;
 
-    private Partie() throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
 
+    private Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
         // marqueur eclosion et propagation placé à 0 lors de la création du plateau
         // lors de la création du plateau, toute la créations des cartes du jeu se font
-       this.plateau = new Plateau();
-       joueurs = new ArrayList<>();
-       victoire = false;
-       defaite = false;
-       plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
+        this.codePartie = codePartie;
+        this.plateau = new Plateau();
+        joueurs = new ArrayList<>();
+        victoire = false;
+        defaite = false;
+        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
     }
 
 
-    public static Partie creerPartieDeuxJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
-        Partie partie = new Partie();
+    public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
+        Partie partie = new Partie(codePartie);
         partie.ajoutJoueursDansPartie(2);
         partie.distributionCarteJoueurs(4);
         partie.miseEnPlaceJeuCartePropagation();
@@ -48,8 +50,8 @@ public class Partie {
         return partie;
     }
 
-    public static Partie creerPartieTroisJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        Partie partie = new Partie();
+    public static Partie creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        Partie partie = new Partie(codePartie);
         partie.ajoutJoueursDansPartie(3);
         partie.distributionCarteJoueurs(3);
         partie.miseEnPlaceJeuCartePropagation();
@@ -57,14 +59,15 @@ public class Partie {
         return partie;
     }
 
-    public static Partie creerPartieQuatreJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        Partie partie = new Partie();
+    public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        Partie partie = new Partie(codePartie);
         partie.ajoutJoueursDansPartie(4);
         partie.distributionCarteJoueurs(2);
         partie.miseEnPlaceJeuCartePropagation();
         partie.determinerQuiCommencePartie();
         return partie;
     }
+
     private void ajoutJoueursDansPartie(int nbJoueurs) {
         for (int i = 0 ; i < nbJoueurs ; i++){
             joueurs.add(new PionJoueur(this));

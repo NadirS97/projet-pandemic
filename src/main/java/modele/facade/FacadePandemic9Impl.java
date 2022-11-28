@@ -18,16 +18,16 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     Partie partie;
 
     @Override
-    public void creerPartieDeuxJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        partie = Partie.creerPartieDeuxJoueurs();
+    public void creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        partie = Partie.creerPartieDeuxJoueurs(codePartie);
     }
     @Override
-    public void creerPartieTroisJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        partie = Partie.creerPartieTroisJoueurs();
+    public void creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        partie = Partie.creerPartieTroisJoueurs(codePartie);
     }
     @Override
-    public void creerPartieQuatreJoueurs() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        partie = Partie.creerPartieQuatreJoueurs();
+    public void creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        partie = Partie.creerPartieQuatreJoueurs(codePartie);
     }
 
     @Override
@@ -35,8 +35,8 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         for (IAction action : listeAction){
             jouerAction(partie.getJoueurActuel(),action);
         }
-            piocherCartes(partie.getJoueurActuel());
-            propagation(partie.getJoueurActuel());
+        piocherCartes(partie.getJoueurActuel());
+        propagation(partie.getJoueurActuel());
 
         if (partie.presenceMedecin())
             partie.effetCarteMedecin();
@@ -63,7 +63,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     @Override
     public void piocherCartes(PionJoueur joueurActuel) throws TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, DefaitePartieTermineException {
 
-            joueurActuel.piocherCartes();
+        joueurActuel.piocherCartes();
 
     }
 
@@ -86,4 +86,4 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         joueurActuel.repartiteurDeplacementPion(joueurCible,villeDestination);
     }
 
-    }
+}

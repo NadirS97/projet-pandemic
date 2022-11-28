@@ -53,7 +53,7 @@ class FacadePandemic9ImplTest {
     @BeforeEach
     void setUp() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         instance = new FacadePandemic9Impl();
-        instance.creerPartieQuatreJoueurs();
+        instance.creerPartieQuatreJoueurs("1234abcd");
         plateau = instance.partie.getPlateau();
         pionJoueur = instance.partie.getJoueurActuel();
         pionJoueur2 = instance.partie.getJoueurSuivant();
@@ -79,7 +79,7 @@ class FacadePandemic9ImplTest {
 
     @Test
     void creationPartie4Joueurs(){
-        Assertions.assertDoesNotThrow(()-> this.instance.creerPartieQuatreJoueurs());
+        Assertions.assertDoesNotThrow(()-> this.instance.creerPartieQuatreJoueurs("1234abcd"));
         // on verifie que l'on a bien 4 pionsJoueur creer dans la partie
         assertEquals(4,instance.partie.getJoueurs().size());
         // que les 4 cartes roles ont bien été distribué parmis les 7 présente dans le plateau de base lors de la création
