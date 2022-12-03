@@ -42,43 +42,44 @@ public class Partie {
         plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
     }
 
+    //############################# A ENLEVER
+    public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
+        Partie partie = new Partie(codePartie);
+        partie.ajoutJoueursDansPartie(2);
+        partie.distributionCarteJoueurs(4);
+        partie.miseEnPlaceJeuCartePropagation();
+        partie.determinerQuiCommencePartie();
+        return partie;
+    }
 
-//    public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
-//        Partie partie = new Partie(codePartie);
-//        partie.ajoutJoueursDansPartie(2);
-//        partie.distributionCarteJoueurs(4);
-//        partie.miseEnPlaceJeuCartePropagation();
-//        partie.determinerQuiCommencePartie();
-//        return partie;
-//    }
-//
-//    public static Partie creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-//        Partie partie = new Partie(codePartie);
-//        partie.ajoutJoueursDansPartie(3);
-//        partie.distributionCarteJoueurs(3);
-//        partie.miseEnPlaceJeuCartePropagation();
-//        partie.determinerQuiCommencePartie();
-//        return partie;
-//    }
-//
-//    public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-//        Partie partie = new Partie(codePartie);
-//        partie.ajoutJoueursDansPartie(4);
-//        partie.distributionCarteJoueurs(2);
-//        partie.miseEnPlaceJeuCartePropagation();
-//        partie.determinerQuiCommencePartie();
-//        return partie;
-//    }
+    public static Partie creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        Partie partie = new Partie(codePartie);
+        partie.ajoutJoueursDansPartie(3);
+        partie.distributionCarteJoueurs(3);
+        partie.miseEnPlaceJeuCartePropagation();
+        partie.determinerQuiCommencePartie();
+        return partie;
+    }
+
+    public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        Partie partie = new Partie(codePartie);
+        partie.ajoutJoueursDansPartie(4);
+        partie.distributionCarteJoueurs(2);
+        partie.miseEnPlaceJeuCartePropagation();
+        partie.determinerQuiCommencePartie();
+        return partie;
+    }
+    //#####################################################
 
     public static void inscription(String pseudo, String mdp) {
         Dao.inscription(pseudo, mdp);
     }
 
-//    private void ajoutJoueursDansPartie(int nbJoueurs) {
-//        for (int i = 0 ; i < nbJoueurs ; i++){
-//            joueurs.add(new PionJoueur(this));
-//        }
-//    }
+    private void ajoutJoueursDansPartie(int nbJoueurs) {
+        for (int i = 0 ; i < nbJoueurs ; i++){
+            joueurs.add(new PionJoueur(this));
+        }
+    }
 
     /**
      * Les 3 premières cartes retournées seront les 3 villes contaminées

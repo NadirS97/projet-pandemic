@@ -85,6 +85,4 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     public void repartiteurDeplacementPion(PionJoueur joueurActuel,PionJoueur joueurCible, Ville villeDestination) throws AucunJoueurDansVilleDestinationException, AutorisationManquanteException {
         joueurActuel.repartiteurDeplacementPion(joueurCible,villeDestination);
     }
-
-
 }
