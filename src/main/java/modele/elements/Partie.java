@@ -1,6 +1,7 @@
 package modele.elements;
 
 
+import dao.Dao;
 import lombok.Getter;
 import lombok.Setter;
 import modele.elements.cartes.CarteJoueur;
@@ -11,7 +12,9 @@ import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
 
 import java.io.FileNotFoundException;
+import java.rmi.RemoteException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -25,11 +28,10 @@ public class Partie {
     private boolean victoire;
     private boolean defaite;
     private PionJoueur joueurActuel;
-
     private String codePartie;
 
 
-    private Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
+    public Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
         // marqueur eclosion et propagation placé à 0 lors de la création du plateau
         // lors de la création du plateau, toute la créations des cartes du jeu se font
         this.codePartie = codePartie;
@@ -41,38 +43,42 @@ public class Partie {
     }
 
 
-    public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
-        Partie partie = new Partie(codePartie);
-        partie.ajoutJoueursDansPartie(2);
-        partie.distributionCarteJoueurs(4);
-        partie.miseEnPlaceJeuCartePropagation();
-        partie.determinerQuiCommencePartie();
-        return partie;
+//    public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
+//        Partie partie = new Partie(codePartie);
+//        partie.ajoutJoueursDansPartie(2);
+//        partie.distributionCarteJoueurs(4);
+//        partie.miseEnPlaceJeuCartePropagation();
+//        partie.determinerQuiCommencePartie();
+//        return partie;
+//    }
+//
+//    public static Partie creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+//        Partie partie = new Partie(codePartie);
+//        partie.ajoutJoueursDansPartie(3);
+//        partie.distributionCarteJoueurs(3);
+//        partie.miseEnPlaceJeuCartePropagation();
+//        partie.determinerQuiCommencePartie();
+//        return partie;
+//    }
+//
+//    public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+//        Partie partie = new Partie(codePartie);
+//        partie.ajoutJoueursDansPartie(4);
+//        partie.distributionCarteJoueurs(2);
+//        partie.miseEnPlaceJeuCartePropagation();
+//        partie.determinerQuiCommencePartie();
+//        return partie;
+//    }
+
+    public static void inscription(String pseudo, String mdp) {
+        Dao.inscription(pseudo, mdp);
     }
 
-    public static Partie creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        Partie partie = new Partie(codePartie);
-        partie.ajoutJoueursDansPartie(3);
-        partie.distributionCarteJoueurs(3);
-        partie.miseEnPlaceJeuCartePropagation();
-        partie.determinerQuiCommencePartie();
-        return partie;
-    }
-
-    public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        Partie partie = new Partie(codePartie);
-        partie.ajoutJoueursDansPartie(4);
-        partie.distributionCarteJoueurs(2);
-        partie.miseEnPlaceJeuCartePropagation();
-        partie.determinerQuiCommencePartie();
-        return partie;
-    }
-
-    private void ajoutJoueursDansPartie(int nbJoueurs) {
-        for (int i = 0 ; i < nbJoueurs ; i++){
-            joueurs.add(new PionJoueur(this));
-        }
-    }
+//    private void ajoutJoueursDansPartie(int nbJoueurs) {
+//        for (int i = 0 ; i < nbJoueurs ; i++){
+//            joueurs.add(new PionJoueur(this));
+//        }
+//    }
 
     /**
      * Les 3 premières cartes retournées seront les 3 villes contaminées
@@ -204,5 +210,10 @@ public class Partie {
 
     public boolean presenceMedecin() {
         return joueurs.stream().anyMatch(joueur -> joueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN));
+    }
+
+    // TODO : à appeler dans FacadePandemic9Impl je suppose
+    public boolean getPartie(String idPartie) {
+        return Dao.seReconnecterAuJeu(idPartie);
     }
 }
