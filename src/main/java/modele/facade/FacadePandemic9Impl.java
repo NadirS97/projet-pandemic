@@ -1,6 +1,7 @@
 package modele.facade;
 
 
+import dao.Dao;
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
 import modele.elements.Partie;
@@ -25,10 +26,19 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     public void creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         partie = Partie.creerPartieTroisJoueurs(codePartie);
     }
+
+
+//    @Override
+//    public void creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+//        partie = Partie.creerPartieQuatreJoueurs(codePartie);
+//    }
+
     @Override
     public void creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        partie = Partie.creerPartieQuatreJoueurs(codePartie);
+//        partie = Partie.creerPartieQuatreJoueurs(codePartie);
+        partie = Dao.creerPartieQuatreJoueurs(codePartie);
     }
+
 
     @Override
     public void jouerTour(List<IAction> listeAction) throws EchecDeLaPartiePlusDeCarteJoueurException, CarteVilleInexistanteDansDeckJoueurException, NbCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException, TropDeCarteEnMainException, NuitTranquilleException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, VictoireFinDePartieException, DefaitePartieTermineException {

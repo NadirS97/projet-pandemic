@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class Dao {
 
-    private static final MongoClient mongoClient = MongoClients.create("mongodb://172.17.0.2:27017");
+    private static final MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
     private static final CodecRegistry pojoCodeRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
     private static final MongoDatabase db = mongoClient.getDatabase("pandemic9").withCodecRegistry(pojoCodeRegistry);
 
@@ -35,7 +35,8 @@ public class Dao {
         MongoCollection<Partie> partiesMongoCollection = db.getCollection("parties", Partie.class);
         if (partiesMongoCollection.countDocuments() > 0)
             partiesMongoCollection.drop();
-        Partie partie = Partie.getInstance(codePartie);
+//        Partie partie = Partie.getInstance(codePartie);
+        Partie partie = new Partie(codePartie);
         // TODO : une partie du contenu de creerPartieQuatreJoueurs ou les autres devrait se trouver ici
         partiesMongoCollection.insertOne(partie);
     }
@@ -46,4 +47,16 @@ public class Dao {
         Objects.requireNonNull(partie).getPartie(idPartie);
         return true;
     }
+
+    public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        MongoCollection<Partie> partieMongoCollection = db.getCollection("parties", Partie.class);
+        if (partieMongoCollection.countDocuments() > 0)
+            partieMongoCollection.drop();
+        Partie partie = Partie.creerPartieQuatreJoueurs(codePartie);
+        partieMongoCollection.insertOne(partie);
+        return partie;
+    }
+
+
+
 }
