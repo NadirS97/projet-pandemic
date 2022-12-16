@@ -32,10 +32,12 @@ public class Dao {
     }
 
     public static void creerPartie(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        MongoCollection<Partie> partieMongoCollection = db.getCollection("parties", Partie.class);
-        Partie partie = new Partie(codePartie);
+        MongoCollection<Partie> partiesMongoCollection = db.getCollection("parties", Partie.class);
+        if (partiesMongoCollection.countDocuments() > 0)
+            partiesMongoCollection.drop();
+        Partie partie = Partie.getInstance(codePartie);
         // TODO : une partie du contenu de creerPartieQuatreJoueurs ou les autres devrait se trouver ici
-        partieMongoCollection.insertOne(partie);
+        partiesMongoCollection.insertOne(partie);
     }
 
     public static boolean seReconnecterAuJeu(String idPartie) {

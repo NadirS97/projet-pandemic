@@ -22,6 +22,7 @@ public class Partie {
 
 //    Map<PionJoueur,CarteRole> joueurs;
 
+    private static Partie singleton;
     private List<PionJoueur> joueurs;
     int indexJoueur;
     private Plateau plateau;
@@ -30,17 +31,32 @@ public class Partie {
     private PionJoueur joueurActuel;
     private String codePartie;
 
-
-    public Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
-        // marqueur eclosion et propagation placé à 0 lors de la création du plateau
-        // lors de la création du plateau, toute la créations des cartes du jeu se font
-        this.codePartie = codePartie;
-        this.plateau = new Plateau();
-        joueurs = new ArrayList<>();
-        victoire = false;
-        defaite = false;
-        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
+    public static Partie getInstance(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        if (Objects.isNull(singleton)) {
+            singleton = new Partie();
+            // marqueur eclosion et propagation placé à 0 lors de la création du plateau
+            // lors de la création du plateau, toute la créations des cartes du jeu se font
+            singleton.setCodePartie(codePartie);
+            singleton.setPlateau(new Plateau());
+            singleton.setJoueurs(new ArrayList<>());
+            singleton.setVictoire(false);
+            singleton.setDefaite(false);
+            singleton.getPlateau().getVilleByName("Atlanta").setStationDeRechercheVille(true);
+        }
+        return singleton;
     }
+
+    // Constructeur public "classique" dorénavant inutile, car nous avons un singleton et donc un constructeur static
+//    public Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
+//        // marqueur eclosion et propagation placé à 0 lors de la création du plateau
+//        // lors de la création du plateau, toute la créations des cartes du jeu se font
+//        this.codePartie = codePartie;
+//        this.plateau = new Plateau();
+//        joueurs = new ArrayList<>();
+//        victoire = false;
+//        defaite = false;
+//        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
+//    }
 
     //############################# A ENLEVER
     public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
