@@ -37,16 +37,27 @@ public class MongoMain {
 //            collection.insertOne(document);
 //            System.out.println("connexion success");
 
-            FacadePandemic9Impl instance = new FacadePandemic9Impl();
-            instance.creerPartieQuatreJoueurs("123abcd");
+//            FacadePandemic9Impl instance = new FacadePandemic9Impl();
+//            instance.creerPartieQuatreJoueurs("123abcd");
+            Dao.inscription("ahbon","hah");
 
             System.out.println("connexion success");
 
             }
         catch (MongoException me){
             System.err.println("Une erreur a eu lieu lors de la connexion");
-        } catch (RoleIntrouvableException | VilleIntrouvableException | EvenementInnexistantException |
-                 VirusIntrouvableException | FileNotFoundException e) {
+//        } catch (RoleIntrouvableException | VilleIntrouvableException | EvenementInnexistantException |
+//                 VirusIntrouvableException | FileNotFoundException e) {
+//            throw new RuntimeException(e);
+        } catch (RoleIntrouvableException e) {
+            throw new RuntimeException(e);
+        } catch (VilleIntrouvableException e) {
+            throw new RuntimeException(e);
+        } catch (EvenementInnexistantException e) {
+            throw new RuntimeException(e);
+        } catch (VirusIntrouvableException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 

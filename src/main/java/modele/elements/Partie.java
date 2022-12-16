@@ -12,9 +12,7 @@ import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
 
 import java.io.FileNotFoundException;
-import java.rmi.RemoteException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -55,7 +53,7 @@ public class Partie {
         joueurs = new ArrayList<>();
         victoire = false;
         defaite = false;
-        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
+//        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
     }
 
     //############################# A ENLEVER ?
@@ -82,15 +80,15 @@ public class Partie {
     public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
 //        Partie partie = Partie.getInstance(codePartie);
         Partie partie = new Partie(codePartie);
-        partie.ajoutJoueursDansPartie(4);
-        partie.distributionCarteJoueurs(2);
-        partie.miseEnPlaceJeuCartePropagation();
-        partie.determinerQuiCommencePartie();
+//        partie.ajoutJoueursDansPartie(4);
+//        partie.distributionCarteJoueurs(2);
+//        partie.miseEnPlaceJeuCartePropagation();
+//        partie.determinerQuiCommencePartie();
         return partie;
     }
     //#####################################################
 
-    public static void inscription(String pseudo, String mdp) {
+    public static void inscription(String pseudo, String mdp) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         Dao.inscription(pseudo, mdp);
     }
 
@@ -113,20 +111,20 @@ public class Partie {
         for (int i = 0; i < DonneesVariablesStatiques.nbCartesARetournerPhase; i++){
            Ville villeContamine =  plateau.piocherCartePropagation(0);
            Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-           plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
+           plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(), DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
            virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
 
         }
         for (int i = 0 ; i < DonneesVariablesStatiques.nbCartesARetournerPhase; i++){
             Ville villeContamine =  plateau.piocherCartePropagation(0);
             Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus,DonneesVariablesStatiques.nbCubesAPlacerDeuxiemePhase);
+            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(),DonneesVariablesStatiques.nbCubesAPlacerDeuxiemePhase);
             virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerDeuxiemePhase);
         }
         for (int i = 0 ; i < DonneesVariablesStatiques.nbCartesARetournerPhase; i++){
             Ville villeContamine =  plateau.piocherCartePropagation(0);
             Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus, DonneesVariablesStatiques.nbCubesAPlacerTroisiemePhase);
+            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(), DonneesVariablesStatiques.nbCubesAPlacerTroisiemePhase);
             virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerTroisiemePhase);
         }
     }
@@ -175,7 +173,7 @@ public class Partie {
         joueurActuel.setNbActions(DonneesVariablesStatiques.nbActionsMaxParTour);
     }
 
-    public PionJoueur getJoueurSuivant(){
+    public PionJoueur accesJoueurSuivant(){
         int indexJoueur  = getIndexJoueur() + 1;
 
 
@@ -188,7 +186,7 @@ public class Partie {
     }
 
     public boolean isVictoire() throws VictoireFinDePartieException {
-        if (plateau.isToutLesRemedeDecouvert()) {
+        if (plateau.checkToutLesRemedeDecouvert()) {
             victoire = true;
             throw new VictoireFinDePartieException();
         }

@@ -13,7 +13,10 @@ public class Ville {
 
     private String nomVille;
     private List<String> villesVoisinesVille;
-    private Map<Virus, Integer> nbCubeVirusVille;
+//    private Map<Virus, Integer> nbCubeVirusVille;
+
+    // mongo accepte que les map avec des string en key :(
+    private Map<String, Integer> nbCubeVirusVille;
     private int nbPopulationTotaleVille;
     private int nbPopulationKmCarreeVille;
     private boolean stationDeRechercheVille = false;
@@ -37,18 +40,24 @@ public class Ville {
         this.listeVaccinationContreVirus = new HashMap<>();
     }
 
-    public void setVillesVoisines(List<String> villesVoisines) {
-        this.villesVoisinesVille = villesVoisines;
-    }
 
     public void setStationDeRechercheVille(boolean stationDeRechercheVille) {
         this.stationDeRechercheVille = stationDeRechercheVille;
     }
 
+    // mongo accepte que les map avec des string en key :(
+//    public String retourneVirusNbCubeVirusVille(){
+//        StringBuilder s = new StringBuilder("[");
+//        for(Map.Entry<Virus, Integer> donneesCubesVirusVille : nbCubeVirusVille.entrySet()){
+//            s.append("(").append(donneesCubesVirusVille.getKey().getVirusCouleur()).append(", ").append(donneesCubesVirusVille.getValue()).append(")");
+//        }
+//        return s + "]";
+//    }
+
     public String retourneVirusNbCubeVirusVille(){
         StringBuilder s = new StringBuilder("[");
-        for(Map.Entry<Virus, Integer> donneesCubesVirusVille : nbCubeVirusVille.entrySet()){
-            s.append("(").append(donneesCubesVirusVille.getKey().getVirusCouleur()).append(", ").append(donneesCubesVirusVille.getValue()).append(")");
+        for(Map.Entry<String, Integer> donneesCubesVirusVille : nbCubeVirusVille.entrySet()){
+            s.append("(").append(donneesCubesVirusVille.getKey()).append(", ").append(donneesCubesVirusVille.getValue()).append(")");
         }
         return s + "]";
     }

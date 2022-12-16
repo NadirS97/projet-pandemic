@@ -56,7 +56,7 @@ class FacadePandemic9ImplTest {
         instance.creerPartieQuatreJoueurs("1234abcd");
         plateau = instance.partie.getPlateau();
         pionJoueur = instance.partie.getJoueurActuel();
-        pionJoueur2 = instance.partie.getJoueurSuivant();
+        pionJoueur2 = instance.partie.accesJoueurSuivant();
         atlanta = plateau.getVilleByName("Atlanta");
         chicago = plateau.getVilleByName("Chicago");
         paris = plateau.getVilleByName("Paris");
@@ -403,14 +403,14 @@ class FacadePandemic9ImplTest {
     @Test
     void jouerTourActionTraiterMaladieOK(){
         Virus virusBleu = plateau.getLesVirus().get("BLEU");
-        atlanta.getNbCubeVirusVille().put(virusBleu,0);
+        atlanta.getNbCubeVirusVille().put(virusBleu.getVirusCouleur(),0);
         // pour simplifier le test, on choisit la ville qui se propage plutôt que de tester la propagation random
         Assertions.assertDoesNotThrow(() -> this.pionJoueur.getPlateau().propagationMaladie(atlanta, 2));
         pionJoueur.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
         IAction traiter = new TraiterMaladie(virusBleu);
         pionJoueur.setVilleActuelle(atlanta);
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,traiter));
-        Assertions.assertEquals(1, atlanta.getNbCubeVirusVille().get(virusBleu));
+        Assertions.assertEquals(1, atlanta.getNbCubeVirusVille().get(virusBleu.getVirusCouleur()));
     }
 
 //------------ 2- Tests jouerAction() avec l'action TraiterMaladie OK (test spécifique au Role : "MEDECIN")
@@ -422,7 +422,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         IAction traiter = new TraiterMaladie(virusBleu);
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur, traiter));
-        Assertions.assertEquals(0, atlanta.getNbCubeVirusVille().get(virusBleu));
+        Assertions.assertEquals(0, atlanta.getNbCubeVirusVille().get(virusBleu.getVirusCouleur()));
     }
 
 //------------ 4- Tests jouerAction() avec l'action TraiterMaladie KO
@@ -900,15 +900,15 @@ class FacadePandemic9ImplTest {
         Assertions.assertDoesNotThrow(() -> instance.jouerAction(pionJoueur, traiter));
         pionJoueur.getVilleActuelle().getListeVaccinationContreVirus().put(pionJoueur.getVilleActuelle().getCouleurVirusVille(), virus);
         Assertions.assertDoesNotThrow(() -> instance.partie.getPlateau().propagationMaladie(pionJoueur.getVilleActuelle(), 1));
-        assertEquals(0, pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(virus));
+        assertEquals(0, pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(virus.getVirusCouleur()));
 
         // cas éclosion dans une ville voisine
         Ville miami = instance.partie.getPlateau().getVilleByName("Miami");
         Virus virus2 = instance.partie.getPlateau().getLesVirus().get(miami.getCouleurVirusVille());
-        miami.getNbCubeVirusVille().put(virus2, 3);
+        miami.getNbCubeVirusVille().put(virus2.getVirusCouleur(), 3);
         pionJoueur.getVilleActuelle().getListeVaccinationContreVirus().put(miami.getCouleurVirusVille(), virus2);
         Assertions.assertDoesNotThrow(() -> instance.partie.getPlateau().eclosion(miami, virus2));
-        assertEquals(0, pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(virus2));
+        assertEquals(0, pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(virus2.getVirusCouleur()));
     }
 
 //=============================================================================================================================
@@ -969,7 +969,7 @@ class FacadePandemic9ImplTest {
         assertEquals(2,plateau.getVitesseDePropagation());
 
         // EFFET 2 : INFECTION
-        assertEquals(3,cartePropagation.getVilleCartePropagation().getNbCubeVirusVille().get(virus));
+        assertEquals(3,cartePropagation.getVilleCartePropagation().getNbCubeVirusVille().get(virus.getVirusCouleur()));
 
         // EFFET 3 : INTENSIFICATION
         // 0, car notre defausseCartePropagation doit être vide

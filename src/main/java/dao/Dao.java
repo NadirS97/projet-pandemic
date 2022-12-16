@@ -25,9 +25,10 @@ public class Dao {
     private static final CodecRegistry pojoCodeRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
     private static final MongoDatabase db = mongoClient.getDatabase("pandemic9").withCodecRegistry(pojoCodeRegistry);
 
-    public static void inscription(String pseudo, String mdp) {
+    public static void inscription(String pseudo, String mdp) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         MongoCollection<Joueur> joueurMongoCollection = db.getCollection("joueurs", Joueur.class);
         Joueur joueur = new Joueur(pseudo, mdp);
+        joueurMongoCollection.drop();
         joueurMongoCollection.insertOne(joueur);
     }
 

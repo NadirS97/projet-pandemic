@@ -43,11 +43,11 @@ public class TraiterMaladie implements IAction {
         if (choixVirus.getEtatVirus().equals(EtatVirus.NON_TRAITE)) {
             if (pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN)) {
                 int nbCubesPresentVille = pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(choixVirus);
-                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus, 0);
+                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus.getVirusCouleur(), 0);
                 choixVirus.rajouterCubesSac(nbCubesPresentVille);
             }
             else {
-                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus, nbCubesVirusVilleActuel - 1);
+                pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus.getVirusCouleur(), nbCubesVirusVilleActuel - 1);
                 choixVirus.rajouterCubesSac(1);
             }
         }
@@ -55,7 +55,7 @@ public class TraiterMaladie implements IAction {
         //  cas maladie traite et dernier cube d'une couleur suppr, il faut check si parmis toutes les villes il n'y a plus aucun virus de cette couleur
         if (choixVirus.getEtatVirus().equals(EtatVirus.TRAITE)) {
             int nbCubesPresentVille = pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(choixVirus);
-            pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus, 0);
+            pionJoueur.getVilleActuelle().getNbCubeVirusVille().put(choixVirus.getVirusCouleur(), 0);
             choixVirus.rajouterCubesSac(nbCubesPresentVille);
 
             boolean eradique = true;

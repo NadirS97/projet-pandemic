@@ -42,7 +42,7 @@ public class ConstruireUneStation implements IAction {
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
         // construire une station de recherche quand la limite n'a pas été atteinte
-        if (plateau.getNbStationsDeRechercheConstruites() < DonneesVariablesStatiques.nbStationsRechercheMaxAutorise) {
+        if (plateau.addNbStationsDeRechercheConstruites() < DonneesVariablesStatiques.nbStationsRechercheMaxAutorise) {
             if (plateau.isVilleStationDeRecherche(villeActuelle))
                 throw new VilleActuellePossedeDejaUneStationDeRechercheException("Impossible de rajouter une station de recherche, la ville " + villeActuelle.getNomVille() + " possède déjà une station de recherche.");
             // SI JOUEUR = EXPERT AUX OPERATIONS, PAS DE DE DE DEFAUSSE NECESSAIRE
