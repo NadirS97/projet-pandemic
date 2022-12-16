@@ -10,6 +10,7 @@ import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -20,13 +21,21 @@ public class Partie {
 
 //    Map<PionJoueur,CarteRole> joueurs;
 
+    @BsonProperty("partie")
     private static Partie singleton;
+    @BsonProperty("joueurs")
     private List<PionJoueur> joueurs;
+    @BsonProperty("indexJoueur")
     int indexJoueur;
+    @BsonProperty("plateau")
     private Plateau plateau;
+    @BsonProperty("victoire")
     private boolean victoire;
+    @BsonProperty("defaite")
     private boolean defaite;
+    @BsonProperty("joueurActuel")
     private PionJoueur joueurActuel;
+    @BsonProperty("_id")
     private String codePartie;
 
 //    public static Partie getInstance(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {

@@ -19,14 +19,12 @@ public class Joueur {
     @BsonProperty("_id")
     private String pseudo;
 
-    @BsonProperty("plateau")
-    private Plateau plateau;
+
     private String mdp;
 
     public Joueur(String pseudo, String mdp) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         this.pseudo = pseudo;
         this.mdp = mdp;
-        this.plateau = new Plateau();
     }
 
 

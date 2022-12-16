@@ -19,7 +19,6 @@ import java.io.FileNotFoundException;
 
 public class MongoMain {
     /**
-     *
      * Normalement juste docker desktop installé sur son pc
      * + le plugin le docker sur intellij
      * run le docker-compose et c'est bon
@@ -28,7 +27,7 @@ public class MongoMain {
     public static void main(String[] args) {
         String uri = "mongodb://localhost:27017";
 
-        try (MongoClient mongoClient = MongoClients.create(uri)){
+        try (MongoClient mongoClient = MongoClients.create(uri)) {
 //            MongoDatabase database = mongoClient.getDatabase("projet_pandemic7");
 //            MongoCollection<Document> collection = database.getCollection("partie");
 //            Document document = new Document("name","Jo");
@@ -37,30 +36,19 @@ public class MongoMain {
 //            collection.insertOne(document);
 //            System.out.println("connexion success");
 
-//            FacadePandemic9Impl instance = new FacadePandemic9Impl();
-//            instance.creerPartieQuatreJoueurs("123abcd");
-            Dao.inscription("ahbon","hah");
+            FacadePandemic9Impl instance = new FacadePandemic9Impl();
+            instance.creerPartieQuatreJoueurs("123abcd");
+
 
             System.out.println("connexion success");
 
-            }
-        catch (MongoException me){
+        } catch (MongoException me) {
             System.err.println("Une erreur a eu lieu lors de la connexion");
-//        } catch (RoleIntrouvableException | VilleIntrouvableException | EvenementInnexistantException |
-//                 VirusIntrouvableException | FileNotFoundException e) {
-//            throw new RuntimeException(e);
-        } catch (RoleIntrouvableException e) {
+        } catch (RoleIntrouvableException | VilleIntrouvableException | EvenementInnexistantException |
+                 VirusIntrouvableException | FileNotFoundException e) {
             throw new RuntimeException(e);
-        } catch (VilleIntrouvableException e) {
-            throw new RuntimeException(e);
-        } catch (EvenementInnexistantException e) {
-            throw new RuntimeException(e);
-        } catch (VirusIntrouvableException e) {
-            throw new RuntimeException(e);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+
+
         }
-
-
     }
 }
