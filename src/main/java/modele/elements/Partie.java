@@ -58,9 +58,9 @@ public class Partie {
 //        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
 //    }
 
-    //############################# A ENLEVER
+    //############################# A ENLEVER ?
     public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
-        Partie partie = new Partie(codePartie);
+        Partie partie = Partie.getInstance(codePartie);
         partie.ajoutJoueursDansPartie(2);
         partie.distributionCarteJoueurs(4);
         partie.miseEnPlaceJeuCartePropagation();
@@ -69,7 +69,7 @@ public class Partie {
     }
 
     public static Partie creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        Partie partie = new Partie(codePartie);
+        Partie partie = Partie.getInstance(codePartie);
         partie.ajoutJoueursDansPartie(3);
         partie.distributionCarteJoueurs(3);
         partie.miseEnPlaceJeuCartePropagation();
@@ -78,7 +78,7 @@ public class Partie {
     }
 
     public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        Partie partie = new Partie(codePartie);
+        Partie partie = Partie.getInstance(codePartie);
         partie.ajoutJoueursDansPartie(4);
         partie.distributionCarteJoueurs(2);
         partie.miseEnPlaceJeuCartePropagation();
