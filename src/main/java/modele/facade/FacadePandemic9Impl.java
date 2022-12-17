@@ -20,25 +20,18 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     @Override
     public void creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        partie = Partie.creerPartieDeuxJoueurs(codePartie);
+        partie = Dao.creerPartieDeuxJoueurs(codePartie);
     }
     @Override
     public void creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        partie = Partie.creerPartieTroisJoueurs(codePartie);
+        partie = Dao.creerPartieTroisJoueurs(codePartie);
     }
-
-
-//    @Override
-//    public void creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-//        partie = Partie.creerPartieQuatreJoueurs(codePartie);
-//    }
 
     @Override
     public void creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
 //        partie = Partie.creerPartieQuatreJoueurs(codePartie);
         partie = Dao.creerPartieQuatreJoueurs(codePartie);
     }
-
 
     @Override
     public void jouerTour(List<IAction> listeAction) throws EchecDeLaPartiePlusDeCarteJoueurException, CarteVilleInexistanteDansDeckJoueurException, NbCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException, TropDeCarteEnMainException, NuitTranquilleException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, VictoireFinDePartieException, DefaitePartieTermineException {
@@ -55,8 +48,6 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         partie.isVictoire();
 
     }
-
-
 
     @Override
     public void jouerAction(PionJoueur joueurActuel, IAction action) throws CarteVilleInexistanteDansDeckJoueurException, NbCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException {
@@ -95,4 +86,6 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     public void repartiteurDeplacementPion(PionJoueur joueurActuel,PionJoueur joueurCible, Ville villeDestination) throws AucunJoueurDansVilleDestinationException, AutorisationManquanteException {
         joueurActuel.repartiteurDeplacementPion(partie,joueurCible,villeDestination);
     }
+
+
 }

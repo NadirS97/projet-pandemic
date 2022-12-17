@@ -64,9 +64,7 @@ public class Partie {
         joueurs = new ArrayList<>();
         victoire = false;
         defaite = false;
-
-
-//        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
+        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
     }
 
     //############################# A ENLEVER ?
@@ -93,9 +91,7 @@ public class Partie {
     public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
 //        Partie partie = Partie.getInstance(codePartie);
         Partie partie = new Partie(codePartie);
-
         partie.ajoutJoueursDansPartie(4);
-
         partie.distributionCarteJoueurs(2);
         partie.miseEnPlaceJeuCartePropagation();
         partie.determinerQuiCommencePartie();
@@ -229,6 +225,7 @@ public class Partie {
                     .getVilleActuelle()
                     .getNbCubeVirusVille()
                     .keySet()::remove);
+            //TODO Robin faut revoir ca (Jo a modifié le type des clés, ce sont des String au lieu de virus)
 
             virusDejaGueris.forEach(v -> {
                 HashMap<String, Virus> listeVaccinationContreVirus = null;

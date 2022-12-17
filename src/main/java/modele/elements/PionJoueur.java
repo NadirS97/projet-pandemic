@@ -64,9 +64,7 @@ public class PionJoueur {
 
     public Map.Entry<String, Integer> recupNbMaxCarteVilleMemeCouleurDeckJoueur(){
         Map<String, Integer> maMap= new HashMap<>();
-        plateau.getLesVirus().keySet().forEach(s -> {
-            maMap.put(s, 0);
-        });
+        plateau.getLesVirus().keySet().forEach(s -> maMap.put(s, 0));
         deckJoueur.forEach(carteJoueur -> {
             if(carteJoueur instanceof CarteVille){
                 String couleurVirusVille = ((CarteVille) carteJoueur).getVilleCarteVille().getCouleurVirusVille();

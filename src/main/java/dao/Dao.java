@@ -6,23 +6,24 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Updates;
 import modele.elements.Joueur;
 import modele.elements.Partie;
-import modele.exceptions.EvenementInnexistantException;
-import modele.exceptions.RoleIntrouvableException;
-import modele.exceptions.VilleIntrouvableException;
-import modele.exceptions.VirusIntrouvableException;
+import modele.elements.PionJoueur;
+import modele.elements.actions.IAction;
+import modele.exceptions.*;
 import org.bson.codecs.configuration.CodecRegistries;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Objects;
 
 public class Dao {
 
     private static final MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
-    private static final CodecRegistry pojoCodeRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+    private static final CodecRegistry pojoCodeRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
     private static final MongoDatabase db = mongoClient.getDatabase("pandemic9").withCodecRegistry(pojoCodeRegistry);
 
     public static void inscription(String pseudo, String mdp) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
@@ -49,6 +50,26 @@ public class Dao {
         return true;
     }
 
+    //=================================================================================================================
+
+    public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        MongoCollection<Partie> partieMongoCollection = db.getCollection("parties", Partie.class);
+        if (partieMongoCollection.countDocuments() > 0)
+            partieMongoCollection.drop();
+        Partie partie = Partie.creerPartieDeuxJoueurs(codePartie);
+        partieMongoCollection.insertOne(partie);
+        return partie;
+    }
+
+    public static Partie creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        MongoCollection<Partie> partieMongoCollection = db.getCollection("parties", Partie.class);
+        if (partieMongoCollection.countDocuments() > 0)
+            partieMongoCollection.drop();
+        Partie partie = Partie.creerPartieTroisJoueurs(codePartie);
+        partieMongoCollection.insertOne(partie);
+        return partie;
+    }
+
     public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
         MongoCollection<Partie> partieMongoCollection = db.getCollection("parties", Partie.class);
         if (partieMongoCollection.countDocuments() > 0)
@@ -57,7 +78,5 @@ public class Dao {
         partieMongoCollection.insertOne(partie);
         return partie;
     }
-
-
 
 }

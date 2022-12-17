@@ -10,8 +10,6 @@ import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VirusDejaEradiqueException;
-import modele.exceptions.VirusInexistantDansLaVilleActuelException;
-import modele.utils.DonneesVariablesStatiques;
 
 @AllArgsConstructor
 

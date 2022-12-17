@@ -18,7 +18,7 @@ public class DecouvrirRemede implements IAction {
     /**
      * Fonction permettant d'executer l'action DecouvrirRemede :
      * Pour une action le Joueur peut découvrir un remède sur n’importe quelle station de recherche
-     * à partir du moment oùle joueur fournit 5 cartes de la même couleur.
+     * à partir du moment où le joueur fournit 5 cartes de la même couleur.
      * Attention, certains rôles permettent de ne fournir que 4 cartes !
      * @param pionJoueur
      * @throws NbActionsMaxTourAtteintException

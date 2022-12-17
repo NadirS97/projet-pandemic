@@ -38,6 +38,9 @@ public class MongoMain {
 
             FacadePandemic9Impl instance = new FacadePandemic9Impl();
             instance.creerPartieQuatreJoueurs("123abcd");
+            instance.creerPartieTroisJoueurs("123abcd");
+            instance.creerPartieDeuxJoueurs("123abcd");
+
 
 
             System.out.println("connexion success");
