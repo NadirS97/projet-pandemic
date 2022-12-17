@@ -33,7 +33,8 @@ public class PionJoueur {
     private List<CartePropagation> mainAReorganiser = new ArrayList<>();
 
 
-
+    public PionJoueur() {
+    }
 
     public PionJoueur(Plateau plateau){
         this.plateau = plateau;

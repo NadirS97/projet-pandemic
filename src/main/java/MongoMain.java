@@ -28,18 +28,23 @@ public class MongoMain {
         String uri = "mongodb://localhost:27017";
 
         try (MongoClient mongoClient = MongoClients.create(uri)) {
-//            MongoDatabase database = mongoClient.getDatabase("projet_pandemic7");
-//            MongoCollection<Document> collection = database.getCollection("partie");
-//            Document document = new Document("name","Jo");
-//            document.append("sex","male");
-//            document.append("age","21");
-//            collection.insertOne(document);
-//            System.out.println("connexion success");
 
             FacadePandemic9Impl instance = new FacadePandemic9Impl();
             instance.creerPartieQuatreJoueurs("123abcd");
-            instance.creerPartieTroisJoueurs("123abcd");
-            instance.creerPartieDeuxJoueurs("123abcd");
+//            instance.creerPartieTroisJoueurs("123abcd");
+//            instance.creerPartieDeuxJoueurs("123abcd");
+            instance.getPartie().setDefaite(true);
+            instance.sauvegarderPartie();
+            instance.getPartie().setDefaite(false);
+            System.out.println(instance.getPartie().isDefaite());
+
+            // sauvegarde partie OK , mais impossible de recup la partie depuis la bdd
+            // multiples erreur de codec
+//           Dao.reprendrePartie();
+
+            // on arrive cependant a recup joueur depuis la bdd
+            //            Dao.inscription("truc","ah");
+//            System.out.println(Dao.reprendrejoueur());
 
 
 

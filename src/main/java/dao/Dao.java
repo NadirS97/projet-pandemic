@@ -17,8 +17,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.io.FileNotFoundException;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Dao {
 
@@ -46,8 +45,34 @@ public class Dao {
     public static boolean seReconnecterAuJeu(String idPartie) {
         MongoCollection<Partie> partieMongoCollection = db.getCollection("parties", Partie.class);
         Partie partie = partieMongoCollection.find(Filters.and(Filters.eq("_id", idPartie))).first();
-        Objects.requireNonNull(partie).getPartie(idPartie);
+        System.out.println(partie);
+//        Objects.requireNonNull(partie).getPartie(idPartie);
         return true;
+    }
+
+    // test de la fonction au dessus mais qui retourne un objet partie pour la reprise de partie
+    public static Partie reprendrePartie() {
+        MongoCollection<Partie> partieMongoCollection = db.getCollection("parties", Partie.class);
+        Collection<Partie> partie = new ArrayList<>();
+        partieMongoCollection.find().forEach(a->partie.add(a));
+        return partie.stream().toList().get(0);
+//        Partie partie = partieMongoCollection.find(Filters.and(Filters.eq("_id", idPartie))).first();
+//        Objects.requireNonNull(partie).getPartie(idPartie);
+//        return partie;
+
+    }
+    public static Joueur reprendrejoueur(){
+        MongoCollection<Joueur> joueurMongoCollection = db.getCollection("joueurs", Joueur.class);
+        Collection<Joueur> joueurs = new ArrayList<>();
+        joueurMongoCollection.find().forEach(a->joueurs.add(a));
+        return joueurs.stream().toList().get(0);
+    }
+
+
+    public static void sauvegarderPartie(Partie partie){
+        MongoCollection<Partie> partieMongoCollection = db.getCollection("parties",Partie.class);
+        partieMongoCollection.drop();
+        partieMongoCollection.insertOne(partie);
     }
 
     //=================================================================================================================

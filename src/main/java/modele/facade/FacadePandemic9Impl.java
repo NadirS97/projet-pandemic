@@ -34,6 +34,17 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     }
 
     @Override
+    public void sauvegarderPartie() {
+        Dao.sauvegarderPartie(partie);
+    }
+
+    @Override
+    public void reprendrePartie() {
+        partie = Dao.reprendrePartie();
+    }
+
+
+    @Override
     public void jouerTour(List<IAction> listeAction) throws EchecDeLaPartiePlusDeCarteJoueurException, CarteVilleInexistanteDansDeckJoueurException, NbCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException, TropDeCarteEnMainException, NuitTranquilleException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, VictoireFinDePartieException, DefaitePartieTermineException {
         for (IAction action : listeAction){
             jouerAction(partie.getJoueurActuel(),action);
@@ -87,5 +98,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
         joueurActuel.repartiteurDeplacementPion(partie,joueurCible,villeDestination);
     }
 
-
+    public Partie getPartie() {
+        return partie;
+    }
 }

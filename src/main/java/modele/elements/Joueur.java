@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 @Getter
 @Setter
 public class Joueur {
+    public Joueur() {
+    }
 
     @BsonProperty("_id")
     private String pseudo;

@@ -1,5 +1,6 @@
 package modele.facade;
 
+import modele.elements.Partie;
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
 import modele.elements.cartes.CarteEvenement;
@@ -29,6 +30,9 @@ public interface FacadePandemic9 {
     void creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException;
 
 
+    void sauvegarderPartie();
+
+    void reprendrePartie();
     /**
      *
      * @param listeAction

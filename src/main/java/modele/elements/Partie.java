@@ -11,6 +11,7 @@ import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
 import org.bson.BsonType;
+import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.bson.codecs.pojo.annotations.BsonRepresentation;
 
@@ -54,6 +55,10 @@ public class Partie {
 //        }
 //        return singleton;
 //    }
+
+
+    public Partie() {
+    }
 
     // Constructeur public "classique" dorénavant inutile, car nous avons un singleton et donc un constructeur static
     public Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
