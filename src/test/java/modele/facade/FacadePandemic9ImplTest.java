@@ -76,6 +76,11 @@ class FacadePandemic9ImplTest {
         pionJoueur2.getDeckJoueur().remove(0);
     }
 
+    @Test
+    void truc(){
+
+    }
+
 
     @Test
     void creationPartie4Joueurs(){
