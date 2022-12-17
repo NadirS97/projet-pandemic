@@ -880,7 +880,7 @@ class FacadePandemic9ImplTest {
     @Test
     void repartiteurOk() {
         pionJoueur.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
-        PionJoueur pionJoueur3 = new PionJoueur(instance.partie);
+        PionJoueur pionJoueur3 = new PionJoueur(instance.partie.getPlateau());
         pionJoueur2.setAutorisationDeplacementRepartiteur(true);
         pionJoueur3.setVilleActuelle(alger);
         instance.partie.getJoueurs().add(pionJoueur3);

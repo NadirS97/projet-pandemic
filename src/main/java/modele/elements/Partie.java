@@ -93,11 +93,12 @@ public class Partie {
     public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
 //        Partie partie = Partie.getInstance(codePartie);
         Partie partie = new Partie(codePartie);
-        partie.joueurActuel = new PionJoueur(partie);
-//        partie.ajoutJoueursDansPartie(4);
-//        partie.distributionCarteJoueurs(2);
-//        partie.miseEnPlaceJeuCartePropagation();
-//        partie.determinerQuiCommencePartie();
+
+        partie.ajoutJoueursDansPartie(4);
+
+        partie.distributionCarteJoueurs(2);
+        partie.miseEnPlaceJeuCartePropagation();
+        partie.determinerQuiCommencePartie();
         return partie;
     }
     //#####################################################
@@ -106,9 +107,11 @@ public class Partie {
         Dao.inscription(pseudo, mdp);
     }
 
+
     public void ajoutJoueursDansPartie(int nbJoueurs) {
         for (int i = 0 ; i < nbJoueurs ; i++){
-            joueurs.add(new PionJoueur(this));
+            joueurs.add(new PionJoueur(plateau));
+
         }
     }
 

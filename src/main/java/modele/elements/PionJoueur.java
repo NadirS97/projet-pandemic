@@ -26,7 +26,7 @@ public class PionJoueur {
     private List<CarteJoueur> deckJoueur;
     private Ville villeActuelle;
     private Plateau plateau;
-    private Partie partie;
+
     private boolean permissionPontAerien;
     private CarteEvenement cartePlanificateurUrgenceEntrepose;
     private boolean autorisationDeplacementRepartiteur;
@@ -35,9 +35,8 @@ public class PionJoueur {
 
 
 
-    public PionJoueur(Partie partie){
-        this.plateau = partie.getPlateau();
-        this.partie = partie;
+    public PionJoueur(Plateau plateau){
+        this.plateau = plateau;
         this.deckJoueur = new ArrayList<>();
         this.nbActions = DonneesVariablesStatiques.nbActionsMaxParTour;
         this.roleJoueur = plateau.piocherCarteRole();
@@ -176,7 +175,7 @@ public class PionJoueur {
 
     }
 
-    public void repartiteurDeplacementPion(PionJoueur joueurCible,Ville villeDestination) throws AutorisationManquanteException, AucunJoueurDansVilleDestinationException {
+    public void repartiteurDeplacementPion(Partie partie, PionJoueur joueurCible,Ville villeDestination) throws AutorisationManquanteException, AucunJoueurDansVilleDestinationException {
         if (!joueurCible.autorisationDeplacementRepartiteur)
             throw new AutorisationManquanteException();
 
