@@ -41,41 +41,41 @@ public class Partie {
     @BsonProperty("_id")
     private String codePartie;
 
-    public static Partie getInstance(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        if (Objects.isNull(singleton)) {
-            singleton = new Partie();
-            // marqueur éclosion et propagation placé à 0 lors de la création du plateau
-            // lors de la création du plateau, toute la création des cartes du jeu se font
-            singleton.setCodePartie(codePartie);
-            singleton.setPlateau(new Plateau());
-            singleton.setJoueurs(new ArrayList<>());
-            singleton.setVictoire(false);
-            singleton.setDefaite(false);
-            singleton.getPlateau().getVilleByName("Atlanta").setStationDeRechercheVille(true);
-        }
-        return singleton;
-    }
+//    public static Partie getInstance(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+//        if (Objects.isNull(singleton)) {
+//            singleton = new Partie();
+//            // marqueur éclosion et propagation placé à 0 lors de la création du plateau
+//            // lors de la création du plateau, toute la création des cartes du jeu se font
+//            singleton.setCodePartie(codePartie);
+//            singleton.setPlateau(new Plateau());
+//            singleton.setJoueurs(new ArrayList<>());
+//            singleton.setVictoire(false);
+//            singleton.setDefaite(false);
+//            singleton.getPlateau().getVilleByName("Atlanta").setStationDeRechercheVille(true);
+//        }
+//        return singleton;
+//    }
 
 
 //    public Partie() {
 //    }
 
     // Constructeur public "classique" dorénavant inutile, car nous avons un singleton et donc un constructeur static
-//    public Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
-//        // marqueur eclosion et propagation placé à 0 lors de la création du plateau
-//        // lors de la création du plateau, toute la créations des cartes du jeu se font
-//        this.codePartie = codePartie;
-//        this.plateau = new Plateau();
-//        joueurs = new ArrayList<>();
-//        victoire = false;
-//        defaite = false;
-//        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
-//    }
+    public Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
+        // marqueur eclosion et propagation placé à 0 lors de la création du plateau
+        // lors de la création du plateau, toute la créations des cartes du jeu se font
+        this.codePartie = codePartie;
+        this.plateau = new Plateau();
+        joueurs = new ArrayList<>();
+        victoire = false;
+        defaite = false;
+        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
+    }
 
     //############################# A ENLEVER ?
     public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
-        Partie partie = Partie.getInstance(codePartie);
-//        Partie partie = new Partie(codePartie);
+//        Partie partie = Partie.getInstance(codePartie);
+        Partie partie = new Partie(codePartie);
         partie.getJoueurs().clear();
         partie.ajoutJoueursDansPartie(2);
         partie.distributionCarteJoueurs(4);
@@ -85,8 +85,8 @@ public class Partie {
     }
 
     public static Partie creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        Partie partie = Partie.getInstance(codePartie);
-//        Partie partie = new Partie(codePartie);
+//        Partie partie = Partie.getInstance(codePartie);
+        Partie partie = new Partie(codePartie);
         partie.getJoueurs().clear();
         partie.ajoutJoueursDansPartie(3);
         partie.distributionCarteJoueurs(3);
@@ -96,8 +96,8 @@ public class Partie {
     }
 
     public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        Partie partie = Partie.getInstance(codePartie);
-//        Partie partie = new Partie(codePartie);
+//        Partie partie = Partie.getInstance(codePartie);
+        Partie partie = new Partie(codePartie);
         partie.getJoueurs().clear();
         partie.ajoutJoueursDansPartie(4);
         partie.distributionCarteJoueurs(2);

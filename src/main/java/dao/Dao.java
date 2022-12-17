@@ -37,7 +37,7 @@ public class Dao {
         if (partiesMongoCollection.countDocuments() > 0)
             partiesMongoCollection.drop();
 //        Partie partie = Partie.getInstance(codePartie);
-        Partie partie = Partie.getInstance(codePartie);
+        Partie partie = new Partie(codePartie);
         // TODO : une partie du contenu de creerPartieQuatreJoueurs ou les autres devrait se trouver ici
         partiesMongoCollection.insertOne(partie);
     }
@@ -103,5 +103,7 @@ public class Dao {
         partieMongoCollection.insertOne(partie);
         return partie;
     }
+
+
 
 }
