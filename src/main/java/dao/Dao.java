@@ -37,7 +37,7 @@ public class Dao {
         if (partiesMongoCollection.countDocuments() > 0)
             partiesMongoCollection.drop();
 //        Partie partie = Partie.getInstance(codePartie);
-        Partie partie = new Partie(codePartie);
+        Partie partie = Partie.getInstance(codePartie);
         // TODO : une partie du contenu de creerPartieQuatreJoueurs ou les autres devrait se trouver ici
         partiesMongoCollection.insertOne(partie);
     }
@@ -64,7 +64,7 @@ public class Dao {
     public static Joueur reprendrejoueur(){
         MongoCollection<Joueur> joueurMongoCollection = db.getCollection("joueurs", Joueur.class);
         Collection<Joueur> joueurs = new ArrayList<>();
-        joueurMongoCollection.find().forEach(a->joueurs.add(a));
+        joueurMongoCollection.find().forEach(joueurs::add);
         return joueurs.stream().toList().get(0);
     }
 
