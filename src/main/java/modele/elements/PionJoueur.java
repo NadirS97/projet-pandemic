@@ -34,6 +34,7 @@ public class PionJoueur {
 
 
 
+
     public PionJoueur(Partie partie){
         this.plateau = partie.getPlateau();
         this.partie = partie;
@@ -62,7 +63,7 @@ public class PionJoueur {
         return listeVillesDeckJoueur.contains(ville); //True
     }
 
-    public Map.Entry<String, Integer> getNbMaxCarteVilleMemeCouleurDeckJoueur(){
+    public Map.Entry<String, Integer> recupNbMaxCarteVilleMemeCouleurDeckJoueur(){
         Map<String, Integer> maMap= new HashMap<>();
         plateau.getLesVirus().keySet().forEach(s -> {
             maMap.put(s, 0);
@@ -77,7 +78,7 @@ public class PionJoueur {
         return maMap.entrySet().stream().max(Map.Entry.comparingByValue()).orElse(null);
     }
 
-    public List<CarteVille> getLesCartesVilleDeMemeCouleurDeDeckJoueur(String couleurVirus){
+    public List<CarteVille> recupLesCartesVilleDeMemeCouleurDeDeckJoueur(String couleurVirus){
         List<CarteVille> cartesVilleDeMemeCouleur= new ArrayList<>();
         deckJoueur.forEach(carteJoueur -> {
             if(carteJoueur instanceof CarteVille){

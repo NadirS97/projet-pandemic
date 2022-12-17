@@ -10,7 +10,9 @@ import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
+import org.bson.BsonType;
 import org.bson.codecs.pojo.annotations.BsonProperty;
+import org.bson.codecs.pojo.annotations.BsonRepresentation;
 
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -23,7 +25,7 @@ public class Partie {
 
     @BsonProperty("partie")
     private static Partie singleton;
-    @BsonProperty("joueurs")
+    @BsonProperty("listeJoueur")
     private List<PionJoueur> joueurs;
     @BsonProperty("indexJoueur")
     int indexJoueur;
@@ -62,6 +64,8 @@ public class Partie {
         joueurs = new ArrayList<>();
         victoire = false;
         defaite = false;
+
+
 //        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
     }
 
@@ -89,7 +93,8 @@ public class Partie {
     public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
 //        Partie partie = Partie.getInstance(codePartie);
         Partie partie = new Partie(codePartie);
-        partie.ajoutJoueursDansPartie(4);
+        partie.joueurActuel = new PionJoueur(partie);
+//        partie.ajoutJoueursDansPartie(4);
 //        partie.distributionCarteJoueurs(2);
 //        partie.miseEnPlaceJeuCartePropagation();
 //        partie.determinerQuiCommencePartie();
