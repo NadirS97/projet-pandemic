@@ -38,9 +38,9 @@ public class DeplacementVoiture implements IAction, Deplacement, Serializable {
             throw new VilleDestinationEstVilleActuelleException("Vous ne pouvez pas vous déplacer vers votre ville actuelle.");
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
-        if (!pionJoueur.getPlateau().isVille(villeDestination.getNomVille()))
+        if (Boolean.FALSE.equals(pionJoueur.getPlateau().isVille(villeDestination.getNomVille())))
             throw new VilleIntrouvableException(villeDestination.getNomVille() + " non trouvé");
-        if (!pionJoueur.getPlateau().isVilleVoisine(pionJoueur.getVilleActuelle(), villeDestination))
+        if (Boolean.FALSE.equals(pionJoueur.getPlateau().isVilleVoisine(pionJoueur.getVilleActuelle(), villeDestination)))
             throw new VilleNonVoisineException();
          if (pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.SPECIALISTE_EN_MISE_EN_QUARANTAINE)) {
              conditionRoleAffectantDeplacement(pionJoueur, pionJoueur.getVilleActuelle(), villeDestination);

@@ -45,11 +45,11 @@ public class DonnerConnaissance implements IAction, Serializable {
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
         if (!pionJoueur2.getVilleActuelle().equals(pionJoueur.getVilleActuelle()))
             throw new JoueursNonPresentMemeVilleException();
-        if(!pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.CHERCHEUSE)){
+        if (!pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.CHERCHEUSE)){
             if(!pionJoueur.estVilleOfCarteVilleDeckJoueur(pionJoueur.getVilleActuelle()))
                 throw new CarteVilleInexistanteDansDeckJoueurException("Le joueur ne possède pas la carte ville dans sa main");
             pionJoueur2.getDeckJoueur().add(pionJoueur.defausseCarteVilleDeDeckJoueur(pionJoueur.getVilleActuelle()));
-        }else{
+        } else {
             if(villeChoisis == null)
                 throw new DonneeManquanteException();
             if(!pionJoueur.estVilleOfCarteVilleDeckJoueur(villeChoisis))

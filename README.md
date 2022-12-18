@@ -9,13 +9,13 @@
 Année : Master 1 MIAGE - 2022
 ------------
 
-### Mise en place de l'environnement de travail:
+### Mise en place de l'environnement de travail :
 
-**1-** On lance tout d'abord l'application **Docker Desktop**  :
-Lien de téléchargement: [ici](https://www.docker.com/products/docker-desktop/)
+**1-** On lance tout d'abord l'application **Docker Desktop** :
+Lien de téléchargement : [ici](https://www.docker.com/products/docker-desktop/)
 
-**2-**  On start notre conteneur :
-En faisant un run dans notre fichier **docker-compose**
+**2-** On démarre notre conteneur :
+En faisant un *run* dans notre fichier **docker-compose**
 ***Chemin:** projet-pandemic-9/docker-compose.yaml*
 >Qui s'occupera de lancer automatiquement notre conteneur MongoDB ou de créer un nouveau si celui-ci n'existe pas encore.
 >- Nom du conteneur : *mongodb*
@@ -23,24 +23,26 @@ En faisant un run dans notre fichier **docker-compose**
 >- Image : *mongo:latest*
 
 **3-** Une fois ceci fait, on peut exécuter l'ensemble des tests :
-En faisant un run de la classe **FacadePandemic9ImplTest**
+En faisant un *run* de la classe **FacadePandemic9ImplTest**
 ***Chemin:** projet-pandemic-9/src/test/java/modele/facade/FacadePandemic9ImplTest.java**
 >Afin de tester l'ensemble des fonctions de notre facade.
 
-**4-** On peut éventuellement lancer l'application **MongoDBCompass**:
-Lien de téléchargement: [ici](https://www.mongodb.com/try/download/compass)
+**4-** On peut éventuellement lancer l'application **MongoDBCompass** :
+
+Lien de téléchargement : [ici](https://www.mongodb.com/try/download/compass)
+
 Application nous permettant d'avoir une meilleure lecture de la base de données avec une interface graphique.
 URL de connexion à notre conteneur et donc à notre BDD :
 ```
 mongodb://localhost:27017/
 ```
 -----------------------------------
-### Difficultés rencontrées:
+### Difficultés rencontrées :
 
 #### Problème avec partieMongoCollection.find().first() :
 partieMongoCollection.find().first() ne fonctionne pas, on suppose que c'est à cause de la complexité des objets qu'on utilise.
-- On a essayé de régler les soucis en utilisant le Discriminator et en ajoutant nos ClassModel problématiques (non concrètes, c'est à dire les classes abstraites ainsi que les interfaces) ainsi que les classes concrètes qui les extends ou les implements mais ceci nous a permis de régler une partie du problème.
-  En les ajoutant dans le pojoCodeRegistry avec un .register() comme suit :
+- On a essayé de régler les soucis en utilisant le Discriminator et en ajoutant nos ClassModel problématiques (non concrètes, c'est-à-dire les classes abstraites ainsi que les interfaces) ainsi que les classes concrètes qui les extends ou les implements mais ceci nous a permis de régler une partie du problème.
+  En les ajoutant dans le pojoCodeRegistry avec un *.register()* comme suit :
 ```java
 CodecRegistry pojoCodeRegistry = CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).register(classJoueur,classCarteScientifique, classEvent,classCarteParUneNuitTranquille,classPontAerien,classPop,classPrev,classSub,classRole,classChercheuse, classExpert,classCarteMedecin, classCartePlan, classRepart, classSpecia).build()));
 ```
@@ -76,7 +78,7 @@ partieMongoCollection.updateOne(Filters.eq("_id", "123abcd"),Updates.combine(
 ```
 
 **Solution**
-On a eu l'idée de contourner le problème en effectuant:
+On a eu l'idée de contourner le problème en effectuant :
 ```java
 partieMongoCollection.insertOne(partie);
 ``` 
@@ -94,7 +96,7 @@ En insérant de nouveau, le nouvel état de notre partie à la fin de chaque tou
     - ***Chemin du fichier JSON :** projet-pandemic-9/src/main/resources/DonneesPlateau.json*
       Fichier contenant :
         - La liste des villes avec le nom, la population totale, la population par km² ainsi que la liste des villes voisines.
-        - La liste des virus avec la couleur, et l'etat (*de base étant NON_TRAITE*)
+        - La liste des virus avec la couleur et l'etat (*de base étant NON_TRAITE*)
 - On a mis en place une fonction dans la class Partie *lectureDonneesPlateau()* permettant de lire les données depuis le fichier en JSON en utilisant les classes DTO afin de construire les objets en Java
 ```java
 public DonneesPlateauDTO lectureDonneesPlateau() throws FileNotFoundException {

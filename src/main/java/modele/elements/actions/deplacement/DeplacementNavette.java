@@ -42,9 +42,9 @@ public class DeplacementNavette implements IAction , Deplacement, Serializable {
         if (pionJoueur.getNbActions() <= 0)
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
 
-        // ROLE EXPERT AUX OPERATIONS , pas besoin que la ville cible soit une station de recherche
+        // ROLE EXPERT AUX OPERATIONS, pas besoin que la ville cible soit une station de recherche
         if (!pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.EXPERT_AUX_OPERATIONS)){
-            if (!pionJoueur.getPlateau().isVilleStationDeRecherche(villeDestination))
+            if (Boolean.FALSE.equals(pionJoueur.getPlateau().isVilleStationDeRecherche(villeDestination)))
                 throw new VilleAvecAucuneStationDeRechercheException("La ville de destination: " + villeDestination.getNomVille() + " ne possède pas de station de recherche.");
         }
 

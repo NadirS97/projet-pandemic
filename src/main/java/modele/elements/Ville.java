@@ -15,9 +15,6 @@ public class Ville implements Serializable {
 
     private String nomVille;
     private List<String> villesVoisinesVille;
-//    private Map<Virus, Integer> nbCubeVirusVille;
-
-    // mongo accepte que les map avec des string en key :(
     private Map<String, Integer> nbCubeVirusVille;
     private int nbPopulationTotaleVille;
     private int nbPopulationKmCarreeVille;
@@ -45,15 +42,6 @@ public class Ville implements Serializable {
     public void setStationDeRechercheVille(boolean stationDeRechercheVille) {
         this.stationDeRechercheVille = stationDeRechercheVille;
     }
-
-    // mongo accepte que les map avec des string en key :(
-//    public String retourneVirusNbCubeVirusVille(){
-//        StringBuilder s = new StringBuilder("[");
-//        for(Map.Entry<Virus, Integer> donneesCubesVirusVille : nbCubeVirusVille.entrySet()){
-//            s.append("(").append(donneesCubesVirusVille.getKey().getVirusCouleur()).append(", ").append(donneesCubesVirusVille.getValue()).append(")");
-//        }
-//        return s + "]";
-//    }
 
     public String retourneVirusNbCubeVirusVille(){
         StringBuilder s = new StringBuilder("[");

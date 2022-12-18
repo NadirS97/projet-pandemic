@@ -1,7 +1,6 @@
 package modele.elements;
 
 
-import dao.Dao;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,15 +10,10 @@ import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
-import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonDiscriminator;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import java.io.FileNotFoundException;
-import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Getter
