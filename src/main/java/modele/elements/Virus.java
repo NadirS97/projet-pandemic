@@ -1,13 +1,17 @@
 package modele.elements;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import modele.elements.enums.EtatVirus;
 import modele.utils.DonneesVariablesStatiques;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class Virus {
+@NoArgsConstructor
+public class Virus implements Serializable {
 
     private String virusCouleur;
     private EtatVirus etatVirus;

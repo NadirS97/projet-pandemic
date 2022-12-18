@@ -1,10 +1,14 @@
 package modele.elements.cartes.roles;
 
+import lombok.NoArgsConstructor;
 import modele.elements.cartes.CarteRole;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
-public class CarteRepartiteur extends CarteRole {
+import java.io.Serializable;
+
+@NoArgsConstructor
+public class CarteRepartiteur extends CarteRole implements Serializable {
 
     public CarteRepartiteur(CouleurPionsRole couleurPionRole) {
         super(couleurPionRole);

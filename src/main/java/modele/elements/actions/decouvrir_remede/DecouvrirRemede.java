@@ -1,5 +1,8 @@
 package modele.elements.actions.decouvrir_remede;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import modele.elements.PionJoueur;
 
 import modele.elements.Virus;
@@ -13,7 +16,12 @@ import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.exceptions.VirusDejaTraiteException;
 import modele.utils.DonneesVariablesStatiques;
 
-public class DecouvrirRemede implements IAction {
+import java.io.Serializable;
+
+@Setter
+@Getter
+@NoArgsConstructor
+public class DecouvrirRemede implements IAction, Serializable {
 
     /**
      * Fonction permettant d'executer l'action DecouvrirRemede :

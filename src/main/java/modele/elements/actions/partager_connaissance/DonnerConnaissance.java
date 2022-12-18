@@ -1,5 +1,8 @@
 package modele.elements.actions.partager_connaissance;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import modele.elements.PionJoueur;
 import modele.elements.Ville;
 import modele.elements.actions.IAction;
@@ -9,8 +12,12 @@ import modele.exceptions.DonneeManquanteException;
 import modele.exceptions.JoueursNonPresentMemeVilleException;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 
+import java.io.Serializable;
 
-public class DonnerConnaissance implements IAction {
+@NoArgsConstructor
+@Getter
+@Setter
+public class DonnerConnaissance implements IAction, Serializable {
     PionJoueur pionJoueur2;
     Ville villeChoisis;
 

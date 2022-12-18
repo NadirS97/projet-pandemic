@@ -1,6 +1,7 @@
 package modele.elements.actions.planificateur_urgence;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import modele.elements.PionJoueur;
 import modele.elements.actions.IAction;
@@ -11,8 +12,12 @@ import modele.elements.enums.NomsRoles;
 import modele.exceptions.CarteEvenementNonTrouveDansDefausseException;
 import modele.exceptions.MauvaisRoleException;
 
+import java.io.Serializable;
 
-public class EntreposerEvenementRolePlanificateur implements IAction {
+@NoArgsConstructor
+@Getter
+@Setter
+public class EntreposerEvenementRolePlanificateur implements IAction, Serializable {
 
 
     private CarteEvenement carteEvenementChoisis;

@@ -1,5 +1,8 @@
 package modele.elements.actions.deplacement;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import modele.elements.actions.Deplacement;
 import modele.elements.actions.IAction;
 import modele.elements.PionJoueur;
@@ -7,7 +10,11 @@ import modele.elements.Ville;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 
-public class DeplacementVoiture implements IAction, Deplacement {
+import java.io.Serializable;
+@NoArgsConstructor
+@Setter
+@Getter
+public class DeplacementVoiture implements IAction, Deplacement, Serializable {
 
     private Ville villeDestination;
 

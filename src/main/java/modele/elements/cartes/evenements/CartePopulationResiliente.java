@@ -1,19 +1,22 @@
 package modele.elements.cartes.evenements;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.enums.NomsEvenement;
 import modele.exceptions.CartePropagationNotInDefausseException;
 
+import java.io.Serializable;
+
 @Getter
-public class CartePopulationResiliente extends CarteEvenement {
+@Setter
+@NoArgsConstructor
+public class CartePopulationResiliente extends CarteEvenement implements Serializable {
 
    private CartePropagation cartePropagationChoisis;
-
-    public CartePopulationResiliente() {
-    }
 
     private final NomsEvenement nomEvenement = NomsEvenement.POPULATION_RESILIENTE;
     private final String descriptionN = "Retirez du jeu 1 carte de votre choix de la défausse Propagation. (Vous pouvez jouer Population résiliente entre les étapes Infection et Intensification d'une carte Épidémie.)";

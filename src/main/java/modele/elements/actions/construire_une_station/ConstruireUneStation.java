@@ -1,5 +1,8 @@
 package modele.elements.actions.construire_une_station;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
 import modele.elements.Ville;
@@ -12,13 +15,15 @@ import modele.exceptions.VilleActuellePossedeDejaUneStationDeRechercheException;
 import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.utils.DonneesVariablesStatiques;
 
+import java.io.Serializable;
 
-public class ConstruireUneStation implements IAction {
+
+@Setter
+@Getter
+@NoArgsConstructor
+public class ConstruireUneStation implements IAction, Serializable {
 
     private Ville villeStationDeRecherche;
-
-    public ConstruireUneStation() {
-    }
 
     public ConstruireUneStation(Ville villeStationDeRecherche) {
         this.villeStationDeRecherche = villeStationDeRecherche;

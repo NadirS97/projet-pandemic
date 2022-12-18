@@ -1,5 +1,8 @@
 package modele.elements.actions.deplacement;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import modele.elements.PionJoueur;
 
 import modele.elements.Ville;
@@ -9,7 +12,11 @@ import modele.elements.cartes.CarteJoueur;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 
-public class DeplacementVolDirect implements IAction, Deplacement {
+import java.io.Serializable;
+@NoArgsConstructor
+@Getter
+@Setter
+public class DeplacementVolDirect implements IAction, Deplacement, Serializable {
 
     private Ville villeDestination;
 

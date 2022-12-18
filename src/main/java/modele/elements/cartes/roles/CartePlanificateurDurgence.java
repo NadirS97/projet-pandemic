@@ -1,15 +1,19 @@
 package modele.elements.cartes.roles;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CarteRole;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
+import java.io.Serializable;
+
 @Getter
+@NoArgsConstructor
 @Setter
-public class CartePlanificateurDurgence extends CarteRole {
+public class CartePlanificateurDurgence extends CarteRole implements Serializable {
 
     CarteEvenement carteEvenementEntrepose;
 

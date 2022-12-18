@@ -1,17 +1,23 @@
 package modele.elements.cartes.evenements;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import modele.elements.PionJoueur;
 import modele.elements.cartes.CarteEvenement;
 import modele.elements.cartes.CartePropagation;
 import modele.elements.enums.NomsEvenement;
 import modele.utils.DonneesVariablesStatiques;
 
+import javax.sql.rowset.serial.SerialJavaObject;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class CartePrevision extends CarteEvenement {
+@Setter
+@NoArgsConstructor
+public class CartePrevision extends CarteEvenement implements Serializable {
 
     private final NomsEvenement nomEvenement = NomsEvenement.PREVISION;
     private final String description = "Piochez, consultez et réorganisez dans l'ordre de votre choix les 6 premières cartes du paquet Propagation. Replacez-les ensuite sur le dessus du paquet.";

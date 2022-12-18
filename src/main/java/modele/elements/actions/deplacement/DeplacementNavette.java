@@ -1,5 +1,8 @@
 package modele.elements.actions.deplacement;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import modele.elements.PionJoueur;
 
 import modele.elements.Ville;
@@ -11,7 +14,11 @@ import modele.exceptions.VilleAvecAucuneStationDeRechercheException;
 import modele.exceptions.VilleDestinationEstVilleActuelleException;
 import modele.exceptions.VilleIntrouvableException;
 
-public class DeplacementNavette implements IAction , Deplacement {
+import java.io.Serializable;
+@NoArgsConstructor
+@Setter
+@Getter
+public class DeplacementNavette implements IAction , Deplacement, Serializable {
 
     private Ville villeDestination;
 

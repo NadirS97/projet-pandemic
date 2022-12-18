@@ -178,7 +178,6 @@ public class PionJoueur {
                 return;
             }
         }
-
         throw new AucunJoueurDansVilleDestinationException();
     }
 

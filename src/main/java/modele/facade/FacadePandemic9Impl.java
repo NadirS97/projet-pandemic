@@ -29,7 +29,6 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     @Override
     public void creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-//        partie = Partie.creerPartieQuatreJoueurs(codePartie);
         partie = Dao.creerPartieQuatreJoueurs(codePartie);
     }
 
@@ -42,7 +41,6 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
     public void reprendrePartie() {
         partie = Dao.reprendrePartie();
     }
-
 
     @Override
     public void jouerTour(List<IAction> listeAction) throws EchecDeLaPartiePlusDeCarteJoueurException, CarteVilleInexistanteDansDeckJoueurException, NbCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException, TropDeCarteEnMainException, NuitTranquilleException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, VictoireFinDePartieException, DefaitePartieTermineException {

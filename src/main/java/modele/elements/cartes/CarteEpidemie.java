@@ -1,6 +1,8 @@
 package modele.elements.cartes;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import modele.elements.PionJoueur;
 import modele.elements.Plateau;
@@ -10,12 +12,16 @@ import modele.exceptions.NbCubesAAjouterInvalideException;
 import modele.exceptions.PropagationImpossibleCarSpecialisteQuarantaineException;
 import modele.exceptions.VilleDejaEclosException;
 import modele.utils.DonneesVariablesStatiques;
+
+import java.io.Serializable;
 import java.util.List;
 
 
 @Getter
 @ToString
-public class CarteEpidemie extends CarteJoueur implements IEffet {
+@Setter
+@NoArgsConstructor
+public class CarteEpidemie extends CarteJoueur implements IEffet, Serializable {
     private void applicationEffetIntensification(Plateau plateau){
         plateau.melangerPaquet(plateau.getDefausseCartePropagation());
         plateau.getDefausseCartePropagation().forEach(cartePropagation -> {

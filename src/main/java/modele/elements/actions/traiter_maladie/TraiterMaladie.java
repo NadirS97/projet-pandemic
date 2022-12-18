@@ -1,6 +1,9 @@
 package modele.elements.actions.traiter_maladie;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import modele.elements.PionJoueur;
 
 import modele.elements.Ville;
@@ -11,9 +14,13 @@ import modele.elements.enums.NomsRoles;
 import modele.exceptions.NbActionsMaxTourAtteintException;
 import modele.exceptions.VirusDejaEradiqueException;
 
-@AllArgsConstructor
+import java.io.Serializable;
 
-public class TraiterMaladie implements IAction {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class TraiterMaladie implements IAction, Serializable {
 
     private Virus choixVirus;
 

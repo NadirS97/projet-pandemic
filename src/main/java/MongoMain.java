@@ -36,10 +36,13 @@ public class MongoMain {
     public static void main(String[] args) {
         String uri = "mongodb://localhost:27017";
 
+        //Test afin de vérifier que notre partie est bien enregistré dans notre BDD une fois par tour
+
         try (MongoClient mongoClient = MongoClients.create(uri)) {
 
             FacadePandemic9Impl instance = new FacadePandemic9Impl();
             instance.creerPartieQuatreJoueurs("123abcd");
+
 
             PionJoueur joueurActuel = instance.getPartie().getJoueurActuel();
             joueurActuel.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
@@ -47,7 +50,7 @@ public class MongoMain {
             IAction action1 = new DeplacementVoiture(instance.getPartie().getPlateau().recupererVilleAvecNom("Atlanta"));
             IAction action2 = new DeplacementVoiture(instance.getPartie().getPlateau().recupererVilleAvecNom("Chicago"));
             IAction action3 = new DeplacementVoiture(instance.getPartie().getPlateau().recupererVilleAvecNom("Atlanta"));
-            List<IAction> listeActions = List.of(action,action1,action2,action3);
+            List<IAction> listeActions = List.of(action,action1, action2, action3);
             instance.jouerTour(listeActions);
 
 

@@ -26,37 +26,14 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class Partie {
-
-//    Map<PionJoueur,CarteRole> joueurs;
-
-    //    @BsonProperty("listeJoueur")
     private List<PionJoueur> joueurs;
-    //    @BsonProperty("indexJoueur")
     int indexJoueur;
-    //    @BsonProperty("plateau")
     private Plateau plateau;
-    //    @BsonProperty("victoire")
     private boolean victoire;
-    //    @BsonProperty("defaite")
     private boolean defaite;
     private PionJoueur joueurActuel;
     @BsonProperty("_id")
     private String codePartie;
-
-//    public static Partie getInstance(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-//        if (Objects.isNull(singleton)) {
-//            singleton = new Partie();
-//            // marqueur éclosion et propagation placé à 0 lors de la création du plateau
-//            // lors de la création du plateau, toute la création des cartes du jeu se font
-//            singleton.setCodePartie(codePartie);
-//            singleton.setPlateau(new Plateau());
-//            singleton.setJoueurs(new ArrayList<>());
-//            singleton.setVictoire(false);
-//            singleton.setDefaite(false);
-//            singleton.getPlateau().getVilleByName("Atlanta").setStationDeRechercheVille(true);
-//        }
-//        return singleton;
-//    }
 
     // Constructeur public "classique" dorénavant inutile, car nous avons un singleton et donc un constructeur static
     public Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
@@ -72,7 +49,6 @@ public class Partie {
 
     //############################# A ENLEVER ?
     public static Partie creerPartieDeuxJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, FileNotFoundException, VirusIntrouvableException {
-//        Partie partie = Partie.getInstance(codePartie);
         Partie partie = new Partie(codePartie);
         partie.getJoueurs().clear();
         partie.ajoutJoueursDansPartie(2);
@@ -83,7 +59,6 @@ public class Partie {
     }
 
     public static Partie creerPartieTroisJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-//        Partie partie = Partie.getInstance(codePartie);
         Partie partie = new Partie(codePartie);
         partie.getJoueurs().clear();
         partie.ajoutJoueursDansPartie(3);
@@ -94,7 +69,6 @@ public class Partie {
     }
 
     public static Partie creerPartieQuatreJoueurs(String codePartie) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-//        Partie partie = Partie.getInstance(codePartie);
         Partie partie = new Partie(codePartie);
         partie.getJoueurs().clear();
         partie.ajoutJoueursDansPartie(4);
@@ -109,7 +83,6 @@ public class Partie {
     public void ajoutJoueursDansPartie(int nbJoueurs) {
         for (int i = 0 ; i < nbJoueurs ; i++){
             joueurs.add(new PionJoueur(plateau));
-
         }
     }
 
@@ -124,10 +97,10 @@ public class Partie {
     private void miseEnPlaceJeuCartePropagation() {
         // 3 premiere, 3 cubes
         for (int i = 0; i < DonneesVariablesStatiques.nbCartesARetournerPhase ; i++) {
-            Ville villeContamine =  plateau.piocherCartePropagation(0);
-            Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-            plateau.recupererVilleAvecNom(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(), DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
-            virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
+           Ville villeContamine =  plateau.piocherCartePropagation(0);
+           Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
+           plateau.recupererVilleAvecNom(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(), DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
+           virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
         }
         for (int i = 0 ; i < DonneesVariablesStatiques.nbCartesARetournerPhase ; i++) {
             Ville villeContamine =  plateau.piocherCartePropagation(0);
@@ -245,9 +218,4 @@ public class Partie {
     public boolean presenceMedecin() {
         return joueurs.stream().anyMatch(joueur -> joueur.getRoleJoueur().getNomRole().equals(NomsRoles.MEDECIN));
     }
-
-    // TODO : à appeler dans FacadePandemic9Impl je suppose
-//    public boolean getPartie(String idPartie) {
-//        return Dao.seReconnecterAuJeu(idPartie);
-//    }
 }

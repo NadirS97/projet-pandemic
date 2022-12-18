@@ -4,10 +4,14 @@ import lombok.*;
 import modele.elements.enums.CouleurPionsRole;
 import modele.elements.enums.NomsRoles;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @ToString
-public abstract class CarteRole {
+@NoArgsConstructor
+@AllArgsConstructor
+public abstract class CarteRole implements Serializable {
 
     private NomsRoles nomRole;
     private CouleurPionsRole couleurPionRole;
