@@ -2,6 +2,7 @@ package modele.elements;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.NoArgsConstructor;
 import modele.dto.DonneesPlateauDTO;
 import modele.elements.cartes.*;
 import modele.elements.cartes.evenements.*;
@@ -14,19 +15,23 @@ import lombok.Getter;
 
 import modele.elements.enums.NomsEvenement;
 import modele.utils.DonneesVariablesStatiques;
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
 
 @Getter
-public class Plateau {
+@NoArgsConstructor
+public class Plateau implements Serializable {
 
     private Map<String, Virus> lesVirus;
-
     private Map<String, Ville> villes;
     private int marqueurVitessePropagation;   // entre 1 et 3 = vitesse2 , 4, 5 = vitesse3 , 6, 7 vitesse 4, pas vraiment besoin d'un tableau ?
     private int marqueurVitesseEclosion;
@@ -41,8 +46,10 @@ public class Plateau {
     // TODO : au moment de la phase propagation des maladies, vérifier que effetParUneNuitTranquilleActif est à false, sinon passer la phase puis passer effetParUneNuitTranquilleActif à false
     private boolean effetParUneNuitTranquilleActif;
     private DonneesPlateauDTO donneesPlateauDTO;
+    private String plateauName;
 
-    public Plateau() throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+    public Plateau(String plateauName) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
+        this.plateauName = plateauName;
         lesVirus = new HashMap<>();
         villes = new HashMap<>();
         marqueurVitessePropagation = 0;
@@ -59,8 +66,7 @@ public class Plateau {
     }
 
 
-
-    public Ville getVilleByName(String name){
+    public Ville recupererVilleAvecNom(String name){
         return villes.get(name);
     }
 

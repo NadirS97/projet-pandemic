@@ -40,13 +40,13 @@ public class PrendreConnaissance implements IAction {
         if (!pionJoueur2.getVilleActuelle().equals(pionJoueur.getVilleActuelle()))
             throw new JoueursNonPresentMemeVilleException();
         if(!pionJoueur2.getRoleJoueur().getNomRole().equals(NomsRoles.CHERCHEUSE)){
-            if (!pionJoueur2.isVilleOfCarteVilleDeckJoueur(pionJoueur2.getVilleActuelle()))
+            if (!pionJoueur2.estVilleOfCarteVilleDeckJoueur(pionJoueur2.getVilleActuelle()))
                 throw new CarteVilleInexistanteDansDeckJoueurException("Le joueur ne possède pas la carte ville dans sa main");
             pionJoueur.getDeckJoueur().add(pionJoueur2.defausseCarteVilleDeDeckJoueur(pionJoueur2.getVilleActuelle()));
         }else{
             if(villeChoisis == null)
                 throw new DonneeManquanteException();
-            if (!pionJoueur2.isVilleOfCarteVilleDeckJoueur(villeChoisis))
+            if (!pionJoueur2.estVilleOfCarteVilleDeckJoueur(villeChoisis))
                 throw new CarteVilleInexistanteDansDeckJoueurException("Le joueur ne possède pas la carte ville dans sa main");
 
             pionJoueur.getDeckJoueur().add(pionJoueur2.defausseCarteVilleDeDeckJoueur(villeChoisis));

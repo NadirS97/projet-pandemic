@@ -46,18 +46,7 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     @Override
     public void jouerTour(List<IAction> listeAction) throws EchecDeLaPartiePlusDeCarteJoueurException, CarteVilleInexistanteDansDeckJoueurException, NbCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException, TropDeCarteEnMainException, NuitTranquilleException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, VictoireFinDePartieException, DefaitePartieTermineException {
-        for (IAction action : listeAction){
-            jouerAction(partie.getJoueurActuel(),action);
-        }
-        piocherCartes(partie.getJoueurActuel());
-        propagation(partie.getJoueurActuel());
-
-        if (partie.presenceMedecin())
-            partie.effetCarteMedecin();
-
-        partie.joueurSuivant();
-        partie.isVictoire();
-
+        partie = Dao.jouerTour(listeAction, this, partie);
     }
 
     @Override
@@ -68,15 +57,12 @@ public class FacadePandemic9Impl implements FacadePandemic9 {
 
     @Override
     public void jouerEvent(PionJoueur joueur, CarteEvenement carteEvenement) throws VilleDejaEclosException, CarteEvenementNotFoundInDeckException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, PermissionNonAccordeException, CartePropagationNotInDefausseException, DefaitePartieTermineException {
-
         joueur.jouerCarteEvenement(carteEvenement);
     }
 
     @Override
     public void piocherCartes(PionJoueur joueurActuel) throws TropDeCarteEnMainException, EchecDeLaPartiePlusDeCarteJoueurException, VilleDejaEclosException, NbCubesAAjouterInvalideException, PropagationImpossibleCarSpecialisteQuarantaineException, DefaitePartieTermineException {
-
         joueurActuel.piocherCartes();
-
     }
 
     public void defausserCartesJoueur(PionJoueur joueurActuel, List<CarteJoueur> cartesJoueursDefausser) throws CarteJoueurInexistanteDansDeckException {

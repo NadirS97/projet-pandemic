@@ -41,7 +41,7 @@ public class DeplacementVolCharter implements IAction, Deplacement {
             throw new NbActionsMaxTourAtteintException("Le nombre maximum d'actions autorisés par tour est atteint.");
         if (!pionJoueur.getPlateau().isVille(villeDestination.getNomVille()))
             throw new VilleIntrouvableException(villeDestination.getNomVille() + " non trouvé");
-        if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(pionJoueur.getVilleActuelle()))
+        if (!pionJoueur.estVilleOfCarteVilleDeckJoueur(pionJoueur.getVilleActuelle()))
             throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + pionJoueur.getVilleActuelle().getNomVille() + " n'est pas présente dans votre deck.");
         if (pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.SPECIALISTE_EN_MISE_EN_QUARANTAINE)) {
             conditionRoleAffectantDeplacement(pionJoueur, pionJoueur.getVilleActuelle(), villeDestination);

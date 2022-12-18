@@ -50,7 +50,7 @@ public class ConstruireUneStation implements IAction {
                 plateau.getVilles().get(villeActuelle.getNomVille()).setStationDeRechercheVille(true);
             }
             else {
-                if (!pionJoueur.isVilleOfCarteVilleDeckJoueur(villeActuelle))
+                if (!pionJoueur.estVilleOfCarteVilleDeckJoueur(villeActuelle))
                     throw new CarteVilleInexistanteDansDeckJoueurException("La carte ville correspondante à " + villeActuelle.getNomVille() + " n'est pas présente dans votre deck.");
                 CarteJoueur carteJoueur = pionJoueur.defausseCarteVilleDeDeckJoueur(villeActuelle);
                 pionJoueur.getPlateau().defausserCarteJoueur(carteJoueur);

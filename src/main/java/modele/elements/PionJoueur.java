@@ -1,6 +1,7 @@
 package modele.elements;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import modele.elements.actions.Deplacement;
 import modele.elements.actions.IAction;
@@ -8,6 +9,8 @@ import modele.elements.cartes.*;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +19,7 @@ import java.util.Map;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class PionJoueur {
 
     private IAction action;
@@ -26,15 +30,11 @@ public class PionJoueur {
     private List<CarteJoueur> deckJoueur;
     private Ville villeActuelle;
     private Plateau plateau;
-
     private boolean permissionPontAerien;
     private CarteEvenement cartePlanificateurUrgenceEntrepose;
     private boolean autorisationDeplacementRepartiteur;
     private List<CartePropagation> mainAReorganiser = new ArrayList<>();
 
-
-    public PionJoueur() {
-    }
 
     public PionJoueur(Plateau plateau){
         this.plateau = plateau;
@@ -43,9 +43,8 @@ public class PionJoueur {
         this.roleJoueur = plateau.piocherCarteRole();
         this.autorisationDeplacementRepartiteur = false;
         // tout les pions commencent à Atlanta
-        this.villeActuelle = plateau.getVilleByName("Atlanta");
+        this.villeActuelle = plateau.recupererVilleAvecNom("Atlanta");
     }
-
 
     /**
      * Fonction permettant de savoir si le joueur possède une carteVille dans sa main correspondant à la ville en paramètre
@@ -53,7 +52,7 @@ public class PionJoueur {
      * @param ville
      * @return True si le joueur possède la carte en main, False sinon
      */
-    public Boolean isVilleOfCarteVilleDeckJoueur(Ville ville) {
+    public Boolean estVilleOfCarteVilleDeckJoueur(Ville ville) {
         List<Ville> listeVillesDeckJoueur = new ArrayList<>();
         for (CarteJoueur carteJoueur : deckJoueur) {
             if (carteJoueur instanceof CarteVille) {
@@ -143,10 +142,6 @@ public class PionJoueur {
         deckJoueur.add(carteVille);
     }
 
-    public void setVilleActuelle(Ville villeActuelle) {
-        this.villeActuelle = villeActuelle;
-    }
-
     public void executerAction() throws CarteVilleInexistanteDansDeckJoueurException, NbCartesVilleDansDeckJoueurInvalideException, VirusDejaEradiqueException, VilleNonVoisineException, NbActionsMaxTourAtteintException, VilleActuellePossedeDejaUneStationDeRechercheException, CarteEvenementNonTrouveDansDefausseException, JoueursNonPresentMemeVilleException, VirusDejaTraiteException, VilleIntrouvableException, VilleDestinationEstVilleActuelleException, MauvaisRoleException, VirusInexistantDansLaVilleActuelException, VilleAvecAucuneStationDeRechercheException, DonneeManquanteException {
         this.action.execAction(this);
         this.nbActions--;
@@ -164,14 +159,11 @@ public class PionJoueur {
 
     }
 
-
-
     public void jouerCarteEntreposerPlanificateurUrgence() throws MauvaisRoleException, VilleDejaEclosException, CarteEvenementNotFoundInDeckException, PermissionNonAccordeException, NbCubesAAjouterInvalideException, CartePropagationNotInDefausseException, PropagationImpossibleCarSpecialisteQuarantaineException, DefaitePartieTermineException {
         if (!this.roleJoueur.getNomRole().equals(NomsRoles.PLANIFICATEUR_D_URGENCE))
             throw new MauvaisRoleException();
         jouerCarteEvenement(cartePlanificateurUrgenceEntrepose);
         cartePlanificateurUrgenceEntrepose = null;
-
     }
 
     public void repartiteurDeplacementPion(Partie partie, PionJoueur joueurCible,Ville villeDestination) throws AutorisationManquanteException, AucunJoueurDansVilleDestinationException {
@@ -197,4 +189,3 @@ public class PionJoueur {
                 '}';
     }
 }
-

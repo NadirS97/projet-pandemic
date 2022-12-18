@@ -39,13 +39,13 @@ public class DonnerConnaissance implements IAction {
         if (!pionJoueur2.getVilleActuelle().equals(pionJoueur.getVilleActuelle()))
             throw new JoueursNonPresentMemeVilleException();
         if(!pionJoueur.getRoleJoueur().getNomRole().equals(NomsRoles.CHERCHEUSE)){
-            if(!pionJoueur.isVilleOfCarteVilleDeckJoueur(pionJoueur.getVilleActuelle()))
+            if(!pionJoueur.estVilleOfCarteVilleDeckJoueur(pionJoueur.getVilleActuelle()))
                 throw new CarteVilleInexistanteDansDeckJoueurException("Le joueur ne possède pas la carte ville dans sa main");
             pionJoueur2.getDeckJoueur().add(pionJoueur.defausseCarteVilleDeDeckJoueur(pionJoueur.getVilleActuelle()));
         }else{
             if(villeChoisis == null)
                 throw new DonneeManquanteException();
-            if(!pionJoueur.isVilleOfCarteVilleDeckJoueur(villeChoisis))
+            if(!pionJoueur.estVilleOfCarteVilleDeckJoueur(villeChoisis))
                 throw new CarteVilleInexistanteDansDeckJoueurException("Le joueur ne possède pas la carte ville dans sa main");
             pionJoueur2.getDeckJoueur().add(pionJoueur.defausseCarteVilleDeDeckJoueur(villeChoisis));
         }

@@ -1,21 +1,30 @@
+import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import dao.Dao;
-import modele.exceptions.EvenementInnexistantException;
-import modele.exceptions.RoleIntrouvableException;
-import modele.exceptions.VilleIntrouvableException;
-import modele.exceptions.VirusIntrouvableException;
-import modele.facade.FacadePandemic9;
+import modele.elements.*;
+import modele.elements.actions.IAction;
+import modele.elements.actions.deplacement.DeplacementVoiture;
+import modele.elements.cartes.*;
+import modele.elements.cartes.evenements.*;
+import modele.elements.cartes.roles.*;
+import modele.elements.enums.CouleurPionsRole;
+import modele.exceptions.*;
 import modele.facade.FacadePandemic9Impl;
-import org.bson.BsonDocument;
-import org.bson.BsonInt64;
 import org.bson.Document;
-import org.bson.conversions.Bson;
+import org.bson.codecs.configuration.CodecRegistries;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.ClassModel;
+import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 public class MongoMain {
     /**
@@ -31,21 +40,15 @@ public class MongoMain {
 
             FacadePandemic9Impl instance = new FacadePandemic9Impl();
             instance.creerPartieQuatreJoueurs("123abcd");
-//            instance.creerPartieTroisJoueurs("123abcd");
-//            instance.creerPartieDeuxJoueurs("123abcd");
-            instance.getPartie().setDefaite(true);
-            instance.sauvegarderPartie();
-            instance.getPartie().setDefaite(false);
-            System.out.println(instance.getPartie().isDefaite());
 
-            // sauvegarde partie OK , mais impossible de recup la partie depuis la bdd
-            // multiples erreur de codec
-//           Dao.reprendrePartie();
-
-            // on arrive cependant a recup joueur depuis la bdd
-            //            Dao.inscription("truc","ah");
-//            System.out.println(Dao.reprendrejoueur());
-
+            PionJoueur joueurActuel = instance.getPartie().getJoueurActuel();
+            joueurActuel.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
+            IAction action = new DeplacementVoiture(instance.getPartie().getPlateau().recupererVilleAvecNom("Washington"));
+            IAction action1 = new DeplacementVoiture(instance.getPartie().getPlateau().recupererVilleAvecNom("Atlanta"));
+            IAction action2 = new DeplacementVoiture(instance.getPartie().getPlateau().recupererVilleAvecNom("Chicago"));
+            IAction action3 = new DeplacementVoiture(instance.getPartie().getPlateau().recupererVilleAvecNom("Atlanta"));
+            List<IAction> listeActions = List.of(action,action1,action2,action3);
+            instance.jouerTour(listeActions);
 
 
             System.out.println("connexion success");
@@ -53,10 +56,17 @@ public class MongoMain {
         } catch (MongoException me) {
             System.err.println("Une erreur a eu lieu lors de la connexion");
         } catch (RoleIntrouvableException | VilleIntrouvableException | EvenementInnexistantException |
-                 VirusIntrouvableException | FileNotFoundException e) {
+                 VirusIntrouvableException | FileNotFoundException | VilleDejaEclosException |
+                 CarteVilleInexistanteDansDeckJoueurException | VirusDejaEradiqueException | VilleNonVoisineException |
+                 DefaitePartieTermineException | VictoireFinDePartieException | NuitTranquilleException |
+                 EchecDeLaPartiePlusDeCarteJoueurException | NbCartesVilleDansDeckJoueurInvalideException |
+                 NbActionsMaxTourAtteintException | VilleActuellePossedeDejaUneStationDeRechercheException |
+                 CarteEvenementNonTrouveDansDefausseException | JoueursNonPresentMemeVilleException |
+                 VirusDejaTraiteException | VilleDestinationEstVilleActuelleException | MauvaisRoleException |
+                 VirusInexistantDansLaVilleActuelException | TropDeCarteEnMainException |
+                 VilleAvecAucuneStationDeRechercheException | DonneeManquanteException |
+                 NbCubesAAjouterInvalideException | PropagationImpossibleCarSpecialisteQuarantaineException e) {
             throw new RuntimeException(e);
-
-
         }
     }
 }

@@ -3,6 +3,7 @@ package modele.elements;
 
 import dao.Dao;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import modele.elements.cartes.CarteJoueur;
 import modele.elements.cartes.CarteVille;
@@ -10,33 +11,33 @@ import modele.elements.enums.EtatVirus;
 import modele.elements.enums.NomsRoles;
 import modele.exceptions.*;
 import modele.utils.DonneesVariablesStatiques;
-import org.bson.BsonType;
 import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonDiscriminator;
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
-import org.bson.codecs.pojo.annotations.BsonRepresentation;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.*;
+
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Partie {
 
 //    Map<PionJoueur,CarteRole> joueurs;
 
-    @BsonProperty("partie")
-    private static Partie singleton;
-    @BsonProperty("listeJoueur")
+    //    @BsonProperty("listeJoueur")
     private List<PionJoueur> joueurs;
-    @BsonProperty("indexJoueur")
+    //    @BsonProperty("indexJoueur")
     int indexJoueur;
-    @BsonProperty("plateau")
+    //    @BsonProperty("plateau")
     private Plateau plateau;
-    @BsonProperty("victoire")
+    //    @BsonProperty("victoire")
     private boolean victoire;
-    @BsonProperty("defaite")
+    //    @BsonProperty("defaite")
     private boolean defaite;
-    @BsonProperty("joueurActuel")
     private PionJoueur joueurActuel;
     @BsonProperty("_id")
     private String codePartie;
@@ -56,20 +57,16 @@ public class Partie {
 //        return singleton;
 //    }
 
-
-//    public Partie() {
-//    }
-
     // Constructeur public "classique" dorénavant inutile, car nous avons un singleton et donc un constructeur static
     public Partie(String codePartie) throws RoleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException, VilleIntrouvableException {
         // marqueur eclosion et propagation placé à 0 lors de la création du plateau
         // lors de la création du plateau, toute la créations des cartes du jeu se font
         this.codePartie = codePartie;
-        this.plateau = new Plateau();
+        this.plateau = new Plateau("Plateau1");
         joueurs = new ArrayList<>();
         victoire = false;
         defaite = false;
-        plateau.getVilleByName("Atlanta").setStationDeRechercheVille(true);
+        plateau.recupererVilleAvecNom("Atlanta").setStationDeRechercheVille(true);
     }
 
     //############################# A ENLEVER ?
@@ -105,12 +102,8 @@ public class Partie {
         partie.determinerQuiCommencePartie();
         return partie;
     }
+
     //#####################################################
-
-    public static void inscription(String pseudo, String mdp) throws RoleIntrouvableException, VilleIntrouvableException, EvenementInnexistantException, VirusIntrouvableException, FileNotFoundException {
-        Dao.inscription(pseudo, mdp);
-    }
-
 
     public void ajoutJoueursDansPartie(int nbJoueurs) {
         for (int i = 0 ; i < nbJoueurs ; i++){
@@ -130,21 +123,21 @@ public class Partie {
     private void miseEnPlaceJeuCartePropagation() {
         // 3 premiere, 3 cubes
         for (int i = 0; i < DonneesVariablesStatiques.nbCartesARetournerPhase ; i++) {
-           Ville villeContamine =  plateau.piocherCartePropagation(0);
-           Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-           plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(), DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
-           virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
+            Ville villeContamine =  plateau.piocherCartePropagation(0);
+            Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
+            plateau.recupererVilleAvecNom(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(), DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
+            virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerPremierePhase);
         }
         for (int i = 0 ; i < DonneesVariablesStatiques.nbCartesARetournerPhase ; i++) {
             Ville villeContamine =  plateau.piocherCartePropagation(0);
             Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(),DonneesVariablesStatiques.nbCubesAPlacerDeuxiemePhase);
+            plateau.recupererVilleAvecNom(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(),DonneesVariablesStatiques.nbCubesAPlacerDeuxiemePhase);
             virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerDeuxiemePhase);
         }
         for (int i = 0 ; i < DonneesVariablesStatiques.nbCartesARetournerPhase ; i++) {
             Ville villeContamine =  plateau.piocherCartePropagation(0);
             Virus virus = plateau.getLesVirus().get(villeContamine.getCouleurVirusVille());
-            plateau.getVilleByName(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(), DonneesVariablesStatiques.nbCubesAPlacerTroisiemePhase);
+            plateau.recupererVilleAvecNom(villeContamine.getNomVille()).getNbCubeVirusVille().put(virus.getVirusCouleur(), DonneesVariablesStatiques.nbCubesAPlacerTroisiemePhase);
             virus.retirerCubesSac(DonneesVariablesStatiques.nbCubesAPlacerTroisiemePhase);
         }
     }
@@ -205,7 +198,7 @@ public class Partie {
 
     }
 
-    public boolean isVictoire() throws VictoireFinDePartieException {
+    public boolean estUneVictoire() throws VictoireFinDePartieException {
         if (plateau.checkToutLesRemedeDecouvert()) {
             victoire = true;
             throw new VictoireFinDePartieException();
@@ -252,7 +245,7 @@ public class Partie {
     }
 
     // TODO : à appeler dans FacadePandemic9Impl je suppose
-    public boolean getPartie(String idPartie) {
-        return Dao.seReconnecterAuJeu(idPartie);
-    }
+//    public boolean getPartie(String idPartie) {
+//        return Dao.seReconnecterAuJeu(idPartie);
+//    }
 }

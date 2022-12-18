@@ -57,14 +57,14 @@ class FacadePandemic9ImplTest {
         plateau = instance.partie.getPlateau();
         pionJoueur = instance.partie.getJoueurActuel();
         pionJoueur2 = instance.partie.accesJoueurSuivant();
-        atlanta = plateau.getVilleByName("Atlanta");
-        chicago = plateau.getVilleByName("Chicago");
-        paris = plateau.getVilleByName("Paris");
-        alger = plateau.getVilleByName("Alger");
-        milan = plateau.getVilleByName("Milan");
-        tokyo = plateau.getVilleByName("Tokyo");
-        istanbul = plateau.getVilleByName("Istanbul");
-        miami = plateau.getVilleByName("Miami");
+        atlanta = plateau.recupererVilleAvecNom("Atlanta");
+        chicago = plateau.recupererVilleAvecNom("Chicago");
+        paris = plateau.recupererVilleAvecNom("Paris");
+        alger = plateau.recupererVilleAvecNom("Alger");
+        milan = plateau.recupererVilleAvecNom("Milan");
+        tokyo = plateau.recupererVilleAvecNom("Tokyo");
+        istanbul = plateau.recupererVilleAvecNom("Istanbul");
+        miami = plateau.recupererVilleAvecNom("Miami");
 
 
         // trop de conflit avec les initialisations des cartes distribué aux joueurs créés et les assert/throw qui check si
@@ -98,7 +98,7 @@ class FacadePandemic9ImplTest {
 //                                                ACTION DeplacementVoiture
 //=============================================================================================================================
 
-//------------ 1- Tests jouerAction() avec l'action DeplacementVoiture OK
+    //------------ 1- Tests jouerAction() avec l'action DeplacementVoiture OK
     @Test
     void jouerTourActionDeplacementVoitureOK() {
         IAction action = new DeplacementVoiture(chicago);
@@ -106,7 +106,7 @@ class FacadePandemic9ImplTest {
         assertEquals(pionJoueur.getVilleActuelle(), chicago);
     }
 
-//------------ 2- Tests jouerAction() avec l'action DeplacementVoiture KO
+    //------------ 2- Tests jouerAction() avec l'action DeplacementVoiture KO
     @Test
     void jouerTourActionDeplacementVoitureVilleDestinationEstVilleActuelle() {
         IAction action = new DeplacementVoiture(atlanta);
@@ -147,7 +147,7 @@ class FacadePandemic9ImplTest {
 //                                                ACTION DeplacementVolDirect
 //=============================================================================================================================
 
-//------------ 1- Tests jouerAction() avec l'action DeplacementVolDirect OK
+    //------------ 1- Tests jouerAction() avec l'action DeplacementVolDirect OK
     @Test
     void jouerTourActionDeplacementVolDirectOK() {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
@@ -156,7 +156,7 @@ class FacadePandemic9ImplTest {
         assertEquals(pionJoueur.getVilleActuelle(), paris);
     }
 
-//------------ 2- Tests jouerAction() avec l'action DeplacementVolDirect KO
+    //------------ 2- Tests jouerAction() avec l'action DeplacementVolDirect KO
     @Test
     void jouerTourActionDeplacementVolDirectVilleDestinationEstVilleActuelle() {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
@@ -231,7 +231,7 @@ class FacadePandemic9ImplTest {
         IAction action = new ConstruireUneStation();
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action));
         assertTrue(pionJoueur.getVilleActuelle().isStationDeRechercheVille());
-        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(alger));
+        assertFalse(pionJoueur.estVilleOfCarteVilleDeckJoueur(alger));
     }
 
     @Test
@@ -430,7 +430,7 @@ class FacadePandemic9ImplTest {
         Assertions.assertEquals(0, atlanta.getNbCubeVirusVille().get(virusBleu.getVirusCouleur()));
     }
 
-//------------ 4- Tests jouerAction() avec l'action TraiterMaladie KO
+    //------------ 4- Tests jouerAction() avec l'action TraiterMaladie KO
     @Test
     void jouerTourActionTraiterMaladieNbActionsMaxTourAtteint(){
         atlanta.setStationDeRechercheVille(true);
@@ -471,8 +471,8 @@ class FacadePandemic9ImplTest {
         pionJoueur.setRoleJoueur(new CarteMedecin(CouleurPionsRole.ORANGE));
         IAction donnerConaissance = new DonnerConnaissance(pionJoueur2);
         assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,donnerConaissance));
-        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
-        assertTrue(pionJoueur2.isVilleOfCarteVilleDeckJoueur(atlanta));
+        assertFalse(pionJoueur.estVilleOfCarteVilleDeckJoueur(atlanta));
+        assertTrue(pionJoueur2.estVilleOfCarteVilleDeckJoueur(atlanta));
     }
 
 //------------ 2- Tests jouerAction() avec l'action DonnerConnaissance OK (test spécifique au Role : "CHERCHEUSE")
@@ -487,8 +487,8 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         IAction action = new DonnerConnaissance(pionJoueur2, chicago);
         assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,action));
-        assertFalse(pionJoueur.isVilleOfCarteVilleDeckJoueur(chicago));
-        assertTrue(pionJoueur2.isVilleOfCarteVilleDeckJoueur(chicago));
+        assertFalse(pionJoueur.estVilleOfCarteVilleDeckJoueur(chicago));
+        assertTrue(pionJoueur2.estVilleOfCarteVilleDeckJoueur(chicago));
     }
 
 //------------ 3- Tests jouerAction() avec l'action DonnerConnaissance KO
@@ -576,8 +576,8 @@ class FacadePandemic9ImplTest {
         pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(atlanta));
         IAction prendreConnaissance = new PrendreConnaissance(pionJoueur2);
         assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,prendreConnaissance));
-        assertFalse(pionJoueur2.isVilleOfCarteVilleDeckJoueur(atlanta));
-        assertTrue(pionJoueur.isVilleOfCarteVilleDeckJoueur(atlanta));
+        assertFalse(pionJoueur2.estVilleOfCarteVilleDeckJoueur(atlanta));
+        assertTrue(pionJoueur.estVilleOfCarteVilleDeckJoueur(atlanta));
     }
 
 //------------ 2- Tests jouerAction() avec l'action PrendreConnaissance OK (test spécifique au Role : "CHERCHEUSE")
@@ -591,8 +591,8 @@ class FacadePandemic9ImplTest {
         pionJoueur2.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
         IAction prendreConnaissance = new PrendreConnaissance(pionJoueur2, chicago);
         assertDoesNotThrow(() -> instance.jouerAction(pionJoueur,prendreConnaissance));
-        assertTrue(pionJoueur.isVilleOfCarteVilleDeckJoueur(chicago));
-        assertFalse(pionJoueur2.isVilleOfCarteVilleDeckJoueur(chicago));
+        assertTrue(pionJoueur.estVilleOfCarteVilleDeckJoueur(chicago));
+        assertFalse(pionJoueur2.estVilleOfCarteVilleDeckJoueur(chicago));
     }
 
 //------------ 3- Tests jouerAction() avec l'action PrendreConnaissance KO
@@ -687,7 +687,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("New_York")));
         int tailleDeckApresAjoutDesCartes = pionJoueur.getDeckJoueur().size();
         int tailleDefausseInitial = pionJoueur.getPlateau().getDefausseCarteJoueur().size();
         IAction action = new DecouvrirRemede();
@@ -729,7 +729,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("New_York")));
         IAction action = new DecouvrirRemede();
         Assertions.assertThrows(VilleAvecAucuneStationDeRechercheException.class, () -> this.instance.jouerAction(pionJoueur, action));
     }
@@ -750,7 +750,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("New_York")));
         IAction action1 = new DeplacementNavette(alger);
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur,action1));
         IAction action2 = new DeplacementNavette(atlanta);
@@ -770,7 +770,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("New_York")));
         IAction action1 = new DecouvrirRemede();
         Assertions.assertDoesNotThrow(() -> this.instance.jouerAction(pionJoueur, action1));
 
@@ -778,7 +778,7 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(chicago));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("New_York")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("New_York")));
         IAction action2 = new DecouvrirRemede();
         Assertions.assertThrows(VirusDejaTraiteException.class, () -> this.instance.jouerAction(pionJoueur, action2));
     }
@@ -908,7 +908,7 @@ class FacadePandemic9ImplTest {
         assertEquals(0, pionJoueur.getVilleActuelle().getNbCubeVirusVille().get(virus.getVirusCouleur()));
 
         // cas éclosion dans une ville voisine
-        Ville miami = instance.partie.getPlateau().getVilleByName("Miami");
+        Ville miami = instance.partie.getPlateau().recupererVilleAvecNom("Miami");
         Virus virus2 = instance.partie.getPlateau().getLesVirus().get(miami.getCouleurVirusVille());
         miami.getNbCubeVirusVille().put(virus2.getVirusCouleur(), 3);
         pionJoueur.getVilleActuelle().getListeVaccinationContreVirus().put(miami.getCouleurVirusVille(), virus2);
@@ -924,7 +924,7 @@ class FacadePandemic9ImplTest {
     void jouerTourOk() {
         PionJoueur joueurActuel = instance.partie.getJoueurActuel();
         joueurActuel.setRoleJoueur(new CarteRepartiteur(CouleurPionsRole.ROSE));
-        IAction action = new DeplacementVoiture(plateau.getVilleByName("Washington"));
+        IAction action = new DeplacementVoiture(plateau.recupererVilleAvecNom("Washington"));
         IAction action1 = new DeplacementVoiture(atlanta);
         IAction action2 = new DeplacementVoiture(chicago);
         IAction action3 = new DeplacementVoiture(atlanta);
@@ -1064,20 +1064,20 @@ class FacadePandemic9ImplTest {
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(milan));
         pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(paris));
         // 4 cartes de virus ROUGE
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Tokyo")));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Seoul")));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Osaka")));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Sydney")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Tokyo")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Seoul")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Osaka")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Sydney")));
         // 4 cartes de virus JAUNE
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Mexico")));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Miami")));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Bogota")));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Lima")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Mexico")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Miami")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Bogota")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Lima")));
         // 4 cartes de virus NOIR
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Alger")));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Karachi")));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Chennai")));
-        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.getVilleByName("Mumbai")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Alger")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Karachi")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Chennai")));
+        pionJoueur.ajouterCarteVilleDeckJoueur(new CarteVille(plateau.recupererVilleAvecNom("Mumbai")));
 
         IAction action2 = new DecouvrirRemede();
         IAction action1 = new DecouvrirRemede();
@@ -1086,5 +1086,4 @@ class FacadePandemic9ImplTest {
         List<IAction> listeActionPionJoueur =List.of(action1,action2,action3, action4);
         Assertions.assertThrows(VictoireFinDePartieException.class, () -> this.instance.jouerTour(listeActionPionJoueur));
     }
-
 }

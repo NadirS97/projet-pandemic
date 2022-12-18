@@ -3,13 +3,15 @@ package modele.elements;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
-public class Ville {
+@NoArgsConstructor
+public class Ville implements Serializable {
 
     private String nomVille;
     private List<String> villesVoisinesVille;
@@ -25,7 +27,6 @@ public class Ville {
     private boolean speicalisteMiseEnQuarantainePresent;
 
     private HashMap<String, Virus> listeVaccinationContreVirus;
-
 
     public Ville(String nomVille) {
         this.nomVille = nomVille;
