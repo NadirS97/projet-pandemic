@@ -19,6 +19,7 @@ import org.bson.codecs.pojo.annotations.BsonProperty;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Getter
@@ -220,12 +221,13 @@ public class Partie {
                 .findFirst();
 
         if (medecin.isPresent()) {
-            virusDejaGueris.forEach(medecin
-                    .get()
-                    .getVilleActuelle()
-                    .getNbCubeVirusVille()
-                    .keySet()::remove);
-            //TODO Robin faut revoir ca (Jo a modifié le type des clés, ce sont des String au lieu de virus)
+            List<String> couleursVirusDejaGueris = new ArrayList<>();
+            virusDejaGueris.forEach(virus -> couleursVirusDejaGueris.add(virus.getVirusCouleur()));
+
+            couleursVirusDejaGueris.stream().distinct().forEach(medecin.get()
+                        .getVilleActuelle()
+                        .getNbCubeVirusVille()
+                        .keySet()::remove);
 
             virusDejaGueris.forEach(v -> {
                 HashMap<String, Virus> listeVaccinationContreVirus = null;
