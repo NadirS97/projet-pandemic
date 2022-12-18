@@ -64,17 +64,18 @@ public class MongoMain {
 
         } catch (MongoException me) {
             System.err.println("Une erreur a eu lieu lors de la connexion");
-        } catch (RoleIntrouvableException | VilleIntrouvableException | EvenementInnexistantException |
-                 VirusIntrouvableException | FileNotFoundException | VilleDejaEclosException |
+        } catch (RoleIntrouvableException | EvenementInnexistantException | VirusIntrouvableException |
+                 FileNotFoundException | NuitTranquilleException | VilleDejaEclosException |
                  CarteVilleInexistanteDansDeckJoueurException | VirusDejaEradiqueException | VilleNonVoisineException |
-                 DefaitePartieTermineException | VictoireFinDePartieException | NuitTranquilleException |
+                 DefaitePartieTermineException | VictoireFinDePartieException |
                  EchecDeLaPartiePlusDeCarteJoueurException | NbCartesVilleDansDeckJoueurInvalideException |
                  NbActionsMaxTourAtteintException | VilleActuellePossedeDejaUneStationDeRechercheException |
                  CarteEvenementNonTrouveDansDefausseException | JoueursNonPresentMemeVilleException |
                  VirusDejaTraiteException | VilleDestinationEstVilleActuelleException | MauvaisRoleException |
                  VirusInexistantDansLaVilleActuelException | TropDeCarteEnMainException |
                  VilleAvecAucuneStationDeRechercheException | DonneeManquanteException |
-                 NbCubesAAjouterInvalideException | PropagationImpossibleCarSpecialisteQuarantaineException e) {
+                 NbCubesAAjouterInvalideException | PropagationImpossibleCarSpecialisteQuarantaineException |
+                 VilleIntrouvableException e) {
             throw new RuntimeException(e);
         }
     }
